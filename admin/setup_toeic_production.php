@@ -1,11 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/session_handler.php';
 require_once __DIR__ . '/../includes/config.php';
-
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit();
-}
+require_once __DIR__ . '/../includes/db_utils.php';
 
 if (!($conn instanceof mysqli)) {
     http_response_code(500);
@@ -23,6 +19,14 @@ $transcriptPath = $root . '/uploads/toeic_audio/transcripts.json';
 function envValue(string $name): string {
     $value = getenv($name);
     return $value === false ? '' : trim($value);
+}
+
+function bootstrapToken(): string {
+    $token = envValue('TOEIC_SETUP_TOKEN');
+    if ($token !== '') {
+        return $token;
+    }
+    return envValue('SETUP_BOOTSTRAP_TOKEN');
 }
 
 function audioPublicBaseUrl(): string {
@@ -566,6 +570,25 @@ function importToeicProductionContent(mysqli $conn, string $contentDir, string $
 
 $audioBaseUrl = audioPublicBaseUrl();
 $photoBaseUrl = photoPublicBaseUrl();
+$usersTableExists = checkTableExists($conn, 'users');
+$bootstrapMode = !$usersTableExists;
+$providedBootstrapToken = isset($_REQUEST['bootstrap_token']) ? trim((string)$_REQUEST['bootstrap_token']) : trim((string)($_GET['token'] ?? ''));
+$configuredBootstrapToken = bootstrapToken();
+$hasAdminSession = isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+
+if (!$hasAdminSession) {
+    if ($bootstrapMode) {
+        if ($configuredBootstrapToken === '' || !hash_equals($configuredBootstrapToken, $providedBootstrapToken)) {
+            http_response_code(403);
+            echo "Bootstrap token required. Set TOEIC_SETUP_TOKEN in .env and open this page with ?token=YOUR_TOKEN.";
+            exit();
+        }
+    } else {
+        header("Location: login.php");
+        exit();
+    }
+}
+
 $result = null;
 $error = null;
 
@@ -575,6 +598,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $logs = [];
         try {
+            if ($bootstrapMode && ($configuredBootstrapToken === '' || !hash_equals($configuredBootstrapToken, $providedBootstrapToken))) {
+                throw new RuntimeException('Bootstrap token mismatch.');
+            }
             if ($audioBaseUrl === '' || $photoBaseUrl === '') {
                 throw new RuntimeException('R2 audio/photo public base URL is not configured. Set R2_AUDIO_PUBLIC_BASE_URL and R2_PHOTO_PUBLIC_BASE_URL (or R2_PUBLIC_BASE_URL).');
             }
@@ -637,9 +663,15 @@ $snapshot = [
             <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
                     <h1 class="h3 mb-2">TOEIC Production Setup</h1>
-                    <p class="muted mb-0">Admin-only all-in-one setup page for schema bootstrap, seed defaults, and TOEIC content import using R2 URLs.</p>
+                    <p class="muted mb-0">
+                        <?php echo $bootstrapMode
+                            ? 'Bootstrap mode is active because the users table does not exist yet. Access is currently guarded by TOEIC_SETUP_TOKEN.'
+                            : 'Admin-only all-in-one setup page for schema bootstrap, seed defaults, and TOEIC content import using R2 URLs.'; ?>
+                    </p>
                 </div>
-                <a href="index.php" class="btn btn-outline-secondary">Back to Admin</a>
+                <a href="<?php echo $bootstrapMode ? '../index.php' : 'index.php'; ?>" class="btn btn-outline-secondary">
+                    <?php echo $bootstrapMode ? 'Back to Site' : 'Back to Admin'; ?>
+                </a>
             </div>
         </div>
 
@@ -698,6 +730,9 @@ $snapshot = [
             <p class="muted">This page will run schema bootstrap, seed defaults, and import TOEIC content from local JSON files. Existing content is skipped if it already exists.</p>
             <form method="POST">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                <?php if ($bootstrapMode): ?>
+                    <input type="hidden" name="bootstrap_token" value="<?php echo htmlspecialchars($providedBootstrapToken); ?>">
+                <?php endif; ?>
                 <button type="submit" class="btn btn-primary" onclick="return confirm('Run TOEIC production setup now?');">Run TOEIC Production Setup</button>
             </form>
         </div>

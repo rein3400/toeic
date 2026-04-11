@@ -7,8 +7,13 @@ require_once '../includes/db_utils.php';
 // Get website settings
 $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
+$bootstrapRequired = !checkTableExists($conn, 'users');
+$bootstrapTokenConfigured = (getenv('TOEIC_SETUP_TOKEN') ?: getenv('SETUP_BOOTSTRAP_TOKEN')) ? true : false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($bootstrapRequired) {
+        $error = "Database belum dibootstrap. Jalankan setup production terlebih dahulu.";
+    } else {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -36,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Invalid admin credentials.";
     }
     $stmt->close();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -208,6 +214,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
         <div class="login-body">
+            <?php if ($bootstrapRequired): ?>
+                <div class="alert alert-warning">
+                    <strong>Database belum siap.</strong><br>
+                    Tabel <code>users</code> belum ada, jadi admin login belum bisa dipakai.
+                    <?php if ($bootstrapTokenConfigured): ?>
+                        Jalankan setup bootstrap melalui
+                        <code>setup_toeic_production.php?token=YOUR_TOEIC_SETUP_TOKEN</code>.
+                    <?php else: ?>
+                        Set <code>TOEIC_SETUP_TOKEN</code> di <code>.env</code>, lalu buka
+                        <code>setup_toeic_production.php?token=YOUR_TOEIC_SETUP_TOKEN</code>.
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="fas fa-exclamation-triangle me-2"></i><?php echo $error; ?>
