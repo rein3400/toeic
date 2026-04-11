@@ -107,9 +107,9 @@ elseif (getenv('RAILWAY_ENVIRONMENT')) {
 else {
     $db_host = 'localhost';
     $db_port = '3306';
-    $db_user = 'oseecoid_toeic';
-    $db_pass = 'b\AY;U}gk!?%8n8xw7';
-    $db_name = 'oseecoid_toeic';
+    $db_user = '';
+    $db_pass = '';
+    $db_name = '';
 }
 
 // Create connection

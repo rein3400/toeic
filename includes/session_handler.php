@@ -14,8 +14,16 @@ class DbSessionHandler implements SessionHandlerInterface {
             return;
         }
 
-        $check = @$this->conn->query("SELECT 1 FROM sessions LIMIT 1");
-        if ($check === false) {
+        try {
+            $check = $this->conn->query("SELECT 1 FROM sessions LIMIT 1");
+            if ($check !== false) {
+                return;
+            }
+        } catch (Throwable $e) {
+            // Expected on first boot when the sessions table does not exist yet.
+        }
+
+        try {
             $this->conn->query(
                 "CREATE TABLE IF NOT EXISTS sessions (
                     id VARCHAR(128) NOT NULL PRIMARY KEY,
@@ -23,6 +31,8 @@ class DbSessionHandler implements SessionHandlerInterface {
                     data TEXT
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci"
             );
+        } catch (Throwable $e) {
+            error_log('DbSessionHandler::ensureTable failed: ' . $e->getMessage());
         }
     }
 
