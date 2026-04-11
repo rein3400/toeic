@@ -1,0 +1,382 @@
+{
+  "part": "2",
+  "items": [
+    {
+      "item_id": "P2-001",
+      "title": "Client Presentation Deadline",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "We need to wrap up the client presentation by Thursday. Can you have the slides ready for review by Wednesday? A: I'll finalize the deck first thing Wednesday morning. B: I think we should ask the client for an extension. C: The graphics team hasn't sent the final assets yet.",
+      "prompt_text": "Listen to the question and choose the best response.",
+      "options": {
+        "A": "I'll finalize the deck first thing Wednesday morning.",
+        "B": "I think we should ask the client for an extension.",
+        "C": "The graphics team hasn't sent the final assets yet."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A provides an indirect affirmative by committing to a concrete action ('finalize the deck first thing Wednesday morning'), which implicitly confirms ability to meet the requested timeline. The other options either deflect the request (B) or give a negative update (C), neither of which answers the yes/no question. The phrase 'finalize the deck' is a precise workplace collocation that signals competence.",
+      "audio_file": "toeic_p2_01.mp3"
+    },
+    {
+      "item_id": "P2-002",
+      "title": "Software Integration Feasibility",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Do you think we could integrate the new software into the current system without disrupting the workflow? A: We can run a pilot test to see if it integrates smoothly. B: I don't think the current system can handle it. C: We should consider hiring a consultant to handle the integration.",
+      "prompt_text": "Listen to the question and choose the best response.",
+      "options": {
+        "A": "We can run a pilot test to see if it integrates smoothly.",
+        "B": "I don't think the current system can handle it.",
+        "C": "We should consider hiring a consultant to handle the integration."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A uses an indirect affirmative ('We can run a pilot test') that pragmatically implies the integration is possible, while also using the precise collocation 'run a pilot test', which is common in business contexts for assessing feasibility. Option B directly rejects the possibility, and Option C suggests an alternative action without answering the yes/no question. The indirectness and collocational precision make A the most appropriate response.",
+      "audio_file": "toeic_p2_02.mp3"
+    },
+    {
+      "item_id": "1",
+      "title": "Project Timeline Inquiry",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Question: \"Can we have the final report ready by Thursday?\"\nA. We'll have it ready by Wednesday.\nB. I think we can get it done by next Monday.\nC. We're aiming for Thursday, but we may need until Friday if any issues arise.",
+      "prompt_text": "Can we have the final report ready by Thursday?",
+      "options": {
+        "A": "We'll have it ready by Wednesday.",
+        "B": "I think we can get it done by next Monday.",
+        "C": "We're aiming for Thursday, but we may need until Friday if any issues arise."
+      },
+      "correct_answer": "C",
+      "explanation": "Option C is the best response because it directly addresses the requested timeline while adding a realistic caveat, which is typical in professional settings when a deadline is tight. The phrase 'We're aiming for' conveys commitment, while 'if any issues arise' provides a pragmatic hedge. Option A is overly optimistic and unrealistic; Option B postpones the deliverable far beyond the requested date, showing lack of alignment with the request.",
+      "audio_file": "toeic_p2_03.mp3"
+    },
+    {
+      "item_id": "2",
+      "title": "Client Approval Confirmation",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Question: \"Could you let me know if the client has approved the budget?\"\nA. The client approved it yesterday.\nB. I'll check with the client and get back to you.\nC. I'm not allowed to discuss that.",
+      "prompt_text": "Could you let me know if the client has approved the budget?",
+      "options": {
+        "A": "The client approved it yesterday.",
+        "B": "I'll check with the client and get back to you.",
+        "C": "I'm not allowed to discuss that."
+      },
+      "correct_answer": "B",
+      "explanation": "Option B provides a polite, indirect answer that acknowledges the request and promises follow‑up, which is appropriate when the speaker does not have definitive information. The collocation 'check with' and 'get back to you' are common in workplace communication. Option A assumes knowledge that may be inaccurate; Option C is too blunt and unhelpful.",
+      "audio_file": "toeic_p2_04.mp3"
+    },
+    {
+      "item_id": "3",
+      "title": "Proposal Deadline Inquiry",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Question: \"Can we get the proposal to the client before the end of the week?\"\nA. I'll send it right now.\nB. I don't think we can make it.\nC. We'll do our best to send it out by Friday.",
+      "prompt_text": "Can we get the proposal to the client before the end of the week?",
+      "options": {
+        "A": "I'll send it right now.",
+        "B": "I don't think we can make it.",
+        "C": "We'll do our best to send it out by Friday."
+      },
+      "correct_answer": "C",
+      "explanation": "Option C is the most appropriate because it shows willingness to meet the request while acknowledging uncertainty, which aligns with indirect pragmatic meaning. The collocation 'do our best' and 'send it out' are typical in professional contexts. Option A is unrealistic as it implies immediate sending without consideration of any constraints; Option B is overly negative and uncooperative.",
+      "audio_file": "toeic_p2_05.mp3"
+    },
+    {
+      "item_id": "L2P2_001",
+      "title": "Budget Approval and Launch Delay",
+      "transcript_prompt": "If we don't receive the final budget approval by Thursday, we'll have to consider postponing the product launch.",
+      "audio_script": "Q: If we don't receive the final budget approval by Thursday, we'll have to consider postponing the product launch.\nA: We could ask the finance committee for an extension on the budget deadline.\nB: We need to confirm the budget numbers immediately.\nC: The launch date is already set and cannot be changed.",
+      "prompt_text": "What will the team most likely do?",
+      "options": {
+        "A": "We could ask the finance committee for an extension on the budget deadline.",
+        "B": "We need to confirm the budget numbers immediately.",
+        "C": "The launch date is already set and cannot be changed."
+      },
+      "correct_answer": "A",
+      "explanation": "The speaker presents a conditional possibility of postponement. The best response indirectly addresses this by suggesting a workaround—asking the finance committee for an extension—using the hedged modal \"could\". Option B is a direct action but ignores the conditional nuance; option C outright contradicts the implied possibility. The collocation \"ask for an extension\" and the pragmatic use of \"consider\" add precision and indirectness, making A the most appropriate answer.",
+      "audio_file": "toeic_p2_06.mp3"
+    },
+    {
+      "item_id": "L2P2_002",
+      "title": "Resource Allocation Request",
+      "transcript_prompt": "Given the current workload, I'm not sure we can meet the deadline for the quarterly report without additional support.",
+      "audio_script": "Q: Given the current workload, I'm not sure we can meet the deadline for the quarterly report without additional support.\nA: We should cancel the deadline.\nB: We could consider bringing in temporary staff.\nC: We'll just work overtime without any extra help.",
+      "prompt_text": "What does the speaker suggest?",
+      "options": {
+        "A": "We should cancel the deadline.",
+        "B": "We could consider bringing in temporary staff.",
+        "C": "We'll just work overtime without any extra help."
+      },
+      "correct_answer": "B",
+      "explanation": "The manager expresses uncertainty about meeting the deadline without extra help, implying a need for additional resources. The correct response uses a hedged suggestion \"could consider\", which matches the speaker's tentative tone and provides a pragmatic solution—bringing in temporary staff. Option A is unrealistic (cancelling the deadline does not address the workload), while Option C dismisses the need for extra assistance. The collocation \"bring in temporary staff\" and the indirect phrasing reflect precise workplace language and pragmatic meaning.",
+      "audio_file": "toeic_p2_07.mp3"
+    },
+    {
+      "item_id": "L2P2_003",
+      "title": "Client Negotiation Stance",
+      "transcript_prompt": "The client is hesitant about the new pricing model, but they seem interested in the added features.",
+      "audio_script": "Q: The client is hesitant about the new pricing model, but they seem interested in the added features.\nA: We should lower the price immediately.\nB: We could emphasize the added features to address the client's concerns.\nC: We need to postpone the discussion until next quarter.",
+      "prompt_text": "What should the sales team do to overcome the client's hesitation?",
+      "options": {
+        "A": "We should lower the price immediately.",
+        "B": "We could emphasize the added features to address the client's concerns.",
+        "C": "We need to postpone the discussion until next quarter."
+      },
+      "correct_answer": "B",
+      "explanation": "The manager notes the client's hesitation but also their interest in the features, suggesting a solution that leverages the added value. The best response uses an indirect, solution‑oriented suggestion—emphasizing the features—to address the concern, employing the hedged modal \"could\". Option A makes an unwarranted concession, while Option C unnecessarily delays the negotiation. The collocation \"emphasize the added features\" and the pragmatic use of \"address the client's concerns\" demonstrate precise workplace language and nuanced indirectness.",
+      "audio_file": "toeic_p2_08.mp3"
+    },
+    {
+      "item_id": "P2-001",
+      "title": "Considering Outsourcing",
+      "transcript_prompt": "Listen to the question and the three responses. Choose the best response.",
+      "audio_script": {
+        "question": "Should we consider outsourcing the design work for the new product?",
+        "responses": {
+          "A": "It might be worth exploring if the in-house team is overloaded.",
+          "B": "No, we should keep it in-house.",
+          "C": "I think we need more information before deciding."
+        }
+      },
+      "prompt_text": "Should we consider outsourcing the design work for the new product?",
+      "options": {
+        "A": "It might be worth exploring if the in-house team is overloaded.",
+        "B": "No, we should keep it in-house.",
+        "C": "I think we need more information before deciding."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A provides a conditional endorsement of outsourcing, aligning with the indirect style typical of high‑level workplace discourse. It implies that outsourcing could be beneficial if the in‑house team is overloaded, which addresses the suggestion without an outright yes. Option B is a blunt refusal, while C is evasive and does not offer a substantive stance.",
+      "audio_file": "toeic_p2_09.mp3"
+    },
+    {
+      "item_id": "P2-002",
+      "title": "Marketing Campaign Launch Approval",
+      "transcript_prompt": "Listen to the question and the three responses. Choose the best response.",
+      "audio_script": {
+        "question": "Do we have the sign-off to launch the marketing campaign on Monday?",
+        "responses": {
+          "A": "I'm waiting for the final approval from the legal team.",
+          "B": "Yes, we can launch on Monday.",
+          "C": "No, we should postpone it."
+        }
+      },
+      "prompt_text": "Do we have the sign-off to launch the marketing campaign on Monday?",
+      "options": {
+        "A": "I'm waiting for the final approval from the legal team.",
+        "B": "Yes, we can launch on Monday.",
+        "C": "No, we should postpone it."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A indirectly conveys that the required sign-off has not yet been granted, which is the appropriate nuanced response in a professional context. It avoids a direct yes or no while providing relevant information. Option B assumes the launch is approved without verification, which is overly direct. Option C is an outright negative without explanation, making it unsuitable.",
+      "audio_file": "toeic_p2_10.mp3"
+    },
+    {
+      "item_id": "1",
+      "title": "Budget Proposal Readiness",
+      "transcript_prompt": "You will hear a question and three responses. Choose the best response.",
+      "audio_script": "Question: Will the budget proposal be ready for review by Friday?\nResponse A: Yes, it will be ready on Thursday.\nResponse B: We’re still finalizing a few numbers.\nResponse C: No, we haven’t started it yet.",
+      "prompt_text": "Listen to the question and choose the best response.",
+      "options": {
+        "A": "Yes, it will be ready on Thursday.",
+        "B": "We’re still finalizing a few numbers.",
+        "C": "No, we haven’t started it yet."
+      },
+      "correct_answer": "B",
+      "explanation": "Option B is the correct indirect answer. It does not directly answer yes or no; instead it implies that the proposal will not be ready by Friday because the numbers are still being finalized. This reflects pragmatic meaning: the speaker is signaling a delay without explicitly refusing. The collocation 'finalizing a few numbers' is precise and idiomatic in a business context, making the inference necessary for correct selection.",
+      "audio_file": "toeic_p2_11.mp3"
+    },
+    {
+      "item_id": "2",
+      "title": "Software Rollout Schedule",
+      "transcript_prompt": "You will hear a question and three responses. Choose the best response.",
+      "audio_script": "Question: Will the new software be rolled out on schedule next Monday?\nResponse A: Yes, it’s on track for next Monday.\nResponse B: We’re still testing a few modules.\nResponse C: No, it will be delayed indefinitely.",
+      "prompt_text": "Listen to the question and choose the best response.",
+      "options": {
+        "A": "Yes, it’s on track for next Monday.",
+        "B": "We’re still testing a few modules.",
+        "C": "No, it will be delayed indefinitely."
+      },
+      "correct_answer": "B",
+      "explanation": "Option B is the correct indirect response. Rather than explicitly confirming or denying the schedule, it indicates that the software is still in the testing phase, which pragmatically implies that the Monday rollout is unlikely to happen as planned. The collocation 'testing a few modules' is a precise, workplace‑appropriate phrase, and the indirectness requires the test‑taker to infer the intended meaning from pragmatic cues.",
+      "audio_file": "toeic_p2_12.mp3"
+    },
+    {
+      "item_id": "P2-001",
+      "title": "Project Timeline Status",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Q: Can we still launch the product on the original date?\nA: We've hit a few snags, but the team is working around the clock to stay on schedule.\nB: The launch has been postponed to next quarter.\nC: Let's discuss this in tomorrow's status meeting.",
+      "prompt_text": "Can we still launch the product on the original date?",
+      "options": {
+        "A": "We've hit a few snags, but the team is working around the clock to stay on schedule.",
+        "B": "The launch has been postponed to next quarter.",
+        "C": "Let's discuss this in tomorrow's status meeting."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A indirectly affirms that the original launch date is still feasible while acknowledging minor setbacks, which matches the pragmatic intent of the question. The collocation 'hit a few snags' and 'working around the clock' convey effort to stay on schedule. Option B directly states a postponement, contradicting the implied possibility of meeting the original date. Option C evades the question by deferring discussion, providing no answer.",
+      "audio_file": "toeic_p2_13.mp3"
+    },
+    {
+      "item_id": "P2-002",
+      "title": "Budget Approval Inquiry",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Q: Has the finance department approved the new budget proposal?\nA: They're still reviewing the numbers, but they expect to give the green light by early next week.\nB: Yes, the budget has been approved.\nC: No, they rejected the proposal outright.",
+      "prompt_text": "Has the finance department approved the new budget proposal?",
+      "options": {
+        "A": "They're still reviewing the numbers, but they expect to give the green light by early next week.",
+        "B": "Yes, the budget has been approved.",
+        "C": "No, they rejected the proposal outright."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A provides an indirect response by indicating that the review is ongoing and approval is imminent, which aligns with the pragmatic nuance of the question. The collocation 'give the green light' is a standard business expression for approval. Option B prematurely assumes final approval, while Option C is a definitive negative that does not reflect the actual situation described.",
+      "audio_file": "toeic_p2_14.mp3"
+    },
+    {
+      "item_id": "P2-003",
+      "title": "Client Feedback Response",
+      "transcript_prompt": "Listen to the question and choose the best response.",
+      "audio_script": "Q: What did the client say about the revised contract terms?\nA: The client raised a few concerns about the liability clause, and we've drafted an amendment to address them.\nB: The client accepted the terms as they are.\nC: The client said they need more time to decide.",
+      "prompt_text": "What did the client say about the revised contract terms?",
+      "options": {
+        "A": "The client raised a few concerns about the liability clause, and we've drafted an amendment to address them.",
+        "B": "The client accepted the terms as they are.",
+        "C": "The client said they need more time to decide."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A captures the indirect nuance: the client expressed specific concerns, and the speaker is addressing them with an amendment, which fulfills the pragmatic need to report feedback accurately. The collocation 'drafted an amendment' shows precise business language. Option B is overly positive and likely inaccurate. Option C suggests indecision but does not convey the specific feedback provided.",
+      "audio_file": "toeic_p2_15.mp3"
+    },
+    {
+      "item_id": "Q1",
+      "title": "Budget Reallocation",
+      "transcript_prompt": "Finance Director: With the recent cost overruns in the marketing campaign, I'm afraid we may have to look at the overall budget again.",
+      "audio_script": "Speaker: With the recent cost overruns in the marketing campaign, I'm afraid we may have to look at the overall budget again.\nQuestion: What does the director suggest?\nA) The marketing team should increase spending.\nB) The company should consider reallocating funds.\nC) The budget will remain unchanged.",
+      "prompt_text": "What does the director suggest?",
+      "options": {},
+      "correct_answer": "B",
+      "explanation": "The director uses the phrase 'may have to look at the overall budget again', which implies a need to adjust the budget. Option B directly captures this implied suggestion to reallocate funds, whereas A suggests an increase in spending (the opposite) and C states the budget will stay the same, contradicting the director's concern.",
+      "audio_file": "toeic_p2_16.mp3"
+    },
+    {
+      "item_id": "Q2",
+      "title": "Flexible Deadline",
+      "transcript_prompt": "Project Lead: I'm not sure we can hold the line on the original delivery date given the recent scope changes.",
+      "audio_script": "Speaker: I'm not sure we can hold the line on the original delivery date given the recent scope changes.\nQuestion: What does the project lead imply?\nA) The deadline is fixed.\nB) We may need to negotiate a new deadline.\nC) We will deliver early.",
+      "prompt_text": "What does the project lead imply?",
+      "options": {},
+      "correct_answer": "B",
+      "explanation": "The lead’s statement 'I'm not sure we can hold the line on the original delivery date' is an indirect way of saying the current deadline may not be achievable, suggesting a need to discuss a new deadline. Option B reflects this implied need, while A contradicts the suggestion and C claims early delivery, which is not supported.",
+      "audio_file": "toeic_p2_17.mp3"
+    },
+    {
+      "item_id": "Q3",
+      "title": "Staffing Reconsideration",
+      "transcript_prompt": "HR Manager: Given the upcoming restructuring, it might be necessary to reconsider the size of our teams.",
+      "audio_script": "Speaker: Given the upcoming restructuring, it might be necessary to reconsider the size of our teams.\nQuestion: What does the HR manager suggest?\nA) The company will increase hiring.\nB) There may be a reduction in staff.\nC) The current workforce is optimal.",
+      "prompt_text": "What does the HR manager suggest?",
+      "options": {},
+      "correct_answer": "B",
+      "explanation": "The phrase 'reconsider the size of our teams' in the context of restructuring is a euphemistic way of indicating that staff cuts could be required. Option B captures this implication, whereas A suggests more hiring (the opposite) and C claims the workforce is optimal, which does not align with the need to reconsider size.",
+      "audio_file": "toeic_p2_18.mp3"
+    },
+    {
+      "item_id": "1",
+      "title": "Prototype Delivery Timeline",
+      "transcript_prompt": "Speaker: \"The client wants the prototype delivered by next Monday, but I'm not sure we can meet that.\"",
+      "audio_script": "Speaker: \"The client wants the prototype delivered by next Monday, but I'm not sure we can meet that.\"\nA) \"We’ll have it ready by Monday.\"\nB) \"I’m not certain we can meet that date.\"\nC) \"Let’s see what can be done to expedite the work.\"",
+      "prompt_text": "The client wants the prototype delivered by next Monday, but I'm not sure we can meet that.",
+      "options": {
+        "A": "We’ll have it ready by Monday.",
+        "B": "I’m not certain we can meet that date.",
+        "C": "Let’s see what can be done to expedite the work."
+      },
+      "correct_answer": "C",
+      "explanation": "The statement expresses doubt about meeting the deadline, implicitly asking for a plan to address the risk. Option C proposes a concrete step to expedite the work, showing willingness to adapt the timeline—an appropriate indirect response. Option A makes an overly optimistic commitment without acknowledging the uncertainty, while Option B simply agrees with the doubt and offers no constructive action.",
+      "audio_file": "toeic_p2_19.mp3"
+    },
+    {
+      "item_id": "2",
+      "title": "Budget Concerns Discussion",
+      "transcript_prompt": "Speaker: \"There are some concerns about the budget for the new marketing campaign.\"",
+      "audio_script": "Speaker: \"There are some concerns about the budget for the new marketing campaign.\"\nA) \"We can address them right now in the meeting.\"\nB) \"Let's take it offline and review the numbers.\"\nC) \"We should ignore those concerns for now.\"",
+      "prompt_text": "There are some concerns about the budget for the new marketing campaign.",
+      "options": {
+        "A": "We can address them right now in the meeting.",
+        "B": "Let's take it offline and review the numbers.",
+        "C": "We should ignore those concerns for now."
+      },
+      "correct_answer": "B",
+      "explanation": "The phrase “take it offline” is a business collocation meaning to discuss a topic privately or separately, which is the pragmatic way to handle detailed budget concerns. Option A attempts to resolve the issue publicly, which may not be appropriate for sensitive financial details; Option C dismisses the concerns outright, which is unprofessional.",
+      "audio_file": "toeic_p2_20.mp3"
+    },
+    {
+      "item_id": "3",
+      "title": "Report Delivery Request",
+      "transcript_prompt": "Speaker: \"Could you get the report to the client by end of day?\"",
+      "audio_script": "Speaker: \"Could you get the report to the client by end of day?\"\nA) \"I’ll have it to them by 5 p.m.\"\nB) \"I’ll see if I can get it to them today.\"\nC) \"I won’t be able to send it today.\"",
+      "prompt_text": "Could you get the report to the client by end of day?",
+      "options": {
+        "A": "I’ll have it to them by 5 p.m.",
+        "B": "I’ll see if I can get it to them today.",
+        "C": "I won’t be able to send it today."
+      },
+      "correct_answer": "B",
+      "explanation": "The request is a polite ask that allows for a tentative commitment. Option B uses the indirect phrasing “I’ll see if I can,” which acknowledges the request while expressing uncertainty about the exact timing—typical in professional communication. Option A is a firm commitment that may be unrealistic if obstacles arise; Option C is a direct refusal, which does not meet the pragmatic expectation of a cooperative response.",
+      "audio_file": "toeic_p2_21.mp3"
+    },
+    {
+      "item_id": "Q001",
+      "title": "Budget Cut Request",
+      "transcript_prompt": "Listen to the statement and choose the most appropriate response.",
+      "audio_script": "The finance director says, 'We need to trim the marketing budget by 10% this quarter.' A. I'll revise the campaign plan and let you know. B. We can't afford any cuts. C. I'll make sure the team is aware.",
+      "prompt_text": "What is the most appropriate response?",
+      "options": {
+        "A": "I'll revise the campaign plan and let you know.",
+        "B": "We can't afford any cuts.",
+        "C": "I'll make sure the team is aware."
+      },
+      "correct_answer": "A",
+      "explanation": "The statement asks for a reduction in the budget. The best response acknowledges the request and offers a concrete action—revising the campaign plan—rather than refusing or simply informing the team. This reflects an indirect approach that addresses the implied need to adjust the budget while maintaining collaboration.",
+      "audio_file": "toeic_p2_22.mp3"
+    },
+    {
+      "item_id": "Q002",
+      "title": "Client Specification Change",
+      "transcript_prompt": "Listen to the statement and choose the most appropriate response.",
+      "audio_script": "The project manager says, 'The client has requested a last‑minute change to the product specifications, but we’re already in the final testing phase.' A. I'll inform the testing team to halt the current tests. B. I'll discuss the change with the client to understand the impact. C. I'll incorporate the changes immediately without checking.",
+      "prompt_text": "What is the most appropriate response?",
+      "options": {
+        "A": "I'll inform the testing team to halt the current tests.",
+        "B": "I'll discuss the change with the client to understand the impact.",
+        "C": "I'll incorporate the changes immediately without checking."
+      },
+      "correct_answer": "B",
+      "explanation": "The statement reveals a potential conflict between a client request and the current testing schedule. The most pragmatic response is to seek clarification from the client before taking any action, demonstrating indirectness and careful assessment of the implied intent.",
+      "audio_file": "toeic_p2_23.mp3"
+    },
+    {
+      "item_id": "Q003",
+      "title": "Shipping Delay Concern",
+      "transcript_prompt": "Listen to the statement and choose the most appropriate response.",
+      "audio_script": "The logistics coordinator says, 'If we don’t receive the shipment by Friday, we'll have to delay the product launch.' A. I'll check the shipping status and get back to you. B. We should inform the client about the delay now. C. I'll arrange a backup supplier immediately.",
+      "prompt_text": "What is the most appropriate response?",
+      "options": {
+        "A": "I'll check the shipping status and get back to you.",
+        "B": "We should inform the client about the delay now.",
+        "C": "I'll arrange a backup supplier immediately."
+      },
+      "correct_answer": "A",
+      "explanation": "The statement expresses a conditional threat to the launch schedule. The best response indirectly addresses the uncertainty by offering to verify the shipment status, which is a pragmatic way to gather more information before committing to a decision.",
+      "audio_file": "toeic_p2_24.mp3"
+    },
+    {
+      "item_id": "Q004",
+      "title": "Staff Turnover Impact",
+      "transcript_prompt": "Listen to the statement and choose the most appropriate response.",
+      "audio_script": "The HR manager says, 'Given the recent turnover in the department, we may need to revisit the timeline for the new product rollout.' A. I'll coordinate with HR to fill the vacant positions. B. I'll propose a new rollout date without assessing resources. C. I'll ignore the turnover and stick to the original schedule.",
+      "prompt_text": "What is the most appropriate response?",
+      "options": {
+        "A": "I'll coordinate with HR to fill the vacant positions.",
+        "B": "I'll propose a new rollout date without assessing resources.",
+        "C": "I'll ignore the turnover and stick to the original schedule."
+      },
+      "correct_answer": "A",
+      "explanation": "The statement suggests that turnover may affect the timeline. The appropriate response acknowledges the issue and proposes a concrete step—coordinating with HR to address staffing gaps—thereby indirectly supporting a possible timeline revision without prematurely changing dates.",
+      "audio_file": "toeic_p2_25.mp3"
+    }
+  ]
+}

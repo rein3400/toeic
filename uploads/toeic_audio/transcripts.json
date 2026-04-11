@@ -1,0 +1,1206 @@
+{
+  "generated_at": "2026-04-11T10:16:27.195137+00:00",
+  "model": "tts-1-hd",
+  "files": {
+    "toeic_p1_01.mp3": {
+      "part": "1",
+      "title": "Corporate Meeting Room",
+      "spoken_transcript": {
+        "statements": [
+          "A presenter is pointing at a flowchart on the whiteboard.",
+          "A participant is typing on a laptop.",
+          "The blinds are fully closed.",
+          "A projector is showing a slide."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 11.07,
+      "sha256": "273e4b4dca65a4be967db89f42c72ece59b2b124042ab7ca909057b35c9abccb"
+    },
+    "toeic_p1_02.mp3": {
+      "part": "1",
+      "title": "Office Digital Display",
+      "spoken_transcript": {
+        "statements": [
+          "A woman is pointing at a digital display while a man reads a newspaper.",
+          "A woman is handing a folder to a man who is holding a coffee cup.",
+          "A man is standing next to a wall calendar while a woman looks at a briefcase.",
+          "A man is reading a newspaper and a woman is holding a briefcase."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 18.75,
+      "sha256": "6966dc11d45600910f35938f2e609f8d6391d332fed5bffadaec09149fbbc5cb"
+    },
+    "toeic_p1_03.mp3": {
+      "part": "1",
+      "title": "Conference Room Presentation",
+      "spoken_transcript": {
+        "statements": [
+          "A man is pointing at a presentation on the screen while others look on.",
+          "A woman is typing on a laptop while a coffee mug sits beside her.",
+          "Someone is standing near a water cooler in the corner of the room.",
+          "A briefcase is placed on the floor next to the conference table."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 17.454,
+      "sha256": "7d2b2f9fd1f30b707d7bfb769fd7251905ea32b7f6a26a10953c5704e06573c9"
+    },
+    "toeic_p1_04.mp3": {
+      "part": "1",
+      "title": "Conference Room Meeting",
+      "spoken_transcript": {
+        "statements": [
+          "A man is pointing at a bar chart on the screen while a woman reads a printed agenda.",
+          "A man is pointing at a bar chart on the screen while a woman looks at a tablet.",
+          "A man is pointing at a bar chart on the screen while a woman holds a water bottle.",
+          "A man is pointing at a bar chart on the screen while a woman adjusts a monitor."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 21.582,
+      "sha256": "75e8d927e0d115bf7fcb577ed137289950f73dc5a97febb3582e1c1b2607e73c"
+    },
+    "toeic_p1_05.mp3": {
+      "part": "1",
+      "title": "Corporate Conference Room Presentation",
+      "spoken_transcript": {
+        "statements": [
+          "The woman in the blazer is explaining the project to the group.",
+          "All six employees are seated around the conference table.",
+          "The man by the window is reviewing a document.",
+          "Someone is using the whiteboard to write notes."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 14.958,
+      "sha256": "949bcadeb3a0c7d99ef3741e53551ee64de9f5671495c6a160e1dc1046aee55e"
+    },
+    "toeic_p1_06.mp3": {
+      "part": "1",
+      "title": "Office Whiteboard Presentation",
+      "spoken_transcript": {
+        "statements": [
+          "The woman is writing on the whiteboard.",
+          "The man is typing on the laptop.",
+          "The woman is pointing at the chart on the wall.",
+          "The man is drinking coffee."
+        ]
+      },
+      "voice_cast": {
+        "narrator": "nova"
+      },
+      "duration_seconds": 10.734,
+      "sha256": "37ba1d779f00c512e43b0fd51e793708c39f3e6dbf296f41b469f6e9e321d5db"
+    },
+    "toeic_p2_01.mp3": {
+      "part": "2",
+      "title": "Client Presentation Deadline",
+      "spoken_transcript": {
+        "prompt": "We need to wrap up the client presentation by Thursday. Can you have the slides ready for review by Wednesday?",
+        "response_1": "I'll finalize the deck first thing Wednesday morning.",
+        "response_2": "I think we should ask the client for an extension.",
+        "response_3": "The graphics team hasn't sent the final assets yet."
+      },
+      "voice_cast": {
+        "prompt": "onyx",
+        "responses": "nova"
+      },
+      "duration_seconds": 18.174,
+      "sha256": "11afd4642de1eb71a9983e8a76102bcc28fb8a8b9d80444611f62823a0a58343"
+    },
+    "toeic_p2_02.mp3": {
+      "part": "2",
+      "title": "Software Integration Feasibility",
+      "spoken_transcript": {
+        "prompt": "Do you think we could integrate the new software into the current system without disrupting the workflow?",
+        "response_1": "We can run a pilot test to see if it integrates smoothly.",
+        "response_2": "I don't think the current system can handle it.",
+        "response_3": "We should consider hiring a consultant to handle the integration."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "onyx"
+      },
+      "duration_seconds": 19.014,
+      "sha256": "c72fd7250af1af6eb84d141d70bbd162277f2769a1aac79a295ef629fcba345d"
+    },
+    "toeic_p2_03.mp3": {
+      "part": "2",
+      "title": "Project Timeline Inquiry",
+      "spoken_transcript": {
+        "prompt": "Can we have the final report ready by Thursday?",
+        "response_1": "We'll have it ready by Wednesday.",
+        "response_2": "I think we can get it done by next Monday.",
+        "response_3": "We're aiming for Thursday, but we may need until Friday if any issues arise."
+      },
+      "voice_cast": {
+        "prompt": "echo",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 14.406,
+      "sha256": "7521e9f6cd2222cd89f6154bd667057545f9723750e11fc325323568e5b6d970"
+    },
+    "toeic_p2_04.mp3": {
+      "part": "2",
+      "title": "Client Approval Confirmation",
+      "spoken_transcript": {
+        "prompt": "Could you let me know if the client has approved the budget?",
+        "response_1": "The client approved it yesterday.",
+        "response_2": "I'll check with the client and get back to you.",
+        "response_3": "I'm not allowed to discuss that."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "echo"
+      },
+      "duration_seconds": 12.558,
+      "sha256": "52272221e2a7648dd3f6622c8fe7030b253941e92646be70cb06456d920873d1"
+    },
+    "toeic_p2_05.mp3": {
+      "part": "2",
+      "title": "Proposal Deadline Inquiry",
+      "spoken_transcript": {
+        "prompt": "Can we get the proposal to the client before the end of the week?",
+        "response_1": "I'll send it right now.",
+        "response_2": "I don't think we can make it.",
+        "response_3": "We'll do our best to send it out by Friday."
+      },
+      "voice_cast": {
+        "prompt": "fable",
+        "responses": "nova"
+      },
+      "duration_seconds": 11.262,
+      "sha256": "128715d8b89370c9dbab7eeb9c3714599efbc2bde6061dc7b9f8a59904f2bc10"
+    },
+    "toeic_p2_06.mp3": {
+      "part": "2",
+      "title": "Budget Approval and Launch Delay",
+      "spoken_transcript": {
+        "prompt": "If we don't receive the final budget approval by Thursday, we'll have to consider postponing the product launch.",
+        "response_1": "We could ask the finance committee for an extension on the budget deadline.",
+        "response_2": "We need to confirm the budget numbers immediately.",
+        "response_3": "The launch date is already set and cannot be changed."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "fable"
+      },
+      "duration_seconds": 20.19,
+      "sha256": "a72379843be3705de08a54ac17561dca76ac7e7eb10c699cbe8136f93b8ea2a5"
+    },
+    "toeic_p2_07.mp3": {
+      "part": "2",
+      "title": "Resource Allocation Request",
+      "spoken_transcript": {
+        "prompt": "Given the current workload, I'm not sure we can meet the deadline for the quarterly report without additional support.",
+        "response_1": "We should cancel the deadline.",
+        "response_2": "We could consider bringing in temporary staff.",
+        "response_3": "We'll just work overtime without any extra help."
+      },
+      "voice_cast": {
+        "prompt": "onyx",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 17.262,
+      "sha256": "0dc63e2241ea6180daa3e6481d8af0801f50e244e6ddc059963bd3928826dec6"
+    },
+    "toeic_p2_08.mp3": {
+      "part": "2",
+      "title": "Client Negotiation Stance",
+      "spoken_transcript": {
+        "prompt": "The client is hesitant about the new pricing model, but they seem interested in the added features.",
+        "response_1": "We should lower the price immediately.",
+        "response_2": "We could emphasize the added features to address the client's concerns.",
+        "response_3": "We need to postpone the discussion until next quarter."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "onyx"
+      },
+      "duration_seconds": 17.67,
+      "sha256": "26e40effe3f9c61d611b4a344e07d837e370e36d2f85cef0d7bb25b3ddd9dc30"
+    },
+    "toeic_p2_09.mp3": {
+      "part": "2",
+      "title": "Considering Outsourcing",
+      "spoken_transcript": {
+        "prompt": "Should we consider outsourcing the design work for the new product?",
+        "response_1": "It might be worth exploring if the in-house team is overloaded.",
+        "response_2": "No, we should keep it in-house.",
+        "response_3": "I think we need more information before deciding."
+      },
+      "voice_cast": {
+        "prompt": "echo",
+        "responses": "nova"
+      },
+      "duration_seconds": 14.934,
+      "sha256": "9dd3d6b93585bdb39f7d49523f761573453e3d8d4c941ef8284c58e6db5906b4"
+    },
+    "toeic_p2_10.mp3": {
+      "part": "2",
+      "title": "Marketing Campaign Launch Approval",
+      "spoken_transcript": {
+        "prompt": "Do we have the sign-off to launch the marketing campaign on Monday?",
+        "response_1": "I'm waiting for the final approval from the legal team.",
+        "response_2": "Yes, we can launch on Monday.",
+        "response_3": "No, we should postpone it."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "echo"
+      },
+      "duration_seconds": 12.726,
+      "sha256": "9b0b434e10ba413c8306de22354484276753b7dd2374e753cfbcc55e7e938157"
+    },
+    "toeic_p2_11.mp3": {
+      "part": "2",
+      "title": "Budget Proposal Readiness",
+      "spoken_transcript": {
+        "prompt": "Will the budget proposal be ready for review by Friday?",
+        "response_1": "Yes, it will be ready on Thursday.",
+        "response_2": "We're still finalizing a few numbers.",
+        "response_3": "No, we haven't started it yet."
+      },
+      "voice_cast": {
+        "prompt": "fable",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 11.742,
+      "sha256": "f68eab88077b44a428c901d4366212a157e915ffd775a6bd1803ded5df48e8f3"
+    },
+    "toeic_p2_12.mp3": {
+      "part": "2",
+      "title": "Software Rollout Schedule",
+      "spoken_transcript": {
+        "prompt": "Will the new software be rolled out on schedule next Monday?",
+        "response_1": "Yes, it's on track for next Monday.",
+        "response_2": "We're still testing a few modules.",
+        "response_3": "No, it will be delayed indefinitely."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "fable"
+      },
+      "duration_seconds": 12.15,
+      "sha256": "ad777b362c3f6de5551664f058253b2b60f42993cfc40a496ccaae9aad566ef3"
+    },
+    "toeic_p2_13.mp3": {
+      "part": "2",
+      "title": "Project Timeline Status",
+      "spoken_transcript": {
+        "prompt": "Can we still launch the product on the original date?",
+        "response_1": "We've hit a few snags, but the team is working around the clock to stay on schedule.",
+        "response_2": "The launch has been postponed to next quarter.",
+        "response_3": "Let's discuss this in tomorrow's status meeting."
+      },
+      "voice_cast": {
+        "prompt": "onyx",
+        "responses": "nova"
+      },
+      "duration_seconds": 15.414,
+      "sha256": "43d0ddce7ee234dfbe197ac87aea38a648fee3f9a5b073cc367bb8c8f09b249c"
+    },
+    "toeic_p2_14.mp3": {
+      "part": "2",
+      "title": "Budget Approval Inquiry",
+      "spoken_transcript": {
+        "prompt": "Has the finance department approved the new budget proposal?",
+        "response_1": "They're still reviewing the numbers, but they expect to give the green light by early next week.",
+        "response_2": "Yes, the budget has been approved.",
+        "response_3": "No, they rejected the proposal outright."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "onyx"
+      },
+      "duration_seconds": 15.75,
+      "sha256": "9865a6e4a024c2a1a599c9ce5f70c8d9ed1fcc8df5444f0e8efd07214ef31e5e"
+    },
+    "toeic_p2_15.mp3": {
+      "part": "2",
+      "title": "Client Feedback Response",
+      "spoken_transcript": {
+        "prompt": "What did the client say about the revised contract terms?",
+        "response_1": "The client raised a few concerns about the liability clause, and we've drafted an amendment to address them.",
+        "response_2": "The client accepted the terms as they are.",
+        "response_3": "The client said they need more time to decide."
+      },
+      "voice_cast": {
+        "prompt": "echo",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 17.934,
+      "sha256": "981a6792a2209f15198da97e74f9509ec91535b264452c7e8c6b2b8b389e3d40"
+    },
+    "toeic_p2_16.mp3": {
+      "part": "2",
+      "title": "Budget Reallocation",
+      "spoken_transcript": {
+        "prompt": "Speaker: With the recent cost overruns in the marketing campaign, I'm afraid we may have to look at the overall budget again. Question: What does the director suggest?",
+        "response_1": "The marketing team should increase spending.",
+        "response_2": "The company should consider reallocating funds.",
+        "response_3": "The budget will remain unchanged."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "echo"
+      },
+      "duration_seconds": 20.094,
+      "sha256": "e8b4770e476990ff59f383f67a1327d98abeecfa09018fc2a6f5633e5cee97a8"
+    },
+    "toeic_p2_17.mp3": {
+      "part": "2",
+      "title": "Flexible Deadline",
+      "spoken_transcript": {
+        "prompt": "Speaker: I'm not sure we can hold the line on the original delivery date given the recent scope changes. Question: What does the project lead imply?",
+        "response_1": "The deadline is fixed.",
+        "response_2": "We may need to negotiate a new deadline.",
+        "response_3": "We will deliver early."
+      },
+      "voice_cast": {
+        "prompt": "fable",
+        "responses": "nova"
+      },
+      "duration_seconds": 16.47,
+      "sha256": "1609b3d9c3529d206c5ab4b3bfbf0a1b40048a36081908b183d438d7eb2ee62a"
+    },
+    "toeic_p2_18.mp3": {
+      "part": "2",
+      "title": "Staffing Reconsideration",
+      "spoken_transcript": {
+        "prompt": "Speaker: Given the upcoming restructuring, it might be necessary to reconsider the size of our teams. Question: What does the HR manager suggest?",
+        "response_1": "The company will increase hiring.",
+        "response_2": "There may be a reduction in staff.",
+        "response_3": "The current workforce is optimal."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "fable"
+      },
+      "duration_seconds": 17.07,
+      "sha256": "7a16beb8001514f84f6acf13dad32dfaf66614e265e21f45c1916cfb0ad3474f"
+    },
+    "toeic_p2_19.mp3": {
+      "part": "2",
+      "title": "Prototype Delivery Timeline",
+      "spoken_transcript": {
+        "prompt": "Speaker: \"The client wants the prototype delivered by next Monday, but I'm not sure we can meet that.",
+        "response_1": "We'll have it ready by Monday.",
+        "response_2": "I'm not certain we can meet that date.",
+        "response_3": "Let's see what can be done to expedite the work."
+      },
+      "voice_cast": {
+        "prompt": "onyx",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 14.67,
+      "sha256": "8aee0c7e1ec37156e5b18dc168df3a3995d8a3ff0a5d7f4fc05e4aa58137ea8d"
+    },
+    "toeic_p2_20.mp3": {
+      "part": "2",
+      "title": "Budget Concerns Discussion",
+      "spoken_transcript": {
+        "prompt": "Speaker: \"There are some concerns about the budget for the new marketing campaign.",
+        "response_1": "We can address them right now in the meeting.",
+        "response_2": "Let's take it offline and review the numbers.",
+        "response_3": "We should ignore those concerns for now."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "onyx"
+      },
+      "duration_seconds": 14.55,
+      "sha256": "064404caf0e3fa2dd7947366dc79176d461560a7769811b59407c6b061dc6e1f"
+    },
+    "toeic_p2_21.mp3": {
+      "part": "2",
+      "title": "Report Delivery Request",
+      "spoken_transcript": {
+        "prompt": "Speaker: \"Could you get the report to the client by end of day?",
+        "response_1": "I'll have it to them by 5 p.m.",
+        "response_2": "I'll see if I can get it to them today.",
+        "response_3": "I won't be able to send it today."
+      },
+      "voice_cast": {
+        "prompt": "echo",
+        "responses": "nova"
+      },
+      "duration_seconds": 11.646,
+      "sha256": "b9fcab6b68bb69fdb1d76570ef30a7d09b2474f1a4766948f7973c7e6b563440"
+    },
+    "toeic_p2_22.mp3": {
+      "part": "2",
+      "title": "Budget Cut Request",
+      "spoken_transcript": {
+        "prompt": "The finance director says, 'We need to trim the marketing budget by 10% this quarter.",
+        "response_1": "I'll revise the campaign plan and let you know.",
+        "response_2": "We can't afford any cuts.",
+        "response_3": "I'll make sure the team is aware."
+      },
+      "voice_cast": {
+        "prompt": "nova",
+        "responses": "echo"
+      },
+      "duration_seconds": 14.046,
+      "sha256": "26e84c9d353149a59bdd26c223bc1b39fc3478e1398bc3de432861698a6ba534"
+    },
+    "toeic_p2_23.mp3": {
+      "part": "2",
+      "title": "Client Specification Change",
+      "spoken_transcript": {
+        "prompt": "The project manager says, 'The client has requested a last-minute change to the product specifications, but we're already in the final testing phase.",
+        "response_1": "I'll inform the testing team to halt the current tests.",
+        "response_2": "I'll discuss the change with the client to understand the impact.",
+        "response_3": "I'll incorporate the changes immediately without checking."
+      },
+      "voice_cast": {
+        "prompt": "fable",
+        "responses": "shimmer"
+      },
+      "duration_seconds": 22.71,
+      "sha256": "3173b2748a54517ccd7c2d18e882afbd540a6ff9aa8c71ffd1e3157647fcab0a"
+    },
+    "toeic_p2_24.mp3": {
+      "part": "2",
+      "title": "Shipping Delay Concern",
+      "spoken_transcript": {
+        "prompt": "The logistics coordinator says, 'If we don't receive the shipment by Friday, we'll have to delay the product launch.",
+        "response_1": "I'll check the shipping status and get back to you.",
+        "response_2": "We should inform the client about the delay now.",
+        "response_3": "I'll arrange a backup supplier immediately."
+      },
+      "voice_cast": {
+        "prompt": "shimmer",
+        "responses": "fable"
+      },
+      "duration_seconds": 18.246,
+      "sha256": "c0382217ea6beed45ee4e6a8f6f4638a3ba1bb3ceaa792d1a88c59dd8a8b18a2"
+    },
+    "toeic_p2_25.mp3": {
+      "part": "2",
+      "title": "Staff Turnover Impact",
+      "spoken_transcript": {
+        "prompt": "The HR manager says, 'Given the recent turnover in the department, we may need to revisit the timeline for the new product rollout.",
+        "response_1": "I'll coordinate with HR to fill the vacant positions.",
+        "response_2": "I'll propose a new rollout date without assessing resources.",
+        "response_3": "I'll ignore the turnover and stick to the original schedule."
+      },
+      "voice_cast": {
+        "prompt": "onyx",
+        "responses": "nova"
+      },
+      "duration_seconds": 20.07,
+      "sha256": "92248684f26ed8c5117d71d4d7d9b845af6e43b1790a00159d7fc9cfd8f8e481"
+    },
+    "toeic_p3_01.mp3": {
+      "part": "3",
+      "title": "Vendor Delivery Schedule Revision",
+      "context": "A project manager at a multinational software firm contacts an overseas vendor to adjust the delivery timeline after the company's product launch date is moved up.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "PM",
+            "text": "Hello, this is David Chen from Apex Solutions. I'm calling about the upcoming delivery of the customized control modules we ordered last month."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Hi David, this is Sarah Patel from TechParts Inc. I understand you need to discuss the schedule. What can I help you with?"
+          },
+          {
+            "speaker": "PM",
+            "text": "We were originally expecting the shipment to arrive by March 15th, but our product launch has been moved up to March 8th. Could we possibly have the delivery moved forward by one week, to arrive no later than March 7th?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "I appreciate the urgency. Our current production line is running at full capacity, but we might be able to expedite the order if we can adjust the final testing phase. However, that would require an extra QC pass, which would add a 5% surcharge."
+          },
+          {
+            "speaker": "PM",
+            "text": "That sounds acceptable. Could you confirm the new delivery date and the total cost including the surcharge?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Sure. If we expedite, we can have it ready for shipment on March 6th, arriving at your warehouse by March 7th. The base price remains $42,000, plus the 5% surcharge, so $44,100. We'll send a revised invoice and the updated purchase order for your approval."
+          },
+          {
+            "speaker": "PM",
+            "text": "Perfect. I'll forward that to our finance team for immediate processing. Once we get the PO signed, can we expect the shipment to leave your facility on the 6th?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Yes, as long as we receive the approved PO by close of business on March 4th, we can ship on the 6th."
+          },
+          {
+            "speaker": "PM",
+            "text": "Great. I'll make sure that happens. Thank you, Sarah."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Thank you, David. I'll send the documentation shortly. Have a good day."
+          }
+        ]
+      },
+      "voice_cast": {
+        "PM": "onyx",
+        "Vendor": "shimmer"
+      },
+      "duration_seconds": 98.052,
+      "sha256": "0273ee9c82d322b73dfa273233bf86b09aec5547d01a676ee7c42048b31880e9"
+    },
+    "toeic_p3_02.mp3": {
+      "part": "3",
+      "title": "Cloud Migration Timeline Acceleration",
+      "context": "A procurement manager at a multinational corporation discusses with a vendor the acceleration of a cloud migration project due to an upcoming regulatory compliance deadline. The conversation involves timeline changes, cost implications, staff assignments, and next steps.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Sarah",
+            "text": "Hi Mike, thanks for joining. I wanted to follow up on the proposal we received for the cloud migration."
+          },
+          {
+            "speaker": "Mike",
+            "text": "Sure, Sarah. I'm glad you called. I've reviewed the timeline we discussed last month."
+          },
+          {
+            "speaker": "Sarah",
+            "text": "We need to move up the go-live date to March 15, due to the new compliance requirement that kicks in on April 1."
+          },
+          {
+            "speaker": "Mike",
+            "text": "That's a significant shift. Our original schedule had the final testing wrapped up by March 30."
+          },
+          {
+            "speaker": "Sarah",
+            "text": "Yes, we understand that. Could you expedite the environment provisioning and perhaps assign a dedicated team?"
+          },
+          {
+            "speaker": "Mike",
+            "text": "We can allocate an extra engineer, but it would require an additional $15,000 for overtime and a revised SLA."
+          },
+          {
+            "speaker": "Sarah",
+            "text": "Understood. Could you also provide a revised cost breakdown and the new milestone dates by Thursday?"
+          },
+          {
+            "speaker": "Mike",
+            "text": "Absolutely. I'll also have Tom send you the updated project plan that reflects the accelerated schedule."
+          },
+          {
+            "speaker": "Sarah",
+            "text": "Perfect. We'll review it and get back to you early next week."
+          },
+          {
+            "speaker": "Mike",
+            "text": "Great. I'll coordinate with Tom and have the documents ready by Thursday afternoon."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Sarah": "shimmer",
+        "Mike": "fable"
+      },
+      "duration_seconds": 63.996,
+      "sha256": "ee1e790bc33c6b5263f30ce4085a5a1cc8742452526570e7f9de4228c7c2ab8f"
+    },
+    "toeic_p3_03.mp3": {
+      "part": "3",
+      "title": "Project Timeline Adjustment and Delivery Negotiation",
+      "context": "A project manager at Apex Innovations (a global technology firm) calls the account manager at TechSupply to discuss a delayed shipment of custom server racks and negotiate a revised delivery schedule to meet an upcoming product launch.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Manager",
+            "text": "Hello, this is Sarah Chen from Apex Innovations. I'm calling about the upcoming shipment of the custom server racks we ordered."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Hi Sarah, this is James Park from TechSupply. Thank you for reaching out. How can I assist you?"
+          },
+          {
+            "speaker": "Manager",
+            "text": "Our project timeline has shifted. We originally expected delivery on June 5, but we were just informed that the production line will be delayed by a week. What are our options now?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "I understand. Based on the delay, the earliest we can ship via standard ocean freight is June 12. However, to meet your launch on July 1, we can switch to air freight, which would get the shipment to your warehouse by June 19."
+          },
+          {
+            "speaker": "Manager",
+            "text": "That's tight. Can you confirm the final delivery date if we choose air freight?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Yes, we can deliver to your Los Angeles distribution center by June 19, provided we receive your approval on the additional shipping fee of $5,200 and the updated customs documentation by tomorrow noon."
+          },
+          {
+            "speaker": "Manager",
+            "text": "That's acceptable. We'll need the racks to be labeled according to the new regulatory guidelines and include the serial numbers for inventory."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "We'll include the required labeling and serial number manifest. I'll send you the revised invoice and the airway bill by end of day."
+          },
+          {
+            "speaker": "Manager",
+            "text": "Perfect. I'll review and get back to you by tomorrow morning. Thanks."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Great. I'll wait for your confirmation. Talk to you then."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Manager": "nova",
+        "Vendor": "shimmer"
+      },
+      "duration_seconds": 85.092,
+      "sha256": "e224fdef10f41984fe50044c886f973e7d99796c6a8581ff008b4bfcb14e6485"
+    },
+    "toeic_p3_04.mp3": {
+      "part": "3",
+      "title": "Vendor Coordination and Timeline Revision",
+      "context": "In a global technology consulting firm, a Senior Project Manager (Jennifer) is discussing with a vendor account manager (Robert) about unexpected scope changes and revised delivery schedules for a multinational client's infrastructure upgrade project.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Jennifer",
+            "text": "Robert, I appreciate you fitting this call in on such short notice. Given the complications that arose after last week's client presentation, we need to reassess our timeline significantly."
+          },
+          {
+            "speaker": "Robert",
+            "text": "I understand. When we spoke on Thursday, you mentioned the client requested additional security protocols. Has that been finalized?"
+          },
+          {
+            "speaker": "Jennifer",
+            "text": "Actually, that's precisely the issue. The client not only approved the enhanced security module but added two new requirements: a disaster recovery system and compliance documentation for three additional regional data centers. Their legal team is now involved, which changes everything."
+          },
+          {
+            "speaker": "Robert",
+            "text": "I see. Originally we were looking at a twelve-week implementation. With these additions, the earliest we could complete testing would be the end of week sixteen, but that's contingent on your team providing the necessary environment access by this Friday."
+          },
+          {
+            "speaker": "Jennifer",
+            "text": "That's problematic. Our technical lead just informed me that the network infrastructure won't be ready until the twenty-first due to procurement delays with the local internet service provider in the Singapore region. The earliest we can provision the staging environment is the twenty-sixth."
+          },
+          {
+            "speaker": "Robert",
+            "text": "Then we need to push the go-live date to the first week of March at the earliest. However, that conflicts with the quarterly review meeting the client's CTO has scheduled for March fifth. Should we propose a phased rollout instead?"
+          },
+          {
+            "speaker": "Jennifer",
+            "text": "Let's present that option. I'll prepare three scenarios by tomorrow and we can reconvene with the client stakeholders on Wednesday. Also, the budget implications for the extended timeline need to be addressed-our contract allows for one revision, but this is effectively a second scope change."
+          },
+          {
+            "speaker": "Robert",
+            "text": "Agreed. I'll have my finance team calculate the additional resource costs and send the revised proposal by Tuesday. We should also consider assigning a dedicated integration specialist since the regional compliance requirements are becoming complex."
+          },
+          {
+            "speaker": "Jennifer",
+            "text": "That would be helpful. Given that we now have to coordinate across time zones in Singapore, Frankfurt, and São Paulo, I think we need a weekly sync meeting rather than our current bi-weekly schedule. Can your team commit to that?"
+          },
+          {
+            "speaker": "Robert",
+            "text": "We'll make it work. I'll confirm with our regional director and get back to you by end of day tomorrow with the updated project plan."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Jennifer": "shimmer",
+        "Robert": "echo"
+      },
+      "duration_seconds": 145.98,
+      "sha256": "18f223165b9bd5d3e3fb6d35855ca4b050c31b10bf597f69e534d14fb9f22ade"
+    },
+    "toeic_p3_05.mp3": {
+      "part": "3",
+      "title": "Project Timeline Revision and Vendor Coordination",
+      "context": "A senior project manager at a global software solutions company contacts the account manager of a hardware vendor to discuss a delayed shipment of custom servers needed for a client rollout in Europe. The conversation covers the reason for the delay, alternative shipping options, and the next steps for decision‑making.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "PM",
+            "text": "Hello, this is Sarah Chen, senior project manager at GlobalTech Solutions. I'm calling about the upcoming shipment of the custom BladeServer units we ordered for the FinCorp project."
+          },
+          {
+            "speaker": "VAM",
+            "text": "Hi Sarah, this is James Liu, account manager at InServe. Thanks for reaching out. I wanted to update you as soon as possible."
+          },
+          {
+            "speaker": "PM",
+            "text": "We were expecting delivery by June 15, but our logistics team just notified us that the shipment is not showing up in the system. What's happening?"
+          },
+          {
+            "speaker": "VAM",
+            "text": "I'm sorry about the confusion. The units completed final testing on June 8, but while arranging the export, our freight forwarder hit a hold at the customs clearance in Rotterdam. It's a documentation issue related to the new EU customs code for high-performance computing hardware. We're working with the broker to resolve it, but the earliest we can clear is now July 1."
+          },
+          {
+            "speaker": "PM",
+            "text": "That pushes the arrival well past our client's go-live date of July 10. Have you considered any expedited options?"
+          },
+          {
+            "speaker": "VAM",
+            "text": "Yes. We can switch the remaining 60% of the order to air freight, which would cut transit time to about three days after clearance. The air freight cost is roughly $18,000 more than the original sea freight. We can absorb $5,000 of that as a gesture, but the remaining $13,000 would be passed to your side."
+          },
+          {
+            "speaker": "PM",
+            "text": "I see. That's a significant extra cost. We'll need to get approval from our finance director and discuss the impact on the launch schedule with the client. Could you send a written summary of the options, including the revised delivery dates for both sea and air freight, as well as the cost breakdown?"
+          },
+          {
+            "speaker": "VAM",
+            "text": "Absolutely. I'll email you the detailed quote and a revised timeline within the next hour. Once you have the numbers, we can set up a quick call to decide which route you prefer."
+          },
+          {
+            "speaker": "PM",
+            "text": "Perfect. I'll review the documentation this afternoon and loop in our client liaison. I'll get back to you by tomorrow morning with our decision."
+          },
+          {
+            "speaker": "VAM",
+            "text": "Great. Thank you for your patience, Sarah. I'll await your response."
+          },
+          {
+            "speaker": "PM",
+            "text": "Thanks, James. Talk soon."
+          }
+        ]
+      },
+      "voice_cast": {
+        "PM": "nova",
+        "VAM": "shimmer"
+      },
+      "duration_seconds": 127.736,
+      "sha256": "6088eab621c9634484e32ba62b02aae705c111bb3c0d04b6449d4e7ab9906582"
+    },
+    "toeic_p3_06.mp3": {
+      "part": "3",
+      "title": "Software Deployment Delay Discussion",
+      "context": "A senior project manager (PM) from a multinational manufacturing firm is on a call with the client’s procurement director (Client) to discuss the revised timeline for a new CRM system rollout, vendor delays, and upcoming operational actions.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "PM",
+            "text": "Good morning, thank you for joining. As you know, we originally planned to launch the new CRM on March 15, but the data migration vendor has informed us they need an extra three weeks due to unexpected data quality issues. Consequently, we are moving the launch to April 5."
+          },
+          {
+            "speaker": "Client",
+            "text": "That changes our marketing campaign schedule. We were planning a simultaneous email blast to coincide with the launch. Will we still be able to have the marketing assets ready by the new date?"
+          },
+          {
+            "speaker": "PM",
+            "text": "I think we can adjust the timeline, but we need to finalize the training schedule for your staff. I've asked our training coordinator to prepare a condensed two-day session for the key users, and we can schedule that the week before go-live. Also, the vendor will provide on-site support for the first three days after launch."
+          },
+          {
+            "speaker": "Client",
+            "text": "Great. Also, can we get a detailed report on the integration issues and the vendor's plan to resolve them before the launch?"
+          },
+          {
+            "speaker": "PM",
+            "text": "Absolutely. The vendor will send a full technical report by Friday, and we will review it in our weekly status meeting on Monday. Then we can decide if any additional resources are needed."
+          }
+        ]
+      },
+      "voice_cast": {
+        "PM": "shimmer",
+        "Client": "nova"
+      },
+      "duration_seconds": 70.28,
+      "sha256": "40b3d9dc010c600ec4bbcd0746de844d9c6de89b1c34e70cbdf959058e4148b5"
+    },
+    "toeic_p3_07.mp3": {
+      "part": "3",
+      "title": "Vendor Call: Data Migration Delay and Change Order",
+      "context": "A senior project manager at a global consulting firm speaks with a software vendor about a delayed data migration for a new analytics platform, discussing timeline changes, cost implications, and next steps.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "PM",
+            "text": "Good morning, John. I wanted to follow up on the data migration timeline we discussed last week. Our original plan was to have the data migrated by March 31, but I understand there have been some changes."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Good morning, Sarah. Yes, due to the new GDPR compliance review required by the EU client, we need to incorporate additional data masking procedures. That pushes our migration completion to April 12."
+          },
+          {
+            "speaker": "PM",
+            "text": "That's a twelve-day shift. How will that affect our overall go-live date of May 1?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "We can still meet the May 1 launch if we approve a change order to bring in a dedicated server environment, which will cost an extra $8,000. This will also give us a three-day buffer for testing."
+          },
+          {
+            "speaker": "PM",
+            "text": "I see. So the purpose of the change order is to cover the dedicated server and the extra testing period, right?"
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Exactly. It will also allow us to schedule the final integration tests during the week of April 20, after the migration is done."
+          },
+          {
+            "speaker": "PM",
+            "text": "Okay. I'll need to get approval from our finance team and then send a revised project schedule to the client. I'll also schedule a call with the client to confirm the new dates."
+          },
+          {
+            "speaker": "Vendor",
+            "text": "Sounds good. I'll prepare the change order document and send it to you by end of day today."
+          },
+          {
+            "speaker": "PM",
+            "text": "Perfect. I'll review it tomorrow morning and get back to you with the signed approval."
+          }
+        ]
+      },
+      "voice_cast": {
+        "PM": "onyx",
+        "Vendor": "shimmer"
+      },
+      "duration_seconds": 82.912,
+      "sha256": "9c87d263b8f22830b60801dc971214a68c36c70ddf1b214e5eb8e241789724b4"
+    },
+    "toeic_p3_08.mp3": {
+      "part": "3",
+      "title": "Revised Timeline and Vendor Confirmation Discussion",
+      "context": "A regional manager meets with a vendor representative to discuss the impact of new client requirements on the project timeline and to confirm next steps.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Sam",
+            "text": "Thanks for taking the time, Nina. I wanted to go over the revised schedule for the PQR implementation."
+          },
+          {
+            "speaker": "Nina",
+            "text": "Sure, Sam. As you know, the original pilot launch was set for March 15, but the client has asked for three additional features-enhanced reporting, real-time dashboards, and a custom API. Those weren't part of the original scope."
+          },
+          {
+            "speaker": "Sam",
+            "text": "Right, that means we need more development time."
+          },
+          {
+            "speaker": "Nina",
+            "text": "Exactly. We can incorporate the new features, but it will push the launch back by two weeks. Our new target is April 1."
+          },
+          {
+            "speaker": "Sam",
+            "text": "That gives us less than a month for testing. How will that affect the client training?"
+          },
+          {
+            "speaker": "Nina",
+            "text": "We can run a condensed training session on March 28 and 29, but we'll need your team to have the training environment ready by March 25."
+          },
+          {
+            "speaker": "Sam",
+            "text": "Okay, I'll coordinate with our support lead, Lara, to get that done. Also, the client has asked about the service-level agreement."
+          },
+          {
+            "speaker": "Nina",
+            "text": "We've drafted an SLA that raises the uptime guarantee from 99.9% to 99.95%. That will require a modest increase in server capacity. We'll handle the capacity increase, but we need a confirmation from your side by Friday so we can provision the resources."
+          },
+          {
+            "speaker": "Sam",
+            "text": "Got it. I'll send the confirmation and also schedule a call with the client for next Tuesday to walk them through the revised plan."
+          },
+          {
+            "speaker": "Nina",
+            "text": "Great. Once we have the confirmation, we'll finalize the revised proposal and send it to the client by Wednesday."
+          },
+          {
+            "speaker": "Sam",
+            "text": "Perfect. I'll also update the internal stakeholders about the timeline shift."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Sam": "echo",
+        "Nina": "nova"
+      },
+      "duration_seconds": 93.392,
+      "sha256": "85aa4448baa44804080eaf6c4a717b38c119a7114b549c5f84da7f10e3aed79b"
+    },
+    "toeic_p3_09.mp3": {
+      "part": "3",
+      "title": "Project Timeline Revision and Compliance QA Discussion",
+      "context": "A conversation between Alex Mercer, Senior Account Manager at Acme Global Solutions, and Sandra Lau, Procurement Officer at EuroBank, about the delayed implementation of a new core banking platform due to updated EU anti‑money‑laundering regulations.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Alex",
+            "text": "Good morning, Sandra. Thanks for taking the time to discuss the revised timeline for the CoreBank implementation.\\nSandra: Good morning, Alex. I've reviewed the latest regulatory update from the EU Commission, and we need to incorporate the new anti-money-laundering modules before go-live. That will push our testing window out by at least six weeks.\\nAlex: I understand. So you're looking at moving the final acceptance from the end of March to the end of April?\\nSandra: Exactly. We also want an extra two-week QA phase to validate the compliance changes. That means we'll need to adjust the deployment schedule to early May, with a full rollout by June 15.\\nAlex: Understood. I'll update the project plan and re-allocate two senior QA engineers from our Dublin hub. Also, I'll coordinate with your legal team to sign off on the updated SOW.\\nSandra: Great. Once you send the revised timeline, we'll need to brief our board next week. Also, please ensure the vendor, DataSecure Inc., provides the latest patch for the encryption module.\\nAlex: Will do. I'll set up a call with DataSecure for Thursday to confirm the patch delivery, and then I'll forward the updated project schedule to you."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Alex": "fable"
+      },
+      "duration_seconds": 74.232,
+      "sha256": "e7a4b70b4eb94a7c5f852955bf4497948aa0144e013e7e9f15538f3c660ce52d"
+    },
+    "toeic_p3_10.mp3": {
+      "part": "3",
+      "title": "Project Launch Delay and Vendor Coordination",
+      "context": "A project manager at a multinational tech company discusses schedule changes, logistics, and staff assignments with a vendor for an upcoming client demonstration.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Alex",
+            "text": "Hi Maria, thanks for joining the call. I wanted to update you on the timeline for the demonstration at GlobalTech Solutions. We originally planned for March 5, but due to a scheduling conflict with the client's senior VP, we've had to push it back to March 12. Could you confirm if the new date works for your team?"
+          },
+          {
+            "speaker": "Maria",
+            "text": "Yes, March 12 is feasible. However, we need to adjust the shipment of the prototype units. The earlier schedule allowed us to ship by March 1, but with the new date we can ship by March 8, which gives us enough lead time. Also, the latest firmware version is ready; we'll include the updated software."
+          },
+          {
+            "speaker": "Alex",
+            "text": "Good. In addition, the client has requested a live data-integration demo. We'll need your technical support team on site at least one hour before the presentation to set up the network. Are you able to provide two engineers?"
+          },
+          {
+            "speaker": "Maria",
+            "text": "Absolutely. I'll assign James and Linda, our senior integration engineers. They will arrive by 9 a.m. on March 12. I'll also arrange for a backup unit in case of any hardware issues."
+          },
+          {
+            "speaker": "Alex",
+            "text": "Perfect. One more thing-after the demo, the client wants a brief follow-up meeting to discuss future collaboration. Could you prepare a short proposal on extending the service contract for an additional year?"
+          },
+          {
+            "speaker": "Maria",
+            "text": "I'll draft the proposal and send it to you by end of day Friday. Then we can review it before the client meeting."
+          },
+          {
+            "speaker": "Alex",
+            "text": "Great. I'll confirm the conference room booking and send the updated agenda to both teams. Thank you, Maria."
+          },
+          {
+            "speaker": "Maria",
+            "text": "Thank you, Alex. Talk soon."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Alex": "onyx",
+        "Maria": "nova"
+      },
+      "duration_seconds": 94.508,
+      "sha256": "bb098f3008181bd3591ce9d402f4c8517d309df06f434cd2cecdc19dde78ea88"
+    },
+    "toeic_p3_11.mp3": {
+      "part": "3",
+      "title": "ERP Implementation Timeline Adjustment",
+      "context": "A global manufacturing company's project manager (Alex) is on a call with the lead consultant from the vendor (Elena) to discuss rescheduling the ERP rollout because of new GDPR data‑privacy requirements.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Alex",
+            "text": "Good morning, Elena. I wanted to follow up on the timeline for the ERP pilot. We originally planned to go live on October 15, but I understand there have been some changes."
+          },
+          {
+            "speaker": "Elena",
+            "text": "Good morning, Alex. Yes, we've had to revisit the schedule. Because the EU data-protection authority has updated the GDPR guidance on data anonymization, our compliance team needs an additional two weeks to verify the new scripts. As a result, we propose moving the pilot start to November 1, with the full rollout scheduled for December 10."
+          },
+          {
+            "speaker": "Alex",
+            "text": "That's a significant shift. Do we still meet the Q4 deadline for the client's board meeting on December 20?"
+          },
+          {
+            "speaker": "Elena",
+            "text": "Absolutely. If we get client approval by November 2, we can begin user-acceptance testing on November 5, run a dry-run on November 20, and launch the pilot on November 1. That gives us enough buffer before the board meeting."
+          },
+          {
+            "speaker": "Alex",
+            "text": "Perfect. I'll need to get sign-off from our legal and procurement teams. Could you send the revised SOW and a revised cost estimate by Friday?"
+          },
+          {
+            "speaker": "Elena",
+            "text": "Of course. I'll also schedule a call with your internal test lead to align the UAT plan. After that, I'll send you the updated project timeline for distribution."
+          },
+          {
+            "speaker": "Alex",
+            "text": "I'll send the revised timeline to the internal test team and ask them to adjust the UAT plan as soon as I receive the SOW."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Alex": "echo",
+        "Elena": "shimmer"
+      },
+      "duration_seconds": 82.896,
+      "sha256": "3b8864dec94cb190a8e6a075f433a730f352aebf1b26112bdab68ab1a59d36b6"
+    },
+    "toeic_p3_12.mp3": {
+      "part": "3",
+      "title": "Project Timeline Revision with Overseas Vendor",
+      "context": "Alice, a project manager at GlobalTech, contacts John, her component vendor in Taiwan, to inform him of a design change that has shifted their production schedule. She requests a revised delivery date and discusses cost implications.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Narrator",
+            "text": "[Manager] \"Hi John, this is Alice from GlobalTech's product development team. Thanks for taking the time. [Vendor] \"Sure, Alice. What can I do for you today? [Manager] \"We've just finalized the redesign of the controller board, and the PCB layout is now 20% smaller. Consequently, our internal production schedule has shifted. Originally we were expecting the first article samples by May 12, but we now need them by June 3 to align with the new testing window. [Vendor] \"I see. That's a significant shift. Our manufacturing line is currently booked for the next three weeks, but we might be able to expedite a batch if we reroute some of the SMT capacity. The earliest we could ship would be June 10, but that would incur a 15% expedite fee and require you to confirm the final BOM by this Friday. [Manager] \"We can confirm the BOM by Thursday at the latest. Also, could you provide a detailed breakdown of the extra costs? We'll need to allocate the expedite fee to the project's contingency budget. [Vendor] \"Absolutely. I'll send you the cost breakdown, including the expedite fee, shipping, and customs clearance. Once we receive your BOM confirmation, we'll schedule the production and provide a provisional delivery note. [Manager] \"Great. After we receive the delivery note, we'll arrange for in-house inspection and update the project schedule accordingly. I'll also inform the testing team about the new sample arrival. [Vendor] \"Sounds good. I'll follow up with an email summarising the revised dates and the cost estimate. Let me know if anything else changes. [Manager] \"Will do. Thanks, John."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Narrator": "shimmer"
+      },
+      "duration_seconds": 100.656,
+      "sha256": "ea786a6ce7c1ac6446552f37e2e96714f8eac50f7e9e32eecc11228a63fd220c"
+    },
+    "toeic_p3_13.mp3": {
+      "part": "3",
+      "title": "Client Feedback and Implementation Plan",
+      "context": "Emma, a senior consultant, speaks with Robert, a client project sponsor, about critical defects discovered in a beta release. They discuss extending the UAT phase, adding QA resources, adjusting the go‑live date, and approving a change order.",
+      "spoken_transcript": {
+        "segments": [
+          {
+            "speaker": "Narrator",
+            "text": "[Client] \"Hi Emma, thanks for joining the call. Our team has been reviewing the beta release, and we've identified several critical defects that could impact the launch. [Consultant] \"I appreciate you bringing this to our attention. We've already started a root-cause analysis. To address the defects, we recommend extending the UAT phase by one week, which will push the go-live from July 1 to July 15. We also propose adding two senior QA engineers to accelerate the testing. [Client] \"That sounds reasonable. What are the cost implications of adding the extra QA resources? [Consultant] \"The additional QA work will cost $12,000, which falls under the change order provision in our contract. We'll also need to schedule a training session for your end-users on July 10, before the go-live. [Client] \"Okay, we can approve the change order, but we need it signed by Thursday so we can finalize the budget for the next quarter. [Consultant] \"Understood. I'll draft the revised SOW and send it over this afternoon. Once you sign, we'll proceed with the extended UAT and the training schedule. [Client] \"Great. After we sign, we'll coordinate the logistics for the training and notify the internal stakeholders about the new go-live date. [Consultant] \"Perfect. I'll follow up with a summary email outlining the revised timeline, cost breakdown, and next steps. Let me know if anything else comes up. [Client] \"Thanks, Emma. Talk soon."
+          }
+        ]
+      },
+      "voice_cast": {
+        "Narrator": "onyx"
+      },
+      "duration_seconds": 90.096,
+      "sha256": "16946f025ab3b8e0447176161688a32c013c98a5ff895e6bd9fa8c9f0e9bcc70"
+    },
+    "toeic_p4_01.mp3": {
+      "part": "4",
+      "title": "Corporate Product Launch Announcement",
+      "context": "You will hear a recorded message from the marketing department regarding changes to the upcoming product launch event.",
+      "spoken_transcript": {
+        "talk": "Good morning, this is the official announcement from GlobalTech Solutions regarding the upcoming product launch event scheduled for next Thursday, March 12th. We have several important updates to share with you. First, the opening keynote will now begin at 2:00 PM instead of the originally planned 10:00 AM. This change is due to the speaker's flight delay. The keynote will be held in the Main Hall, which has been moved from Room A to Room B to accommodate a larger audience. For participants who have registered for the VIP session, please note that the VIP lounge will open at 1:00 PM in Conference Room C. Second, the schedule for the afternoon workshops has been modified. The 'Future of AI' workshop, originally set for 3:30 PM, has been cancelled. Attendees who had signed up for this workshop will receive a full refund. To request your refund, please complete the online refund request form on the event website by the last business day of this month. Alternatively, you may contact the support hotline, but the form is strongly preferred for faster processing. Third, regarding meals, a complimentary lunch will be provided to all attendees who have a valid registration badge. However, a special lunch for VIP badge holders is available only if you registered by the early-bird deadline of March 5th and you present your VIP badge at the lunch counter. Press members are not required to pay the registration fee, but they must show a valid press pass at the entrance to receive media credentials. Fourth, for those traveling from out of town, the shuttle service from the airport to the venue will operate every 30 minutes starting at 8:00 AM. If you arrive after 9:00 PM, please use the night-time taxi voucher that can be obtained from the information desk. Finally, please note that the event's safety protocols remain in effect: masks are optional but recommended in crowded indoor spaces, and hand sanitizing stations are available throughout the venue. Should any additional schedule changes occur, we will update the official event page and send a SMS alert to all registered participants. Thank you for your attention, and we look forward to seeing you at the launch."
+      },
+      "voice_cast": {
+        "announcer": "echo"
+      },
+      "duration_seconds": 140.208,
+      "sha256": "d30611e20d686ed90ba532c70e5b83400d933011c7a0cfa00bb83238a29977a2"
+    },
+    "toeic_p4_02.mp3": {
+      "part": "4",
+      "title": "Metro Transit Service Update",
+      "context": "A recorded announcement from Metro Transit regarding schedule changes, service cancellations, special shuttles, and revised ticketing policies for the Orange Line and connecting services.",
+      "spoken_transcript": {
+        "talk": "Good morning, this is Metro Transit Information. Starting Monday, May 15, we will implement the following changes to the Orange Line service. The 6:45 a.m. express from Central Station to Harber City will be moved to 6:50 a.m. However, passengers holding a Gold Card who travel in the first three cars will still be able to board at 6:45 a.m. from Platform 2, provided they present their card before boarding. In addition, the 9:30 a.m. and 4:15 p.m. local services will be cancelled, except for the 9:30 a.m. service on Wednesdays, which will operate as a special \"Market Shuttle\" for passengers attending the downtown farmers market. Passengers who have purchased a Day Pass for May can still use it on any of the remaining services, but those with a 10-ride pack must complete their rides before June 30, after which the packs will be deactivated. For customers connecting to the Blue Line at Harbor Station, a complimentary transfer will be provided if the connecting train is delayed more than ten minutes. If you have a disability and require assistance, please press 0 to speak with a customer-service representative. For more information, please visit metrotra.org or call 555-0123. Thank you."
+      },
+      "voice_cast": {
+        "announcer": "nova"
+      },
+      "duration_seconds": 78.576,
+      "sha256": "89623d54dce49ca93382e00117ef44744f058576fd06a8f0e287d07f13d29192"
+    },
+    "toeic_p4_03.mp3": {
+      "part": "4",
+      "title": "Flight Schedule Update and Gate Change Announcement",
+      "context": "An airport announcement regarding the delayed departure of flight JL 789 to Tokyo Narita, gate change, re‑booking options for connecting passengers, and special instructions for passengers with pets and those requiring assistance.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, ladies and gentlemen. This is an update for passengers of flight JL 789 to Tokyo Narita, originally scheduled to depart at 2:30 PM from Gate B12, now delayed until 3:45 PM. Due to a technical issue, the aircraft has been changed. Passengers with connecting flights on JAL 456 to Osaka should proceed to the service counter in Terminal 1 for rebooking onto the next available flight at 5:10 PM. Please note that passengers traveling with pets must report to the pet relief area located near Gate A5. The new gate will be announced 20 minutes before departure. If you have already checked in online and do not have baggage, you may proceed directly to the new gate. For those requiring special assistance, please meet the airline representative at the boarding desk. Thank you."
+      },
+      "voice_cast": {
+        "announcer": "onyx"
+      },
+      "duration_seconds": 53.208,
+      "sha256": "c47576526707ad5be7a5fcd0367710d0eb03e0105d56fbb1efe6de80f375d239"
+    },
+    "toeic_p4_04.mp3": {
+      "part": "4",
+      "title": "Corporate Annual Strategy Update Announcement",
+      "context": "A recorded message from the Vice President of Operations to all staff regarding the upcoming annual strategy meeting, including schedule changes, venue changes, and mandatory attendance requirements.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, this is Jennifer Martinez, Vice President of Operations, with an important update regarding our Annual Strategy Meeting scheduled for next Thursday. First, please note that the meeting has been moved from the Main Conference Hall to the new Innovation Center, located at 500 Technology Boulevard, to accommodate a larger audience. The new venue is equipped with advanced presentation facilities and is accessible by the shuttle service from the north parking lot. The start time remains at 9:00 AM, but the afternoon session has been adjusted: the optional workshop on data analytics will now begin at 2:00 PM instead of 1:30 PM. This change is due to a scheduling conflict with the IT department's system maintenance window, which runs from 1:00 PM to 2:00 PM. All senior managers and department heads are required to attend the morning session from 9:00 AM to 12:00 PM. Additionally, the 2:00 PM workshop is mandatory for the analytics team, the marketing strategy team, and any staff members who have registered for the advanced certification program. If you are not part of those groups but still wish to attend the workshop, you must register by 5:00 PM on Wednesday. Late registration will not be accepted, except for employees who have a documented travel conflict and provide proof by email to hr@company.com by 3:00 PM on Wednesday. Please note that the lunch break will be shortened to 45 minutes, from 12:00 PM to 12:45 PM, to accommodate the revised agenda. Coffee and light snacks will be available in the lobby starting at 8:30 AM. Finally, for those traveling from the downtown office, the shuttle will depart at 8:15 AM and will return after the meeting ends. If you require special accommodations, such as wheelchair access or sign-language interpretation, please contact the facilities team no later than 5:00 PM on Tuesday. Thank you for your attention, and we look forward to your participation."
+      },
+      "voice_cast": {
+        "announcer": "fable"
+      },
+      "duration_seconds": 129.744,
+      "sha256": "dcd3fb147219bc24ca34b7f8f27fd54de67937b0e515955f7d88775c0be3ea28"
+    },
+    "toeic_p4_05.mp3": {
+      "part": "4",
+      "title": "Airport Announcement: Flight DL 2847 Delay, Gate Change, and Connecting Flight Instructions",
+      "context": "An airport announcement informing passengers of a delayed departure of Flight DL 2847 to Chicago, a gate change, and special instructions for connecting passengers, passengers requiring assistance, and those traveling with pets.",
+      "spoken_transcript": {
+        "talk": "Ladies and gentlemen, this is an announcement for passengers of Flight DL 2847 to Chicago O'Hare. The flight, originally scheduled to depart at 2:15 p.m., is now delayed due to a technical issue with the aircraft. The new departure time is 3:45 p.m. Gate information has also changed; please proceed to Gate B12 for boarding. Boarding will begin at 3:15 p.m. Passengers with connecting flights to Detroit on Flight AA 1191 should proceed to the service desk in the central terminal after deplaning, as a standby rebooking will be provided. Passengers requiring wheelchair assistance should remain seated, and a ground crew member will assist you at 3:00 p.m. Additionally, passengers traveling with pets must present the health certificate at the gate no later than 3:10 p.m., or the pet will not be allowed to board. A complimentary meal voucher will be provided at the gate for all passengers; please collect it before boarding. If you have any questions, please see the customer service representative at Gate B12. We apologize for the inconvenience and thank you for your patience."
+      },
+      "voice_cast": {
+        "announcer": "shimmer"
+      },
+      "duration_seconds": 72.888,
+      "sha256": "e26b942f14aea1ca8e0ebf57955008bb202ff71071eb555fbbee1463faaa2e7e"
+    },
+    "toeic_p4_06.mp3": {
+      "part": "4",
+      "title": "Flight Schedule Update and Service Modifications",
+      "context": "You will hear an announcement regarding flight schedule changes, revised boarding procedures, and exceptions for certain passengers.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, this is the customer service manager at City International Airport. We regret to inform you that due to ongoing runway maintenance, several departures scheduled for this afternoon have been adjusted. The 2:15 p.m. flight to Seattle, flight 308, will now depart at 3:30 p.m. Passengers who have connecting flights to Vancouver should proceed to the service desk for rebooking. Please note that passengers traveling with pets will be accommodated on the 4:00 p.m. flight only, and must present a health certificate at check-in. If your flight is delayed beyond four hours, you may request a full refund or rebooking on the next available flight. Additionally, lounge access for premium members is extended until 7:00 p.m., but only for those traveling on confirmed tickets. If you have any questions, please contact the information counter at gate B4."
+      },
+      "voice_cast": {
+        "announcer": "echo"
+      },
+      "duration_seconds": 55.68,
+      "sha256": "935248bf7650a181e6d6a868699ce7a7d2e7bb4ea056a2b88126fd907618e478"
+    },
+    "toeic_p4_07.mp3": {
+      "part": "4",
+      "title": "Corporate Announcement: Product Launch Schedule Update",
+      "context": "A recorded announcement from the R&D Division informing staff about changes to the product launch date, meeting schedule, travel guidelines, and remote‑work arrangements.",
+      "spoken_transcript": {
+        "talk": "Good morning, this is [Name] from the R&D Division. I am calling to inform you of several updates regarding our upcoming product launch. As you know, the original launch date was scheduled for July 15th. However, due to unexpected delays in the component supply chain, we have revised the launch date to August 1st. Please note that this date is contingent upon the arrival of the remaining shipments by June 30th. If the shipments are not received by that deadline, the launch will be automatically postponed to August 15th. In addition to the launch date change, the following schedule modifications will take effect: The originally planned all-hands project review meeting on June 20th will be moved to June 22nd. This rescheduled meeting is mandatory for all senior staff members, defined as those at the manager level and above. Junior staff are required to attend a separate session that will be held on June 23rd. Both sessions will be held in Conference Room B and will begin at 10:00 a.m. Regarding travel, effective immediately and until July 31st, only essential business travel will be approved. Non-essential travel, including conferences, client visits, and internal seminars, must be cancelled or rebooked to a later date. Employees who have non-essential trips scheduled before the end of July should contact the travel coordinator by June 25th to arrange cancellations or alternative bookings. Finally, a note on remote-work arrangements: Employees who have pre-approved vacation between July 1st and July 7th may proceed as planned, but they must submit a remote-work plan to their direct supervisor by June 28th to ensure coverage. If you have any questions about these changes, please email r&d-updates@company.com. Thank you for your attention and cooperation."
+      },
+      "voice_cast": {
+        "announcer": "nova"
+      },
+      "duration_seconds": 113.424,
+      "sha256": "39e73f7ae83254642e852b9ae037bcb40ba421289411180c91fc8a3361683a01"
+    },
+    "toeic_p4_08.mp3": {
+      "part": "4",
+      "title": "Global Logistics Weekly Operations Update",
+      "context": "An internal announcement from the operations manager concerning new shipping routes, order processing cutoffs, and revised training schedule for the upcoming quarter.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, this is the weekly operations update from Global Logistics. Due to the upcoming maintenance at the Hong Kong hub, effective from Monday the 12th, all shipments destined for Southeast Asia will be rerouted through our backup facility in Manila, unless they are temperature-sensitive, in which case they will be held in the cold storage at the hub until further notice. Additionally, any orders placed after 5 PM on Friday will be processed on the next business day, unless the client has opted for the premium expedited service, which guarantees same-day dispatch regardless of the cutoff. For the Q3 timeline, the training sessions for the new software will be held on the second and fourth Thursdays of each month, except when those dates conflict with a regional holiday, in which case they will be moved to the following Wednesday. Please note that the training will now be conducted remotely via the Zoom platform, and participants must log in at least five minutes prior to the start time. If you have any questions about the revised routing or the training schedule, please contact the operations desk at extension 2300."
+      },
+      "voice_cast": {
+        "announcer": "onyx"
+      },
+      "duration_seconds": 72.312,
+      "sha256": "e206243ecf91a607c879eb1c22e5fcfea106fe8374c996e1f6ff84035303343a"
+    },
+    "toeic_p4_09.mp3": {
+      "part": "4",
+      "title": "International Conference Call - Revised Schedule Announcement",
+      "context": "A recorded message from the conference organizing committee notifying participants about changes to the schedule, new deadlines, special instructions for presenters, and refund policy.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, this is the conference information line. Due to unforeseen venue maintenance, the following adjustments have been made to the schedule for the upcoming International Technology Conference, originally planned for March 15-17, 2025, in Chicago. First, the opening plenary session on March 15 will now begin at 9:30 a.m. instead of the previously announced 9:00 a.m. Second, the workshop on AI ethics, originally scheduled for March 16 at 2:00 p.m., has been moved to March 17 at 10:00 a.m. in order to accommodate a guest speaker. Third, the poster session on March 16 will be extended by one hour, running from 3:30 p.m. to 5:30 p.m., and will take place in Hall B, not Hall A as previously indicated. For presenters, please note the following: if you submitted your abstract by the early deadline of January 10, you must upload your final presentation slides to the conference portal by 11:59 p.m. Central Time on February 28. Presenters who submitted after January 10 but before the final deadline of February 15 are required to upload their slides by March 5. In case of technical difficulties, contact the technical support desk before March 7. Regarding registration refunds, a full refund is available for cancellations made on or before February 1, a 50% refund for cancellations between February 2 and February 20, and no refunds after February 20. However, participants who have a documented medical emergency may request a special exception after the deadline by submitting a letter from a physician. The conference dinner on March 15 will now be a buffet-style dinner at the Riverside Hotel, with a vegetarian and gluten-free option guaranteed. Please note that if you have a dietary restriction other than vegetarian or gluten-free, you must inform the organizer by March 10. For any additional questions, call the helpline at 800-555-0199, Monday through Friday, 8:00 a.m. to 6:00 p.m. Central Time. Thank you."
+      },
+      "voice_cast": {
+        "announcer": "fable"
+      },
+      "duration_seconds": 134.256,
+      "sha256": "f492e544d547af6df38de15a150751eada6dfcb5ea4af6057829d68b0dce63c5"
+    },
+    "toeic_p4_10.mp3": {
+      "part": "4",
+      "title": "Airport Terminal Reconfiguration Announcement",
+      "context": "A public address announcement regarding gate relocations, shuttle schedule changes, and lounge access updates at an international airport.",
+      "spoken_transcript": {
+        "talk": "Good afternoon, ladies and gentlemen. This is an important update regarding operations at Logan International Airport, effective starting Monday, November 20th. Due to ongoing construction of the new Terminal C concourse, several gate assignments and shuttle services will be modified. First, all flights departing from Gate A1 through A5 will be moved to the new Terminal C, specifically to Gates C12 through C16. However, flights operated by SkyPartner airlines that are part of the Oneworld alliance will remain at Gate A2, but only for destinations in Europe. All other European-bound flights will be relocated. Second, the intra-terminal shuttle that connects Terminal C to the remote parking garage will now operate every 12 minutes, instead of the previous 15-minute interval. The first shuttle leaves at 5:00 a.m., and the last shuttle departs at 11:45 p.m. Passengers who have a connecting flight that departs within 90 minutes of arrival are advised to use the shuttle to reach the new gates promptly. Third, effective immediately, the premium lounge access policy has been revised. Passengers holding a Gold or higher frequent-flyer status, regardless of airline, will be eligible for complimentary entry to the SkyLounge located in Terminal C. Additionally, passengers traveling on a Business Class ticket for any airline will also receive complimentary entry. However, those who have purchased a day-pass are not eligible for the complimentary access, even if they hold elite status. Finally, please note that the security checkpoint near Gate C15 will be closed for maintenance from 2:00 a.m. to 5:00 a.m. daily. Travelers with early-morning flights are encouraged to use the checkpoint at Terminal B, which remains open 24 hours. We apologize for any inconvenience and appreciate your cooperation."
+      },
+      "voice_cast": {
+        "announcer": "shimmer"
+      },
+      "duration_seconds": 118.992,
+      "sha256": "f5e4ad319e737c308f102895f0bc887d202bee5fa53f0dc6ab62fedd0ddb2924"
+    }
+  }
+}

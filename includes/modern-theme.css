@@ -1,0 +1,1158 @@
+/* ==========================================================================
+   OSGLI Dark Glassmorphism Design System
+   Modern dark theme with glass effects for admin and shared pages
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Variables
+   -------------------------------------------------------------------------- */
+:root {
+    /* Core dark palette */
+    --dark-bg: #0f0f1a;
+    --dark-bg-secondary: #1a1a2e;
+    --dark-bg-tertiary: #16213e;
+
+    /* Glass surfaces */
+    --surface: rgba(255,255,255,0.05);
+    --surface-hover: rgba(255,255,255,0.08);
+    --surface-active: rgba(255,255,255,0.12);
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-blur: blur(20px);
+
+    /* Text */
+    --text-main: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.7);
+    --text-muted: rgba(255,255,255,0.5);
+    --text-faint: rgba(255,255,255,0.3);
+
+    /* Brand colors */
+    --primary: #2563eb;
+    --primary-hover: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --primary-light: rgba(37,99,235,0.15);
+    --primary-glow: rgba(37,99,235,0.3);
+
+    /* Status colors */
+    --success: #10b981;
+    --success-light: rgba(16,185,129,0.15);
+    --danger: #ef4444;
+    --danger-light: rgba(239,68,68,0.15);
+    --warning: #f59e0b;
+    --warning-light: rgba(245,158,11,0.15);
+    --info: #06b6d4;
+    --info-light: rgba(6,182,212,0.15);
+
+    /* Borders & shadows */
+    --border-color: rgba(255,255,255,0.08);
+    --border-light: rgba(255,255,255,0.05);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+
+    /* Maroon-theme compatibility aliases */
+    --maroon-primary: #2563eb;
+    --maroon-secondary: #1e40af;
+    --maroon-dark: #1d4ed8;
+    --white: rgba(255,255,255,0.05);
+    --light-gray: rgba(255,255,255,0.03);
+    --border-gray: rgba(255,255,255,0.08);
+
+    /* Legacy variable aliases */
+    --background: #0f0f1a;
+    --border: rgba(255,255,255,0.08);
+    --secondary: #64748b;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base Styles
+   -------------------------------------------------------------------------- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139,92,246,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(16,185,129,0.04) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+a {
+    color: var(--primary-hover);
+}
+
+a:hover {
+    color: #93c5fd;
+}
+
+hr {
+    border-color: var(--border-color);
+    opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   3. Bootstrap Utility Overrides
+   -------------------------------------------------------------------------- */
+
+/* Backgrounds */
+.bg-white {
+    background: var(--surface) !important;
+}
+
+.bg-light {
+    background: var(--dark-bg-secondary) !important;
+}
+
+.bg-dark {
+    background: var(--dark-bg) !important;
+}
+
+.bg-body {
+    background: var(--dark-bg) !important;
+}
+
+.bg-body-secondary {
+    background: var(--dark-bg-secondary) !important;
+}
+
+/* Text colors */
+.text-dark {
+    color: var(--text-main) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-body {
+    color: var(--text-main) !important;
+}
+
+.text-body-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-black-50 {
+    color: var(--text-muted) !important;
+}
+
+.text-primary {
+    color: var(--primary-hover) !important;
+}
+
+.text-success {
+    color: var(--success) !important;
+}
+
+.text-danger {
+    color: var(--danger) !important;
+}
+
+.text-warning {
+    color: var(--warning) !important;
+}
+
+.text-info {
+    color: var(--info) !important;
+}
+
+/* Borders */
+.border {
+    border-color: var(--border-color) !important;
+}
+
+.border-top {
+    border-top-color: var(--border-color) !important;
+}
+
+.border-bottom {
+    border-bottom-color: var(--border-color) !important;
+}
+
+.border-start {
+    border-left-color: var(--border-color) !important;
+}
+
+.border-end {
+    border-right-color: var(--border-color) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Cards
+   -------------------------------------------------------------------------- */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-main);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.card-footer {
+    background: rgba(255,255,255,0.02);
+    border-top: 1px solid var(--border-color);
+}
+
+.card-body {
+    color: var(--text-main);
+}
+
+.card-title {
+    color: var(--text-main);
+}
+
+.card-text {
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   5. Tables
+   -------------------------------------------------------------------------- */
+.table {
+    color: var(--text-main);
+    border-color: var(--border-color);
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: rgba(255,255,255,0.02);
+    --bs-table-striped-color: var(--text-main);
+    --bs-table-hover-bg: rgba(255,255,255,0.05);
+    --bs-table-hover-color: var(--text-main);
+    --bs-table-active-bg: rgba(255,255,255,0.08);
+    --bs-table-active-color: var(--text-main);
+}
+
+.table > :not(caption) > * > * {
+    background-color: transparent;
+    border-bottom-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.table > thead {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table > thead > tr > th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.02);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(255,255,255,0.02);
+    color: var(--text-main);
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(255,255,255,0.05);
+    color: var(--text-main);
+}
+
+.table-bordered {
+    border-color: var(--border-color);
+}
+
+.table-bordered > :not(caption) > * > * {
+    border-color: var(--border-color);
+}
+
+.table-dark {
+    --bs-table-bg: rgba(255,255,255,0.05);
+    --bs-table-border-color: var(--border-color);
+}
+
+/* --------------------------------------------------------------------------
+   6. Forms
+   -------------------------------------------------------------------------- */
+.form-control,
+.form-select {
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: rgba(255,255,255,0.08);
+    border-color: var(--primary);
+    color: var(--text-main);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-control::placeholder {
+    color: var(--text-faint);
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: rgba(255,255,255,0.02);
+    color: var(--text-muted);
+}
+
+.form-select option {
+    background: #1a1a2e;
+    color: var(--text-main);
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.form-text {
+    color: var(--text-muted);
+}
+
+.form-check-input {
+    background-color: rgba(255,255,255,0.1);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.form-check-label {
+    color: var(--text-main);
+}
+
+.input-group-text {
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+textarea.form-control {
+    min-height: 80px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+    padding: 0.6rem 1.2rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.btn-outline-primary {
+    color: var(--primary-hover);
+    border-color: var(--primary);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success);
+    border-color: var(--success);
+}
+
+.btn-success:hover {
+    background: #059669;
+    border-color: #059669;
+}
+
+.btn-outline-success {
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.btn-outline-success:hover {
+    background: var(--success);
+    color: white;
+}
+
+.btn-danger {
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.btn-outline-danger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-warning {
+    background: var(--warning);
+    border-color: var(--warning);
+    color: #000;
+}
+
+.btn-outline-warning {
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.btn-outline-warning:hover {
+    background: var(--warning);
+    color: #000;
+}
+
+.btn-info {
+    background: var(--info);
+    border-color: var(--info);
+}
+
+.btn-outline-info {
+    color: var(--info);
+    border-color: var(--info);
+}
+
+.btn-outline-info:hover {
+    background: var(--info);
+    color: white;
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.btn-outline-secondary {
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.btn-outline-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.btn-light {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.1);
+    color: var(--text-main);
+}
+
+.btn-light:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+.btn-link {
+    color: var(--primary-hover);
+}
+
+.btn-link:hover {
+    color: #93c5fd;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* --------------------------------------------------------------------------
+   8. Modals
+   -------------------------------------------------------------------------- */
+.modal-content {
+    background: var(--dark-bg-secondary);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    color: var(--text-main);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-title {
+    color: var(--text-main);
+}
+
+.modal-backdrop.show {
+    opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   9. Dropdowns
+   -------------------------------------------------------------------------- */
+.dropdown-menu {
+    background: var(--dark-bg-secondary);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: background 0.15s;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background: var(--surface-hover);
+    color: white;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+}
+
+.dropdown-divider {
+    border-top-color: var(--border-color);
+}
+
+.dropdown-header {
+    color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. Alerts
+   -------------------------------------------------------------------------- */
+.alert {
+    border-radius: 12px;
+    border: 1px solid;
+    backdrop-filter: var(--glass-blur);
+}
+
+.alert-primary {
+    background: var(--primary-light);
+    border-color: rgba(37,99,235,0.2);
+    color: #93c5fd;
+}
+
+.alert-success {
+    background: var(--success-light);
+    border-color: rgba(16,185,129,0.2);
+    color: #6ee7b7;
+}
+
+.alert-danger {
+    background: var(--danger-light);
+    border-color: rgba(239,68,68,0.2);
+    color: #fca5a5;
+}
+
+.alert-warning {
+    background: var(--warning-light);
+    border-color: rgba(245,158,11,0.2);
+    color: #fcd34d;
+}
+
+.alert-info {
+    background: var(--info-light);
+    border-color: rgba(6,182,212,0.2);
+    color: #67e8f9;
+}
+
+.alert-secondary {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   11. Badges
+   -------------------------------------------------------------------------- */
+.badge.bg-primary {
+    background: var(--primary) !important;
+}
+
+.badge.bg-success {
+    background: var(--success) !important;
+}
+
+.badge.bg-danger {
+    background: var(--danger) !important;
+}
+
+.badge.bg-warning {
+    background: var(--warning) !important;
+    color: #000;
+}
+
+.badge.bg-info {
+    background: var(--info) !important;
+}
+
+.badge.bg-secondary {
+    background: rgba(255,255,255,0.15) !important;
+    color: var(--text-secondary);
+}
+
+.badge.bg-light {
+    background: rgba(255,255,255,0.1) !important;
+    color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   12. Pagination
+   -------------------------------------------------------------------------- */
+.pagination .page-link {
+    background: var(--surface);
+    border-color: var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    margin: 0 2px;
+    transition: all 0.2s;
+}
+
+.pagination .page-link:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary);
+    color: var(--primary-hover);
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: rgba(255,255,255,0.02);
+    border-color: var(--border-color);
+    color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   13. Navigation & Tabs
+   -------------------------------------------------------------------------- */
+.navbar {
+    background: rgba(15,15,26,0.9) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: white !important;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-hover) !important;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-muted) !important;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    background: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-main) !important;
+    border-bottom-color: var(--text-muted);
+    background: transparent;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-hover) !important;
+    background: transparent;
+    border-bottom-color: var(--primary);
+}
+
+.nav-pills .nav-link {
+    border-radius: 10px;
+    color: var(--text-secondary) !important;
+}
+
+.nav-pills .nav-link.active {
+    background: var(--primary);
+    color: white !important;
+}
+
+.breadcrumb {
+    background: transparent;
+}
+
+.breadcrumb-item {
+    color: var(--text-muted);
+}
+
+.breadcrumb-item.active {
+    color: var(--text-secondary);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   14. List Groups
+   -------------------------------------------------------------------------- */
+.list-group-item {
+    background: var(--surface);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.list-group-item:hover {
+    background: var(--surface-hover);
+}
+
+.list-group-item.active {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.list-group-item-action {
+    color: var(--text-main);
+}
+
+.list-group-item-action:hover {
+    color: white;
+    background: var(--surface-hover);
+}
+
+/* --------------------------------------------------------------------------
+   15. Accordion
+   -------------------------------------------------------------------------- */
+.accordion-item {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.accordion-button {
+    background: var(--surface);
+    color: var(--text-main);
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--surface-hover);
+    color: var(--primary-hover);
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    filter: invert(1);
+}
+
+.accordion-body {
+    background: var(--surface);
+    color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   16. Progress Bars
+   -------------------------------------------------------------------------- */
+.progress {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    height: 8px;
+}
+
+.progress-bar {
+    border-radius: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   17. Tooltips & Popovers
+   -------------------------------------------------------------------------- */
+.tooltip .tooltip-inner {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+}
+
+.popover {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.popover-header {
+    background: rgba(255,255,255,0.05);
+    border-bottom-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.popover-body {
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   18. Spinners
+   -------------------------------------------------------------------------- */
+.spinner-border {
+    color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   19. Admin Layout Components
+   -------------------------------------------------------------------------- */
+.admin-content {
+    background: transparent;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.admin-header {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-header h2,
+.admin-header h3,
+.admin-header h4 {
+    color: var(--text-main);
+    margin: 0;
+}
+
+.content-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.stats-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.table-container {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+/* --------------------------------------------------------------------------
+   20. Glass Utility Classes
+   -------------------------------------------------------------------------- */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.glass-card-hover {
+    transition: all 0.3s ease;
+}
+
+.glass-card-hover:hover {
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   21. Stats & Dashboard Utilities
+   -------------------------------------------------------------------------- */
+.stats-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.2;
+}
+
+.stats-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.text-primary-custom {
+    color: var(--primary-hover) !important;
+}
+
+/* --------------------------------------------------------------------------
+   22. Dashboard Specifics
+   -------------------------------------------------------------------------- */
+.welcome-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 3rem;
+    border-radius: 24px;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow-lg);
+}
+
+/* --------------------------------------------------------------------------
+   23. Test Interface Specifics
+   -------------------------------------------------------------------------- */
+.timer-float {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--dark-bg-secondary);
+    border: 2px solid var(--primary);
+    color: var(--primary-hover);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 16px var(--primary-glow);
+    z-index: 100;
+}
+
+.question-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--glass-border);
+    margin-bottom: 1.5rem;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface);
+    color: var(--text-main);
+}
+
+.option-item:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.option-item.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.audio-player {
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   24. Result Page Specifics
+   -------------------------------------------------------------------------- */
+.big-score {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   25. Scrollbar
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+/* --------------------------------------------------------------------------
+   26. Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 1rem;
+    }
+
+    .admin-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .content-card,
+    .table-container {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .stats-value {
+        font-size: 2rem;
+    }
+
+    .welcome-section {
+        padding: 2rem;
+        border-radius: 16px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   27. Print Styles
+   -------------------------------------------------------------------------- */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    body::before {
+        display: none;
+    }
+
+    .admin-sidebar,
+    .mobile-menu-toggle,
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+
+    .admin-content {
+        padding: 0;
+    }
+
+    .card,
+    .content-card,
+    .table-container,
+    .glass-card {
+        background: white;
+        border: 1px solid #ddd;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+}

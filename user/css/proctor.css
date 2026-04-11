@@ -1,0 +1,342 @@
+/* Avant-Garde Proctoring UI */
+:root {
+    --bg-deep: #0f172a;
+    --bg-surface: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-red: #ef4444;
+    --accent-green: #10b981;
+    --glass: rgba(30, 41, 59, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+#gatekeeper-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg-deep);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    backdrop-filter: blur(10px);
+}
+
+.gk-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.gk-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gk-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.gk-visualizer {
+    width: 100%;
+    height: 300px;
+    background: #000;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.gk-visualizer video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror */
+}
+
+.gk-scan-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    pointer-events: none;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.gk-scan-overlay.scanning {
+    border-color: var(--accent-blue);
+    animation: pulse-border 2s infinite;
+}
+
+.gk-scan-overlay.success {
+    border-color: var(--accent-green);
+}
+
+.gk-scan-overlay::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 100px; /* Face shape */
+}
+
+.gk-steps {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.gk-step {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 1px solid var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.gk-step.active {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    transform: scale(1.2);
+}
+
+.gk-step.done {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.gk-btn {
+    background: var(--text-primary);
+    color: var(--bg-deep);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.gk-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+}
+
+.gk-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Audio Visualizer Bars */
+.audio-bars {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    height: 30px;
+    align-items: flex-end;
+}
+
+.audio-bar {
+    width: 6px;
+    background: var(--accent-blue);
+    border-radius: 3px;
+    height: 5px;
+    transition: height 0.1s ease;
+}
+
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.hidden { display: none !important; }
+
+/* ============================================
+   HEARTBEAT WARNING MODAL
+   ============================================ */
+
+#proctor-heartbeat-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    backdrop-filter: blur(8px);
+}
+
+#proctor-heartbeat-warning.minimized {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    left: auto;
+    width: auto;
+    height: auto;
+    background: rgba(239, 68, 68, 0.95);
+    border-radius: 12px;
+    padding: 15px 20px;
+    backdrop-filter: none;
+}
+
+#proctor-heartbeat-warning.minimized .proctor-heartbeat-modal {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#proctor-heartbeat-warning.minimized .proctor-heartbeat-icon,
+#proctor-heartbeat-warning.minimized .proctor-heartbeat-detail,
+#proctor-heartbeat-warning.minimized .proctor-heartbeat-actions,
+#proctor-heartbeat-warning.minimized .proctor-heartbeat-warning-text {
+    display: none;
+}
+
+#proctor-heartbeat-warning.minimized h3 {
+    font-size: 14px;
+    margin: 0;
+}
+
+#proctor-heartbeat-warning.minimized p {
+    display: none;
+}
+
+.proctor-heartbeat-modal {
+    background: var(--bg-surface, #1e293b);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: heartbeat-pulse 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat-pulse {
+    0%, 100% { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 20px rgba(239, 68, 68, 0); }
+}
+
+.proctor-heartbeat-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    color: #ef4444;
+    animation: heartbeat-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.proctor-heartbeat-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.proctor-heartbeat-modal h3 {
+    color: var(--text-primary, #f8fafc);
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 0 15px;
+    letter-spacing: -0.02em;
+}
+
+.proctor-heartbeat-modal p {
+    color: var(--text-secondary, #94a3b8);
+    margin: 0 0 10px;
+    line-height: 1.6;
+}
+
+.proctor-heartbeat-detail {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.proctor-heartbeat-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.proctor-heartbeat-btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.proctor-heartbeat-retry {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.proctor-heartbeat-retry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+.proctor-heartbeat-continue {
+    background: transparent;
+    color: var(--text-secondary, #94a3b8);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
+}
+
+.proctor-heartbeat-continue:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary, #f8fafc);
+}
+
+.proctor-heartbeat-warning-text {
+    margin-top: 20px !important;
+    font-size: 0.85rem !important;
+    color: #fbbf24 !important;
+}

@@ -1,0 +1,551 @@
+{
+  "part": "3",
+  "sets": [
+    {
+      "set_id": "1",
+      "title": "Vendor Delivery Schedule Revision",
+      "context": "A project manager at a multinational software firm contacts an overseas vendor to adjust the delivery timeline after the company's product launch date is moved up.",
+      "audio_script": "PM: Hello, this is David Chen from Apex Solutions. I'm calling about the upcoming delivery of the customized control modules we ordered last month.\nVendor: Hi David, this is Sarah Patel from TechParts Inc. I understand you need to discuss the schedule. What can I help you with?\nPM: We were originally expecting the shipment to arrive by March 15th, but our product launch has been moved up to March 8th. Could we possibly have the delivery moved forward by one week, to arrive no later than March 7th?\nVendor: I appreciate the urgency. Our current production line is running at full capacity, but we might be able to expedite the order if we can adjust the final testing phase. However, that would require an extra QC pass, which would add a 5% surcharge.\nPM: That sounds acceptable. Could you confirm the new delivery date and the total cost including the surcharge?\nVendor: Sure. If we expedite, we can have it ready for shipment on March 6th, arriving at your warehouse by March 7th. The base price remains $42,000, plus the 5% surcharge, so $44,100. We'll send a revised invoice and the updated purchase order for your approval.\nPM: Perfect. I'll forward that to our finance team for immediate processing. Once we get the PO signed, can we expect the shipment to leave your facility on the 6th?\nVendor: Yes, as long as we receive the approved PO by close of business on March 4th, we can ship on the 6th.\nPM: Great. I'll make sure that happens. Thank you, Sarah.\nVendor: Thank you, David. I'll send the documentation shortly. Have a good day.",
+      "questions": [
+        {
+          "question_text": "What specific change in the delivery schedule does the project manager request?",
+          "options": {
+            "A": "Delay the shipment by two weeks",
+            "B": "Move the delivery forward by one week",
+            "C": "Cancel the order",
+            "D": "Extend the payment terms"
+          },
+          "correct_answer": "B",
+          "explanation": "The PM asks to shift the original March 15 delivery to March 7, which is one week earlier, i.e., moving the delivery forward by one week."
+        },
+        {
+          "question_text": "What is the primary purpose of the project manager's request?",
+          "options": {
+            "A": "To reduce the overall cost",
+            "B": "To align the delivery with the revised product launch date",
+            "C": "To test the vendor's responsiveness",
+            "D": "To comply with a new regulatory requirement"
+          },
+          "correct_answer": "B",
+          "explanation": "He explicitly states that the product launch has been moved up, so the request is aimed at matching the new launch date."
+        },
+        {
+          "question_text": "What will most likely happen after this conversation?",
+          "options": {
+            "A": "The vendor will immediately ship the order without confirmation",
+            "B": "The project manager will submit a change request to his company",
+            "C": "The vendor will send a revised invoice and purchase order for approval",
+            "D": "The project manager will delay the launch"
+          },
+          "correct_answer": "C",
+          "explanation": "The vendor states they will send a revised invoice and an updated purchase order for the client to approve before shipping."
+        }
+      ],
+      "audio_file": "toeic_p3_01.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Cloud Migration Timeline Acceleration",
+      "context": "A procurement manager at a multinational corporation discusses with a vendor the acceleration of a cloud migration project due to an upcoming regulatory compliance deadline. The conversation involves timeline changes, cost implications, staff assignments, and next steps.",
+      "audio_script": "Sarah: Hi Mike, thanks for joining. I wanted to follow up on the proposal we received for the cloud migration.\nMike: Sure, Sarah. I'm glad you called. I’ve reviewed the timeline we discussed last month.\nSarah: We need to move up the go‑live date to March 15, due to the new compliance requirement that kicks in on April 1.\nMike: That’s a significant shift. Our original schedule had the final testing wrapped up by March 30.\nSarah: Yes, we understand that. Could you expedite the environment provisioning and perhaps assign a dedicated team?\nMike: We can allocate an extra engineer, but it would require an additional $15,000 for overtime and a revised SLA.\nSarah: Understood. Could you also provide a revised cost breakdown and the new milestone dates by Thursday?\nMike: Absolutely. I’ll also have Tom send you the updated project plan that reflects the accelerated schedule.\nSarah: Perfect. We’ll review it and get back to you early next week.\nMike: Great. I’ll coordinate with Tom and have the documents ready by Thursday afternoon.",
+      "questions": [
+        {
+          "question_text": "According to the conversation, by what date must the migration be completed to comply with the new regulatory requirement?",
+          "options": {
+            "A": "March 1",
+            "B": "March 15",
+            "C": "March 30",
+            "D": "April 1"
+          },
+          "correct_answer": "B",
+          "explanation": "Sarah explicitly states that they need to move the go‑live date to March 15 because the compliance requirement takes effect on April 1, making March 15 the target date to meet the deadline."
+        },
+        {
+          "question_text": "Why did Sarah request the go‑live date be moved up?",
+          "options": {
+            "A": "Because the vendor asked for a later date",
+            "B": "Because the vendor's team is unavailable",
+            "C": "Because of an upcoming regulatory compliance deadline",
+            "D": "Because the client wants to reduce the budget"
+          },
+          "correct_answer": "C",
+          "explanation": "Sarah mentions that the move is necessary 'due to the new compliance requirement that kicks in on April 1,' indicating the purpose is to meet a regulatory deadline, not cost reduction or vendor issues."
+        },
+        {
+          "question_text": "What will the vendor likely do next, and who will send the updated project plan?",
+          "options": {
+            "A": "Cancel the project; Sarah will send the plan",
+            "B": "Send a revised proposal with an extra $15,000; Tom will send the plan",
+            "C": "Offer a discount; Mike will send the plan",
+            "D": "Delay the timeline; no one will send the plan"
+          },
+          "correct_answer": "B",
+          "explanation": "Mike agrees to provide a revised cost breakdown and new milestone dates by Thursday, and he says he will have Tom send the updated project plan. The accelerated schedule also incurs an additional $15,000 cost for overtime."
+        }
+      ],
+      "audio_file": "toeic_p3_02.mp3"
+    },
+    {
+      "set_id": "set_1",
+      "title": "Project Timeline Adjustment and Delivery Negotiation",
+      "context": "A project manager at Apex Innovations (a global technology firm) calls the account manager at TechSupply to discuss a delayed shipment of custom server racks and negotiate a revised delivery schedule to meet an upcoming product launch.",
+      "audio_script": "Manager: Hello, this is Sarah Chen from Apex Innovations. I'm calling about the upcoming shipment of the custom server racks we ordered.\nVendor: Hi Sarah, this is James Park from TechSupply. Thank you for reaching out. How can I assist you?\nManager: Our project timeline has shifted. We originally expected delivery on June 5, but we were just informed that the production line will be delayed by a week. What are our options now?\nVendor: I understand. Based on the delay, the earliest we can ship via standard ocean freight is June 12. However, to meet your launch on July 1, we can switch to air freight, which would get the shipment to your warehouse by June 19.\nManager: That's tight. Can you confirm the final delivery date if we choose air freight?\nVendor: Yes, we can deliver to your Los Angeles distribution center by June 19, provided we receive your approval on the additional shipping fee of $5,200 and the updated customs documentation by tomorrow noon.\nManager: That's acceptable. We'll need the racks to be labeled according to the new regulatory guidelines and include the serial numbers for inventory.\nVendor: We'll include the required labeling and serial number manifest. I'll send you the revised invoice and the airway bill by end of day.\nManager: Perfect. I'll review and get back to you by tomorrow morning. Thanks.\nVendor: Great. I'll wait for your confirmation. Talk to you then.",
+      "questions": [
+        {
+          "question_text": "What is the new expected delivery date for the shipment if the client chooses air freight?",
+          "options": {
+            "A": "June 12",
+            "B": "June 19",
+            "C": "June 26",
+            "D": "July 3"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor explicitly states that air freight would deliver the shipment to the Los Angeles distribution center by June 19. The other dates refer to the original delayed ocean freight (June 12) and later options that were not discussed."
+        },
+        {
+          "question_text": "Why does the client need the shipment to arrive by the new date?",
+          "options": {
+            "A": "To meet a product launch",
+            "B": "To fulfill a contract penalty",
+            "C": "To replace defective parts",
+            "D": "To take advantage of a discount"
+          },
+          "correct_answer": "A",
+          "explanation": "The manager mentions that the shipment must arrive by June 19 in order to support the product launch scheduled for July 1. The other options are not mentioned in the conversation."
+        },
+        {
+          "question_text": "What will the vendor do after this conversation?",
+          "options": {
+            "A": "Cancel the order",
+            "B": "Wait for further instructions",
+            "C": "Send a revised invoice and arrange expedited shipping",
+            "D": "Schedule a meeting for next week"
+          },
+          "correct_answer": "C",
+          "explanation": "The vendor says he will send the revised invoice and the airway bill (for expedited air freight) by the end of the day, confirming the next operational step. The other options contradict the stated plan."
+        }
+      ],
+      "audio_file": "toeic_p3_03.mp3"
+    },
+    {
+      "set_id": "1",
+      "title": "Vendor Coordination and Timeline Revision",
+      "context": "In a global technology consulting firm, a Senior Project Manager (Jennifer) is discussing with a vendor account manager (Robert) about unexpected scope changes and revised delivery schedules for a multinational client's infrastructure upgrade project.",
+      "audio_script": "Jennifer: Robert, I appreciate you fitting this call in on such short notice. Given the complications that arose after last week's client presentation, we need to reassess our timeline significantly.\n\nRobert: I understand. When we spoke on Thursday, you mentioned the client requested additional security protocols. Has that been finalized?\n\nJennifer: Actually, that's precisely the issue. The client not only approved the enhanced security module but added two new requirements: a disaster recovery system and compliance documentation for three additional regional data centers. Their legal team is now involved, which changes everything.\n\nRobert: I see. Originally we were looking at a twelve-week implementation. With these additions, the earliest we could complete testing would be the end of week sixteen, but that's contingent on your team providing the necessary environment access by this Friday.\n\nJennifer: That's problematic. Our technical lead just informed me that the network infrastructure won't be ready until the twenty-first due to procurement delays with the local internet service provider in the Singapore region. The earliest we can provision the staging environment is the twenty-sixth.\n\nRobert: Then we need to push the go-live date to the first week of March at the earliest. However, that conflicts with the quarterly review meeting the client's CTO has scheduled for March fifth. Should we propose a phased rollout instead?\n\nJennifer: Let's present that option. I'll prepare three scenarios by tomorrow and we can reconvene with the client stakeholders on Wednesday. Also, the budget implications for the extended timeline need to be addressed—our contract allows for one revision, but this is effectively a second scope change.\n\nRobert: Agreed. I'll have my finance team calculate the additional resource costs and send the revised proposal by Tuesday. We should also consider assigning a dedicated integration specialist since the regional compliance requirements are becoming complex.\n\nJennifer: That would be helpful. Given that we now have to coordinate across time zones in Singapore, Frankfurt, and São Paulo, I think we need a weekly sync meeting rather than our current bi-weekly schedule. Can your team commit to that?\n\nRobert: We'll make it work. I'll confirm with our regional director and get back to you by end of day tomorrow with the updated project plan.",
+      "questions": [
+        {
+          "question_text": "According to the conversation, what is the primary reason for the project timeline revision?",
+          "options": {
+            "A": "The vendor failed to meet the original deadline",
+            "B": "The client added new requirements after the presentation",
+            "C": "Network infrastructure delays in Singapore caused postponement",
+            "D": "The quarterly review meeting conflicts with the proposed schedule"
+          },
+          "correct_answer": "B",
+          "explanation": "The conversation clearly states that after the client presentation, the client not only approved the enhanced security module but added two new requirements: disaster recovery system and compliance documentation. This scope change is the primary reason for the timeline revision, though the subsequent network infrastructure delay in Singapore (option C) is also a contributing factor. Option B directly addresses the implied purpose of the timeline change - the client's additional requests.'"
+        },
+        {
+          "question_text": "What will happen by the end of the next business day?",
+          "options": {
+            "A": "The client will receive three project scenarios for review",
+            "B": "The vendor will send a revised proposal with cost calculations",
+            "C": "A dedicated integration specialist will be assigned to the project",
+            "D": "The weekly sync meeting schedule will be finalized"
+          },
+          "correct_answer": "B",
+          "explanation": "Robert explicitly states he will have his finance team calculate the additional resource costs and send the revised proposal by Tuesday. Since the conversation occurs on what appears to be early in the week (given the Wednesday reconvene plan), Tuesday would be the next business day. This tests next-step inference based on explicit timeline commitments in the audio.'"
+        },
+        {
+          "question_text": "What can be inferred about the project's current operational status?",
+          "options": {
+            "A": "The staging environment is currently ready for testing",
+            "B": "The contract has already been amended twice for scope changes",
+            "C": "Coordination challenges exist due to multiple time zone involvement",
+            "D": "The client's legal team has approved all documentation requirements"
+          },
+          "correct_answer": "C",
+          "explanation": "Jennifer states 'Given that we now have to coordinate across time zones in Singapore, Frankfurt, and São Paulo' when proposing weekly sync meetings. This implies that managing multiple regional time zones is an operational challenge. Option A is incorrect because the staging environment won't be ready until the 26th. Option B is incorrect because the conversation mentions this would be a 'second scope change,' not that the contract has been amended twice. Option D is incorrect as the compliance documentation is still being added, not approved.'"
+        }
+      ],
+      "audio_file": "toeic_p3_04.mp3"
+    },
+    {
+      "set_id": "1",
+      "title": "Project Timeline Revision and Vendor Coordination",
+      "context": "A senior project manager at a global software solutions company contacts the account manager of a hardware vendor to discuss a delayed shipment of custom servers needed for a client rollout in Europe. The conversation covers the reason for the delay, alternative shipping options, and the next steps for decision‑making.",
+      "audio_script": "PM: Hello, this is Sarah Chen, senior project manager at GlobalTech Solutions. I'm calling about the upcoming shipment of the custom BladeServer units we ordered for the FinCorp project.\nVAM: Hi Sarah, this is James Liu, account manager at InServe. Thanks for reaching out. I wanted to update you as soon as possible.\nPM: We were expecting delivery by June 15, but our logistics team just notified us that the shipment is not showing up in the system. What’s happening?\nVAM: I’m sorry about the confusion. The units completed final testing on June 8, but while arranging the export, our freight forwarder hit a hold at the customs clearance in Rotterdam. It’s a documentation issue related to the new EU customs code for high‑performance computing hardware. We’re working with the broker to resolve it, but the earliest we can clear is now July 1.\nPM: That pushes the arrival well past our client’s go‑live date of July 10. Have you considered any expedited options?\nVAM: Yes. We can switch the remaining 60% of the order to air freight, which would cut transit time to about three days after clearance. The air freight cost is roughly $18,000 more than the original sea freight. We can absorb $5,000 of that as a gesture, but the remaining $13,000 would be passed to your side.\nPM: I see. That’s a significant extra cost. We’ll need to get approval from our finance director and discuss the impact on the launch schedule with the client. Could you send a written summary of the options, including the revised delivery dates for both sea and air freight, as well as the cost breakdown?\nVAM: Absolutely. I’ll email you the detailed quote and a revised timeline within the next hour. Once you have the numbers, we can set up a quick call to decide which route you prefer.\nPM: Perfect. I’ll review the documentation this afternoon and loop in our client liaison. I’ll get back to you by tomorrow morning with our decision.\nVAM: Great. Thank you for your patience, Sarah. I’ll await your response.\nPM: Thanks, James. Talk soon.",
+      "questions": [
+        {
+          "question_text": "What is the primary cause of the shipment delay according to the vendor?",
+          "options": {
+            "A": "A manufacturing defect discovered during final testing",
+            "B": "Unexpected customs clearance hold at the port of Rotterdam",
+            "C": "A sudden shortage of raw materials for the servers",
+            "D": "A change in the client’s specifications after production began"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor explicitly states that the delay is due to a customs clearance hold in Rotterdam caused by a documentation issue with the new EU customs code for high‑performance computing hardware."
+        },
+        {
+          "question_text": "What alternative shipping method does the vendor suggest, and what is the approximate extra cost to the project?",
+          "options": {
+            "A": "Air freight for the entire order, costing an additional $5,000",
+            "B": "Air freight for 60% of the order, costing an additional $13,000",
+            "C": "Sea freight with a reduced route, costing an additional $8,000",
+            "D": "Express courier service for the entire order, costing an additional $18,000"
+          },
+          "correct_answer": "B",
+          "explanation": "James proposes switching the remaining 60% of the order to air freight, which would add about $18,000 in total; InServe would absorb $5,000, leaving $13,000 to be covered by GlobalTech."
+        },
+        {
+          "question_text": "Based on the conversation, what is the most likely next step the project manager will take after the call?",
+          "options": {
+            "A": "Confirm the original sea‑freight delivery date with the client immediately",
+            "B": "Accept the vendor’s air‑freight proposal on the spot without further review",
+            "C": "Review the written summary and cost breakdown, then discuss with finance and the client before giving a final decision",
+            "D": "Cancel the order and look for a different vendor"
+          },
+          "correct_answer": "C",
+          "explanation": "Sarah says she will review the documentation that afternoon, involve finance and the client liaison, and get back to James by tomorrow morning with a decision, indicating she will not commit immediately but will evaluate the options."
+        }
+      ],
+      "audio_file": "toeic_p3_05.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Software Deployment Delay Discussion",
+      "context": "A senior project manager (PM) from a multinational manufacturing firm is on a call with the client’s procurement director (Client) to discuss the revised timeline for a new CRM system rollout, vendor delays, and upcoming operational actions.",
+      "audio_script": "PM: Good morning, thank you for joining. As you know, we originally planned to launch the new CRM on March 15, but the data migration vendor has informed us they need an extra three weeks due to unexpected data quality issues. Consequently, we are moving the launch to April 5.\n\nClient: That changes our marketing campaign schedule. We were planning a simultaneous email blast to coincide with the launch. Will we still be able to have the marketing assets ready by the new date?\n\nPM: I think we can adjust the timeline, but we need to finalize the training schedule for your staff. I've asked our training coordinator to prepare a condensed two‑day session for the key users, and we can schedule that the week before go‑live. Also, the vendor will provide on‑site support for the first three days after launch.\n\nClient: Great. Also, can we get a detailed report on the integration issues and the vendor’s plan to resolve them before the launch?\n\nPM: Absolutely. The vendor will send a full technical report by Friday, and we will review it in our weekly status meeting on Monday. Then we can decide if any additional resources are needed.",
+      "questions": [
+        {
+          "question_text": "What is the primary reason for moving the CRM launch date from March 15 to April 5?",
+          "options": {
+            "A": "The client requested a later launch date.",
+            "B": "The data migration vendor needed extra time due to data quality issues.",
+            "C": "The internal budget review delayed the project.",
+            "D": "The marketing team was not ready."
+          },
+          "correct_answer": "B",
+          "explanation": "The PM explicitly states that the data migration vendor informed them they need an extra three weeks because of unexpected data quality issues, which forced the launch date to be moved to April 5."
+        },
+        {
+          "question_text": "When the client asks, 'Will we still be able to have the marketing assets ready by the new date?', what does the client implicitly want to know?",
+          "options": {
+            "A": "Whether the marketing team can meet the revised launch schedule.",
+            "B": "Whether the vendor will deliver the software on time.",
+            "C": "If the training schedule will be shortened.",
+            "D": "If the project budget will increase."
+          },
+          "correct_answer": "A",
+          "explanation": "The client is concerned about aligning the marketing campaign with the new launch date; by asking if the assets will be ready, the client is essentially asking whether the marketing team can meet the revised timeline."
+        },
+        {
+          "question_text": "According to the PM, what will be the next step after the vendor sends the technical report?",
+          "options": {
+            "A": "Proceed immediately with the launch.",
+            "B": "Schedule a meeting to review the report and decide on additional resources.",
+            "C": "Request a refund from the vendor.",
+            "D": "Cancel the training sessions."
+          },
+          "correct_answer": "B",
+          "explanation": "The PM says the vendor will send the technical report by Friday, and they will review it in the weekly status meeting on Monday, then decide if any additional resources are needed."
+        }
+      ],
+      "audio_file": "toeic_p3_06.mp3"
+    },
+    {
+      "set_id": "1",
+      "title": "Vendor Call: Data Migration Delay and Change Order",
+      "context": "A senior project manager at a global consulting firm speaks with a software vendor about a delayed data migration for a new analytics platform, discussing timeline changes, cost implications, and next steps.",
+      "audio_script": "PM: Good morning, John. I wanted to follow up on the data migration timeline we discussed last week. Our original plan was to have the data migrated by March 31, but I understand there have been some changes.\n\nVendor: Good morning, Sarah. Yes, due to the new GDPR compliance review required by the EU client, we need to incorporate additional data masking procedures. That pushes our migration completion to April 12.\n\nPM: That's a twelve-day shift. How will that affect our overall go-live date of May 1?\n\nVendor: We can still meet the May 1 launch if we approve a change order to bring in a dedicated server environment, which will cost an extra $8,000. This will also give us a three-day buffer for testing.\n\nPM: I see. So the purpose of the change order is to cover the dedicated server and the extra testing period, right?\n\nVendor: Exactly. It will also allow us to schedule the final integration tests during the week of April 20, after the migration is done.\n\nPM: Okay. I'll need to get approval from our finance team and then send a revised project schedule to the client. I'll also schedule a call with the client to confirm the new dates.\n\nVendor: Sounds good. I'll prepare the change order document and send it to you by end of day today.\n\nPM: Perfect. I'll review it tomorrow morning and get back to you with the signed approval.",
+      "questions": [
+        {
+          "question_text": "What is the main reason for the revised migration deadline?",
+          "options": {
+            "A": "The vendor's server maintenance",
+            "B": "Additional GDPR compliance steps",
+            "C": "Client request for new features",
+            "D": "Budget cuts"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor explicitly states that the need to add data-masking procedures for GDPR compliance is what delayed the migration, making option B the correct choice."
+        },
+        {
+          "question_text": "What does the vendor imply as the purpose of the change order?",
+          "options": {
+            "A": "To extend the project timeline",
+            "B": "To cover the cost of a dedicated server and additional testing",
+            "C": "To hire more staff",
+            "D": "To reduce the scope of work"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor says the change order will cover the dedicated server environment and provide a three-day testing buffer, which corresponds to option B."
+        },
+        {
+          "question_text": "What will the project manager most likely do after this call?",
+          "options": {
+            "A": "Approve the change order immediately",
+            "B": "Submit the revised schedule to the client and request approval",
+            "C": "Cancel the project",
+            "D": "Request a further delay from the vendor"
+          },
+          "correct_answer": "B",
+          "explanation": "The PM states she needs finance approval and will then send a revised project schedule to the client and schedule a call to confirm the new dates, indicating she will submit the revised schedule for approval."
+        }
+      ],
+      "audio_file": "toeic_p3_07.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Revised Timeline and Vendor Confirmation Discussion",
+      "context": "A regional manager meets with a vendor representative to discuss the impact of new client requirements on the project timeline and to confirm next steps.",
+      "audio_script": "Sam: \"Thanks for taking the time, Nina. I wanted to go over the revised schedule for the PQR implementation.\"\nNina: \"Sure, Sam. As you know, the original pilot launch was set for March 15, but the client has asked for three additional features—enhanced reporting, real‑time dashboards, and a custom API. Those weren’t part of the original scope.\"\nSam: \"Right, that means we need more development time.\"\nNina: \"Exactly. We can incorporate the new features, but it will push the launch back by two weeks. Our new target is April 1.\"\nSam: \"That gives us less than a month for testing. How will that affect the client training?\"\nNina: \"We can run a condensed training session on March 28 and 29, but we’ll need your team to have the training environment ready by March 25.\"\nSam: \"Okay, I’ll coordinate with our support lead, Lara, to get that done. Also, the client has asked about the service‑level agreement.\"\nNina: \"We’ve drafted an SLA that raises the uptime guarantee from 99.9% to 99.95%. That will require a modest increase in server capacity. We'll handle the capacity increase, but we need a confirmation from your side by Friday so we can provision the resources.\"\nSam: \"Got it. I’ll send the confirmation and also schedule a call with the client for next Tuesday to walk them through the revised plan.\"\nNina: \"Great. Once we have the confirmation, we’ll finalize the revised proposal and send it to the client by Wednesday.\"\nSam: \"Perfect. I’ll also update the internal stakeholders about the timeline shift.\"",
+      "questions": [
+        {
+          "question_text": "What is the new target date for the pilot launch?",
+          "options": {
+            "A": "March 15",
+            "B": "April 1",
+            "C": "March 28",
+            "D": "March 25"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor explicitly states that the new target launch date is April 1, reflecting the two‑week delay caused by the additional features."
+        },
+        {
+          "question_text": "Why does the vendor need a confirmation from the manager by Friday?",
+          "options": {
+            "A": "To finalize the revised proposal for the client",
+            "B": "To adjust server capacity and provision resources",
+            "C": "To schedule the client training sessions",
+            "D": "To inform the internal stakeholders"
+          },
+          "correct_answer": "B",
+          "explanation": "The vendor says they need the confirmation to provision the additional server capacity required to meet the higher uptime guarantee in the SLA."
+        },
+        {
+          "question_text": "What will the manager most likely do next, and which team will prepare the training environment?",
+          "options": {
+            "A": "Send the confirmation to the vendor – support lead Lara’s team will prepare the environment.",
+            "B": "Schedule a client call – vendor’s training team will handle the environment.",
+            "C": "Conduct an internal review – the client’s IT department will prepare the environment.",
+            "D": "Update the SLA – the project management office will handle the environment."
+          },
+          "correct_answer": "A",
+          "explanation": "The manager explicitly says, “I’ll send the confirmation,” and earlier notes that the support lead, Lara, will prepare the training environment by March 25."
+        }
+      ],
+      "audio_file": "toeic_p3_08.mp3"
+    },
+    {
+      "set_id": "1",
+      "title": "Project Timeline Revision and Compliance QA Discussion",
+      "context": "A conversation between Alex Mercer, Senior Account Manager at Acme Global Solutions, and Sandra Lau, Procurement Officer at EuroBank, about the delayed implementation of a new core banking platform due to updated EU anti‑money‑laundering regulations.",
+      "audio_script": "Alex: Good morning, Sandra. Thanks for taking the time to discuss the revised timeline for the CoreBank implementation.\\nSandra: Good morning, Alex. I’ve reviewed the latest regulatory update from the EU Commission, and we need to incorporate the new anti‑money‑laundering modules before go‑live. That will push our testing window out by at least six weeks.\\nAlex: I understand. So you’re looking at moving the final acceptance from the end of March to the end of April?\\nSandra: Exactly. We also want an extra two‑week QA phase to validate the compliance changes. That means we’ll need to adjust the deployment schedule to early May, with a full rollout by June 15.\\nAlex: Understood. I’ll update the project plan and re‑allocate two senior QA engineers from our Dublin hub. Also, I’ll coordinate with your legal team to sign off on the updated SOW.\\nSandra: Great. Once you send the revised timeline, we’ll need to brief our board next week. Also, please ensure the vendor, DataSecure Inc., provides the latest patch for the encryption module.\\nAlex: Will do. I’ll set up a call with DataSecure for Thursday to confirm the patch delivery, and then I’ll forward the updated project schedule to you.",
+      "questions": [
+        {
+          "question_text": "According to the speakers, what is the new final acceptance deadline after the regulatory review?",
+          "options": {
+            "A": "March 31",
+            "B": "April 30",
+            "C": "June 1",
+            "D": "July 20"
+          },
+          "correct_answer": "B",
+          "explanation": "Sandra explicitly states that the final acceptance date is moved to the end of April, which corresponds to April 30."
+        },
+        {
+          "question_text": "What is the primary reason the client is requesting an additional QA phase?",
+          "options": {
+            "A": "To reduce project costs",
+            "B": "To accelerate the deployment schedule",
+            "C": "To ensure compliance with new anti‑money‑laundering regulations",
+            "D": "To address vendor performance issues"
+          },
+          "correct_answer": "C",
+          "explanation": "The client mentions needing an extra QA phase to validate the compliance changes required by the new EU anti‑money‑laundering module."
+        },
+        {
+          "question_text": "What will Alex most likely do next after this call?",
+          "options": {
+            "A": "Send a revised quotation to the client",
+            "B": "Schedule a technical workshop with the legal team",
+            "C": "Initiate the hiring of additional developers",
+            "D": "Confirm the revised timeline with the project board"
+          },
+          "correct_answer": "D",
+          "explanation": "Alex says he will forward the updated project schedule to Sandra, which implies he will first confirm the revised timeline with the project board before officially sharing it."
+        }
+      ],
+      "audio_file": "toeic_p3_09.mp3"
+    },
+    {
+      "set_id": "set_1",
+      "title": "Project Launch Delay and Vendor Coordination",
+      "context": "A project manager at a multinational tech company discusses schedule changes, logistics, and staff assignments with a vendor for an upcoming client demonstration.",
+      "audio_script": "Alex: Hi Maria, thanks for joining the call. I wanted to update you on the timeline for the demonstration at GlobalTech Solutions. We originally planned for March 5, but due to a scheduling conflict with the client's senior VP, we've had to push it back to March 12. Could you confirm if the new date works for your team?\n\nMaria: Yes, March 12 is feasible. However, we need to adjust the shipment of the prototype units. The earlier schedule allowed us to ship by March 1, but with the new date we can ship by March 8, which gives us enough lead time. Also, the latest firmware version is ready; we'll include the updated software.\n\nAlex: Good. In addition, the client has requested a live data‑integration demo. We'll need your technical support team on site at least one hour before the presentation to set up the network. Are you able to provide two engineers?\n\nMaria: Absolutely. I'll assign James and Linda, our senior integration engineers. They will arrive by 9 a.m. on March 12. I’ll also arrange for a backup unit in case of any hardware issues.\n\nAlex: Perfect. One more thing—after the demo, the client wants a brief follow‑up meeting to discuss future collaboration. Could you prepare a short proposal on extending the service contract for an additional year?\n\nMaria: I'll draft the proposal and send it to you by end of day Friday. Then we can review it before the client meeting.\n\nAlex: Great. I'll confirm the conference room booking and send the updated agenda to both teams. Thank you, Maria.\n\nMaria: Thank you, Alex. Talk soon.",
+      "questions": [
+        {
+          "question_text": "According to the conversation, what change was made to the demonstration schedule?",
+          "options": {
+            "A": "The demonstration was moved up by a week.",
+            "B": "The demonstration was postponed by a week.",
+            "C": "The demonstration was canceled.",
+            "D": "The demonstration date remained unchanged."
+          },
+          "correct_answer": "B",
+          "explanation": "Alex states that the original date of March 5 has been moved to March 12 due to a scheduling conflict, which is a one‑week postponement."
+        },
+        {
+          "question_text": "What is the likely purpose of Maria's request to have two engineers on site?",
+          "options": {
+            "A": "To train the client on how to use the prototype.",
+            "B": "To ensure the live data‑integration demo runs smoothly.",
+            "C": "To collect feedback from the client for product improvements.",
+            "D": "To conduct a private meeting with the client."
+          },
+          "correct_answer": "B",
+          "explanation": "Maria explains that the client requested a live data‑integration demo, so the engineers are needed to set up the network and support the demo, ensuring it proceeds without technical issues."
+        },
+        {
+          "question_text": "What will Alex most likely do after the call?",
+          "options": {
+            "A": "Cancel the demo.",
+            "B": "Confirm the conference room and send the updated agenda.",
+            "C": "Delay the shipment of the prototype.",
+            "D": "Prepare the proposal for the client."
+          },
+          "correct_answer": "B",
+          "explanation": "At the end of the conversation Alex says, 'I'll confirm the conference room booking and send the updated agenda to both teams,' indicating the next step."
+        }
+      ],
+      "audio_file": "toeic_p3_10.mp3"
+    },
+    {
+      "set_id": "SET001",
+      "title": "ERP Implementation Timeline Adjustment",
+      "context": "A global manufacturing company's project manager (Alex) is on a call with the lead consultant from the vendor (Elena) to discuss rescheduling the ERP rollout because of new GDPR data‑privacy requirements.",
+      "audio_script": "Alex: Good morning, Elena. I wanted to follow up on the timeline for the ERP pilot. We originally planned to go live on October 15, but I understand there have been some changes.\n\nElena: Good morning, Alex. Yes, we've had to revisit the schedule. Because the EU data-protection authority has updated the GDPR guidance on data anonymization, our compliance team needs an additional two weeks to verify the new scripts. As a result, we propose moving the pilot start to November 1, with the full rollout scheduled for December 10.\n\nAlex: That’s a significant shift. Do we still meet the Q4 deadline for the client’s board meeting on December 20?\n\nElena: Absolutely. If we get client approval by November 2, we can begin user-acceptance testing on November 5, run a dry-run on November 20, and launch the pilot on November 1. That gives us enough buffer before the board meeting.\n\nAlex: Perfect. I’ll need to get sign-off from our legal and procurement teams. Could you send the revised SOW and a revised cost estimate by Friday?\n\nElena: Of course. I’ll also schedule a call with your internal test lead to align the UAT plan. After that, I’ll send you the updated project timeline for distribution.\n\nAlex: I’ll send the revised timeline to the internal test team and ask them to adjust the UAT plan as soon as I receive the SOW.",
+      "questions": [
+        {
+          "question_text": "By what date must the client approve the revised schedule?",
+          "options": {
+            "A": "October 30",
+            "B": "November 2",
+            "C": "November 5",
+            "D": "December 1"
+          },
+          "correct_answer": "B",
+          "explanation": "Elena states that the client must provide sign‑off by Wednesday, which is November 2, in order to keep the new pilot date of November 1 on track."
+        },
+        {
+          "question_text": "What is the primary reason the vendor suggests postponing the pilot?",
+          "options": {
+            "A": "Budget constraints",
+            "B": "Need to complete GDPR compliance verification",
+            "C": "Staff turnover",
+            "D": "Software bugs"
+          },
+          "correct_answer": "B",
+          "explanation": "Elena explains that the compliance team requires extra time to verify the new data‑anonymization scripts mandated by updated GDPR guidance, which is the main driver for the schedule shift."
+        },
+        {
+          "question_text": "What will the project manager do immediately after this call?",
+          "options": {
+            "A": "Send the final invoice to the vendor",
+            "B": "Notify the internal test team of the new UAT schedule",
+            "C": "Request a discount on the next milestone",
+            "D": "Schedule a meeting with the client’s executive board"
+          },
+          "correct_answer": "B",
+          "explanation": "Alex says he will send the revised timeline to the internal test team and ask them to adjust the user‑acceptance testing (UAT) plan as soon as he receives the updated SOW."
+        }
+      ],
+      "audio_file": "toeic_p3_11.mp3"
+    },
+    {
+      "set_id": 1,
+      "title": "Project Timeline Revision with Overseas Vendor",
+      "context": "Alice, a project manager at GlobalTech, contacts John, her component vendor in Taiwan, to inform him of a design change that has shifted their production schedule. She requests a revised delivery date and discusses cost implications.",
+      "audio_script": "[Manager] \"Hi John, this is Alice from GlobalTech's product development team. Thanks for taking the time.\"\n[Vendor] \"Sure, Alice. What can I do for you today?\"\n[Manager] \"We've just finalized the redesign of the controller board, and the PCB layout is now 20% smaller. Consequently, our internal production schedule has shifted. Originally we were expecting the first article samples by May 12, but we now need them by June 3 to align with the new testing window.\"\n[Vendor] \"I see. That's a significant shift. Our manufacturing line is currently booked for the next three weeks, but we might be able to expedite a batch if we reroute some of the SMT capacity. The earliest we could ship would be June 10, but that would incur a 15% expedite fee and require you to confirm the final BOM by this Friday.\"\n[Manager] \"We can confirm the BOM by Thursday at the latest. Also, could you provide a detailed breakdown of the extra costs? We'll need to allocate the expedite fee to the project's contingency budget.\"\n[Vendor] \"Absolutely. I'll send you the cost breakdown, including the expedite fee, shipping, and customs clearance. Once we receive your BOM confirmation, we'll schedule the production and provide a provisional delivery note.\"\n[Manager] \"Great. After we receive the delivery note, we'll arrange for in‑house inspection and update the project schedule accordingly. I'll also inform the testing team about the new sample arrival.\"\n[Vendor] \"Sounds good. I'll follow up with an email summarising the revised dates and the cost estimate. Let me know if anything else changes.\"\n[Manager] \"Will do. Thanks, John.\"",
+      "questions": [
+        {
+          "question_text": "Based on the conversation, what is the new expected shipment date for the first article samples?",
+          "options": {
+            "A": "May 12",
+            "B": "June 3",
+            "C": "June 10",
+            "D": "June 15"
+          },
+          "correct_answer": "C",
+          "explanation": "The vendor explicitly states that the earliest they could ship the samples is June 10, after considering the production line constraints and the expedite option."
+        },
+        {
+          "question_text": "What is the primary reason Alice is contacting John?",
+          "options": {
+            "A": "To request a discount on the order",
+            "B": "To inform about design changes and request a revised delivery schedule",
+            "C": "To cancel the existing order",
+            "D": "To schedule a face‑to‑face meeting"
+          },
+          "correct_answer": "B",
+          "explanation": "Alice explains that the PCB redesign has altered their production timeline, and she needs the vendor to adjust the delivery date accordingly."
+        },
+        {
+          "question_text": "What will Alice most likely do after the call?",
+          "options": {
+            "A": "Wait for the vendor to ship the samples without further action",
+            "B": "Arrange in‑house inspection and update the project schedule",
+            "C": "Submit a new BOM immediately",
+            "D": "Cancel the expedite request"
+          },
+          "correct_answer": "B",
+          "explanation": "Alice says that after receiving the delivery note, she will arrange for in‑house inspection and update the project schedule, as well as inform the testing team."
+        }
+      ],
+      "audio_file": "toeic_p3_12.mp3"
+    },
+    {
+      "set_id": 2,
+      "title": "Client Feedback and Implementation Plan",
+      "context": "Emma, a senior consultant, speaks with Robert, a client project sponsor, about critical defects discovered in a beta release. They discuss extending the UAT phase, adding QA resources, adjusting the go‑live date, and approving a change order.",
+      "audio_script": "[Client] \"Hi Emma, thanks for joining the call. Our team has been reviewing the beta release, and we've identified several critical defects that could impact the launch.\"\n[Consultant] \"I appreciate you bringing this to our attention. We've already started a root‑cause analysis. To address the defects, we recommend extending the UAT phase by one week, which will push the go‑live from July 1 to July 15. We also propose adding two senior QA engineers to accelerate the testing.\"\n[Client] \"That sounds reasonable. What are the cost implications of adding the extra QA resources?\"\n[Consultant] \"The additional QA work will cost $12,000, which falls under the change order provision in our contract. We'll also need to schedule a training session for your end‑users on July 10, before the go‑live.\"\n[Client] \"Okay, we can approve the change order, but we need it signed by Thursday so we can finalize the budget for the next quarter.\"\n[Consultant] \"Understood. I'll draft the revised SOW and send it over this afternoon. Once you sign, we'll proceed with the extended UAT and the training schedule.\"\n[Client] \"Great. After we sign, we'll coordinate the logistics for the training and notify the internal stakeholders about the new go‑live date.\"\n[Consultant] \"Perfect. I'll follow up with a summary email outlining the revised timeline, cost breakdown, and next steps. Let me know if anything else comes up.\"\n[Client] \"Thanks, Emma. Talk soon.\"",
+      "questions": [
+        {
+          "question_text": "What is the new go‑live date according to the conversation?",
+          "options": {
+            "A": "July 1",
+            "B": "July 8",
+            "C": "July 15",
+            "D": "July 22"
+          },
+          "correct_answer": "C",
+          "explanation": "Emma explicitly states that extending the UAT will push the go‑live from July 1 to July 15."
+        },
+        {
+          "question_text": "What is the main purpose of the consultant’s call?",
+          "options": {
+            "A": "To apologize for the defects",
+            "B": "To propose a timeline extension and additional QA resources",
+            "C": "To request a budget increase for marketing",
+            "D": "To schedule a client dinner"
+          },
+          "correct_answer": "B",
+          "explanation": "The consultant’s primary agenda is to recommend extending the UAT and adding QA engineers to address the defects and keep the project on track."
+        },
+        {
+          "question_text": "What must the client do next to proceed with the revised plan?",
+          "options": {
+            "A": "Schedule a training session",
+            "B": "Sign the change order by Thursday",
+            "C": "Begin UAT immediately",
+            "D": "Submit a defect report"
+          },
+          "correct_answer": "B",
+          "explanation": "Robert says the client will approve the change order, but it needs to be signed by Thursday to finalize the budget and allow the next steps."
+        }
+      ],
+      "audio_file": "toeic_p3_13.mp3"
+    }
+  ]
+}

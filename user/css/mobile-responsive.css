@@ -1,0 +1,452 @@
+/* ================================================================
+   OSGLI Mobile Responsive Overrides
+   Single file for all mobile-specific CSS.
+   Included on every user-facing page.
+   ================================================================ */
+
+/* === SAFE AREA INSETS (iPhone notch/home indicator) === */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .timer-bar {
+        padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    }
+    body {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+    #proctor-rules-toast {
+        bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+    }
+}
+
+/* === TOUCH INTERACTION STATES (sentence builder) === */
+.draggable-word.selected-touch {
+    outline: 3px solid #fbbf24;
+    outline-offset: 2px;
+    background: #4f46e5 !important;
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    transition: all 0.15s ease;
+}
+
+.drop-zone.drop-zone-highlight {
+    border-color: #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.1) !important;
+}
+
+/* ================================================================
+   TABLET BREAKPOINT (max-width: 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+
+    /* --- iOS zoom prevention --- */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="search"],
+    select,
+    textarea,
+    .form-control,
+    textarea.form-control {
+        font-size: 16px !important;
+    }
+
+    /* --- General body --- */
+    body {
+        padding-bottom: 120px !important;
+    }
+
+    /* --- Test page: timer bar --- */
+    .timer-bar {
+        padding: 10px 12px !important;
+    }
+    .timer-bar .container-fluid {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .timer-bar .d-flex {
+        flex-wrap: wrap;
+        gap: 4px;
+        justify-content: center !important;
+    }
+    .timer-bar .d-flex > div {
+        width: 100%;
+        text-align: center;
+    }
+    .timer-display {
+        font-size: 20px !important;
+    }
+
+    /* --- Test page: question cards --- */
+    .question-card {
+        padding: 16px !important;
+        margin: 10px 0 !important;
+        border-radius: 12px !important;
+    }
+    .container-fluid {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    /* --- Test page: progress sections --- */
+    .progress-sections {
+        gap: 4px !important;
+    }
+    .progress-section {
+        padding: 6px 4px !important;
+        font-size: 11px !important;
+    }
+    .progress-section .me-2 {
+        margin-right: 4px !important;
+    }
+
+    /* --- Test page: navigation buttons --- */
+    .d-flex.justify-content-between.mt-4 {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    .d-flex.justify-content-between.mt-4 .btn {
+        width: 100%;
+    }
+
+    /* --- Test page: academic discussion columns --- */
+    .question-card .col-md-6 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 12px;
+    }
+
+    /* --- Test page: reading passage & scenario boxes --- */
+    .reading-passage,
+    .scenario-box {
+        padding: 12px !important;
+        font-size: 0.9rem !important;
+        line-height: 1.6 !important;
+    }
+
+    /* --- Test page: masked text (word completion) --- */
+    .masked-text {
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+    }
+    .word-input {
+        width: 80px !important;
+        font-size: 14px !important;
+    }
+
+    /* --- Touch targets: buttons --- */
+    .btn,
+    .btn-outline-secondary,
+    .btn-primary,
+    .btn-success,
+    .btn-danger {
+        min-height: 48px;
+        padding: 12px 20px !important;
+        font-size: 0.95rem;
+    }
+    .btn-sm {
+        min-height: 44px;
+        padding: 8px 16px !important;
+    }
+
+    /* --- Touch targets: option labels (MCQ answers) --- */
+    .option-label {
+        padding: 16px !important;
+        margin: 8px 0 !important;
+        font-size: 0.95rem;
+    }
+
+    /* --- Touch targets: draggable words --- */
+    .draggable-word {
+        padding: 10px 18px !important;
+        margin: 4px !important;
+        font-size: 0.9rem;
+        min-height: 44px;
+        display: inline-flex !important;
+        align-items: center;
+    }
+
+    /* --- Touch targets: drop zone --- */
+    .drop-zone {
+        min-height: 70px !important;
+        padding: 12px !important;
+    }
+
+    /* --- Touch targets: recording button --- */
+    .recording-btn {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 26px !important;
+    }
+
+    /* --- Sentence builder touch hint --- */
+    .word-bank::before {
+        content: 'Ketuk kata untuk memilih, lalu ketuk area jawaban untuk menempatkan';
+        display: block;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 8px;
+        font-style: italic;
+        line-height: 1.4;
+    }
+
+    /* --- Camera setup page --- */
+    .setup-container {
+        border-radius: 12px !important;
+        margin: 0 4px;
+    }
+    .setup-header {
+        padding: 16px !important;
+    }
+    .setup-header h1,
+    .setup-header h2 {
+        font-size: 1.2rem !important;
+    }
+    .setup-body {
+        padding: 16px !important;
+    }
+    .step-indicator {
+        gap: 2px !important;
+        margin-bottom: 16px !important;
+    }
+    .step {
+        padding: 8px 4px !important;
+        margin: 0 2px !important;
+        font-size: 11px !important;
+        border-radius: 6px !important;
+    }
+    .step-icon {
+        font-size: 16px !important;
+        margin-bottom: 4px !important;
+    }
+    .video-container {
+        max-width: 100% !important;
+        margin-bottom: 16px !important;
+    }
+    .btn-start,
+    .setup-body .btn {
+        padding: 14px 24px !important;
+        font-size: 16px !important;
+        width: 100%;
+    }
+
+    /* --- Proctoring overlays --- */
+    .proctor-terminate-content,
+    #proctor-terminate-overlay > div {
+        max-width: 90vw !important;
+        padding: 24px 16px !important;
+    }
+    #proctor-terminate-overlay h2 {
+        font-size: 1.2rem !important;
+    }
+    #proctor-terminate-overlay p {
+        font-size: 0.85rem !important;
+    }
+    #proctor-terminate-overlay a {
+        padding: 14px 28px !important;
+        font-size: 1rem !important;
+        display: block !important;
+        text-align: center;
+    }
+
+    #proctor-warning {
+        max-width: 90vw !important;
+        padding: 10px 16px !important;
+        font-size: 0.8rem !important;
+        left: 5vw !important;
+        right: 5vw !important;
+        transform: none !important;
+        top: 10px !important;
+        width: auto !important;
+    }
+
+    #proctor-rules-toast {
+        bottom: 100px !important;
+        right: 10px !important;
+        left: 10px !important;
+        max-width: none !important;
+    }
+
+    /* --- Dashboard: history table scroll --- */
+    .history-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .history-table {
+        min-width: 500px;
+    }
+
+    /* --- Dashboard: tips grid --- */
+    .tips-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* --- Dashboard: quick buttons --- */
+    .quick-btn {
+        padding: 0.7rem 1rem !important;
+        min-height: 44px;
+    }
+
+    /* --- Result page --- */
+    .result-card {
+        padding: 24px 16px !important;
+        max-width: 100% !important;
+        border-radius: 16px !important;
+    }
+    .score-big {
+        font-size: 48px !important;
+    }
+    .score-max {
+        font-size: 18px !important;
+    }
+    .cefr-badge {
+        font-size: 16px !important;
+        padding: 4px 16px !important;
+    }
+    .section-scores {
+        gap: 8px !important;
+    }
+    .section-item {
+        padding: 12px 8px !important;
+    }
+    .section-item .val {
+        font-size: 1.1rem !important;
+    }
+
+    /* --- Payment pending page --- */
+    .status-card {
+        padding: 1.5rem 1rem !important;
+        border-radius: 16px !important;
+    }
+
+    /* --- Disqualified page --- */
+    .disqualified-card,
+    .card {
+        padding: 24px 16px !important;
+        max-width: 95vw !important;
+        border-radius: 12px !important;
+    }
+    .disqualified-card h1 {
+        font-size: 1.5rem !important;
+    }
+    .disqualified-card .icon {
+        font-size: 2.5rem !important;
+    }
+
+    /* --- Buy exam: pricing cards --- */
+    .pricing-card {
+        padding: 1.25rem !important;
+    }
+
+    /* --- Login/Register pages --- */
+    .login-card,
+    .register-card {
+        padding: 1.5rem !important;
+    }
+
+    /* --- Navbar mobile adjustments --- */
+    .navbar .avatar-circle {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* --- Audio player full-width --- */
+    .audio-player,
+    audio {
+        width: 100% !important;
+    }
+}
+
+/* ================================================================
+   PHONE BREAKPOINT (max-width: 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+
+    /* --- Even tighter question cards --- */
+    .question-card {
+        padding: 12px !important;
+        margin: 6px 0 !important;
+    }
+
+    /* --- Progress sections: icon-only on small phones --- */
+    .progress-section {
+        font-size: 0 !important;
+        padding: 8px !important;
+    }
+    .progress-section i,
+    .progress-section .fa,
+    .progress-section .fas,
+    .progress-section .far {
+        font-size: 14px !important;
+    }
+
+    /* --- Timer display smaller --- */
+    .timer-display {
+        font-size: 18px !important;
+    }
+    body {
+        padding-bottom: 130px !important;
+    }
+
+    /* --- Camera setup: step icon-only --- */
+    .step {
+        font-size: 0 !important;
+        padding: 10px 6px !important;
+    }
+    .step .step-icon,
+    .step i {
+        font-size: 18px !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* --- Score display smaller --- */
+    .score-big {
+        font-size: 42px !important;
+    }
+    .result-card {
+        padding: 20px 12px !important;
+    }
+
+    /* --- Section scores single column --- */
+    .section-scores {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* --- Reading passage text --- */
+    .reading-passage,
+    .scenario-box {
+        font-size: 0.85rem !important;
+    }
+
+    /* --- Masked text smaller --- */
+    .masked-text {
+        font-size: 14px !important;
+    }
+    .word-input {
+        width: 70px !important;
+    }
+}
+
+/* ================================================================
+   LANDSCAPE PHONE (max-height: 500px and landscape)
+   ================================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .timer-bar {
+        padding: 6px 12px !important;
+    }
+    .timer-bar .d-flex {
+        flex-wrap: nowrap !important;
+    }
+    .timer-bar .d-flex > div {
+        width: auto !important;
+    }
+    body {
+        padding-bottom: 60px !important;
+    }
+    .question-card {
+        padding: 10px !important;
+        margin: 6px 0 !important;
+    }
+}

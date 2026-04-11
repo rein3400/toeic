@@ -1,0 +1,35 @@
+.env
+vendor/
+node_modules/
+
+# Local agent/tooling state
+.claude/
+.omx/
+.opencode/
+.sisyphus/
+.worktrees/
+.wrangler/
+uploads/toeic_audio/.wrangler/
+uploads/toeic_photos/.wrangler/
+
+# Runtime-generated logs and caches
+*.log
+logs/
+error_log
+
+# Browser/test artifacts
+playwright-report/
+test-results/
+
+# Runtime-generated uploads
+uploads/proctoring/
+uploads/speaking_2026/
+uploads/ai_content/
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+~$*

@@ -1,0 +1,1225 @@
+{
+  "part": "7",
+  "single_sets": [
+    {
+      "set_id": "S001",
+      "title": "Implementation of New Project Management System",
+      "text_type": "single",
+      "passage_1": "INTERNAL MEMO\\n\\nTo: All Department Heads\\nFrom: Sarah Chen, Chief Information Officer\\nDate: January 3, 2026\\nSubject: Transition to PMS2 – Project Management System\\n\\nGlobalTech Solutions will migrate to the new Project Management System (PMS2) on March 11, 2026. The transition will be executed in four phases:\\n\\n• Phase 1 – Requirements Gathering: January 5 – January 16, 2026.\\n• Phase 2 – Development & Internal Testing: January 17 – February 20, 2026.\\n• Phase 3 – Pilot Testing with Selected Teams: February 21 – March 10, 2026.\\n• Phase 4 – Full Rollout to All Divisions: March 11, 2026 onward.\\n\\nPolicy on Training and Support\\nThe Training & Development (T&D) team will deliver a two‑day workshop for all users prior to the go‑live date. Department heads are responsible for ensuring that every member of their staff attends the workshop and completes the post‑training assessment before March 11. The IT Department will provide technical infrastructure and maintain the system uptime.\\n\\nIMPORTANT NOTICE – Updated Support Procedure (Effective March 12, 2026)\\n\\n1. All technical issues discovered after the go‑live date must be reported through the Internal Ticketing System (ITS). \\n2. Tickets must be created within 24 hours of detection. \\n3. The IT Help Desk will triage tickets based on severity: Critical issues (system down) will receive immediate attention; non‑critical issues will be addressed within the next business day.\\n4. For critical failures, employees are also instructed to call the 24/7 GlobalTech Hotline (ext. 9999) in addition to logging a ticket.\\n\\nFailure to follow the new reporting procedure may result in delayed resolution and may be reflected in department performance metrics.",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "Which of the following lists the phases of the PMS2 implementation in the correct chronological order?",
+          "options": [
+            "A) Requirements Gathering → Development & Internal Testing → Pilot Testing → Full Rollout",
+            "B) Development & Internal Testing → Requirements Gathering → Full Rollout → Pilot Testing",
+            "C) Pilot Testing → Requirements Gathering → Full Rollout → Development & Internal Testing",
+            "D) Full Rollout → Pilot Testing → Development & Internal Testing → Requirements Gathering"
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Which of the following statements is consistent with both the memo and the notice regarding training responsibilities and the procedure for reporting technical issues after the go‑live date?",
+          "options": [
+            "A) Training & Development is responsible for ensuring staff complete training; technical issues must be reported via the Internal Ticketing System.",
+            "B) Department heads are responsible for reporting technical issues; training is handled by the IT Department.",
+            "C) The IT Department ensures staff complete training; critical issues must be reported by email.",
+            "D) Training & Development schedules the training; issues can be reported either by email or the ticketing system."
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Revised Inspection Policy and Operational Timeline",
+      "text_type": "single",
+      "passage_1": "To: Regional Operations Managers\nFrom: Director, Supply Chain Compliance\nDate: April 5, 2024\nSubject: Updated Inspection Protocols and Schedule for International Shipments\n\nThis memo outlines the latest updates to the inspection protocols for all inbound and outbound international shipments, effective immediately.\n\n1. Policy Revisions\n   • The original inspection policy (Version 2.1, issued on November 12, 2022) required that all shipments be inspected within 72 hours of arrival at the destination hub.\n   • On February 1, 2023, a notice (Notice 2023‑02) extended the inspection window to 96 hours for shipments arriving from the Asian hub, citing temporary staffing constraints.\n   • A subsequent revision (Version 3.0, released on March 15, 2023) shortened the inspection window back to 48 hours for all shipments, regardless of origin, and superseded Notice 2023‑02.\n   • Effective January 1, 2024, the company adopted the Global Compliance Standard (GCS) which mandates a maximum inspection window of 36 hours for shipments classified as high‑risk and 48 hours for standard shipments. The GCS takes precedence over any prior policy.\n\n2. Operational Schedule\n   • Shipments departing the Asian hub on or after March 1, 2023 are subject to the Version 3.0 inspection window (48 hours) unless re‑classified as high‑risk.\n   • Shipments that left the Asian hub before March 1, 2023 remain under the previous 72‑hour window (Version 2.1) unless a high‑risk classification was applied at origin.\n   • Starting February 15, 2024, all high‑risk shipments must undergo a preliminary scan within 12 hours of arrival, followed by a full inspection within 24 hours.\n\n3. Cross‑Reference Documents\n   • The attached Appendix A details the risk classification criteria.\n   • The Standard Operating Procedure for Inspection (SOP‑2024‑01) provides step‑by‑step instructions for the new timeline.\n\nIf you have questions regarding the implementation of these protocols, contact the Compliance Desk at ext. 4520.",
+      "questions": [
+        {
+          "question": "According to the memo, which document provides the criteria for classifying a shipment as high‑risk?",
+          "options": [
+            "Appendix A",
+            "Notice 2023‑02",
+            "SOP‑2024‑01",
+            "Version 2.1"
+          ],
+          "correct_index": 0
+        },
+        {
+          "question": "A shipment departed the Asian hub on February 20, 2023 and was not classified as high‑risk. Under which inspection window should the shipment be inspected?",
+          "options": [
+            "96‑hour window per Notice 2023‑02",
+            "48‑hour window per Version 3.0",
+            "72‑hour window per Version 2.1",
+            "36‑hour window per GCS"
+          ],
+          "correct_index": 2
+        }
+      ]
+    },
+    {
+      "set_id": "set_001",
+      "title": "Corporate Memo: Updated Remote Work Policy and HR Notice",
+      "text_type": "single",
+      "passage_1": "MEMO\n\nTo: All Staff\nFrom: Human Resources\nDate: March 1, 2026\nSubject: Revised Remote Work Policy and Equipment Guidelines\n\nEffective April 10, 2026, the company will implement a new remote‑work framework. Employees who wish to work remotely must follow the steps below:\n\n1. Submit a Remote Work Request Form (Form RW‑1) no later than March 15, 2026.\n2. Managers must review and approve requests by March 30, 2026.\n3. Approved employees must submit an Equipment Request (Form ER‑1) by April 1, 2026.\n4. The IT department will ship eligible equipment by April 5, 2026.\n5. All remote work arrangements must be reviewed quarterly.\n\nEmployees who miss the March 15 deadline may submit a late request; however, approval is not guaranteed and equipment shipments cannot be guaranteed before April 10.\n\nFor questions, contact the HR Service Desk at hr‑support@company.com or ext. 5500.\n\n--- \nHR PORTAL NOTICE (Posted March 20, 2026)\n\nRemote Work Deadlines Update\n\nTo align with recent feedback, the following adjustments have been made to the remote‑work timeline:\n\n- The deadline for submitting the Remote Work Request Form (Form RW‑1) is now March 20, 2026.\n- Managers will have until April 5, 2026, to approve requests.\n- Equipment requests must be received by April 3, 2026, to guarantee shipment by April 7, 2026.\n\nPlease log in to the employee portal to review and update your submissions accordingly.\n\n---",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "According to the memo, what is the latest date by which an employee must receive manager approval in order to be eligible for equipment shipment by April 5, 2026?",
+          "options": [
+            "A) March 30, 2026",
+            "B) April 5, 2026",
+            "C) April 3, 2026",
+            "D) April 1, 2026"
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which of the following statements accurately reflects a discrepancy between the memo and the HR portal notice?",
+          "options": [
+            "A) The memo states the equipment request deadline is April 1, while the notice states April 3.",
+            "B) The memo requires approval by March 30, whereas the notice requires approval by April 5.",
+            "C) The memo sets the request submission deadline at March 15, while the notice moves it to March 20.",
+            "D) The memo guarantees equipment shipment by April 5, and the notice guarantees shipment by April 7."
+          ],
+          "correct_answer": "C"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Office Relocation and Revised Remote Work Policy – Implementation Timeline",
+      "text_type": "single",
+      "passage_1": "MEMORANDUM\\n\\nTO: All Staff\\nFROM: Operations Department\\nDATE: May 28, 2024\\nSUBJECT: Office Relocation Schedule and Updated Remote Work Guidelines\\n\\nAs part of our transition to the new headquarters at 500 Innovation Drive, the following timeline has been approved by senior management. Please note the key dates and actions you must take to ensure a smooth move.\\n\\n- May 30: Distribution of new building access badges will begin. Badges will be mailed to your registered address. You must activate them online by June 1.\\n- June 1: All employees are required to attend a brief orientation session (9:00 AM – 10:30 AM) in Conference Room B. Attendance is mandatory.\\n- June 2: The IT Department will conduct the first equipment audit (personal devices, laptops, and peripherals). Employees must have all company‑issued hardware ready for inspection. Personal devices that will be used for work must be registered with the IT Security Team by close of business on June 2.\\n- June 3 – June 4: Departmental packing. Supervisors will provide packing materials and instructions. All non‑essential items should be boxed and labeled.\\n- June 5: Moving of servers and core network equipment. No data‑center access will be possible after 6:00 PM on June 5.\\n- June 6: Deadline for returning any borrowed equipment (e.g., monitors, keyboards) to the Facilities Office. Failure to return items by this date will result in a deduction from the employee’s final paycheck.\\n- June 7 – June 8: Physical relocation of furniture and fixtures. The office will be closed for regular operations.\\n- June 9: Final IT audit and network configuration in the new building.\\n- June 10 – June 11: Cleaning and final safety inspection.\\n- June 12: New office opens; normal business hours resume.\\n\\nUpdated Remote Work Policy\\n\\nThe Flexible Work Arrangement Policy (FWAP) v3, effective June 1, supersedes the previous Remote Work Policy (RWP) v2. FWAP v3 permits employees to work remotely up to three days per week, provided that core‑hour coverage (10:00 AM – 3:00 PM) is maintained and that a formal request is approved by the department manager.\\n\\nPlease be aware that the Building Access Notice (NBA) #2024‑04, issued on May 15, states that remote work is limited to a maximum of two days per week for staff assigned to the new building. This notice remains in effect until a revised access policy is published.\\n\\nIf you have questions regarding the relocation schedule or the remote work guidelines, contact the Operations Helpdesk at ext. 4500 or email reloc@company.com.\\n\\nThank you for your cooperation.",
+      "questions": [
+        {
+          "question_id": 1,
+          "question_text": "Which of the following best reflects the chronological order of the key events related to the office relocation?",
+          "options": [
+            "A. Badge activation → Equipment audit → Departmental packing → Server move → Equipment return → Office closure → Final IT audit → New office opens",
+            "B. Badge activation → Departmental packing → Equipment audit → Server move → Equipment return → Office closure → Final IT audit → New office opens",
+            "C. Badge activation → Departmental packing → Equipment audit → Server move → Office closure → Equipment return → Final IT audit → New office opens",
+            "D. Badge activation → Equipment audit → Departmental packing → Server move → Office closure → Equipment return → Final IT audit → New office opens"
+          ],
+          "correct_option": "A"
+        },
+        {
+          "question_id": 2,
+          "question_text": "According to the memo, what must an employee do if they plan to use a personal laptop for work during the relocation, and what is the maximum number of remote‑work days permitted under the new policy (FWAP v3)?",
+          "options": [
+            "A. The employee may use a personal laptop without registration, and can work remotely up to three days per week.",
+            "B. The employee must register the personal laptop with IT by June 2, and can work remotely up to three days per week.",
+            "C. The employee must register the personal laptop with IT by June 2, but remote work is limited to two days per week per NBA #2024‑04.",
+            "D. The employee may use any device without restriction, and remote work is limited to two days per week."
+          ],
+          "correct_option": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Remote Work Policy Update and HR Notice",
+      "text_type": "single",
+      "passage_1": "Memo:\nTo All Staff\nDate: February 28, 2026\nSubject: Updated Remote Work Policy\n\nEffective Date: April 1, 2026\n\nThe company is expanding its flexible work arrangement program. Under the updated Remote Work Policy, eligible employees may work remotely up to three (3) days per calendar week, provided that:\n- The employee has completed the Remote Work Application Form (RWAF) and received approval from their department manager.\n- The employee’s role is classified as “remote‑suitable” in the current job classification list (JCL).\n- The employee submits a monthly summary of remote work days to HR by the 5th of the following month.\n\nThe Remote Work Application must be submitted no later than March 15, 2026 for the first review cycle. Applications received after this date will be considered for the subsequent cycle beginning May 1, 2026.\n\nPlease note that the remote work allowance is a privilege, not a right, and the company reserves the right to recall employees to the office for critical business needs with a minimum of five (5) business days’ notice.\n\n---\nHR Notice: Personal Data Update Reminder\nDate: March 1, 2026\n\nAll employees must update their personal contact details and emergency contact information in the Employee Self‑Service Portal (ESS) by March 20, 2026. This update is mandatory for compliance with the new remote work policy and to ensure that the HR system can process remote work requests accurately. Employees who fail to complete the update by the deadline will not be eligible to apply for remote work until the next calendar quarter.\n\nEmployees may work remotely up to two (2) days per week under the new policy.\n\nAdditionally, the HR department will host a series of webinars to explain the remote work policy. The schedule is as follows:\n- Webinar 1: “Understanding the Remote Work Policy” – March 10, 2026, 2:00 PM – 3:30 PM\n- Webinar 2: “How to Complete the Remote Work Application” – March 12, 2026, 10:00 AM – 11:30 AM\n- Webinar 3: “Q&A Session for Managers” – March 17, 2026, 1:00 PM – 2:30 PM\n\nNote: Attendance is not required but strongly encouraged. The recordings will be available on the company intranet within two business days after each session.\n\n---\nAdditional Information: Training on New Remote Work Tools\nDate: March 5, 2026\n\nThe IT Department will provide training on the new collaboration platform that must be used for remote work. The training sessions will be held in the Main Conference Room (Building A) and also streamed live. The schedule is:\n- Session A: March 22, 2026, 9:00 AM – 12:00 PM\n- Session B: March 24, 2026, 1:00 PM – 4:00 PM\n\nEmployees who have been approved for remote work must attend at least one session. The deadline to register for a session is March 18, 2026.",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "Which of the following statements accurately reflects the remote work policy as described in the memo and the HR notice?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Employees may work remotely up to three days per week, as stated in the memo, but the HR notice limits remote work to two days per week."
+            },
+            {
+              "label": "B",
+              "text": "The memo allows up to three remote days per week, and the HR notice does not mention a specific number of days."
+            },
+            {
+              "label": "C",
+              "text": "Both the memo and the HR notice specify a maximum of three remote days per week."
+            },
+            {
+              "label": "D",
+              "text": "The memo limits remote work to two days per week, while the HR notice states three days per week."
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "By what date must an employee complete the personal data update in order to remain eligible for the remote work arrangement?",
+          "options": [
+            {
+              "label": "A",
+              "text": "March 15, 2026"
+            },
+            {
+              "label": "B",
+              "text": "March 18, 2026"
+            },
+            {
+              "label": "C",
+              "text": "March 20, 2026"
+            },
+            {
+              "label": "D",
+              "text": "April 1, 2026"
+            }
+          ],
+          "correct_answer": "C"
+        }
+      ]
+    },
+    {
+      "set_id": 1,
+      "title": "Project Orion – Revised Timeline, Training Schedule, and Compliance Policy",
+      "text_type": "single",
+      "passage_1": "The Project Management Office (PMO) has issued a revised timeline for Project Orion. Phase 1 (requirements gathering) runs from March 1 to April 15. Phase 2 (development) begins on April 16 and originally ends on May 30, but a notice dated March 28 extends the deadline to June 15. Phase 3 (testing) is scheduled from June 1 to July 15, with final delivery on July 31.\n\nTo support the transition to the new development platform, a training program has been arranged. An introductory session will be held on March 10. The advanced workshop will take place on March 24. The certification exam is set for April 5. According to the policy, recertification is required every 12 months after the initial certification.\n\nThe PMO's policy on milestones and training compliance (Document PMO‑POL‑2024‑03) states: \"All team members must complete the certification exam before the start of Phase 2. If a team member has not completed the certification, a waiver must be requested at least five (5) business days prior to the start of Phase 2. Any timeline changes must be communicated through an official notice at least seven (7) days in advance.\"\n\nOn March 28, the PMO issued a notice titled \"Extension of Phase 2 Deadline and Training Deadline\". This notice states: \"Phase 2 deadline is extended to June 15. The training deadline for certification is extended to April 20. This notice supersedes all previous schedules and is effective immediately.\"",
+      "questions": [
+        {
+          "question_id": 1,
+          "question": "According to the policy, and ignoring any waiver, by what date must a team member complete the certification exam to be eligible to work on Phase 2?",
+          "options": [
+            "A) March 10",
+            "B) April 5",
+            "C) April 15",
+            "D) April 20"
+          ],
+          "answer": "C",
+          "explanation": "The policy requires certification before the start of Phase 2 on April 16. Therefore the latest permissible date is the day before, April 15."
+        },
+        {
+          "question_id": 2,
+          "question": "The notice dated March 28 extends the training deadline to April 20, but the policy requires certification before Phase 2 begins on April 16. Which of the following actions is consistent with the policy for a team member who completes certification on April 20?",
+          "options": [
+            "A) They may proceed to Phase 2 without any further action.",
+            "B) They must request a waiver at least five business days before Phase 2 start.",
+            "C) They must retake the introductory session.",
+            "D) They are not permitted to work on Phase 2 unless a waiver is granted, but the waiver deadline has already passed."
+          ],
+          "answer": "D",
+          "explanation": "Because the certification is completed after the Phase 2 start date and the waiver request deadline (five business days before April 16, i.e., April 9) has passed, the employee cannot legally work on Phase 2 without a waiver, and obtaining a waiver is no longer possible."
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Remote Work Policy Update and Implementation Notice",
+      "text_type": "single",
+      "passage_1": "On January 15, 2025, the Human Resources department issued a revised Remote Work Policy (RWP), effective March 1, 2025. The policy permits employees to work remotely up to three days per week, provided they submit a Remote Work Agreement (RWA) to their direct supervisor and to Human Resources no later than February 15, 2025.\n\nOn January 20, 2025, the company posted an implementation notice on the internal portal. The notice states that, for the first quarter (March–May 2025), remote work is limited to two days per week and that employees must submit their updated RWA no later than February 10, 2025. The notice also warns that any employee who misses the deadline will be required to work on‑site for the entire quarter.\n\nThe policy also includes a transitional provision: employees who already have an approved RWA under the 2024 policy may continue to work remotely for up to two days per week until March 31, 2025, after which the new three‑day limit takes effect. The HR department will conduct a compliance audit on April 15, 2025, to verify that all remote‑work arrangements comply with the latest policy.",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "Which of the following statements accurately reflects the difference between the Remote Work Policy and the notice?",
+          "options": [
+            {
+              "option_id": "A",
+              "text": "The policy allows up to three days of remote work per week, while the notice allows up to two days."
+            },
+            {
+              "option_id": "B",
+              "text": "The policy requires the RWA to be submitted by February 15, 2025, whereas the notice requires submission by February 10, 2025."
+            },
+            {
+              "option_id": "C",
+              "text": "The policy mentions a compliance audit on April 15, 2025, but the notice does not reference any audit."
+            },
+            {
+              "option_id": "D",
+              "text": "Both A and B."
+            }
+          ],
+          "correct_answer": "D"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "If an employee wishes to begin remote work on March 1, 2025, what is the latest date by which they must submit their Remote Work Agreement to satisfy both the policy and the notice?",
+          "options": [
+            {
+              "option_id": "A",
+              "text": "February 10, 2025"
+            },
+            {
+              "option_id": "B",
+              "text": "February 15, 2025"
+            },
+            {
+              "option_id": "C",
+              "text": "March 1, 2025"
+            },
+            {
+              "option_id": "D",
+              "text": "The employee cannot start remote work on March 1 because the compliance audit has not yet occurred."
+            }
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Remote Work Policy Update FY2026",
+      "text_type": "single",
+      "passage_1": "MEMORANDUM\n\nTo: All Staff\nFrom: Human Resources\nDate: March 15, 2026\nSubject: Revised Remote Work Policy – Effective April 1, 2026\n\nThe company is expanding its flexible‑work arrangement. Effective April 1, 2026, eligible employees may work remotely up to three days per week, an increase from the current two‑day limit. This change applies to all departments except the Sales department, which will continue to operate under the existing two‑day remote work rule (see notice below).\n\nImplementation Timeline:\n- Pilot Phase: April 1 – April 30, 2026 (remote work limited to two days per week).\n- Evaluation Period: May 1 – May 15, 2026 (feedback collection and data analysis).\n- Full Rollout: Starting May 16, 2026 (employees may exercise the new three‑day remote‑work allowance).\n\nDuring the pilot, managers must submit weekly reports on remote‑work usage to the Operations inbox. All remote‑work days must be recorded in the HR portal by the end of each week.\n\nNotice: Sales Department Remote Work\nThe Sales department will remain on the previous policy: remote work is permitted only on Fridays. This notice supersedes the general policy for Sales staff.\n\nPlease direct any questions to hr-support@company.com.",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question": "Based on the timeline described in the passage, what is the earliest date on which an employee may work remotely three days per week?",
+          "options": [
+            "April 1, 2026",
+            "April 30, 2026",
+            "May 1, 2026",
+            "May 16, 2026"
+          ],
+          "correct_answer": "May 16, 2026"
+        },
+        {
+          "question_id": "Q2",
+          "question": "Which of the following best describes the discrepancy between the general remote‑work policy and the notice concerning the Sales department?",
+          "options": [
+            "The notice overrides the policy for Sales, limiting them to only Friday remote work.",
+            "The policy applies to all employees, including Sales, making the notice redundant.",
+            "The notice introduces a new three‑day remote‑work allowance for Sales.",
+            "The policy and notice are consistent; both allow three days remote work."
+          ],
+          "correct_answer": "The notice overrides the policy for Sales, limiting them to only Friday remote work."
+        }
+      ]
+    },
+    {
+      "set_id": "SINGLE_001",
+      "title": "Internal Memo: Revised Remote Work Policy and Travel Reimbursement Guidelines",
+      "text_type": "single",
+      "passage_1": "Date: March 15, 2024\nFrom: Human Resources Department\nTo: All Employees\n\nSubject: Update on Remote Work Policy and Travel Reimbursement Procedures\n\n1. Remote Work Policy Revision\nEffective April 1, 2024, the company’s remote work policy has been updated to allow employees in eligible departments to work remotely up to three days per week, an increase from the previous maximum of two days. The policy applies to all full‑time staff in the Engineering, Product, and Data Science departments. Employees must submit a weekly remote work schedule to their manager by the preceding Thursday. Remote work days may be consecutive, but a minimum of two days on‑site is required each week.\n\n2. Notice on Portal\nOn March 10, 2024, an internal portal notice was posted incorrectly stating that the remote work limit would remain at two days per week until June 1, 2024. The notice will be corrected on March 20, 2024, to reflect the new policy effective April 1.\n\n3. Travel Reimbursement Procedure\nEffective immediately, any business travel expense exceeding $500 must be pre‑approved by the department head and accompanied by a detailed itinerary. Employees must submit the expense claim, together with original receipts, through the online expense system within 10 business days after the travel concludes. For expenses under $500, the approval of a direct supervisor is sufficient, and claims may be submitted within 15 business days.\n\n4. Timeline of Key Dates\n- March 10, 2024: Incorrect portal notice posted.\n- March 15, 2024: Policy memorandum distributed.\n- March 20, 2024: Correction of portal notice to reflect new policy.\n- April 1, 2024: Revised remote work policy becomes effective.\n- June 1, 2024: Deadline for all departments to complete remote work schedule submissions for the new fiscal year.\n\n5. Contact\nFor questions regarding the remote work policy, contact HR at hr-support@company.com. For travel reimbursement inquiries, contact Finance at finance@company.com.",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "Based on the timeline and the policy details, which of the following statements accurately reflects the relationship between the portal notice and the revised remote work policy?",
+          "options": [
+            "A) The portal notice correctly announced the new three‑day limit before April 1.",
+            "B) The portal notice remained unchanged after March 20 and still shows the two‑day limit.",
+            "C) The portal notice initially misstated the remote‑work limit and was corrected on March 20, before the policy took effect.",
+            "D) The portal notice was posted after April 1, creating a discrepancy that was never resolved."
+          ],
+          "correct_answer": "C"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "According to the travel reimbursement procedure, which of the following steps is required for an employee to claim a $600 flight expense?",
+          "options": [
+            "A) Obtain approval from a direct supervisor only.",
+            "B) Submit the claim within 15 business days without prior approval.",
+            "C) Secure pre‑approval from the department head, attach a detailed itinerary, and file the claim online within 10 business days with original receipts.",
+            "D) Submit a handwritten form to the finance department within 30 days."
+          ],
+          "correct_answer": "C"
+        }
+      ]
+    },
+    {
+      "set_id": "7s01",
+      "title": "Remote Work Policy Update 2024",
+      "text_type": "single",
+      "passage_1": "To: All Staff\nFrom: Human Resources\nSubject: Updated Remote Work Policy – Effective 1 March 2024\n\nThe company is introducing a revised remote‑work framework to better support work‑life balance and operational efficiency. The following changes will take effect on 1 March 2024.\n\n1. Eligibility\n   • Employees in the Engineering and Product Development divisions may work remotely up to three (3) days per calendar week.\n   • All other divisions remain under the existing ‘up to two (2) remote days per week’ rule, unchanged since the policy issued on 15 January 2023.\n\n2. Request Procedure\n   • Remote‑work requests must be submitted through the internal portal at least five (5) business days prior to the start of the requested week.\n   • Requests received less than five business days before the intended week will be automatically deferred to the following week.\n\n3. Transition Period\n   • Any remote‑work request already submitted for March 2024 will be processed under the previous policy (up to two remote days) unless the employee resubmits the request after 20 February 2024.\n   • After 20 February 2024, all new submissions will be governed by the 2024 policy.\n\n4. Reference Documents\n   • The 2023 remote‑work policy (Memo dated 15 Jan 2023) can be found on the HR portal under ‘Policy Archive’.\n   • A summary of the new schedule is attached (Table A).\n\nEmployees are encouraged to review the attached summary and update their plans accordingly. If you have questions, contact the HR Service Desk at ext. 4500.",
+      "questions": [
+        {
+          "question_id": "7s01q1",
+          "question_text": "If an employee in the Engineering division wishes to remote work during the week of March 4–7, 2024, by what date must the employee submit the remote‑work request to be processed under the new policy?",
+          "options": [
+            {
+              "id": "A",
+              "text": "February 23, 2024"
+            },
+            {
+              "id": "B",
+              "text": "February 26, 2024"
+            },
+            {
+              "id": "C",
+              "text": "March 1, 2024"
+            },
+            {
+              "id": "D",
+              "text": "March 3, 2024"
+            }
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "question_id": "7s01q2",
+          "question_text": "According to the 2023 remote‑work policy (Memo dated 15 Jan 2023), how many remote days per week were permitted for Engineering employees, and how does that compare to the 2024 policy?",
+          "options": [
+            {
+              "id": "A",
+              "text": "2 days in 2023, 2 days in 2024"
+            },
+            {
+              "id": "B",
+              "text": "2 days in 2023, 3 days in 2024"
+            },
+            {
+              "id": "C",
+              "text": "3 days in 2023, 2 days in 2024"
+            },
+            {
+              "id": "D",
+              "text": "No limit in 2023, 3 days in 2024"
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "7-001",
+      "title": "Revised Travel Reimbursement Policy and Related Notices",
+      "text_type": "single",
+      "passage_1": "Memo\n\nDate: March 1, 2026\nFrom: Director of Operations, Global Logistics Inc.\nTo: All Regional Managers\n\nSubject: Revised Travel Reimbursement Policy and New Pre‑Approval Workflow\n\nEffective April 1, 2026, the company’s travel reimbursement policy will be updated to align with cost‑control directives issued by the Board of Directors on February 15, 2026. The following changes are mandatory for all travel initiated after the effective date, unless otherwise noted.\n\n1. Pre‑approval timeline\n   • International travel: minimum 10 business days advance approval via the Travel Management System (TMS).\n   • Domestic travel: minimum 3 business days advance approval (reduced from 5 days). Requests submitted less than 3 business days prior to departure will be automatically routed to the “Late Request” queue and require Director approval.\n\n2. Reimbursement caps\n   • Lodging: Tier‑1 cities cap decreased from $200 to $180 per night; Tier‑2 cities cap decreased from $150 to $130 per night.\n   • Meals: Per‑diem remains at $60 for all locations; however, itemized receipts are required for any single meal expense exceeding $25 (previously $50). Tips must be included on the receipt.\n\n3. Trip classification codes\n   • All expense reports must include one of the following codes: “C” – client meeting, “P” – project execution, “T” – training, “O” – other. Omission of the code will cause automatic rejection.\n\n4. Exemptions\n   • Travel to crisis‑affected regions designated by the Global Security Office is exempt from the advance notice requirement, but a “Crisis Travel” approval must be obtained within 24 hours of departure. This approval can be requested via the TMS under the crisis‑travel module.\n\n5. Receipts and documentation\n   • Original itemized receipts are required for any individual expense over $25.\n   • For lodging, the receipt must show the nightly rate, taxes, and any applicable service fees.\n\nSupplement to the Travel Reimbursement Policy (issued March 5, 2026)\n   • Effective May 1, 2026, the lodging cap for Tier‑1 cities will be increased to $190 per night to reflect recent market trends. All other caps remain as stated in the March 1 memo.\n\nNotice: Travel Advance Program\n   • Effective immediately, the “Travel Advance” program is suspended for all new travel requests. Employees who have already received a travel advance for a trip scheduled on or after April 1 must settle the advance within 30 days of trip completion; otherwise the amount will be deducted from their next salary.\n\nGuidance for Regional Managers\n   • Please communicate the new timelines and caps to your teams before March 15, 2026, to ensure that any travel planned for April or later is booked in compliance with the revised policy. The TMS will automatically apply the new rules to any request created after March 15.",
+      "questions": [
+        {
+          "question_id": 1,
+          "question_text": "An employee plans to submit a travel request on March 16, 2026 for a domestic trip that will depart on March 25, 2026. Based on the passage, which of the following statements accurately reflects the employee’s obligations under the new policy and the notice about travel advances?",
+          "options": [
+            "A) The employee must obtain pre‑approval at least 5 business days in advance, may request a travel advance, and must include a trip classification code on the expense claim.",
+            "B) The employee must obtain pre‑approval at least 3 business days in advance, is not eligible for a travel advance because the program is suspended, and must include a trip classification code on the expense claim.",
+            "C) The employee may request a travel advance, does not need to use the new pre‑approval portal, and is exempt from including a trip classification code.",
+            "D) The employee is exempt from pre‑approval for domestic travel, but must include a trip classification code, and can still receive a travel advance."
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "question_id": 2,
+          "question_text": "A traveler’s business trip is scheduled from April 28 to May 3, 2026, staying in a Tier‑1 city hotel. The traveler incurs lodging expenses for each night. According to the passage, which of the following best describes the reimbursement the traveler can claim for the entire stay?",
+          "options": [
+            "A) The first two nights (April 28‑29) are reimbursed at $180 per night, and the remaining three nights (April 30‑May 3) are reimbursed at $190 per night.",
+            "B) The entire stay is reimbursed at $180 per night because the new cap takes effect on May 1 only for reservations made after that date.",
+            "C) The entire stay is reimbursed at $190 per night because the supplement states the cap increases effective May 1, regardless of reservation date.",
+            "D) The traveler can claim $180 for the first four nights and $190 for the last night, because the increase applies starting the night of May 1."
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "1",
+      "title": "Travel Policy Update and Reimbursement Procedure",
+      "text_type": "single",
+      "passage_1": "Internal Memo – Revised Travel Policy (Version 3.2) – Effective March 1, 2025\n\n- The new travel policy (Version 3.2) supersedes Version 3.1 effective March 1, 2025.\n- The daily lodging limit is increased to $200 (previously $150).\n- The per‑diem for meals remains $75.\n- All travel must be booked through the corporate portal; any offline booking will not be reimbursed.\n\nSupplementary Notice – Lodging Cap for Metro City Branch (dated February 20, 2025)\n\n- Because of lower hotel rates in the Metro City area, the lodging limit for trips to the Metro City branch is capped at $180 per night. This cap applies to all travel effective March 1, 2025.\n\nNotice – Expense Claim Deadlines (posted February 15, 2025)\n\n- For travel occurring in March 2025 or later, expense claims must be submitted no later than 30 calendar days after the travel end date.\n- For travel in February 2025, the submission deadline is April 15, 2025.\n\nOperational Note – Travel Authorization (issued February 22, 2025)\n\n- Managers must approve travel requests at least five (5) business days before the planned departure.\n- Requests submitted fewer than five business days in advance will be automatically denied unless a waiver is granted by the Director.",
+      "questions": [
+        {
+          "question_id": "1",
+          "question_text": "According to the memo and the supplementary notice, what is the maximum lodging expense that can be claimed for a business trip to the Metro City branch?",
+          "options": [
+            {
+              "label": "A",
+              "text": "$150 per night"
+            },
+            {
+              "label": "B",
+              "text": "$180 per night"
+            },
+            {
+              "label": "C",
+              "text": "$200 per night"
+            },
+            {
+              "label": "D",
+              "text": "$250 per night"
+            }
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "question_id": "2",
+          "question_text": "An employee will travel from March 5 to March 7, 2025. Under the current policy, by what date must the expense claim be submitted, and under what circumstances must a manager request a waiver from the Director?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Claim by April 6, 2025; a waiver is required when the travel is international."
+            },
+            {
+              "label": "B",
+              "text": "Claim by April 6, 2025; a waiver is required when the request is submitted fewer than five business days before departure."
+            },
+            {
+              "label": "C",
+              "text": "Claim by April 7, 2025; a waiver is required when the request is submitted at least five business days before departure."
+            },
+            {
+              "label": "D",
+              "text": "Claim by April 7, 2025; a waiver is required when the trip exceeds 30 days."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_001",
+      "title": "Remote Work Policy and Email Correspondence",
+      "text_type": "single",
+      "passage_1": "Remote Work Policy (RWP) v2.3 – Effective January 1, 2024\n\n1. Eligibility: All full‑time employees are eligible to request remote work.\n2. Submission Window: Requests must be submitted via the Company Portal at least 7 business days before the intended remote‑work start date. The deadline is 5:00 PM local time on the 7th business day prior.\n3. Review Process: Human Resources will acknowledge receipt within one business day and issue a decision no later than 3 business days after the request is received.\n4. Late Submissions: Requests received after the 7‑business‑day window will be deferred to the next available review cycle.\n5. Supersession Clause: This policy supersedes any previous guidelines, informal emails, or memos that conflict with its terms.\n\n--- Notice (February 15, 2024) ---\nEffective February 15, 2024, the advance notice period for remote‑work requests is reduced from 10 to 7 business days. All employees must comply with the new deadline of 7 business days before the start date. This notice is part of the Remote Work Policy and takes precedence over any earlier communication.\n\n--- Internal Email Chain ---\n\nFrom: Sarah Miller <sarah.miller@company.com>\nTo: All Staff\nDate: March 4, 2024 09:15 AM\nSubject: Remote Work Request for March 18\n\nHi team,\n\nI would like to request remote work for Monday, March 18. Since that is 14 days away, I assume I am within the window. Could you confirm that my request will be processed? Thanks.\n\n---\n\nFrom: John Lee <john.lee@company.com>\nTo: Sarah Miller\nDate: March 5, 2024 02:30 PM\nSubject: RE: Remote Work Request for March 18\n\nSarah,\n\nHR has updated the policy as of February 15. The new deadline is 7 business days, not 10. Please resubmit your request by March 11 to meet the new deadline. Let me know if you need the portal link.\n\nRegards,\nJohn\n\n--- End of Documents ---",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "According to the official policy notice dated February 15, 2024, by what date must Sarah submit her remote‑work request for March 18 in order to be considered on time?",
+          "options": [
+            "A) March 7, 2024",
+            "B) March 8, 2024",
+            "C) March 11, 2024",
+            "D) March 12, 2024"
+          ],
+          "correct_answer": "A",
+          "explanation": "The notice states that the advance notice period is 7 business days before the start date. Counting 7 business days before March 18 (a Monday) yields Thursday, March 7 (excluding the weekend). Therefore the deadline is 5:00 PM on March 7."
+        },
+        {
+          "question_id": "q2",
+          "question_text": "If Sarah resubmits her request on March 5, 2024, by what date should she expect to receive a decision from HR according to the policy?",
+          "options": [
+            "A) March 6, 2024",
+            "B) March 7, 2024",
+            "C) March 8, 2024",
+            "D) March 11, 2024"
+          ],
+          "correct_answer": "C",
+          "explanation": "The policy specifies that HR will issue a decision no later than 3 business days after the request is received. Submitting on Tuesday, March 5, the third business day is Friday, March 8. Hence Sarah should receive a decision by the end of March 8."
+        }
+      ]
+    },
+    {
+      "set_id": "set_1",
+      "title": "Updated Remote Work Policy and Implementation Notice",
+      "text_type": "single",
+      "passage_1": "Memo\nTo: All Employees\nFrom: Human Resources\nDate: January 10, 2025\nSubject: Updated Remote Work Policy\n\nEffective January 15, 2025, the company’s remote work policy will be revised. Employees may work remotely up to three days per week, provided they submit a remote work request at least 48 hours in advance through the internal portal. Remote work eligibility is contingent upon compliance with the company’s IT security requirements, including VPN software updates. Failure to meet IT compliance may result in temporary suspension of remote access.\n\nNotice\nTo: All Staff\nFrom: IT Department\nDate: January 12, 2025\nSubject: VPN Software Update Required\n\nTo maintain secure remote access, all employees must update their VPN client to version 4.2 by February 1, 2025. After this date, employees who have not completed the update will have their remote access suspended until the update is installed. Please verify your VPN connectivity by February 5, 2025. Contact the help desk if you experience any issues.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Which of the following statements accurately reflects both the HR memo and the IT notice?",
+          "options": [
+            "A) Remote work is allowed only after VPN update is completed.",
+            "B) Remote work requests can be submitted any time before the effective date.",
+            "C) The VPN update deadline is later than the remote work policy effective date.",
+            "D) Employees may work remotely up to five days per week."
+          ],
+          "correct_answer": "A) Remote work is allowed only after VPN update is completed."
+        },
+        {
+          "question_id": "q2",
+          "question_text": "An employee plans to work remotely on February 3, 2025. According to the notice, by which date must the employee have completed the VPN update to avoid suspension of remote access?",
+          "options": [
+            "A) January 15, 2025",
+            "B) January 30, 2025",
+            "C) February 1, 2025",
+            "D) February 5, 2025"
+          ],
+          "correct_answer": "C) February 1, 2025"
+        }
+      ]
+    },
+    {
+      "set_id": "set_2",
+      "title": "Project Schedule and Risk Management Plan",
+      "text_type": "single",
+      "passage_1": "Project Schedule (Version 2.3)\nDate: February 20, 2025\n\nThe project is structured into five main phases:\n- Requirements Gathering: March 1 – March 15, 2025\n- Design: March 16 – April 5, 2025\n- Development: April 6 – May 20, 2025\n- Testing (including User Acceptance Testing): May 21 – June 10, 2025\n- Deployment: June 15, 2025\n\nAll phase durations are fixed; any slippage will affect subsequent phases.\n\nRisk Management Plan (Version 1.0)\nDate: February 22, 2025\n\nThe following risks have been identified:\n1. Key developer leaving (Probability: High, Impact: High) – Mitigation: Cross‑training and documentation.\n2. Supplier delay for hardware (Probability: Medium, Impact: Medium) – Mitigation: Identify backup supplier.\n3. Data breach (Probability: Low, Impact: Very High) – Mitigation: Security audit and incident response plan.\n\nThe risk priority is determined by multiplying probability and impact scores (1‑5 scale). Risk 1 scores 25 (5×5), Risk 2 scores 9 (3×3), Risk 3 scores 6 (1×5). Therefore, Risk 1 is the highest priority and must be addressed first.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Which of the following best describes the order of the main project phases as presented in the schedule?",
+          "options": [
+            "A) Requirements → Design → Development → Testing → Deployment",
+            "B) Design → Requirements → Development → Testing → Deployment",
+            "C) Development → Requirements → Design → Testing → Deployment",
+            "D) Testing → Development → Design → Requirements → Deployment"
+          ],
+          "correct_answer": "A) Requirements → Design → Development → Testing → Deployment"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Based on the risk management plan, which risk has the highest priority and should be addressed first?",
+          "options": [
+            "A) Key developer leaving",
+            "B) Supplier delay",
+            "C) Data breach",
+            "D) None of the above"
+          ],
+          "correct_answer": "A) Key developer leaving"
+        }
+      ]
+    },
+    {
+      "set_id": "set_001",
+      "title": "Corporate Policy Update and Facility Relocation Notice",
+      "text_type": "single",
+      "passage_1": "Corporate Policy Update and Facility Relocation Notice\n\nEffective March 1, 2024, the Human Resources Department introduces a revised Remote Work Policy (RWP) that allows eligible employees to work remotely up to three days per week. The policy states that employees must submit a Remote Work Agreement (RWA) to their manager at least five business days before the start of any remote work period. The RWA must include a description of the remote work setup, a confirmation of compliance with data‑security protocols, and a signed acknowledgment of the \"Remote Work Guidelines\" (see Section 4.2 of the Employee Handbook). Employees who fail to submit a completed RWA may be required to work on‑site for the full week. Additionally, the policy requires that remote workers attend at least two on‑site days per week for team meetings and equipment maintenance.\n\nFacility Relocation Notice\n\nTo accommodate the expanding Data Analytics Division, the company will relocate the Chicago office to a new building at 500 West Madison Street, effective June 15, 2024. All staff members must return any borrowed equipment (laptops, monitors, keyboards) to the IT Support Desk by May 30, 2024. The relocation schedule is as follows:\n- May 20–24, 2024: Packing of office supplies.\n- May 27–31, 2024: Moving of furniture and IT infrastructure.\n- June 3–7, 2024: Setup of new workspace and testing of network connections.\n- June 10–14, 2024: Final orientation and security badge distribution.\n- June 15, 2024: Official opening of the new office.\n\nEmployees who have previously been approved for remote work under the RWP may continue to work remotely during the relocation period, provided they have submitted an updated RWA that reflects the new office address. Remote workers will not be assigned a permanent desk but may reserve hot‑desks on a daily basis through the internal reservation system.\n\nNote: The new office building does not have a dedicated parking lot. The company has arranged shuttle service from the nearest public transit station, which will operate from 6:30 AM to 9:00 PM on weekdays. Employees who require parking must use the nearby public garage, which offers a discounted rate of $150 per month for staff.\n\nFor questions, contact the Facilities Manager at facilities@company.com.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Which of the following statements best describes how the Remote Work Policy (RWP) interacts with the Facility Relocation Notice, and what action must an employee take to remain compliant during the relocation?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The policy requires at least two on‑site days per week, but the notice allows full remote during relocation; employees must submit an updated Remote Work Agreement reflecting the new office address."
+            },
+            {
+              "id": "B",
+              "text": "The policy has no impact on the relocation; employees may ignore the notice."
+            },
+            {
+              "id": "C",
+              "text": "The policy and notice are identical, requiring no extra steps."
+            },
+            {
+              "id": "D",
+              "text": "The notice overrides the policy, allowing unlimited remote work without an RWA."
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "According to the relocation schedule, on which dates must the final orientation and security badge distribution be completed?",
+          "options": [
+            {
+              "id": "A",
+              "text": "June 3–7, 2024"
+            },
+            {
+              "id": "B",
+              "text": "June 10–14, 2024"
+            },
+            {
+              "id": "C",
+              "text": "June 15, 2024"
+            },
+            {
+              "id": "D",
+              "text": "May 27–31, 2024"
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_002",
+      "title": "PMO Review and Budget Amendment",
+      "text_type": "single",
+      "passage_1": "PMO Review and Budget Amendment\n\nThe Project Management Office (PMO) has completed its quarterly review of ongoing projects as of April 2024. The review summarizes each project’s current phase, budget status, and risk level. The following schedule applies to all projects under the PMO’s oversight:\n- Phase 1 – Requirements Gathering: Jan 10 – Feb 15, 2024.\n- Phase 2 – Design: Feb 20 – Mar 30, 2024.\n- Phase 3 – Development: Apr 5 – Jun 15, 2024.\n- Phase 4 – Testing: Jun 20 – Aug 5, 2024.\n- Phase 5 – Deployment: Aug 10 – Aug 20, 2024.\n\nAccording to the PMO Guidelines (Version 3.1), any change to a project’s approved budget that exceeds USD 50,000 must be approved by the Finance Director. All budget change requests must be accompanied by a revised cost estimate and a risk assessment (see Appendix A of the PMO Handbook). Additionally, the guidelines require that a copy of the request be filed in the Project Documentation Repository (PDR) within two business days of approval.\n\nBudget Amendment Notice (effective April 1, 2024)\n\nTo streamline the approval process, the Finance Department has issued a notice allowing Project Managers to approve budget amendments of up to USD 75,000 without prior Finance Director review, provided the amendment does not increase the total project budget beyond the originally approved ceiling. The notice also states that all approved amendments must be logged in the new Online Budget System (OBS) within one business day.\n\nNote: For projects that have already exceeded their original budget ceiling, any additional increase—regardless of amount—still requires Finance Director approval.\n\nThe risk register is updated weekly (see Appendix B) and is accessible through the PMO portal.\n\nFor further information, contact the PMO at pmo@company.com.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Based on the PMO Guidelines and the Budget Amendment Notice, which statement correctly identifies a conflict and the required approval for a $30,000 expense during Phase 3?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The PMO Guidelines require Finance Director approval for any budget increase over $50,000, while the Notice allows the Project Manager to approve up to $75,000; therefore a $30,000 expense can be approved by the Project Manager."
+            },
+            {
+              "id": "B",
+              "text": "Both documents require Finance Director approval for any increase, so the Project Manager cannot approve $30,000."
+            },
+            {
+              "id": "C",
+              "text": "The Notice eliminates the need for any approval for expenses under $75,000, overriding the PMO Guidelines."
+            },
+            {
+              "id": "D",
+              "text": "There is no conflict; the PMO Guidelines and Notice are identical."
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "According to the project schedule, on which date is the earliest the Testing phase scheduled to begin?",
+          "options": [
+            {
+              "id": "A",
+              "text": "June 15, 2024"
+            },
+            {
+              "id": "B",
+              "text": "June 20, 2024"
+            },
+            {
+              "id": "C",
+              "text": "August 5, 2024"
+            },
+            {
+              "id": "D",
+              "text": "August 10, 2024"
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_001",
+      "title": "Remote Work Policy Revision and Implementation Schedule",
+      "text_type": "single",
+      "passage_1": "From: Human Resources <hr@company.com>\nTo: All Employees\nDate: March 15, 2026\nSubject: Updated Remote Work Policy – Effective April 1, 2026\n\nDear colleagues,\n\nPlease be advised that the company’s remote work policy has been revised as of March 1, 2026. The key changes are as follows:\n\n1. Employees may work remotely up to three days per week (hybrid model) starting April 1, 2026.\n2. All remote work agreements must be submitted to the HR portal by March 20, 2026.\n3. The IT Department will provision secure laptops for eligible employees by March 25, 2026.\n4. The Facilities Management team will collect any excess office equipment from employees who have opted for full‑time remote work by March 30, 2026.\n\nFor detailed eligibility criteria and the new remote‑work guidelines, please refer to the “Remote Work Guidelines 2026” document attached to this memo. If you have questions, contact the HR Service Desk.\n\nNote: The deadline for returning excess equipment has been extended to April 5, 2026, as per the Facilities notice dated March 12, 2026 (see separate notice).\n\nFacilities Management Notice – March 12, 2026\n\nAll employees participating in the remote work program must return any surplus office equipment (desks, chairs, monitors) to the designated storage area by March 30, 2026. No extensions will be granted.\n\nRemote Work Guidelines 2026 (Excerpt)\n\n1. Employees may apply for a hybrid schedule of up to three remote days per week, subject to manager approval.\n2. Remote work eligibility requires a performance rating of “Meets Expectations” or higher in the most recent review.\n3. Employees must certify that their home office meets the company’s safety standards, including fire extinguisher availability and broadband speed of at least 25 Mbps.\n4. The IT department will provide a laptop only after the signed remote work agreement is recorded in the HR portal.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "According to the Facilities Management notice, by what date must employees return surplus office equipment?",
+          "options": [
+            "A) March 30, 2026",
+            "B) April 1, 2026",
+            "C) April 5, 2026",
+            "D) March 25, 2026"
+          ],
+          "correct_answer": "A) March 30, 2026"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which statement best describes the discrepancy between the HR memo and the Facilities notice regarding the equipment return deadline?",
+          "options": [
+            "A) The HR memo states April 5, while the Facilities notice states March 30.",
+            "B) The HR memo states March 30, while the Facilities notice states April 5.",
+            "C) Both documents agree on an April 5 deadline.",
+            "D) Both documents agree on a March 30 deadline."
+          ],
+          "correct_answer": "A) The HR memo states April 5, while the Facilities notice states March 30."
+        }
+      ]
+    },
+    {
+      "set_id": "set_002",
+      "title": "Supply Chain Disruption and Revised Shipping Schedule",
+      "text_type": "single",
+      "passage_1": "From: Logistics Manager <logistics@company.com>\nTo: Distribution Team\nDate: March 4, 2026\nSubject: Critical Supply Chain Disruption – Action Required\n\nDear Team,\n\nDue to the recent port strike in Shanghai, our shipment of electronic components that was scheduled to arrive on March 5, 2026 has been delayed. The new estimated arrival for the sea freight is March 12, 2026. To mitigate the impact, we have arranged alternative air freight; the air cargo is expected to arrive by March 8, 2026.\n\nAll orders that were scheduled for delivery between March 6 and March 10 will be fulfilled using the air freight. Customers affected will be notified via the updated dispatch notice.\n\nPlease coordinate with the warehouse to prioritize the air freight shipments upon arrival.\n\nFor the latest status, refer to the Vendor Shipping Notice attached to this email (see below).\n\n---\n\nVendor Shipping Notice – March 3, 2026\n\nWe will resume normal shipping operations on March 15, 2026. All back orders will be shipped in the order they were received.\n\n---\n\nCustomer Service Policy (Excerpt)\n\nIn the event of a delay longer than 48 hours, the account manager must offer a 10 % discount on the next order.\n\n---\n\nWarehouse Operations Update – March 4, 2026\n\nThe warehouse will operate extended hours from March 9 to March 14 to process the influx of air freight.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Based on the Logistics Manager’s email and the Vendor Shipping Notice, what is the earliest possible delivery date for an order that was originally scheduled for March 6, 2026?",
+          "options": [
+            "A) March 8, 2026",
+            "B) March 10, 2026",
+            "C) March 12, 2026",
+            "D) March 15, 2026"
+          ],
+          "correct_answer": "B) March 10, 2026"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "According to the Customer Service Policy, what must an account manager do if a delivery is delayed by more than 48 hours?",
+          "options": [
+            "A) Issue a full refund",
+            "B) Offer a 10 % discount on the next order",
+            "C) Contact the vendor for compensation",
+            "D) Reschedule the delivery without notification"
+          ],
+          "correct_answer": "B) Offer a 10 % discount on the next order"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Corporate Merger Timeline and Cross-Document Reasoning",
+      "text_type": "single",
+      "passage_1": "The following is an excerpt from an internal memo dated January 15, 2024, sent by the Vice President of Operations to all department heads, followed by a press release issued by the company's communications team on February 1, 2024.\n\nInternal Memo (Jan 15, 2024):\n\"Dear colleagues,\n\nAs part of the upcoming merger with Apex Industries, we have scheduled a series of integration milestones. The due diligence phase is slated to conclude on January 31, 2024. Following the completion of due diligence, the legal team will file the final merger agreement with the regulatory authorities by February 12, 2024. Assuming no objections are raised, we anticipate receiving regulatory approval by February 28, 2024. The target date for the official closing of the merger is March 15, 2024. After the closing, the integration of the two companies' IT infrastructure will begin, with a projected completion date of June 30, 2024.\"\n\nPress Release (Feb 1, 2024):\n\"XYZ Corporation is pleased to announce that it has received conditional approval from the regulatory authority for its merger with Apex Industries. The approval was granted on January 29, 2024. The company expects the merger to close on March 15, 2024, as originally planned. Post‑merger integration activities, including the unification of IT systems, are scheduled to be finalized by the end of the second quarter, i.e., by June 30, 2024.\"",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "According to both the internal memo and the press release, what is the earliest date on which the merger is expected to receive regulatory approval?",
+          "options": [
+            {
+              "label": "A",
+              "text": "January 29, 2024"
+            },
+            {
+              "label": "B",
+              "text": "January 31, 2024"
+            },
+            {
+              "label": "C",
+              "text": "February 12, 2024"
+            },
+            {
+              "label": "D",
+              "text": "February 28, 2024"
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Based on the timeline described in the internal memo, which of the following sequences correctly orders the key milestones for the merger?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Due diligence completion → Filing merger agreement → Regulatory approval → Closing → IT integration"
+            },
+            {
+              "label": "B",
+              "text": "Filing merger agreement → Due diligence completion → Closing → Regulatory approval → IT integration"
+            },
+            {
+              "label": "C",
+              "text": "Due diligence completion → Regulatory approval → Filing merger agreement → Closing → IT integration"
+            },
+            {
+              "label": "D",
+              "text": "Filing merger agreement → Due diligence completion → Regulatory approval → IT integration → Closing"
+            }
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "S002",
+      "title": "Policy Notice Mismatch and Operational Inference",
+      "text_type": "single",
+      "passage_1": "The following two announcements were posted on the company's internal portal in March 2024.\n\nAnnouncement 1 – Remote Work Policy (dated March 1, 2024):\n\"To promote work‑life balance, the company introduces a flexible remote‑work program effective April 1, 2024. Employees may work remotely up to three days per week, provided they obtain prior approval from their direct manager. Remote work days must be consistent throughout the month and cannot exceed three consecutive days. Employees who wish to work remotely on a temporary basis (e.g., due to health concerns) must submit a request to Human Resources at least five business days in advance.\"\n\nAnnouncement 2 – Office Operational Update (dated March 5, 2024):\n\"In response to the new municipal health regulation that took effect March 1, 2024, the company is required to ensure that at least 80% of its workforce is present in the office on any given day. Consequently, all employees are expected to be on‑site a minimum of four days per week, effective April 1, 2024. Managers are asked to adjust team schedules to meet this attendance requirement. Employees with documented medical conditions may apply for an exemption through the HR portal; such requests will be considered on a case‑by‑case basis.\"",
+      "questions": [
+        {
+          "question_id": "Q1",
+          "question_text": "According to the two announcements, which of the following statements is correct regarding the remote‑work allowance starting April 1, 2024?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Employees may work remotely up to three days per week without manager approval."
+            },
+            {
+              "label": "B",
+              "text": "Employees must be on‑site at least four days per week, but can still work remotely up to three days."
+            },
+            {
+              "label": "C",
+              "text": "The remote‑work policy allows up to three consecutive remote days, while the operational update requires at least four on‑site days."
+            },
+            {
+              "label": "D",
+              "text": "The remote‑work policy has been superseded by the operational update, allowing no remote work."
+            }
+          ],
+          "correct_answer": "C"
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "An employee wishes to work remotely two days per week starting April 1. Based on the announcements, what must the employee do to comply with both the remote‑work policy and the operational update?",
+          "options": [
+            {
+              "label": "A",
+              "text": "Obtain manager approval for remote work and submit a medical exemption request to HR."
+            },
+            {
+              "label": "B",
+              "text": "Obtain manager approval for remote work and ensure that the remote days do not exceed one day per week."
+            },
+            {
+              "label": "C",
+              "text": "Submit a request to HR at least five business days in advance and ensure that remote days are not consecutive."
+            },
+            {
+              "label": "D",
+              "text": "There is no way to meet both requirements; the employee must work on‑site all five days."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "S001",
+      "title": "Remote Work Policy Update and Facilities Notice",
+      "text_type": "single",
+      "passage_1": "On February 1, 2024, the Human Resources Department issued a revised Remote Work Policy (RWP), effective March 15, 2024. This policy supersedes the previous Flexible Work Arrangement (FWA) policy dated January 2022. Employees who wish to continue remote work beyond the transition period must submit a Remote Work Application (RWA) by March 1, 2024. The application will be reviewed by the employee’s direct manager and the HR Business Partner. Managers must forward approved applications to the HR portal no later than March 10. Failure to comply will result in default placement in the on‑site work schedule effective March 15.\n\nIn a separate notice dated February 20, 2024, the Facilities Team announced that the downtown office will be closed for renovation from March 20 to April 5, and employees assigned to on‑site work will be temporarily relocated to the Westside campus. However, the Facilities notice incorrectly states that remote work employees must also relocate. The HR Department has clarified that remote workers are not required to relocate.\n\nThe policy also outlines an exception process: employees with medical accommodations may request an exception by submitting a Medical Accommodation Request (MAR) form, supported by a physician’s certificate, to the HR Department at least five business days before the effective date.",
+      "questions": [
+        {
+          "question_id": 1,
+          "question_text": "By what date must employees submit a Remote Work Application (RWA) to be eligible for continued remote work after March 15, and what will be the default arrangement if the deadline is missed?",
+          "options": [
+            "A. March 1; they will be placed on the on‑site schedule.",
+            "B. March 10; they will be placed on the on‑site schedule.",
+            "C. March 1; they will be allowed to continue remote work.",
+            "D. March 10; they will be allowed to continue remote work."
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": 2,
+          "question_text": "Based on the Facilities notice and the HR policy, which statement is correct regarding the relocation requirement for remote employees?",
+          "options": [
+            "A. Remote employees must relocate to the Westside campus during the office closure.",
+            "B. Remote employees are not required to relocate, as clarified by HR.",
+            "C. Remote employees may choose to relocate but will lose remote work eligibility.",
+            "D. The Facilities notice supersedes the HR policy for remote employees."
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_1",
+      "title": "Corporate Policy Update and Implementation Timeline",
+      "text_type": "single",
+      "passage_1": "From: HR Director <hr@company.com>\nTo: All Employees\nSubject: Updated Remote Work Policy – Effective Dates and Implementation Steps\nDate: 15 March 2023\n\nDear Colleagues,\n\nWe are pleased to announce an update to our remote work policy (Policy RWP-2023). The changes will take effect on 1 May 2023. The key points are:\n\n- Employees may work remotely up to three days per week, with manager approval.\n- Core office days are Tuesday and Thursday; all employees must be present on those days unless a formal exception is granted.\n- The Remote Work Request Form (Form RWF-01) must be submitted by 15 April 2023 for the May–June cycle.\n- Managers must review and approve requests by 20 April 2023.\n- Training sessions for the new tools (Virtual Desktop Infrastructure and secure VPN) will be held on 22 April and 25 April 2023. Attendance is mandatory for all remote‑eligible staff.\n\nNote: The Intranet notice dated 10 March 2023 incorrectly states that remote work is limited to two days per week and that core office days are Wednesday and Friday. Please disregard that notice; the correct details are as described above.\n\nFor questions, contact the HR Help Desk at hr.help@company.com or extension 4500.\n\nBest regards,\nJennifer Alvarez\nHuman Resources Director",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Based on the memo, what is the correct chronological order of the key dates related to the new remote‑work policy?",
+          "type": "timeline reconstruction",
+          "options": [
+            {
+              "label": "A",
+              "text": "Form submission – Manager approval – Policy effective date – Training sessions"
+            },
+            {
+              "label": "B",
+              "text": "Training sessions – Form submission – Manager approval – Policy effective date"
+            },
+            {
+              "label": "C",
+              "text": "Manager approval – Form submission – Training sessions – Policy effective date"
+            },
+            {
+              "label": "D",
+              "text": "Policy effective date – Manager approval – Form submission – Training sessions"
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which statement explains the discrepancy between the policy outlined in the memo and the Intranet notice dated 10 March 2023?",
+          "type": "policy/notice mismatch",
+          "options": [
+            {
+              "label": "A",
+              "text": "The notice incorrectly lists the maximum remote days as two instead of three."
+            },
+            {
+              "label": "B",
+              "text": "The notice correctly identifies core days as Tuesday and Thursday."
+            },
+            {
+              "label": "C",
+              "text": "The memo mentions that core days are Wednesday and Friday."
+            },
+            {
+              "label": "D",
+              "text": "The notice was issued after the policy effective date."
+            }
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "set_2",
+      "title": "Logistics Operations: Shipping Route Reassignment",
+      "text_type": "single",
+      "passage_1": "From: Logistics Manager <logistics@globalforward.com>\nTo: Regional Supervisors\nCc: Operations Director\nSubject: Reassignment of Pacific Shipping Routes – Action Required\nDate: 4 June 2024\n\nTeam,\n\nIn response to the port congestion at the Port of Long Beach, the following changes to our Pacific shipping schedule will be implemented effective 15 June 2024.\n\n1. Route A (Shanghai – Los Angeles) will be suspended until further notice.\n2. Route B (Ningbo – Seattle) will be rerouted via the Port of Tacoma. The estimated transit time increases by 2 days.\n3. Route C (Busan – San Francisco) will be accelerated, cutting transit time by 1 day; the departure from Busan will be moved from 08:00 to 06:00 local time.\n\nThe revised timetable is as follows:\n\n- Route B: Departure Ningbo – 10 June 2024 14:00 (local) → Arrival Tacoma – 23 June 2024 09:00 (local)\n- Route C: Departure Busan – 12 June 2024 06:00 (local) → Arrival San Francisco – 20 June 2024 18:00 (local)\n\nPlease ensure that all shipping manifests are updated to reflect the new ports and that the customs broker is notified of the route changes no later than 12 June 2024.\n\nAdditionally, the Operations Update issued on 30 May 2024 incorrectly listed the new transit time for Route B as unchanged (i.e., same as the original schedule). That information is outdated; the correct impact is a two‑day extension as noted above.\n\nIf you have any questions, contact the logistics coordinator at +1-555-0178 or email logistics@globalforward.com.\n\nRegards,\nMarkus Chen\nLogistics Manager\nGlobal Forwarding Inc.",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "Which of the following actions must be taken by the regional supervisors before 12 June 2024 to comply with the new routing instructions?",
+          "type": "operational inference",
+          "options": [
+            {
+              "label": "A",
+              "text": "Update the shipping manifests and notify the customs broker."
+            },
+            {
+              "label": "B",
+              "text": "Adjust the departure times for Route A and Route C."
+            },
+            {
+              "label": "C",
+              "text": "Suspend Route A and reroute Route B without notifying the broker."
+            },
+            {
+              "label": "D",
+              "text": "Wait for the Operations Director’s approval before making any changes."
+            }
+          ],
+          "correct_answer": "A"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which piece of evidence in the passage indicates that the Operations Update dated 30 May 2024 contradicts the current routing plan?",
+          "type": "cross-document reasoning",
+          "options": [
+            {
+              "label": "A",
+              "text": "The Operations Update incorrectly states that Route B’s transit time remains unchanged, while the current memo adds a two‑day extension."
+            },
+            {
+              "label": "B",
+              "text": "The Operations Update mentions the new departure time for Route C."
+            },
+            {
+              "label": "C",
+              "text": "The memo lists the revised timetable for Route B and Route C."
+            },
+            {
+              "label": "D",
+              "text": "The Operations Update was issued after the effective date of the route changes."
+            }
+          ],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "set_id": "1",
+      "title": "Policy Revision Memo",
+      "text_type": "single",
+      "passage_1": "MEMO\n\nTo: All Employees\nFrom: Human Resources Department\nDate: March 12, 2025\nSubject: Revised Remote Work Policy\n\nEffective April 1, 2025, the company’s remote work policy will be updated to reflect a hybrid model. Employees may work remotely up to three days per week, with a minimum of two days required in the office. Remote work days must be approved by the employee’s direct manager at least 48 hours in advance. The updated policy also introduces a monthly allowance of $200 to cover internet and electricity costs for employees who work remotely for more than 10 days in a month. This allowance will be paid quarterly.\n\nAll employees must complete the new remote work agreement form by March 31, 2025. Failure to submit the form may result in the default arrangement of office-based work only.\n\nPlease direct any questions to hr@company.com.\n\n---Intranet Notice (Posted March 15, 2025)---\n\nRemote Work Update\n\nEmployees are informed that, starting April 1, 2025, they may work remotely up to four days per week, provided they obtain manager approval at least 48 hours before the planned remote day. The notice also states that the $200 monthly allowance will be paid quarterly, consistent with the memo.\n\nThe deadline for submitting the remote work agreement remains March 31, 2025.\n\nFor questions, contact hr@company.com.",
+      "questions": [
+        {
+          "question_number": "1",
+          "question_text": "Which of the following discrepancies exists between the memo and the intranet notice?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "The notice states employees may work remotely up to four days per week while the memo limits to three days."
+            },
+            {
+              "option_id": "B",
+              "option_text": "The memo requires manager approval 48 hours in advance; the notice requires 24 hours."
+            },
+            {
+              "option_id": "C",
+              "option_text": "The memo specifies a quarterly allowance, whereas the notice says the allowance will be paid monthly."
+            },
+            {
+              "option_id": "D",
+              "option_text": "The memo’s deadline for the remote work agreement is March 31; the notice extends it to April 5."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "question_number": "2",
+          "question_text": "According to the passage, what is the latest date by which employees must submit the remote work agreement to be eligible for the allowance?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "March 30, 2025"
+            },
+            {
+              "option_id": "B",
+              "option_text": "March 31, 2025"
+            },
+            {
+              "option_id": "C",
+              "option_text": "April 1, 2025"
+            },
+            {
+              "option_id": "D",
+              "option_text": "March 29, 2025"
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "2",
+      "title": "Project Alpha Updated Schedule",
+      "text_type": "single",
+      "passage_1": "Project Alpha – Updated Schedule (as of February 28, 2025)\n\nThe following timeline outlines the key phases for the launch of the new customer portal:\n\n- Phase 1: Requirements gathering – completed by Jan 15, 2025.\n- Phase 2: Design prototype – scheduled from Jan 16 to Feb 10, 2025. Completed on Feb 12, 2025 (2‑day delay due to client feedback).\n- Phase 3: Development – begins Feb 13, 2025; original deadline was March 15, 2025, but due to the prototype delay, the new deadline is March 20, 2025.\n- Phase 4: QA testing – originally planned for March 16‑20, 2025; now shifted to March 21‑25, 2025.\n- Phase 5: User acceptance testing (UAT) – scheduled for March 26‑30, 2025.\n- Go‑live date: April 1, 2025.\n\nNote: Any deliverables that miss their adjusted deadlines will be escalated to the steering committee. Please ensure all team members are aware of the revised dates.",
+      "questions": [
+        {
+          "question_number": "1",
+          "question_text": "Which phase was completed later than originally scheduled, and by how many days?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "Phase 2 – 2 days"
+            },
+            {
+              "option_id": "B",
+              "option_text": "Phase 3 – 5 days"
+            },
+            {
+              "option_id": "C",
+              "option_text": "Phase 4 – 1 day"
+            },
+            {
+              "option_id": "D",
+              "option_text": "None of the phases were delayed"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "question_number": "2",
+          "question_text": "If a deliverable for Phase 3 misses its adjusted deadline, what will happen?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "The project will be cancelled."
+            },
+            {
+              "option_id": "B",
+              "option_text": "It will be escalated to the steering committee."
+            },
+            {
+              "option_id": "C",
+              "option_text": "The team will receive a warning but no further action."
+            },
+            {
+              "option_id": "D",
+              "option_text": "The go‑live date will be automatically extended."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "3",
+      "title": "Equipment Maintenance Schedule",
+      "text_type": "single",
+      "passage_1": "Facility Management Notice – Equipment Maintenance Schedule\n\nDate: June 10, 2025\n\nThe following preventive maintenance schedule is in effect for all production line machinery in Plant B:\n\n- Conveyor Belt System (CBS): Maintenance every 90 days; last performed on March 15, 2025. Next due: June 13, 2025.\n- Hydraulic Press (HP): Maintenance every 180 days; last performed on December 1, 2024. Next due: May 30, 2025.\n- Robotic Arm (RA): Maintenance every 120 days; last performed on February 20, 2025. Next due: June 20, 2025.\n\nNote: If any equipment shows malfunction prior to the scheduled maintenance, staff must immediately report it to the facility hotline (ext. 5555) and complete a malfunction report form (Form FM‑01). Do not attempt to repair the equipment yourself.\n\nThe maintenance window is from 06:00 to 10:00 on the scheduled date. All operators must clear the area before maintenance begins.\n\nFor questions, contact facility.manager@company.com.",
+      "questions": [
+        {
+          "question_number": "1",
+          "question_text": "According to the notice, when is the next scheduled maintenance for the Hydraulic Press?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "May 30, 2025"
+            },
+            {
+              "option_id": "B",
+              "option_text": "June 13, 2025"
+            },
+            {
+              "option_id": "C",
+              "option_text": "June 20, 2025"
+            },
+            {
+              "option_id": "D",
+              "option_text": "December 1, 2025"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "question_number": "2",
+          "question_text": "If a robotic arm malfunctions on June 5, 2025, what are the correct steps the operator should take?",
+          "options": [
+            {
+              "option_id": "A",
+              "option_text": "Wait until the scheduled maintenance date."
+            },
+            {
+              "option_id": "B",
+              "option_text": "Report the malfunction to the facility hotline and complete Form FM‑01."
+            },
+            {
+              "option_id": "C",
+              "option_text": "Attempt to repair the arm personally."
+            },
+            {
+              "option_id": "D",
+              "option_text": "Notify the supervisor after the maintenance window."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_1",
+      "title": "Corporate Office Relocation Plan – Timeline and Policy Revisions",
+      "text_type": "single",
+      "passage_1": "MEMORANDUM\n\nTO: All Staff\nFROM: Facilities Management Department\nDATE: April 25, 2024\nSUBJECT: Headquarters Relocation – Timeline and Updated Remote‑Work Policy\n\nThis memorandum outlines the schedule for relocating our corporate headquarters to the new downtown campus and clarifies the remote‑work provisions that will be in effect during the transition.\n\nOverview\nThe relocation will be executed in five distinct phases. Each phase has specific deliverables and deadlines that must be adhered to ensure a smooth transition and minimal disruption to operations.\n\nTimeline\n• Phase I – Preliminary Assessment: May 1 – May 15, 2024\n• Phase II – Architectural Design: May 16 – June 30, 2024\n• Phase III – Vendor Procurement: July 1 – July 31, 2024\n• Phase IV – Packing and Labeling: August 1 – August 15, 2024\n• Phase V – Physical Move: August 20, 2024\n\nPolicy Updates\nEmployees who wish to request a temporary remote‑work arrangement during the move must submit Form RW‑2026 by the deadline stipulated in the Remote‑Work Policy, which is April 30, 2024. However, a separate HR bulletin dated April 22, 2024 extends this deadline to May 5, 2024 for the relocation period only. Any employee who fails to meet the applicable deadline will be default assigned to the on‑site schedule.\n\nContact\nFor questions regarding the relocation schedule or the remote‑work request process, contact facilities@company.com.\n",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "According to the Remote‑Work Policy, by what date must employees submit Form RW‑2026 to request remote work during the relocation?",
+          "options": [
+            "A) April 22, 2024",
+            "B) April 30, 2024",
+            "C) May 5, 2024",
+            "D) August 1, 2024"
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which of the following sequences correctly reflects the phases of the relocation plan?",
+          "options": [
+            "A) Architectural Design → Preliminary Assessment → Vendor Procurement → Packing and Labeling → Physical Move",
+            "B) Preliminary Assessment → Architectural Design → Vendor Procurement → Packing and Labeling → Physical Move",
+            "C) Vendor Procurement → Preliminary Assessment → Architectural Design → Physical Move → Packing and Labeling",
+            "D) Preliminary Assessment → Packing and Labeling → Architectural Design → Vendor Procurement → Physical Move"
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_2",
+      "title": "Database Server Upgrade – Standard Operating Procedure",
+      "text_type": "single",
+      "passage_1": "TECHNICAL BULLETIN\n\nSubject: Upgrading the Production Database Server from v9.3 to v10.1\nDate: March 12, 2024\nPrepared by: IT Operations\n\n1. Pre‑Upgrade Checks\nBefore initiating the upgrade, confirm the following:\n– Disk space on the server is at least 200 GB.\n– All pending transactions have been committed.\n– A full backup of the current database (full.bak) has been stored on the remote archive server.\n\n2. Upgrade Steps\nStep 1 – Create a full backup of the database (full.bak) on the primary storage.\nStep 2 – Stop all application services that connect to the database.\nStep 3 – Execute the upgrade script (upgrade_10_1.sql).\nStep 4 – Run integrity check scripts (dbcc checkdb, etc.).\nStep 5 – Restart the application services.\n\n3. Post‑Upgrade Validation\nIf any error code appears during Step 4, consult the Error‑Code Matrix (Table 1). Example error codes:\n– E01: insufficient disk space\n– E02: missing library file\n– E03: permission denied\nIf the error persists after applying the recommended action, initiate the Rollback Procedure.\n\n4. Rollback Procedure\n1. Stop the application services.\n2. Restore the full.bak backup.\n3. Restart the services.\n\n5. Contacts\nFor technical assistance, contact db-support@company.com.\n",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "When error code E02 appears after the integrity check (Step 4), which of the following actions should be taken first?",
+          "options": [
+            "A) Restore the full backup",
+            "B) Reinstall the missing library file",
+            "C) Stop the application services",
+            "D) Escalate to vendor support"
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "Which of the following actions must be completed before stopping the application services (Step 2)?",
+          "options": [
+            "A) Run the upgrade script",
+            "B) Create a full backup",
+            "C) Perform a disk space check",
+            "D) Restart services"
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "set_id": "set_3",
+      "title": "Amended Customer Loyalty Program – Points Calculation and Transfer Rules",
+      "text_type": "single",
+      "passage_1": "NOTICE\n\nSubject: Updates to the Customer Loyalty Program – Effective 1 January 2024\nDate: 15 May 2023\nFrom: Loyalty Marketing Department\n\nThe company is pleased to announce amendments to its Loyalty Program, effective 1 January 2024. The key changes are outlined below.\n\n1. Points Accumulation\n– Base earn rate: 1 point per US$1 spent.\n– Enhanced earn rate: For purchases exceeding US$100 in a single transaction, the earn rate increases to 1.5 points per US$1.\n– Fractional points are rounded down to the nearest whole point.\n\n2. Tier Benefits\n– Silver: 0‑4,999 points per calendar year.\n– Gold: 5,000‑9,999 points per calendar year.\n– Platinum: 10,000+ points per calendar year.\n\n3. Points Expiration\nPoints expire 24 months after the month in which they were earned, unless the member holds a Gold or Platinum status, in which case points do not expire.\n\n4. Transferability\nOriginal Program Guide (published 2021) states: “Points are non‑transferable and may only be redeemed by the member who earned them.”\nThe 2023 amendment adds: “Members may transfer up to 5,000 points to another member once per calendar year, provided the recipient is at least a Silver tier member.”\n\n5. Contact\nFor any inquiries, please contact loyalty@company.com.\n",
+      "questions": [
+        {
+          "question_id": "q1",
+          "question_text": "According to the original program guide, can a member transfer points to another member?",
+          "options": [
+            "A) Yes, up to 5,000 points per year",
+            "B) Yes, but only to Silver members",
+            "C) No, points are non‑transferable",
+            "D) Only if the member has Platinum status"
+          ],
+          "correct_answer": "C"
+        },
+        {
+          "question_id": "q2",
+          "question_text": "A Platinum member makes a single purchase of US$150. How many points will be credited to the member’s account under the new earn rate?",
+          "options": [
+            "A) 150 points",
+            "B) 200 points",
+            "C) 225 points",
+            "D) 250 points"
+          ],
+          "correct_answer": "C"
+        }
+      ]
+    }
+  ],
+  "double_sets": [],
+  "triple_sets": []
+}

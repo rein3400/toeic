@@ -1,0 +1,1 @@
+{    "require": {        "php": "^8.2",        "ext-mysqli": "*",        "ext-pdo": "*",        "ext-mbstring": "*",        "google/cloud-text-to-speech": "^2.2",        "dompdf/dompdf": "^2.0"    },    "config": {        "platform": {            "php": "8.2"        }    }}

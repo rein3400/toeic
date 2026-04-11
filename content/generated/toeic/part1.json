@@ -1,0 +1,112 @@
+{
+  "part": "1",
+  "items": [
+    {
+      "item_id": "1",
+      "title": "Corporate Meeting Room",
+      "image_prompt": "A modern corporate meeting room with a large whiteboard on the front wall covered in a partially drawn flowchart, a presenter in business casual attire standing beside the whiteboard holding a pointer and pointing at the flowchart, a rectangular table surrounded by chairs, an open laptop on the table with a black screen, an empty coffee cup, a window with blinds half down, a potted plant in the corner, a wall clock showing 10:15, a safety poster on the side wall, the door slightly ajar, neutral color scheme, realistic indoor lighting.",
+      "photo_description": "The photo shows a meeting room with a whiteboard that has a partially drawn flowchart. A presenter, dressed in business casual attire, is standing next to the whiteboard holding a pointer and pointing at the flowchart. The table in the center has an open laptop with a blank screen and an empty coffee cup. The window has blinds that are halfway down, letting in some natural light. A potted plant sits in the corner, a wall clock displays 10:15, a safety poster is on the side wall, and the door is slightly open.",
+      "audio_script": {
+        "A": "A presenter is pointing at a flowchart on the whiteboard.",
+        "B": "A participant is typing on a laptop.",
+        "C": "The blinds are fully closed.",
+        "D": "A projector is showing a slide."
+      },
+      "options": {
+        "A": "A presenter is pointing at a flowchart on the whiteboard.",
+        "B": "A participant is typing on a laptop.",
+        "C": "The blinds are fully closed.",
+        "D": "A projector is showing a slide."
+      },
+      "correct_answer": "A",
+      "explanation": "The photograph clearly shows a presenter standing beside the whiteboard with a pointer directed at a flowchart, matching statement A. The laptop is open but its screen is black, so no one is typing, making B incorrect. The blinds are only partially down, not fully closed, so C is false. The projector is retracted and not in use, therefore D is also incorrect.",
+      "image_file": "toeic_p1_01.png",
+      "audio_file": "toeic_p1_01.mp3"
+    },
+    {
+      "item_id": "P1-001",
+      "title": "Office Digital Display",
+      "image_prompt": "A modern open-plan office interior, large windows, natural daylight, a wall-mounted digital display showing a bar graph, a woman in a charcoal blazer pointing at the graph with a stylus, a man in a white button-down shirt seated on an office chair reading a newspaper, a coffee cup on a small side table, a briefcase on the floor, a wall calendar showing a date, a potted plant in the corner, realistic high-resolution photography, no text visible.",
+      "photo_description": "In an office, a woman in a charcoal blazer points at a bar graph on a wall-mounted digital display while a man in a white button-down shirt sits on a chair reading a newspaper. A coffee cup sits on a side table, a briefcase rests on the floor, and a wall calendar is visible in the background.",
+      "audio_script": "A. A woman is pointing at a digital display while a man reads a newspaper. B. A woman is handing a folder to a man who is holding a coffee cup. C. A man is standing next to a wall calendar while a woman looks at a briefcase. D. A man is reading a newspaper and a woman is holding a briefcase.",
+      "options": {
+        "A": "A woman is pointing at a digital display while a man reads a newspaper.",
+        "B": "A woman is handing a folder to a man who is holding a coffee cup.",
+        "C": "A man is standing next to a wall calendar while a woman looks at a briefcase.",
+        "D": "A man is reading a newspaper and a woman is holding a briefcase."
+      },
+      "correct_answer": "A",
+      "explanation": "The photograph shows a woman pointing at the graph on the digital display and a man seated reading a newspaper; none of the other statements accurately describe both actions. In option B the woman is not handing a folder; in option C the man is seated, not standing; in option D the woman is not holding a briefcase.",
+      "image_file": "toeic_p1_02.png",
+      "audio_file": "toeic_p1_02.mp3"
+    },
+    {
+      "item_id": "P1-001",
+      "title": "Conference Room Presentation",
+      "image_prompt": "A sleek conference room with a long glass table, six professionals seated around it, one standing at the front pointing at a slide on a wall-mounted screen, a laptop open in front of a woman, a coffee mug beside a man, a window showing a city skyline, a whiteboard with faint markings on the side, a briefcase on the floor, a water dispenser in the corner.",
+      "photo_description": "In a modern conference room, six people are seated around a glass table. One man stands at the front, gesturing toward a slide displayed on a wall-mounted screen. A woman near the far end has an open laptop in front of her, and a coffee mug sits beside a man on her left. In the background, a window reveals a city skyline. A whiteboard with faint markings is on the side wall, a briefcase rests on the floor near the door, and a water dispenser is in the corner.",
+      "audio_script": "A. A man is pointing at a presentation on the screen while others look on. B. A woman is typing on a laptop while a coffee mug sits beside her. C. Someone is standing near a water cooler in the corner of the room. D. A briefcase is placed on the floor next to the conference table.",
+      "options": {
+        "A": "A man is pointing at a presentation on the screen while others look on.",
+        "B": "A woman is typing on a laptop while a coffee mug sits beside her.",
+        "C": "Someone is standing near a water cooler in the corner of the room.",
+        "D": "A briefcase is placed on the floor next to the conference table."
+      },
+      "correct_answer": "A",
+      "explanation": "Option A correctly captures the main action: a man standing at the front pointing at a slide displayed on the screen, which is the most salient element. Option B mentions a woman typing and a coffee mug, which are present but are secondary details and do not describe the primary action. Option C incorrectly states that someone is standing near a water cooler; the water dispenser is in the corner but no one is near it. Option D mentions a briefcase on the floor, which is indeed present but is not the central focus and does not capture the primary activity.",
+      "image_file": "toeic_p1_03.png",
+      "audio_file": "toeic_p1_03.mp3"
+    },
+    {
+      "item_id": "1",
+      "title": "Conference Room Meeting",
+      "image_prompt": "A modern conference room with a large wall-mounted screen displaying a bar chart. A man in a short-sleeved shirt and tie stands at the front, pointing at the chart with his right hand. A woman in a blazer sits beside him, reading a printed agenda that lies on the table in front of her. The table also holds a tablet with its screen off, a half-full water bottle, a small nameplate, and a small potted plant. A wall clock on the background reads 2:50. The room has carpeted flooring, blinds on the windows, and no visible text.",
+      "photo_description": "In a conference room, a man in a short-sleeved shirt and tie stands at the front, pointing at a bar chart on a wall-mounted screen. A woman in a blazer sits next to him, looking down at a printed agenda she is reading. On the table in front of her are a tablet (screen off), a half-full water bottle, a small nameplate, and a small potted plant. A wall clock in the background shows 2:50. The room is carpeted with blinds on the windows.",
+      "audio_script": "A. A man is pointing at a bar chart on the screen while a woman reads a printed agenda. B. A man is pointing at a bar chart on the screen while a woman looks at a tablet. C. A man is pointing at a bar chart on the screen while a woman holds a water bottle. D. A man is pointing at a bar chart on the screen while a woman adjusts a monitor.",
+      "options": {
+        "A": "A man is pointing at a bar chart on the screen while a woman reads a printed agenda.",
+        "B": "A man is pointing at a bar chart on the screen while a woman looks at a tablet.",
+        "C": "A man is pointing at a bar chart on the screen while a woman holds a water bottle.",
+        "D": "A man is pointing at a bar chart on the screen while a woman adjusts a monitor."
+      },
+      "correct_answer": "A",
+      "explanation": "The picture shows a man pointing at a bar chart on the wall-mounted screen and a woman reading a printed agenda placed on the table. The tablet on the table has its screen off, so she is not looking at it; the water bottle is on the table, not being held; there is no monitor being adjusted. Therefore, statement A correctly describes the scene, while B, C, and D misidentify the woman's action or object.",
+      "image_file": "toeic_p1_04.png",
+      "audio_file": "toeic_p1_04.mp3"
+    },
+    {
+      "item_id": "P1-001",
+      "title": "Corporate Conference Room Presentation",
+      "image_prompt": "A modern corporate conference room with a long wooden table surrounded by office chairs. Six professionals are engaged in different activities: three seated around a conference table with laptops and documents, one woman standing at the front near a whiteboard with a marker in hand, one man standing by the window checking his phone, and another woman sitting at the end of the table pointing at a folder. The room has large windows, a screen on the wall, and various office supplies on the table. Natural lighting from the windows.",
+      "photo_description": "In a modern conference room, six employees are present. Three people sit around a long conference table with open laptops and papers. A woman in a blazer stands at the front of the room holding a marker near a whiteboard. A man in a gray sweater stands by the window looking at his phone. Another woman sits at the far end of the table, gesturing toward a folder. A projector screen is visible on the wall.",
+      "audio_script": "A. The woman in the blazer is explaining the project to the group. B. All six employees are seated around the conference table. C. The man by the window is reviewing a document. D. Someone is using the whiteboard to write notes.",
+      "options": {
+        "A": "The woman in the blazer is explaining the project to the group.",
+        "B": "All six employees are seated around the conference table.",
+        "C": "The man by the window is reviewing a document.",
+        "D": "Someone is using the whiteboard to write notes."
+      },
+      "correct_answer": "D",
+      "explanation": "The photograph shows a woman standing at the front of the room near the whiteboard holding a marker. While she is not actively writing at this exact moment, she is positioned at the whiteboard with the marker in hand, suggesting she has just used or is about to use it. Option A is incorrect because the woman is simply standing near the whiteboard, not actively presenting or explaining. Option B is incorrect because two people (the woman at the whiteboard and the man by the window) are standing, not seated. Option C is incorrect because the man by the window is looking at his phone, not reviewing a document.",
+      "image_file": "toeic_p1_05.png",
+      "audio_file": "toeic_p1_05.mp3"
+    },
+    {
+      "item_id": "1",
+      "title": "Office Whiteboard Presentation",
+      "image_prompt": "A contemporary office meeting room featuring a woman in a blazer standing next to a whiteboard holding a marker, pointing at a colorful chart on the board. A man in a dress shirt sits at a desk with an open laptop, his hands near the keyboard. A coffee mug sits on the desk, and a briefcase rests on the floor. The room has neutral walls, a wall clock, and no visible text or logos.",
+      "photo_description": "In a modern office meeting room, a woman in a navy blazer stands beside a whiteboard, holding a black marker and pointing at a colorful bar chart displayed on the board. A man in a light blue dress shirt sits at a desk, his fingers resting on the keys of an open laptop. A white coffee mug sits on the desk, and a brown leather briefcase rests on the floor. A wall clock shows approximately 10:15. No text or brand logos are visible.",
+      "audio_script": "A. The woman is writing on the whiteboard. B. The man is typing on the laptop. C. The woman is pointing at the chart on the wall. D. The man is drinking coffee.",
+      "options": {
+        "A": "The woman is writing on the whiteboard.",
+        "B": "The man is typing on the laptop.",
+        "C": "The woman is pointing at the chart on the wall.",
+        "D": "The man is drinking coffee."
+      },
+      "correct_answer": "C",
+      "explanation": "The photo shows the woman holding a marker and extending her arm toward the chart on the whiteboard, indicating she is pointing at it, not writing. The man is seated with his hands near the laptop keyboard, but his posture suggests he is not actively typing; he is merely resting his hands. The coffee mug is on the desk, not in his hand, so he is not drinking. Therefore, statement C is the only description that accurately matches the visible action.",
+      "image_file": "toeic_p1_06.png",
+      "audio_file": "toeic_p1_06.mp3"
+    }
+  ]
+}

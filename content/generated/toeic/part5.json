@@ -1,0 +1,395 @@
+{
+  "part": "5",
+  "items": [
+    {
+      "item_id": "1",
+      "sentence": "After weeks of deliberation, the board of directors finally reached a decision ___ the proposed merger.",
+      "options": {
+        "A": "on",
+        "B": "about",
+        "C": "regarding",
+        "D": "with"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal business English, the verb phrase “reach a decision on” is the standard collocation. Although “about” and “regarding” are sometimes used, “on” is the most precise and formal. “With” is ungrammatical in this context.",
+      "grammar_focus": "Collocations (verb + preposition) and business register"
+    },
+    {
+      "item_id": "2",
+      "sentence": "Only after the CEO had given approval for the budget ___ the project team was authorized to commence the pilot phase.",
+      "options": {
+        "A": "did",
+        "B": "was",
+        "C": "has",
+        "D": "will"
+      },
+      "correct_answer": "A",
+      "explanation": "The adverbial phrase “Only after …” triggers subject‑auxiliary inversion. Since the adverbial clause uses the past perfect, the main clause requires the auxiliary “did” followed by the base verb “commence”. “Was” would be ungrammatical without inversion, “has” creates a present‑perfect conflict, and “will” changes the temporal meaning.",
+      "grammar_focus": "Clause logic (inversion after ‘only after’) and modifier scope"
+    },
+    {
+      "item_id": "3",
+      "sentence": "The company's annual report, which was ___ to the public last Friday, revealed a 12% increase in net profit.",
+      "options": {
+        "A": "released",
+        "B": "relieved",
+        "C": "revealed",
+        "D": "presented"
+      },
+      "correct_answer": "A",
+      "explanation": "The correct collocation in formal business writing is “released to the public”. “Relieved” is a lexical trap – it shares the suffix “‑leased” but means ‘feeling relief’. “Revealed” and “presented” are not used with ‘to the public’ in this context.",
+      "grammar_focus": "Lexical collocations, lexical traps, and formal business register"
+    },
+    {
+      "item_id": 1,
+      "sentence": "The CFO emphasized that the quarterly report must be ______ with international accounting standards.",
+      "options": {
+        "A": "complied",
+        "B": "compliance",
+        "C": "compliant",
+        "D": "complying"
+      },
+      "correct_answer": "C",
+      "explanation": "The phrase 'must be' requires an adjective. The correct collocation in formal business English is 'be compliant with'. 'Complied' and 'complying' are verb forms that would need 'with' after them; 'compliance' is a noun and does not fit after 'must be'.",
+      "grammar_focus": "collocations (be compliant with)"
+    },
+    {
+      "item_id": 2,
+      "sentence": "The manager presented a detailed analysis of the project, ______ the board's approval.",
+      "options": {
+        "A": "that led to",
+        "B": "which leads to",
+        "C": "leading to",
+        "D": "having led to"
+      },
+      "correct_answer": "C",
+      "explanation": "A present‑participial phrase after a comma functions as an adverbial modifier indicating result. 'Leading to' is the appropriate form; 'that led to' cannot follow a comma, 'which leads to' mismatches the past tense, and 'having led to' is less idiomatic in this context.",
+      "grammar_focus": "modifier scope (participial phrase)"
+    },
+    {
+      "item_id": 3,
+      "sentence": "Although the company ______ a decline in sales, it still managed to increase its market share.",
+      "options": {
+        "A": "has reported",
+        "B": "reported",
+        "C": "had reported",
+        "D": "reports"
+      },
+      "correct_answer": "B",
+      "explanation": "In a concession clause introduced by 'although', the simple past is sufficient to convey the past action; the past perfect is not required. 'Has reported' and 'reports' do not agree with the past context of the main clause.",
+      "grammar_focus": "clause logic (concessive clause, tense sequence)"
+    },
+    {
+      "item_id": 4,
+      "sentence": "The company's strategy focuses on ______ sustainable growth while maintaining profitability.",
+      "options": {
+        "A": "achieving",
+        "B": "attaining",
+        "C": "obtaining",
+        "D": "acquiring"
+      },
+      "correct_answer": "A",
+      "explanation": "In business English the standard collocation with 'growth' is 'achieving growth'. 'Attaining', 'obtaining' and 'acquiring' do not naturally pair with 'growth' in this context.",
+      "grammar_focus": "lexical collocation / lexical traps"
+    },
+    {
+      "item_id": 5,
+      "sentence": "The board has authorized the allocation of additional resources ______ the expansion project.",
+      "options": {
+        "A": "to",
+        "B": "for",
+        "C": "toward",
+        "D": "onto"
+      },
+      "correct_answer": "B",
+      "explanation": "The prepositional collocation with 'allocation' is 'allocation of … for …'. While 'toward' can be used in some contexts, 'for' is the formal, preferred choice in business documents. 'To' and 'onto' are incorrect.",
+      "grammar_focus": "business register (formal preposition choice)"
+    },
+    {
+      "item_id": 1,
+      "sentence": "The board voted to ___ a motion to postpone the merger.",
+      "options": {
+        "A": "table",
+        "B": "chair",
+        "C": "second",
+        "D": "postpone"
+      },
+      "correct_answer": "A",
+      "explanation": "In parliamentary procedure, to 'table a motion' means to postpone or suspend consideration of the motion. 'Chair' is a noun, not a verb; 'second' means to support a motion, not to postpone; 'postpone' is a synonym but not the conventional collocation in this formal context.",
+      "grammar_focus": "Business collocation and lexical semantics: verb + noun (table a motion)."
+    },
+    {
+      "item_id": 2,
+      "sentence": "The quarterly report, together with the financial statements, ___ submitted to the board yesterday.",
+      "options": {
+        "A": "were",
+        "B": "was",
+        "C": "have",
+        "D": "has"
+      },
+      "correct_answer": "B",
+      "explanation": "The subject of the sentence is 'report', which is singular; the phrase 'together with the financial statements' is a parenthetical addition and does not affect the verb form. Therefore the singular past‑tense verb 'was' is required.",
+      "grammar_focus": "Subject‑verb agreement with parenthetical phrase (modifier scope)."
+    },
+    {
+      "item_id": 3,
+      "sentence": "The partnership will continue ___ each partner fulfills their obligations.",
+      "options": {
+        "A": "as long as",
+        "B": "unless",
+        "C": "if",
+        "D": "provided that"
+      },
+      "correct_answer": "A",
+      "explanation": "'As long as' introduces a condition that must be met for the partnership to continue. Using 'unless' would imply that the partnership continues only when the partners do NOT fulfill their obligations, which is contradictory. 'If' is possible but less formal; 'provided that' is also a condition but less idiomatic in this simple conditional context.",
+      "grammar_focus": "Clause logic: choice of conditional conjunctions (as long as vs unless)."
+    },
+    {
+      "item_id": 4,
+      "sentence": "The CEO decided to ___ the new policy rather than merely discussing it.",
+      "options": {
+        "A": "enact",
+        "B": "enforce",
+        "C": "implement",
+        "D": "execute"
+      },
+      "correct_answer": "C",
+      "explanation": "'Implement a policy' is the standard collocation meaning to put the policy into effect. 'Enact' is used for laws; 'enforce' implies compelling compliance; 'execute' can mean carry out but is not the idiomatic term for a policy.",
+      "grammar_focus": "Lexical collocation: verb + noun (implement a policy)."
+    },
+    {
+      "item_id": 5,
+      "sentence": "The consultant, whose recommendations were ___ by the board, suggested a restructuring plan that would increase efficiency.",
+      "options": {
+        "A": "adopted",
+        "B": "endorsed",
+        "C": "embraced",
+        "D": "accepted"
+      },
+      "correct_answer": "A",
+      "explanation": "'Adopt recommendations' is the conventional collocation in business English. 'Endorsed' implies formal approval, but is less common with 'recommendations'; 'embraced' is figurative; 'accepted' is generic and does not fit the formal register.",
+      "grammar_focus": "Relative clause with passive participle; collocation (adopt recommendations)."
+    },
+    {
+      "item_id": 1,
+      "sentence": "The board decided to ______ the merger, despite opposition from some shareholders.",
+      "options": {
+        "A": "proceed with",
+        "B": "proceed to",
+        "C": "proceed for",
+        "D": "proceed on"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal business English the collocation 'proceed with' is used to indicate moving forward with an action. 'Proceed to' suggests moving to the next step, while 'proceed for' and 'proceed on' are not idiomatic in this context.",
+      "grammar_focus": "Collocations (verb + preposition)"
+    },
+    {
+      "item_id": 2,
+      "sentence": "The consultant submitted a report ______ the company's financial performance, highlighting several areas for improvement.",
+      "options": {
+        "A": "analyzing thoroughly",
+        "B": "thoroughly analyzing",
+        "C": "to thoroughly analyze",
+        "D": "thoroughly analyzed"
+      },
+      "correct_answer": "B",
+      "explanation": "The present participle phrase 'thoroughly analyzing' correctly functions as a post‑modifier of 'report', describing what the report does. Placing the adverb before the participle avoids misplacing the modifier. 'Analyzing thoroughly' places the adverb before the object, which is awkward; the infinitive 'to thoroughly analyze' suggests purpose but is less natural after 'submit a report'; 'thoroughly analyzed' creates a passive construction that does not fit the active sense of the sentence.",
+      "grammar_focus": "Modifier scope (placement of adverbial modifiers)"
+    },
+    {
+      "item_id": 3,
+      "sentence": "The marketing team will launch the new campaign ______ they have secured sufficient funding.",
+      "options": {
+        "A": "as soon as",
+        "B": "unless",
+        "C": "provided that",
+        "D": "because"
+      },
+      "correct_answer": "C",
+      "explanation": "'Provided that' introduces a conditional clause, indicating that the launch is contingent on obtaining funding. 'As soon as' would denote timing rather than a condition, 'unless' would invert the condition, and 'because' would imply causation, which does not fit the intended meaning.",
+      "grammar_focus": "Clause logic (conditional subordinate clause)"
+    },
+    {
+      "item_id": 4,
+      "sentence": "The company's policy requires that all employees ______ their travel expenses by the end of the month.",
+      "options": {
+        "A": "submit",
+        "B": "hand in",
+        "C": "turn in",
+        "D": "file"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal corporate policy the verb 'submit' is the standard term for sending in expenses for approval. 'Hand in' and 'turn in' are more colloquial, while 'file' is typically used for official records rather than expense claims.",
+      "grammar_focus": "Business register and lexical nuance"
+    },
+    {
+      "item_id": 5,
+      "sentence": "Although the project was behind schedule, the team managed to ______ the deadline.",
+      "options": {
+        "A": "meet",
+        "B": "hit",
+        "C": "keep",
+        "D": "make"
+      },
+      "correct_answer": "A",
+      "explanation": "The only idiomatic collocation in professional English is 'meet the deadline'. 'Hit the deadline' is not standard, 'keep the deadline' is ungrammatical, and 'make the deadline' is less common than 'meet'.",
+      "grammar_focus": "Lexical traps (collocations)"
+    },
+    {
+      "item_id": "1",
+      "sentence": "After lengthy negotiations, the board decided to ____ an agreement with the new supplier.",
+      "options": {
+        "A": "reach",
+        "B": "make",
+        "C": "conclude",
+        "D": "enter"
+      },
+      "correct_answer": "A",
+      "explanation": "The standard collocation in formal business English is 'reach an agreement'. 'Make an agreement' is less idiomatic; 'conclude an agreement' is possible but less common; 'enter' requires 'into' and does not fit here.",
+      "grammar_focus": "Collocation: verb + noun (reach an agreement)"
+    },
+    {
+      "item_id": "2",
+      "sentence": "XYZ Corp., ____ the first company to implement a carbon‑neutral supply chain, was praised by environmental groups.",
+      "options": {
+        "A": "to implement",
+        "B": "implementing",
+        "C": "having implemented",
+        "D": "being implemented"
+      },
+      "correct_answer": "A",
+      "explanation": "After an ordinal such as 'first', the correct post‑noun modifier is an infinitive ('to implement'). 'Implementing' suggests an ongoing action, 'having implemented' is a perfect participle unnecessarily, and 'being implemented' implies the company is being implemented, which is nonsensical.",
+      "grammar_focus": "Modifier scope: post‑noun infinitive vs participle"
+    },
+    {
+      "item_id": "3",
+      "sentence": "____ the quarterly report is submitted by Friday, the audit committee will proceed with the review.",
+      "options": {
+        "A": "Provided that",
+        "B": "If",
+        "C": "Unless",
+        "D": "Whether"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal business and legal language the conjunction 'provided that' sets a specific condition. 'If' also expresses a condition but is less formal; 'Unless' introduces a negative condition, reversing the intended meaning; 'Whether' is used for indirect questions, not conditions.",
+      "grammar_focus": "Clause logic: formal conditional connector"
+    },
+    {
+      "item_id": "4",
+      "sentence": "The new regulatory framework will ____ the company's financial statements significantly.",
+      "options": {
+        "A": "affect",
+        "B": "effect",
+        "C": "impact",
+        "D": "influence"
+      },
+      "correct_answer": "A",
+      "explanation": "'Affect' is the correct verb meaning 'to influence'. 'Effect' is a noun meaning 'result' and cannot be used as a verb here; 'impact' as a verb is informal; 'influence' can be used but 'affect' is the standard collocation with 'financial statements' in formal writing.",
+      "grammar_focus": "Lexical traps: verb vs noun confusion (affect/effect)"
+    },
+    {
+      "item_id": "5",
+      "sentence": "The committee voted to ____ the proposal, noting that it aligns with the company's long‑term objectives.",
+      "options": {
+        "A": "approve",
+        "B": "adopt",
+        "C": "endorse",
+        "D": "pass"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal business minutes the verb 'approve' collocates with 'proposal'. 'Adopt' is more common for plans or policies; 'endorse' suggests public support; 'pass' is informal in this context. The participial phrase 'noting that...' correctly modifies the committee's action.",
+      "grammar_focus": "Collocation: verb + noun (approve the proposal) and participial modifier"
+    },
+    {
+      "item_id": 1,
+      "sentence": "The manager decided to _____ the new policy, despite the opposition from the staff.",
+      "options": {
+        "A": "implement",
+        "B": "enforce",
+        "C": "execute",
+        "D": "initiate"
+      },
+      "correct_answer": "A",
+      "explanation": "In formal business English the standard collocation is ‘implement a policy’, meaning to put it into effect. ‘Enforce’ is normally used with rules or laws, ‘execute’ with a plan or order, and ‘initiate’ is less idiomatic in this context.",
+      "grammar_focus": "Verb collocations with ‘policy’"
+    },
+    {
+      "item_id": 2,
+      "sentence": "The report, released last month, _____ the company's revenue grew by 5%.",
+      "options": {
+        "A": "shows",
+        "B": "showing",
+        "C": "show",
+        "D": "shown"
+      },
+      "correct_answer": "A",
+      "explanation": "The clause after the non‑restrictive modifier ‘released last month’ requires a finite verb to function as the main predicate. ‘Shows’ (third‑person singular) agrees with the singular subject ‘report’ and completes the sentence. ‘Showing’ would create a dangling participle, ‘show’ lacks the required singular -s, and ‘shown’ is a past participle, not a finite verb.",
+      "grammar_focus": "Participial modifier vs. finite verb clause"
+    },
+    {
+      "item_id": 3,
+      "sentence": "Unless the board _____ the merger, the company will face a liquidity crisis.",
+      "options": {
+        "A": "approves",
+        "B": "will approve",
+        "C": "approve",
+        "D": "approved"
+      },
+      "correct_answer": "A",
+      "explanation": "After ‘unless’ we use the present simple to express a future condition. Hence ‘approves’ (third‑person singular) is correct. ‘Will approve’ would be redundant, ‘approve’ lacks the -s, and ‘approved’ changes the tense to past, altering the meaning.",
+      "grammar_focus": "Conditional clause with ‘unless’ + present simple"
+    },
+    {
+      "item_id": 4,
+      "sentence": "She was _____ at the meeting that she forgot to submit the report.",
+      "options": {
+        "A": "so attentive",
+        "B": "very attentive",
+        "C": "such attentive",
+        "D": "too attentive"
+      },
+      "correct_answer": "A",
+      "explanation": "The correlative conjunction ‘so … that’ is required to convey cause‑and‑effect: ‘She was so attentive that she forgot …’. ‘Very’ does not introduce a that‑clause, ‘such’ would need a noun after it (e.g., ‘such an attentive person that’), and ‘too’ is followed by ‘to‑infinitive’, not a that‑clause.",
+      "grammar_focus": "Correlative conjunction ‘so … that’"
+    },
+    {
+      "item_id": 5,
+      "sentence": "The CFO emphasized that the quarterly earnings, although lower than expected, _____ the company's ability to meet its debt obligations.",
+      "options": {
+        "A": "preserve",
+        "B": "maintain",
+        "C": "sustain",
+        "D": "retain"
+      },
+      "correct_answer": "B",
+      "explanation": "In formal financial discourse the idiomatic collocation is ‘maintain the company’s ability’. While ‘preserve’ and ‘sustain’ can be used with ‘ability’, they are less common in this context; ‘retain’ typically collocates with people or assets, not with ‘ability’.",
+      "grammar_focus": "Verb collocations with ‘ability’ in a financial context"
+    },
+    {
+      "item_id": 1,
+      "sentence": "The Board of Directors has ____ the proposal to expand into the Asian market, despite concerns raised by some shareholders.",
+      "options": {
+        "A": "approved",
+        "B": "endorsed",
+        "C": "sanctioned",
+        "D": "agreed"
+      },
+      "correct_answer": "A",
+      "explanation": "The verb that most naturally collocates with ‘the proposal’ in formal business English is ‘approve’. The phrase ‘has approved the proposal’ follows the standard transitive pattern of ‘approve’ (no preposition is required). ‘Endorsed’ can be used with a direct object, but it is less common in formal board language and often connotes public support. ‘Sanctioned’ is a lexical trap: while it can mean ‘authorized’, it also carries the connotation of ‘penalty’ or ‘official permission’ and typically requires a ‘by’ phrase. ‘Agreed’ is incorrect because ‘agree’ normally takes the preposition ‘to’ before an object (e.g., ‘agreed to the proposal’). Thus, the best choice is option A.",
+      "grammar_focus": "Verb collocations and transitive usage; lexical traps (sanctioned, agreed)"
+    },
+    {
+      "item_id": 2,
+      "sentence": "The partnership agreement, ____ the parties have agreed to share profits in proportion to their investments, will remain in effect unless either party breaches the terms.",
+      "options": {
+        "A": "which",
+        "B": "that",
+        "C": "where",
+        "D": "whose"
+      },
+      "correct_answer": "A",
+      "explanation": "The clause after the comma adds non‑essential (non‑restrictive) information about the partnership agreement. In English, non‑restrictive relative clauses are introduced by ‘which’, not ‘that’. ‘That’ is reserved for restrictive clauses and is not used after a comma. ‘Where’ is used for places, and ‘whose’ is a possessive pronoun, which would require a noun following it (e.g., ‘whose terms’). Therefore the correct pronoun is ‘which’, making option A the right answer. The sentence also contains a conditional clause introduced by ‘unless’, testing the test‑taker’s ability to recognize clause logic.",
+      "grammar_focus": "Non‑restrictive relative clause (which) and conditional clause (unless); modifier scope"
+    }
+  ]
+}

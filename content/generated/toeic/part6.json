@@ -1,0 +1,229 @@
+{
+  "part": "6",
+  "sets": [
+    {
+      "set_id": "set_001",
+      "title": "Implementation of a Flexible Work Pilot",
+      "text_type": "internal memo",
+      "passage_with_blanks": "To: All Staff\\nFrom: Office of Operations\\nDate: March 15, 2026\\nSubject: Implementation of a Flexible Work Pilot\\n\\nThe Operations department will ___1___ a twelve‑month pilot program that allows eligible employees to work from home up to three days per week. This initiative aims to improve work‑life balance, reduce commuting emissions, and assess the impact on productivity. The program will be rolled out in phases, beginning with the IT department on April 1. Managers must ___2___ their teams about the new policy and ensure that performance metrics remain transparent. In addition, the HR department will collect feedback through quarterly surveys, ___3___ any issues promptly and adjusting the schedule as needed. Finally, participants will be required to ___4___ a monthly report detailing their remote work activities.",
+      "questions": [
+        {
+          "blank_number": "1",
+          "question_text": "Choose the most appropriate word to fill in blank #1.",
+          "options": {
+            "A": "implement",
+            "B": "launch",
+            "C": "introduce",
+            "D": "initiate"
+          },
+          "correct_answer": "A",
+          "explanation": "The verb 'implement' collocates naturally with 'program' in formal business English and maintains the formal tone of the memo. 'Launch' and 'introduce' are possible but less precise in this context, while 'initiate' is less common with 'program'."
+        },
+        {
+          "blank_number": "2",
+          "question_text": "Choose the most appropriate word to fill in blank #2.",
+          "options": {
+            "A": "inform",
+            "B": "notify",
+            "C": "tell",
+            "D": "apprise"
+          },
+          "correct_answer": "A",
+          "explanation": "'Inform' is the standard verb used in corporate communications to convey that managers must convey information to their teams. 'Notify' is more formal but less commonly paired with 'teams', 'tell' is too informal, and 'apprise' is overly formal for this memo."
+        },
+        {
+          "blank_number": "3",
+          "question_text": "Choose the most appropriate word to fill in blank #3.",
+          "options": {
+            "A": "addressing",
+            "B": "solving",
+            "C": "managing",
+            "D": "resolving"
+          },
+          "correct_answer": "A",
+          "explanation": "The phrase 'collect feedback ... addressing any issues' uses the gerund to maintain parallel structure with the earlier gerund 'collecting' (implied). 'Addressing' is the most neutral and appropriate verb for dealing with issues in a formal report; 'solving' and 'resolving' imply a complete fix, while 'managing' is less specific."
+        },
+        {
+          "blank_number": "4",
+          "question_text": "Choose the most appropriate word to fill in blank #4.",
+          "options": {
+            "A": "submit",
+            "B": "file",
+            "C": "deliver",
+            "D": "produce"
+          },
+          "correct_answer": "A",
+          "explanation": "'Submit a report' is the conventional collocation in workplace contexts, indicating that employees must send the report to their supervisors. 'File' is used more for administrative records, 'deliver' emphasizes the act of handing over but lacks the formal nuance, and 'produce' is too vague."
+        }
+      ]
+    },
+    {
+      "set_id": "set_001",
+      "title": "Internal Memo: Reorganization of Project Alpha",
+      "text_type": "Internal Memo",
+      "passage_with_blanks": "TO: All Department Heads\nFROM: Maria Alvarez, VP of Operations\nDATE: October 24, 2025\nSUBJECT: Reorganization of Project Alpha\n\nIn response to the recent strategic review, the executive team has decided to restructure Project Alpha. The primary objective is to streamline decision‑making processes and to enhance cross‑functional collaboration. Beginning next month, the project will be divided into three distinct phases, each overseen by a dedicated senior manager. The first phase, scheduled to commence on November 1, will focus on consolidating the existing data infrastructure and assessing current resource allocations.\n\nThe senior management team ___1___ that the consolidation effort will require a thorough review of all vendor contracts. Accordingly, the Finance department ___2___ to convene a working group comprising representatives from Legal, IT, and Procurement. This group ___3___ the objective of renegotiating terms where feasible, thereby reducing overall expenditure. Furthermore, the Human Resources division ___4___ the need to provide transitional support for staff who may be reassigned.\n\nWe anticipate that these measures will position the organization to achieve its long‑term growth targets while maintaining operational resilience. Please ensure that your respective teams are briefed on the upcoming changes and that any concerns are forwarded to the Project Office by October 31.",
+      "questions": [
+        {
+          "blank_number": 1,
+          "question_text": "Which choice best fills blank 1?",
+          "options": {
+            "A": "has concluded",
+            "B": "concluded",
+            "C": "concludes",
+            "D": "had concluded"
+          },
+          "correct_answer": "A",
+          "explanation": "The present perfect 'has concluded' maintains the temporal link to the recent strategic review and agrees with the perfect aspect required by the surrounding present‑tense verbs ('has decided', 'will require')."
+        },
+        {
+          "blank_number": 2,
+          "question_text": "Which choice best fills blank 2?",
+          "options": {
+            "A": "will proceed",
+            "B": "shall proceed",
+            "C": "proceeds",
+            "D": "is proceeding"
+          },
+          "correct_answer": "A",
+          "explanation": "'Will proceed' is the neutral future modal appropriate for a formal memo; 'shall' is overly prescriptive, while 'proceeds' and 'is proceeding' lack the future orientation needed here."
+        },
+        {
+          "blank_number": 3,
+          "question_text": "Which choice best fills blank 3?",
+          "options": {
+            "A": "has",
+            "B": "holds",
+            "C": "pursues",
+            "D": "adopts"
+          },
+          "correct_answer": "A",
+          "explanation": "The simple present 'has' correctly conveys that the group currently possesses the objective of renegotiating, fitting the factual tone of the memo; 'holds', 'pursues', and 'adopts' alter the nuance inappropriately."
+        },
+        {
+          "blank_number": 4,
+          "question_text": "Which choice best fills blank 4?",
+          "options": {
+            "A": "has acknowledged",
+            "B": "acknowledges",
+            "C": "will acknowledge",
+            "D": "acknowledged"
+          },
+          "correct_answer": "A",
+          "explanation": "The present perfect 'has acknowledged' ties the HR division’s recognition to the ongoing planning process, matching the perfect aspect used elsewhere in the paragraph."
+        }
+      ]
+    },
+    {
+      "set_id": "set_1",
+      "title": "PMO Reorganization Memo",
+      "text_type": "memo",
+      "passage_with_blanks": "Following the recent strategic review, the executive leadership has decided to restructure the Project Management Office (PMO) to enhance alignment with the company's long‑term objectives. This memo outlines the key changes, the rationale behind them, and the timeline for implementation.\n\nThe new structure ___1___ a cross‑functional governance model, which ___2___ to streamline decision‑making processes and ___3___ the allocation of resources. Additionally, the PMO will ___4___ a centralized knowledge repository to ensure best practices are documented and accessible, and will be responsible for maintaining the repository’s integrity. Employees are expected to transition to the new framework by the end of the quarter.",
+      "questions": [
+        {
+          "blank_number": "1",
+          "question_text": "Choose the most appropriate word to fill blank 1.",
+          "options": {
+            "A": "adopts",
+            "B": "has adopted",
+            "C": "will adopt",
+            "D": "is adopting"
+          },
+          "correct_answer": "A",
+          "explanation": "The present simple 'adopts' correctly describes the new structure as a factual characteristic of the model. The other options either imply a time frame that does not fit the context ('has adopted' suggests completion, 'will adopt' suggests future, 'is adopting' suggests ongoing action) and do not collocate naturally with 'a cross‑functional governance model'."
+        },
+        {
+          "blank_number": "2",
+          "question_text": "Choose the most appropriate word to fill blank 2.",
+          "options": {
+            "A": "aims",
+            "B": "seeks",
+            "C": "attempts",
+            "D": "promises"
+          },
+          "correct_answer": "A",
+          "explanation": "'Aims' is the most idiomatic verb to express purpose in a relative clause ('which aims to streamline'). 'Seeks' is also possible but less common; 'attempts' implies effort without certainty, and 'promises' does not convey purpose in this context."
+        },
+        {
+          "blank_number": "3",
+          "question_text": "Choose the most appropriate word to fill blank 3.",
+          "options": {
+            "A": "optimize",
+            "B": "maximize",
+            "C": "allocate",
+            "D": "leverage"
+          },
+          "correct_answer": "A",
+          "explanation": "'Optimize the allocation of resources' is a standard collocation meaning to make the allocation as effective as possible. 'Maximize' does not collocate with 'allocation' (you maximize output, not allocation), 'allocate the allocation' is tautological, and 'leverage the allocation' is unnatural."
+        },
+        {
+          "blank_number": "4",
+          "question_text": "Choose the most appropriate word to fill blank 4.",
+          "options": {
+            "A": "establish",
+            "B": "implement",
+            "C": "introduce",
+            "D": "develop"
+          },
+          "correct_answer": "A",
+          "explanation": "'Establish a centralized knowledge repository' is the formal expression for creating and setting up such a system. 'Implement' is used for plans or systems already designed, 'introduce' is less precise, and 'develop' implies a longer process of growth rather than immediate creation."
+        }
+      ]
+    },
+    {
+      "set_id": "6-001",
+      "title": "Implementation of the New Remote Work Policy",
+      "text_type": "Internal Memo",
+      "passage_with_blanks": "To: All Staff\nFrom: Human Resources Department\nDate: March 15, 2026\nSubject: Revised Guidelines for Remote Work\n\nIn response to the recent survey results, the HR department ___1___ a comprehensive review of our remote work framework. The new policy, which will take effect on April 1, 2026, aims to ___2___ productivity while maintaining employee well‑being. Employees who wish to work remotely must submit a request ___3___ their manager at least two weeks in advance. Furthermore, the department will ___4___ a quarterly audit of remote work arrangements to ensure compliance with the updated guidelines.\n\nWe encourage all staff to familiarize themselves with the attached document and to direct any questions to your regional HR representative.",
+      "questions": [
+        {
+          "blank_number": 1,
+          "question_text": "Choose the best word(s) to fill in blank ___1___.",
+          "options": [
+            "A) has undertaken",
+            "B) undertook",
+            "C) is undertaking",
+            "D) will undertake"
+          ],
+          "correct_answer": "A",
+          "explanation": "The present perfect has undertaken indicates that the review was carried out in the recent past and its results are relevant to the forthcoming policy, which is the intended meaning. Undertook (simple past) would also be grammatically correct but lacks the connection to the present situation described in the memo. Is undertaking suggests the review is still ongoing, contradictory to the fact that the new policy is already announced. Will undertake places the action in the future, which does not fit the context."
+        },
+        {
+          "blank_number": 2,
+          "question_text": "Choose the best word(s) to fill in blank ___2___.",
+          "options": [
+            "A) increase",
+            "B) enhancing",
+            "C) boost",
+            "D) maximize"
+          ],
+          "correct_answer": "A",
+          "explanation": "After the modal aims to the base form of the verb is required. Increase is the only option that is a base‑form verb; enhancing is a gerund, boost and maximize are also base forms, but increase is the most neutral and collocates naturally with productivity in formal workplace language. While boost and maximize are acceptable, increase is the standard choice in this context."
+        },
+        {
+          "blank_number": 3,
+          "question_text": "Choose the best word(s) to fill in blank ___3___.",
+          "options": [
+            "A) to",
+            "B) for",
+            "C) with",
+            "D) from"
+          ],
+          "correct_answer": "A",
+          "explanation": "The idiomatic phrase is submit a request to their manager. The preposition to indicates the recipient of the request. For would imply purpose, with would suggest accompaniment, and from would wrongly imply the request originates from the manager."
+        },
+        {
+          "blank_number": 4,
+          "question_text": "Choose the best word(s) to fill in blank ___4___.",
+          "options": [
+            "A) conduct",
+            "B) carry out",
+            "C) execute",
+            "D) undertake"
+          ],
+          "correct_answer": "A",
+          "explanation": "In formal business English the verb conduct is commonly used with audit (e.g., conduct an audit). While carry out and undertake are also grammatically acceptable, conduct is the most conventional collocation in this context. Execute is less common and sounds overly legalistic."
+        }
+      ]
+    }
+  ]
+}

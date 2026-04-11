@@ -1,0 +1,425 @@
+{
+  "part": "4",
+  "sets": [
+    {
+      "set_id": "set_001",
+      "title": "Corporate Product Launch Announcement",
+      "context": "You will hear a recorded message from the marketing department regarding changes to the upcoming product launch event.",
+      "audio_script": "Good morning, this is the official announcement from GlobalTech Solutions regarding the upcoming product launch event scheduled for next Thursday, March 12th. We have several important updates to share with you.\n\nFirst, the opening keynote will now begin at 2:00 PM instead of the originally planned 10:00 AM. This change is due to the speaker’s flight delay. The keynote will be held in the Main Hall, which has been moved from Room A to Room B to accommodate a larger audience. For participants who have registered for the VIP session, please note that the VIP lounge will open at 1:00 PM in Conference Room C.\n\nSecond, the schedule for the afternoon workshops has been modified. The ‘Future of AI’ workshop, originally set for 3:30 PM, has been cancelled. Attendees who had signed up for this workshop will receive a full refund. To request your refund, please complete the online refund request form on the event website by the last business day of this month. Alternatively, you may contact the support hotline, but the form is strongly preferred for faster processing.\n\nThird, regarding meals, a complimentary lunch will be provided to all attendees who have a valid registration badge. However, a special lunch for VIP badge holders is available only if you registered by the early‑bird deadline of March 5th and you present your VIP badge at the lunch counter. Press members are not required to pay the registration fee, but they must show a valid press pass at the entrance to receive media credentials.\n\nFourth, for those traveling from out of town, the shuttle service from the airport to the venue will operate every 30 minutes starting at 8:00 AM. If you arrive after 9:00 PM, please use the night‑time taxi voucher that can be obtained from the information desk.\n\nFinally, please note that the event’s safety protocols remain in effect: masks are optional but recommended in crowded indoor spaces, and hand sanitizing stations are available throughout the venue. Should any additional schedule changes occur, we will update the official event page and send a SMS alert to all registered participants.\n\nThank you for your attention, and we look forward to seeing you at the launch.",
+      "questions": [
+        {
+          "question_text": "What time will the opening keynote now begin?",
+          "options": {
+            "A": "10:00 AM",
+            "B": "11:30 AM",
+            "C": "2:00 PM",
+            "D": "3:30 PM"
+          },
+          "correct_answer": "C",
+          "explanation": "The announcement explicitly states that the opening keynote will now begin at 2:00 PM, a change from the original 10:00 AM time."
+        },
+        {
+          "question_text": "Which attendees are eligible for the special VIP lunch?",
+          "options": {
+            "A": "All attendees",
+            "B": "Press members",
+            "C": "VIP badge holders who registered by March 5",
+            "D": "Remote participants"
+          },
+          "correct_answer": "C",
+          "explanation": "The script says the special lunch for VIP badge holders is available only if the attendee registered by the early‑bird deadline of March 5th and presents the VIP badge."
+        },
+        {
+          "question_text": "How should participants request a refund for the cancelled ‘Future of AI’ workshop?",
+          "options": {
+            "A": "Email the organizer before Friday",
+            "B": "Fill out an online form by the end of the month",
+            "C": "Call the hotline",
+            "D": "No refund is available"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement instructs attendees to complete the online refund request form on the event website by the last business day of the month; the hotline is mentioned only as an alternative."
+        }
+      ],
+      "audio_file": "toeic_p4_01.mp3"
+    },
+    {
+      "set_id": "4-001",
+      "title": "Metro Transit Service Update",
+      "context": "A recorded announcement from Metro Transit regarding schedule changes, service cancellations, special shuttles, and revised ticketing policies for the Orange Line and connecting services.",
+      "audio_script": "Good morning, this is Metro Transit Information. Starting Monday, May 15, we will implement the following changes to the Orange Line service. The 6:45 a.m. express from Central Station to Harber City will be moved to 6:50 a.m. However, passengers holding a Gold Card who travel in the first three cars will still be able to board at 6:45 a.m. from Platform 2, provided they present their card before boarding. In addition, the 9:30 a.m. and 4:15 p.m. local services will be cancelled, except for the 9:30 a.m. service on Wednesdays, which will operate as a special “Market Shuttle” for passengers attending the downtown farmers market. Passengers who have purchased a Day Pass for May can still use it on any of the remaining services, but those with a 10‑ride pack must complete their rides before June 30, after which the packs will be deactivated. For customers connecting to the Blue Line at Harbor Station, a complimentary transfer will be provided if the connecting train is delayed more than ten minutes. If you have a disability and require assistance, please press 0 to speak with a customer‑service representative. For more information, please visit metrotra.org or call 555‑0123. Thank you.",
+      "questions": [
+        {
+          "question_text": "What is the new departure time for the 6:45 a.m. express from Central Station to Harber City?",
+          "options": {
+            "A": "6:45 a.m.",
+            "B": "6:50 a.m.",
+            "C": "6:55 a.m.",
+            "D": "6:40 a.m."
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement explicitly states that the 6:45 a.m. express will be moved to 6:50 a.m. starting May 15."
+        },
+        {
+          "question_text": "Which passengers can still board the 6:45 a.m. express at Platform 2?",
+          "options": {
+            "A": "All passengers.",
+            "B": "Passengers with a Gold Card traveling in the first three cars.",
+            "C": "Passengers with a Day Pass.",
+            "D": "Passengers with a 10‑ride pack."
+          },
+          "correct_answer": "B",
+          "explanation": "Only Gold Card holders traveling in the first three cars are allowed to board the original 6:45 a.m. departure, and they must present their card before boarding."
+        },
+        {
+          "question_text": "Under what condition will a complimentary transfer be provided for customers connecting to the Blue Line at Harbor Station?",
+          "options": {
+            "A": "If the connecting train is delayed more than 10 minutes.",
+            "B": "If the passenger holds a Gold Card.",
+            "C": "If the passenger is traveling on a Wednesday.",
+            "D": "If the passenger has a Day Pass."
+          },
+          "correct_answer": "A",
+          "explanation": "The announcement says a complimentary transfer will be given only when the connecting Blue Line train is delayed by more than ten minutes."
+        }
+      ],
+      "audio_file": "toeic_p4_02.mp3"
+    },
+    {
+      "set_id": 1,
+      "title": "Flight Schedule Update and Gate Change Announcement",
+      "context": "An airport announcement regarding the delayed departure of flight JL 789 to Tokyo Narita, gate change, re‑booking options for connecting passengers, and special instructions for passengers with pets and those requiring assistance.",
+      "audio_script": "Good afternoon, ladies and gentlemen. This is an update for passengers of flight JL 789 to Tokyo Narita, originally scheduled to depart at 2:30 PM from Gate B12, now delayed until 3:45 PM. Due to a technical issue, the aircraft has been changed. Passengers with connecting flights on JAL 456 to Osaka should proceed to the service counter in Terminal 1 for rebooking onto the next available flight at 5:10 PM. Please note that passengers traveling with pets must report to the pet relief area located near Gate A5. The new gate will be announced 20 minutes before departure. If you have already checked in online and do not have baggage, you may proceed directly to the new gate. For those requiring special assistance, please meet the airline representative at the boarding desk. Thank you.",
+      "questions": [
+        {
+          "question_text": "What is the new departure time for flight JL 789?",
+          "options": {
+            "A": "2:30 PM",
+            "B": "3:45 PM",
+            "C": "4:00 PM",
+            "D": "5:10 PM"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement explicitly states that the flight is now delayed until 3:45 PM."
+        },
+        {
+          "question_text": "Which passengers are instructed to go to the service counter in Terminal 1?",
+          "options": {
+            "A": "All passengers of flight JL 789",
+            "B": "Passengers with connecting flights on JAL 456",
+            "C": "Passengers traveling with pets",
+            "D": "Passengers holding Silver status"
+          },
+          "correct_answer": "B",
+          "explanation": "Only those passengers who have a connecting flight on JAL 456 are directed to the service counter in Terminal 1 for rebooking."
+        },
+        {
+          "question_text": "When will the new gate be announced?",
+          "options": {
+            "A": "At the check‑in counter",
+            "B": "On the display board in Terminal 2",
+            "C": "20 minutes before departure",
+            "D": "At the pet relief area"
+          },
+          "correct_answer": "C",
+          "explanation": "The announcement says the new gate will be announced 20 minutes before the revised departure time."
+        }
+      ],
+      "audio_file": "toeic_p4_03.mp3"
+    },
+    {
+      "set_id": "set_1",
+      "title": "Corporate Annual Strategy Update Announcement",
+      "context": "A recorded message from the Vice President of Operations to all staff regarding the upcoming annual strategy meeting, including schedule changes, venue changes, and mandatory attendance requirements.",
+      "audio_script": "Good afternoon, this is Jennifer Martinez, Vice President of Operations, with an important update regarding our Annual Strategy Meeting scheduled for next Thursday.\n\nFirst, please note that the meeting has been moved from the Main Conference Hall to the new Innovation Center, located at 500 Technology Boulevard, to accommodate a larger audience. The new venue is equipped with advanced presentation facilities and is accessible by the shuttle service from the north parking lot.\n\nThe start time remains at 9:00 AM, but the afternoon session has been adjusted: the optional workshop on data analytics will now begin at 2:00 PM instead of 1:30 PM. This change is due to a scheduling conflict with the IT department’s system maintenance window, which runs from 1:00 PM to 2:00 PM.\n\nAll senior managers and department heads are required to attend the morning session from 9:00 AM to 12:00 PM. Additionally, the 2:00 PM workshop is mandatory for the analytics team, the marketing strategy team, and any staff members who have registered for the advanced certification program.\n\nIf you are not part of those groups but still wish to attend the workshop, you must register by 5:00 PM on Wednesday. Late registration will not be accepted, except for employees who have a documented travel conflict and provide proof by email to hr@company.com by 3:00 PM on Wednesday.\n\nPlease note that the lunch break will be shortened to 45 minutes, from 12:00 PM to 12:45 PM, to accommodate the revised agenda. Coffee and light snacks will be available in the lobby starting at 8:30 AM.\n\nFinally, for those traveling from the downtown office, the shuttle will depart at 8:15 AM and will return after the meeting ends. If you require special accommodations, such as wheelchair access or sign‑language interpretation, please contact the facilities team no later than 5:00 PM on Tuesday.\n\nThank you for your attention, and we look forward to your participation.",
+      "questions": [
+        {
+          "question_text": "What is the primary purpose of the announcement?",
+          "options": {
+            "A": "To announce a change in the company’s vacation policy",
+            "B": "To inform staff about changes to the Annual Strategy Meeting schedule and venue",
+            "C": "To introduce a new employee benefits program",
+            "D": "To request feedback on the quarterly report"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement primarily updates the staff about the relocation of the Annual Strategy Meeting to the Innovation Center, the adjusted timing of the afternoon workshop, and attendance requirements."
+        },
+        {
+          "question_text": "Which group of employees must attend the 2:00 PM workshop?",
+          "options": {
+            "A": "All employees",
+            "B": "Only senior managers",
+            "C": "The analytics team, the marketing strategy team, and staff enrolled in the advanced certification program",
+            "D": "The IT department"
+          },
+          "correct_answer": "C",
+          "explanation": "The announcement states that the 2:00 PM workshop is mandatory for the analytics team, the marketing strategy team, and any staff members registered for the advanced certification program."
+        },
+        {
+          "question_text": "By what time must employees register for the optional workshop if they are not in the mandatory groups?",
+          "options": {
+            "A": "5:00 PM on Tuesday",
+            "B": "5:00 PM on Wednesday",
+            "C": "3:00 PM on Wednesday",
+            "D": "12:00 PM on Thursday"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement says that employees who are not in the mandatory groups must register by 5:00 PM on Wednesday; late registration will not be accepted."
+        }
+      ],
+      "audio_file": "toeic_p4_04.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Airport Announcement: Flight DL 2847 Delay, Gate Change, and Connecting Flight Instructions",
+      "context": "An airport announcement informing passengers of a delayed departure of Flight DL 2847 to Chicago, a gate change, and special instructions for connecting passengers, passengers requiring assistance, and those traveling with pets.",
+      "audio_script": "Ladies and gentlemen, this is an announcement for passengers of Flight DL 2847 to Chicago O'Hare. The flight, originally scheduled to depart at 2:15 p.m., is now delayed due to a technical issue with the aircraft. The new departure time is 3:45 p.m. Gate information has also changed; please proceed to Gate B12 for boarding. Boarding will begin at 3:15 p.m. Passengers with connecting flights to Detroit on Flight AA 1191 should proceed to the service desk in the central terminal after deplaning, as a standby rebooking will be provided. Passengers requiring wheelchair assistance should remain seated, and a ground crew member will assist you at 3:00 p.m. Additionally, passengers traveling with pets must present the health certificate at the gate no later than 3:10 p.m., or the pet will not be allowed to board. A complimentary meal voucher will be provided at the gate for all passengers; please collect it before boarding. If you have any questions, please see the customer service representative at Gate B12. We apologize for the inconvenience and thank you for your patience.",
+      "questions": [
+        {
+          "question_text": "What is the new departure time for Flight DL 2847?",
+          "options": {
+            "A": "2:15 p.m.",
+            "B": "3:45 p.m.",
+            "C": "3:15 p.m.",
+            "D": "2:45 p.m."
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement explicitly states that the flight is now delayed and the new departure time is 3:45 p.m."
+        },
+        {
+          "question_text": "Which gate should passengers go to for boarding?",
+          "options": {
+            "A": "Gate A5",
+            "B": "Gate B12",
+            "C": "Gate C3",
+            "D": "Gate D8"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement says that gate information has changed and passengers should proceed to Gate B12."
+        },
+        {
+          "question_text": "What must passengers with connecting flights to Detroit do after deplaning?",
+          "options": {
+            "A": "Wait at the original gate for further instructions",
+            "B": "Proceed to the service desk in the central terminal for a standby rebooking",
+            "C": "Go to the airline's lounge",
+            "D": "Contact the airline via phone"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement instructs passengers with a connecting flight to Detroit on Flight AA 1191 to go to the service desk in the central terminal for a standby rebooking."
+        }
+      ],
+      "audio_file": "toeic_p4_05.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Flight Schedule Update and Service Modifications",
+      "context": "You will hear an announcement regarding flight schedule changes, revised boarding procedures, and exceptions for certain passengers.",
+      "audio_script": "Good afternoon, this is the customer service manager at City International Airport. We regret to inform you that due to ongoing runway maintenance, several departures scheduled for this afternoon have been adjusted. The 2:15 p.m. flight to Seattle, flight 308, will now depart at 3:30 p.m. Passengers who have connecting flights to Vancouver should proceed to the service desk for rebooking. Please note that passengers traveling with pets will be accommodated on the 4:00 p.m. flight only, and must present a health certificate at check‑in. If your flight is delayed beyond four hours, you may request a full refund or rebooking on the next available flight. Additionally, lounge access for premium members is extended until 7:00 p.m., but only for those traveling on confirmed tickets. If you have any questions, please contact the information counter at gate B4.",
+      "questions": [
+        {
+          "question_text": "What is the new departure time for flight 308?",
+          "options": {
+            "A": "2:15 p.m.",
+            "B": "3:00 p.m.",
+            "C": "3:30 p.m.",
+            "D": "4:00 p.m."
+          },
+          "correct_answer": "C",
+          "explanation": "The announcement explicitly states that the 2:15 p.m. flight to Seattle (flight 308) will now depart at 3:30 p.m."
+        },
+        {
+          "question_text": "What must passengers traveling with pets do to board the 4:00 p.m. flight?",
+          "options": {
+            "A": "Arrive early",
+            "B": "Present a health certificate at check‑in",
+            "C": "Purchase a separate ticket",
+            "D": "Travel with a carrier"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement specifies that passengers with pets will be accommodated only on the 4:00 p.m. flight and must present a health certificate at check‑in."
+        },
+        {
+          "question_text": "Until what time can premium members use the lounge, and what condition applies?",
+          "options": {
+            "A": "Until 5:00 p.m. regardless of ticket status",
+            "B": "Until 7:00 p.m. only if they have a confirmed ticket",
+            "C": "Until 9:00 p.m. only if they are elite members",
+            "D": "No time limit"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement says lounge access for premium members is extended until 7:00 p.m., but only for those traveling on confirmed tickets."
+        }
+      ],
+      "audio_file": "toeic_p4_06.mp3"
+    },
+    {
+      "set_id": "SET001",
+      "title": "Corporate Announcement: Product Launch Schedule Update",
+      "context": "A recorded announcement from the R&D Division informing staff about changes to the product launch date, meeting schedule, travel guidelines, and remote‑work arrangements.",
+      "audio_script": "Good morning, this is [Name] from the R&D Division. I am calling to inform you of several updates regarding our upcoming product launch. As you know, the original launch date was scheduled for July 15th. However, due to unexpected delays in the component supply chain, we have revised the launch date to August 1st. Please note that this date is contingent upon the arrival of the remaining shipments by June 30th. If the shipments are not received by that deadline, the launch will be automatically postponed to August 15th.\n\nIn addition to the launch date change, the following schedule modifications will take effect: The originally planned all‑hands project review meeting on June 20th will be moved to June 22nd. This rescheduled meeting is mandatory for all senior staff members, defined as those at the manager level and above. Junior staff are required to attend a separate session that will be held on June 23rd. Both sessions will be held in Conference Room B and will begin at 10:00 a.m.\n\nRegarding travel, effective immediately and until July 31st, only essential business travel will be approved. Non‑essential travel, including conferences, client visits, and internal seminars, must be cancelled or rebooked to a later date. Employees who have non‑essential trips scheduled before the end of July should contact the travel coordinator by June 25th to arrange cancellations or alternative bookings.\n\nFinally, a note on remote‑work arrangements: Employees who have pre‑approved vacation between July 1st and July 7th may proceed as planned, but they must submit a remote‑work plan to their direct supervisor by June 28th to ensure coverage. If you have any questions about these changes, please email r&d‑updates@company.com.\n\nThank you for your attention and cooperation.",
+      "questions": [
+        {
+          "question_text": "When is the revised product launch scheduled for, assuming the remaining shipments arrive by June 30?",
+          "options": {
+            "A": "July 15",
+            "B": "August 1",
+            "C": "August 15",
+            "D": "September 1"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement states that the launch date has been moved to August 1, contingent on the shipments arriving by June 30."
+        },
+        {
+          "question_text": "Which group of employees is required to attend the meeting on June 22?",
+          "options": {
+            "A": "All employees",
+            "B": "Senior staff (manager level and above)",
+            "C": "Junior staff",
+            "D": "External partners"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement specifies that the rescheduled meeting on June 22 is mandatory for senior staff members."
+        },
+        {
+          "question_text": "What must employees do if they have non‑essential travel planned before the end of July?",
+          "options": {
+            "A": "Cancel and rebook the travel to a later date",
+            "B": "Obtain manager approval",
+            "C": "Submit a travel request by June 25",
+            "D": "No action required"
+          },
+          "correct_answer": "A",
+          "explanation": "The announcement says that non‑essential travel must be cancelled or rebooked to a later date; employees should contact the travel coordinator by June 25 to arrange this."
+        }
+      ],
+      "audio_file": "toeic_p4_07.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "Global Logistics Weekly Operations Update",
+      "context": "An internal announcement from the operations manager concerning new shipping routes, order processing cutoffs, and revised training schedule for the upcoming quarter.",
+      "audio_script": "Good afternoon, this is the weekly operations update from Global Logistics. Due to the upcoming maintenance at the Hong Kong hub, effective from Monday the 12th, all shipments destined for Southeast Asia will be rerouted through our backup facility in Manila, unless they are temperature‑sensitive, in which case they will be held in the cold storage at the hub until further notice. Additionally, any orders placed after 5 PM on Friday will be processed on the next business day, unless the client has opted for the premium expedited service, which guarantees same‑day dispatch regardless of the cutoff. For the Q3 timeline, the training sessions for the new software will be held on the second and fourth Thursdays of each month, except when those dates conflict with a regional holiday, in which case they will be moved to the following Wednesday. Please note that the training will now be conducted remotely via the Zoom platform, and participants must log in at least five minutes prior to the start time. If you have any questions about the revised routing or the training schedule, please contact the operations desk at extension 2300.",
+      "questions": [
+        {
+          "question_text": "Which of the following statements about shipments to Southeast Asia is correct, according to the announcement?",
+          "options": {
+            "A": "All shipments to Southeast Asia will be rerouted to Manila.",
+            "B": "Temperature‑sensitive shipments will be held at the Hong Kong hub.",
+            "C": "Only large‑volume shipments will be affected by the rerouting.",
+            "D": "Shipments will continue to be processed through the Hong Kong hub as usual."
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement states that all shipments to Southeast Asia will be rerouted through Manila unless they are temperature‑sensitive; those temperature‑sensitive items will remain in the cold storage at the Hong Kong hub."
+        },
+        {
+          "question_text": "Under what condition will orders placed after 5 PM on Friday be processed on the same day?",
+          "options": {
+            "A": "If the order is placed before 5 PM.",
+            "B": "If the order contains temperature‑sensitive items.",
+            "C": "If the client has a premium expedited service subscription.",
+            "D": "If the destination is within the same region."
+          },
+          "correct_answer": "C",
+          "explanation": "The announcement specifies that orders placed after the 5 PM Friday cutoff will be processed the next business day unless the client has opted for the premium expedited service, which guarantees same‑day dispatch."
+        },
+        {
+          "question_text": "When will the training sessions be held if they conflict with a regional holiday?",
+          "options": {
+            "A": "They will be canceled.",
+            "B": "They will be moved to the second Thursday of the month.",
+            "C": "They will be moved to the following Wednesday.",
+            "D": "They will be held on the next business day after the holiday."
+          },
+          "correct_answer": "C",
+          "explanation": "According to the announcement, if a scheduled training date falls on a regional holiday, the session will be moved to the following Wednesday."
+        }
+      ],
+      "audio_file": "toeic_p4_08.mp3"
+    },
+    {
+      "set_id": "set_001",
+      "title": "International Conference Call - Revised Schedule Announcement",
+      "context": "A recorded message from the conference organizing committee notifying participants about changes to the schedule, new deadlines, special instructions for presenters, and refund policy.",
+      "audio_script": "Good afternoon, this is the conference information line. Due to unforeseen venue maintenance, the following adjustments have been made to the schedule for the upcoming International Technology Conference, originally planned for March 15-17, 2025, in Chicago. First, the opening plenary session on March 15 will now begin at 9:30 a.m. instead of the previously announced 9:00 a.m. Second, the workshop on AI ethics, originally scheduled for March 16 at 2:00 p.m., has been moved to March 17 at 10:00 a.m. in order to accommodate a guest speaker. Third, the poster session on March 16 will be extended by one hour, running from 3:30 p.m. to 5:30 p.m., and will take place in Hall B, not Hall A as previously indicated. For presenters, please note the following: if you submitted your abstract by the early deadline of January 10, you must upload your final presentation slides to the conference portal by 11:59 p.m. Central Time on February 28. Presenters who submitted after January 10 but before the final deadline of February 15 are required to upload their slides by March 5. In case of technical difficulties, contact the technical support desk before March 7. Regarding registration refunds, a full refund is available for cancellations made on or before February 1, a 50% refund for cancellations between February 2 and February 20, and no refunds after February 20. However, participants who have a documented medical emergency may request a special exception after the deadline by submitting a letter from a physician. The conference dinner on March 15 will now be a buffet‑style dinner at the Riverside Hotel, with a vegetarian and gluten‑free option guaranteed. Please note that if you have a dietary restriction other than vegetarian or gluten‑free, you must inform the organizer by March 10. For any additional questions, call the helpline at 800‑555‑0199, Monday through Friday, 8:00 a.m. to 6:00 p.m. Central Time. Thank you.",
+      "questions": [
+        {
+          "question_text": "When is the latest deadline for presenters who submitted their abstract after January 10 but before February 15 to upload their final presentation slides?",
+          "options": {
+            "A": "February 28",
+            "B": "March 5",
+            "C": "March 7",
+            "D": "March 10"
+          },
+          "correct_answer": "B",
+          "explanation": "The audio states that presenters who submitted after the early deadline (January 10) but before the final deadline (February 15) must upload their slides by March 5."
+        },
+        {
+          "question_text": "Under what condition can a participant request a refund after the no‑refund cutoff date of February 20?",
+          "options": {
+            "A": "If they have a travel conflict",
+            "B": "If they submit a physician's letter for a medical emergency",
+            "C": "If they register for a different conference",
+            "D": "If they request within 48 hours"
+          },
+          "correct_answer": "B",
+          "explanation": "The message specifies that only participants with a documented medical emergency may request a special exception after the deadline, by providing a letter from a physician."
+        },
+        {
+          "question_text": "Which session has been moved to a different day and what is the reason for the change?",
+          "options": {
+            "A": "AI ethics workshop – moved to March 17 to accommodate a guest speaker",
+            "B": "Poster session – moved to Hall B",
+            "C": "Opening plenary – delayed to 9:30 a.m.",
+            "D": "Conference dinner – changed to buffet style"
+          },
+          "correct_answer": "A",
+          "explanation": "The audio explicitly states that the AI ethics workshop, originally scheduled for March 16 at 2:00 p.m., has been moved to March 17 at 10:00 a.m. to accommodate a guest speaker."
+        }
+      ],
+      "audio_file": "toeic_p4_09.mp3"
+    },
+    {
+      "set_id": "1",
+      "title": "Airport Terminal Reconfiguration Announcement",
+      "context": "A public address announcement regarding gate relocations, shuttle schedule changes, and lounge access updates at an international airport.",
+      "audio_script": "Good afternoon, ladies and gentlemen. This is an important update regarding operations at Logan International Airport, effective starting Monday, November 20th. Due to ongoing construction of the new Terminal C concourse, several gate assignments and shuttle services will be modified.\n\nFirst, all flights departing from Gate A1 through A5 will be moved to the new Terminal C, specifically to Gates C12 through C16. However, flights operated by SkyPartner airlines that are part of the Oneworld alliance will remain at Gate A2, but only for destinations in Europe. All other European‑bound flights will be relocated.\n\nSecond, the intra‑terminal shuttle that connects Terminal C to the remote parking garage will now operate every 12 minutes, instead of the previous 15‑minute interval. The first shuttle leaves at 5:00 a.m., and the last shuttle departs at 11:45 p.m. Passengers who have a connecting flight that departs within 90 minutes of arrival are advised to use the shuttle to reach the new gates promptly.\n\nThird, effective immediately, the premium lounge access policy has been revised. Passengers holding a Gold or higher frequent‑flyer status, regardless of airline, will be eligible for complimentary entry to the SkyLounge located in Terminal C. Additionally, passengers traveling on a Business Class ticket for any airline will also receive complimentary entry. However, those who have purchased a day‑pass are not eligible for the complimentary access, even if they hold elite status.\n\nFinally, please note that the security checkpoint near Gate C15 will be closed for maintenance from 2:00 a.m. to 5:00 a.m. daily. Travelers with early‑morning flights are encouraged to use the checkpoint at Terminal B, which remains open 24 hours.\n\nWe apologize for any inconvenience and appreciate your cooperation.",
+      "questions": [
+        {
+          "question_text": "Which gate will flights to Paris on SkyPartner airlines be boarding from after the changes?",
+          "options": {
+            "A": "Gate A2",
+            "B": "Gate C12",
+            "C": "Gate C15",
+            "D": "Gate B5"
+          },
+          "correct_answer": "A",
+          "explanation": "The announcement states that flights operated by SkyPartner airlines that are part of the Oneworld alliance will remain at Gate A2, but only for European destinations. Since Paris is a European destination, those flights will continue to board at Gate A2. The other gates are either for relocated flights (C12, C15) or unrelated (B5)."
+        },
+        {
+          "question_text": "According to the announcement, which passengers are eligible for complimentary entry to the SkyLounge?",
+          "options": {
+            "A": "All passengers with a boarding pass",
+            "B": "Gold or higher frequent‑flyer status, regardless of airline, and Business Class travelers",
+            "C": "Passengers who have purchased a day‑pass",
+            "D": "Only passengers flying on SkyPartner airlines"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement specifies that passengers holding a Gold or higher frequent‑flyer status, regardless of airline, as well as passengers traveling on a Business Class ticket for any airline, will receive complimentary lounge entry. The other options are either too broad (all passengers) or explicitly excluded (day‑pass holders, only SkyPartner)."
+        },
+        {
+          "question_text": "What is the new interval for the intra‑terminal shuttle between Terminal C and the remote parking garage?",
+          "options": {
+            "A": "Every 10 minutes",
+            "B": "Every 12 minutes",
+            "C": "Every 15 minutes",
+            "D": "Every 20 minutes"
+          },
+          "correct_answer": "B",
+          "explanation": "The announcement says the shuttle will now operate every 12 minutes, replacing the previous 15‑minute frequency. The other intervals do not match the announced change."
+        }
+      ],
+      "audio_file": "toeic_p4_10.mp3"
+    }
+  ]
+}
