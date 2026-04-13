@@ -109,7 +109,7 @@ try {
             break;
 
         case 'upload_snapshot':
-            // Upload snapshot + AI vision analysis (phone/object detection)
+            // Upload snapshot + LLM validation for snapshot-eligible proctoring alerts
             if (!$session_id) throw new Exception('Proctoring session not found');
 
             $snapshot_data = null;
@@ -119,13 +119,18 @@ try {
             if (!$snapshot_data) throw new Exception('No snapshot uploaded');
 
             $event_type = $_POST['event_type'] ?? ($input['event_type'] ?? 'snapshot');
+            $detector_event_type = $_POST['detector_event_type'] ?? ($input['detector_event_type'] ?? $event_type);
+            $detector_severity = $_POST['detector_severity'] ?? ($input['detector_severity'] ?? 'medium');
+            $detector_metadata_raw = $_POST['detector_metadata'] ?? ($input['detector_metadata'] ?? []);
+            $detector_metadata = is_array($detector_metadata_raw)
+                ? $detector_metadata_raw
+                : (json_decode((string)$detector_metadata_raw, true) ?: []);
 
             // Save snapshot to disk + DB
             $imageId = saveSnapshot($session_id, $snapshot_data, $event_type);
             $response = ['success' => true, 'image_id' => $imageId];
 
-            // Run AI vision analysis (detects phones, notes, multiple people, etc.)
-            if (function_exists('analyzeSnapshotWithAI') && function_exists('getActiveAIProvider')) {
+            if ($imageId && function_exists('reviewSnapshotViolation')) {
                 $snap_stmt = $conn->prepare("SELECT snapshot_path FROM proctoring_events WHERE id = ?");
                 if ($snap_stmt) {
                     $snap_stmt->bind_param("i", $imageId);
@@ -135,32 +140,40 @@ try {
 
                     if ($snap_row && $snap_row['snapshot_path']) {
                         $full_path = __DIR__ . '/../' . $snap_row['snapshot_path'];
-                        $ai_result = analyzeSnapshotWithAI($session_id, $full_path, $event_type);
+                        $review = reviewSnapshotViolation(
+                            $session_id,
+                            $imageId,
+                            $full_path,
+                            $detector_event_type,
+                            $detector_severity,
+                            $detector_metadata
+                        );
 
-                        if (is_array($ai_result) && isset($ai_result['verdict']) && $ai_result['verdict'] !== 'error') {
-                            $response['ai_verdict'] = $ai_result['verdict'];
-                            $response['ai_detected'] = $ai_result['detected'] ?? [];
+                        $decision = $review['decision'] ?? [];
+                        $ai_result = $review['ai_result'] ?? [];
 
-                            // AI detects cheating (phone, notes, etc.) → log critical event
-                            if ($ai_result['verdict'] === 'cheating') {
-                                logProctoringEvent($session_id, 'ai_cheating_detected', 'critical', [
-                                    'detected' => $ai_result['detected'] ?? [],
-                                    'reason' => $ai_result['reason'] ?? ''
-                                ]);
-                                logExamAnomaly($user_id, $test_session, 'ai_cheating_detected',
-                                    json_encode($ai_result['detected'] ?? []));
-                            } elseif ($ai_result['verdict'] === 'suspicious') {
-                                logProctoringEvent($session_id, 'ai_suspicious_activity', 'high', [
-                                    'detected' => $ai_result['detected'] ?? [],
-                                    'reason' => $ai_result['reason'] ?? ''
-                                ]);
-                            }
+                        $response['ai_verdict'] = $ai_result['verdict'] ?? 'error';
+                        $response['ai_detected'] = $ai_result['detected'] ?? [];
+                        $response['review_status'] = $decision['review_status'] ?? 'error';
+                        $response['review_verdict'] = $decision['review_verdict'] ?? 'error';
+                        $response['review_reason'] = $decision['reason'] ?? 'Snapshot review failed';
+                        $response['enforced_severity'] = $decision['enforced_severity'] ?? null;
+                        $response['score_impact'] = (int)($decision['score_impact'] ?? 0);
+                        $response['warn_student'] = ($decision['review_verdict'] ?? '') === 'uncertain' && getSnapshotReviewWarningEnabled();
+
+                        if (($decision['review_verdict'] ?? '') === 'valid_violation') {
+                            logExamAnomaly($user_id, $test_session, 'validated_snapshot_violation', json_encode([
+                                'snapshot_event_id' => $imageId,
+                                'detector_event_type' => $detector_event_type,
+                                'reason' => $decision['reason'] ?? '',
+                                'detected' => $decision['detected'] ?? [],
+                            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                         }
                     }
                 }
             }
 
-            // Check if termination threshold reached (score never sent to client)
+            // Check if termination threshold reached after validated penalty only
             $snap_score = getProctoringSessionScore($session_id);
             $snap_status_stmt = $conn->prepare("SELECT status FROM proctoring_sessions WHERE id = ?");
             $snap_status_stmt->bind_param("i", $session_id);

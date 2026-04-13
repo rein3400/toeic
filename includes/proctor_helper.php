@@ -246,6 +246,108 @@ function updateProctoringPermissions($session_id, $camera, $mic) {
     return $stmt->execute();
 }
 
+function ensureProctoringAILogsTable() {
+    global $conn;
+    static $ensured = false;
+
+    if ($ensured || !$conn) {
+        return (bool)$ensured;
+    }
+
+    $sql = "
+        CREATE TABLE IF NOT EXISTS proctoring_ai_logs (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            session_id INT NOT NULL,
+            request_payload LONGTEXT NULL,
+            response_payload LONGTEXT NULL,
+            response_time_ms INT NOT NULL DEFAULT 0,
+            window_score INT NOT NULL DEFAULT 0,
+            action_taken VARCHAR(100) NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_session_created (session_id, created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ";
+
+    try {
+        $ensured = (bool)$conn->query($sql);
+    } catch (Throwable $e) {
+        error_log('ensureProctoringAILogsTable failed: ' . $e->getMessage());
+        $ensured = false;
+    }
+
+    return $ensured;
+}
+
+function logProctoringAIReview($session_id, array $requestPayload, array $responsePayload, $durationMs, $score, $actionTaken) {
+    global $conn;
+
+    if (!$conn || !ensureProctoringAILogsTable()) {
+        return false;
+    }
+
+    $stmt = $conn->prepare("
+        INSERT INTO proctoring_ai_logs
+        (session_id, request_payload, response_payload, response_time_ms, window_score, action_taken)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ");
+
+    if (!$stmt) {
+        return false;
+    }
+
+    $reqJson = json_encode($requestPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $resJson = json_encode($responsePayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $durationMs = (int)$durationMs;
+    $score = (int)$score;
+    $actionTaken = (string)$actionTaken;
+
+    $stmt->bind_param("issiis", $session_id, $reqJson, $resJson, $durationMs, $score, $actionTaken);
+    $ok = $stmt->execute();
+    $stmt->close();
+
+    return $ok;
+}
+
+function appendProctoringEventMetadata($eventId, array $extraMetadata) {
+    global $conn;
+
+    if (!$conn) {
+        return false;
+    }
+
+    $stmt = $conn->prepare("SELECT metadata FROM proctoring_events WHERE id = ?");
+    if (!$stmt) {
+        return false;
+    }
+
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    $currentMetadata = [];
+    if (!empty($row['metadata'])) {
+        $decoded = json_decode($row['metadata'], true);
+        if (is_array($decoded)) {
+            $currentMetadata = $decoded;
+        }
+    }
+
+    $merged = array_merge($currentMetadata, $extraMetadata);
+    $metadataJson = json_encode($merged, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    $update = $conn->prepare("UPDATE proctoring_events SET metadata = ? WHERE id = ?");
+    if (!$update) {
+        return false;
+    }
+
+    $update->bind_param("si", $metadataJson, $eventId);
+    $ok = $update->execute();
+    $update->close();
+
+    return $ok;
+}
+
 // ============================================
 // EVENT LOGGING
 // ============================================
@@ -253,13 +355,19 @@ function updateProctoringPermissions($session_id, $camera, $mic) {
 /**
  * Log a proctoring event
  */
-function logProctoringEvent($session_id, $type, $severity = 'medium', $metadata = [], $snapshot = null) {
+function logProctoringEvent($session_id, $type, $severity = 'medium', $metadata = [], $snapshot = null, $options = []) {
     global $conn;
 
     $meta_json = is_array($metadata) ? json_encode($metadata) : $metadata;
 
     // Calculate impact from severity
-    $impact = getSeverityImpact($severity);
+    $impact = array_key_exists('score_impact_override', $options)
+        ? max(0, (int)$options['score_impact_override'])
+        : getSeverityImpact($severity);
+    $applyScore = !array_key_exists('apply_score', $options) || (bool)$options['apply_score'];
+    if (!$applyScore) {
+        $impact = 0;
+    }
 
     // Calculate event time (relative to start)
     $start_q = $conn->query("SELECT started_at FROM proctoring_sessions WHERE id = $session_id");
@@ -275,13 +383,15 @@ function logProctoringEvent($session_id, $type, $severity = 'medium', $metadata 
 
     $stmt->bind_param("ississi", $session_id, $type, $severity, $event_time, $meta_json, $snapshot, $impact);
     $stmt->execute();
+    $eventId = (int)$conn->insert_id;
+    $stmt->close();
 
     // Update main integrity score
     if ($impact > 0) {
         updateIntegrityScore($session_id, $impact);
     }
 
-    return $conn->insert_id;
+    return $eventId;
 }
 
 /**
@@ -295,6 +405,127 @@ function getSeverityImpact($severity) {
         case 'low': return 1;
         default: return 0;
     }
+}
+
+function getSnapshotValidationConfirmThreshold() {
+    return max(0, min(100, (int)getProctoringSetting('snapshot_validation_confirm_threshold', 80)));
+}
+
+function getSnapshotValidationDismissThreshold() {
+    return max(0, min(100, (int)getProctoringSetting('snapshot_validation_dismiss_threshold', 35)));
+}
+
+function getSnapshotReviewWarningEnabled() {
+    return (int)getProctoringSetting('snapshot_validation_warn_on_uncertain', 1) === 1;
+}
+
+function normalizeSnapshotDetectedItems($detected) {
+    if (!is_array($detected)) {
+        return [];
+    }
+
+    $normalized = [];
+    foreach ($detected as $item) {
+        $item = trim((string)$item);
+        if ($item === '' || in_array($item, $normalized, true)) {
+            continue;
+        }
+        $normalized[] = $item;
+    }
+
+    return $normalized;
+}
+
+function determineSnapshotValidationSeverity($eventType, array $detectedItems = []) {
+    $eventType = strtolower((string)$eventType);
+    $haystack = strtolower(implode(' ', $detectedItems));
+
+    if ($eventType === 'multiple_faces' || strpos($haystack, 'multiple people') !== false || strpos($haystack, 'multiple person') !== false) {
+        return 'critical';
+    }
+
+    foreach (['phone', 'tablet', 'earbud', 'earbuds', 'headphone', 'headphones', 'book', 'books', 'note', 'notes', 'cheat'] as $needle) {
+        if (strpos($haystack, $needle) !== false) {
+            return 'critical';
+        }
+    }
+
+    foreach (['look away', 'looking away', 'leave the frame', 'out of frame', 'away from camera'] as $needle) {
+        if (strpos($haystack, $needle) !== false) {
+            return 'high';
+        }
+    }
+
+    if ($eventType === 'periodic_check') {
+        return 'high';
+    }
+
+    return 'medium';
+}
+
+function evaluateSnapshotViolationDecision($eventType, array $aiResult, array $options = []) {
+    $confirmThreshold = isset($options['confirm_threshold']) ? (int)$options['confirm_threshold'] : 80;
+    $dismissThreshold = isset($options['dismiss_threshold']) ? (int)$options['dismiss_threshold'] : 35;
+
+    $rawVerdict = strtolower(trim((string)($aiResult['validation_verdict'] ?? $aiResult['verdict'] ?? 'error')));
+    $riskScore = max(0, min(100, (int)($aiResult['risk_score'] ?? 0)));
+    $detectedItems = normalizeSnapshotDetectedItems($aiResult['detected'] ?? []);
+    $reason = trim((string)($aiResult['reason'] ?? ''));
+
+    if ($rawVerdict === 'error') {
+        return [
+            'review_status' => 'error',
+            'review_verdict' => 'error',
+            'raw_verdict' => $rawVerdict,
+            'risk_score' => $riskScore,
+            'detected' => $detectedItems,
+            'reason' => $reason !== '' ? $reason : 'LLM review failed',
+            'enforcement_action' => 'fail_open',
+            'enforced_severity' => null,
+            'score_impact' => 0,
+        ];
+    }
+
+    if ($rawVerdict === 'invalid_violation' || $rawVerdict === 'clean' || $riskScore <= $dismissThreshold) {
+        return [
+            'review_status' => 'dismissed',
+            'review_verdict' => 'invalid_violation',
+            'raw_verdict' => $rawVerdict,
+            'risk_score' => $riskScore,
+            'detected' => $detectedItems,
+            'reason' => $reason !== '' ? $reason : 'Snapshot does not confirm a real violation',
+            'enforcement_action' => 'dismiss',
+            'enforced_severity' => null,
+            'score_impact' => 0,
+        ];
+    }
+
+    if ($rawVerdict === 'valid_violation' || $rawVerdict === 'cheating' || $riskScore >= $confirmThreshold) {
+        $severity = determineSnapshotValidationSeverity($eventType, $detectedItems);
+        return [
+            'review_status' => 'validated',
+            'review_verdict' => 'valid_violation',
+            'raw_verdict' => $rawVerdict,
+            'risk_score' => $riskScore,
+            'detected' => $detectedItems,
+            'reason' => $reason !== '' ? $reason : 'Snapshot confirms a violation',
+            'enforcement_action' => 'apply_penalty',
+            'enforced_severity' => $severity,
+            'score_impact' => getSeverityImpact($severity),
+        ];
+    }
+
+    return [
+        'review_status' => 'needs_review',
+        'review_verdict' => 'uncertain',
+        'raw_verdict' => $rawVerdict,
+        'risk_score' => $riskScore,
+        'detected' => $detectedItems,
+        'reason' => $reason !== '' ? $reason : 'Snapshot review is inconclusive',
+        'enforcement_action' => 'flag_review',
+        'enforced_severity' => null,
+        'score_impact' => 0,
+    ];
 }
 
 /**
@@ -404,20 +635,14 @@ function analyzeEventsWithAI($session_id, $recent_events) {
                 throw new Exception("Invalid AI JSON: missing action/risk_score (attempt $attempt)");
             }
             
-            // Log AI decision (only once on success)
-            $stmt = $conn->prepare("
-                INSERT INTO proctoring_ai_logs 
-                (session_id, request_payload, response_payload, response_time_ms, window_score, action_taken)
-                VALUES (?, ?, ?, ?, ?, ?)
-            ");
-            
-            $req_json = json_encode($recent_events);
-            $res_json = json_encode($json);
-            $score = $json['risk_score'] ?? 0;
-            $action = $json['action'] ?? 'continue';
-            
-            $stmt->bind_param("issiis", $session_id, $req_json, $res_json, $duration, $score, $action);
-            $stmt->execute();
+            logProctoringAIReview(
+                $session_id,
+                ['type' => 'event_window', 'events' => $recent_events],
+                $json,
+                $duration,
+                $json['risk_score'] ?? 0,
+                $json['action'] ?? 'continue'
+            );
             
             return $json;
             
@@ -441,7 +666,7 @@ function analyzeEventsWithAI($session_id, $recent_events) {
  * Analyze a specific snapshot with Vision AI
  * Uses same timeout logic as analyzeEventsWithAI
  */
-function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_check') {
+function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_check', array $context = []) {
     global $conn;
     
     $config = getActiveAIProvider();
@@ -457,15 +682,24 @@ function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_ch
     
     $image_data = base64_encode(file_get_contents($snapshot_path));
     
-    $prompt = "You are a strict exam proctor. Analyze this image captured during an online exam.\n" .
-              "Reason for capture: {$reason}\n" .
+    $triggerEvent = (string)($context['detector_event_type'] ?? $reason);
+    $detectorSeverity = (string)($context['detector_severity'] ?? 'medium');
+    $detectorMetadata = is_array($context['detector_metadata'] ?? null) ? $context['detector_metadata'] : [];
+
+    $prompt = "You are a strict TOEIC exam proctor reviewing a detector alert.\n" .
+              "A local detector flagged a possible violation and captured this image for validation.\n" .
+              "Detector trigger: {$triggerEvent}\n" .
+              "Detector severity: {$detectorSeverity}\n" .
+              "Detector metadata: " . json_encode($detectorMetadata, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n" .
+              "Reason for capture: {$reason}\n\n" .
+              "Validate whether the detector alert is actually supported by the image.\n" .
               "Check for:\n" .
               "1. Multiple people in frame.\n" .
               "2. Electronic devices (phones, tablets, earbuds).\n" .
               "3. Books, notes, or cheat sheets.\n" .
               "4. User looking away significantly or leaving the frame.\n" .
               "5. User wearing headphones (unless allowed).\n\n" .
-              "Return JSON ONLY: { \"detected\": [\"list\", \"items\"], \"risk_score\": 0-100, \"verdict\": \"clean|suspicious|cheating\", \"reason\": \"short explanation\" }";
+              "Return JSON ONLY: { \"detected\": [\"list\", \"items\"], \"risk_score\": 0-100, \"verdict\": \"clean|suspicious|cheating\", \"validation_verdict\": \"valid_violation|invalid_violation|uncertain\", \"reason\": \"short explanation\" }";
 
     try {
         $start = microtime(true);
@@ -475,20 +709,20 @@ function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_ch
         
         $json = parseAIJSON($response);
         
-        // Log AI decision
-        $stmt = $conn->prepare("
-            INSERT INTO proctoring_ai_logs 
-            (session_id, request_payload, response_payload, response_time_ms, window_score, action_taken)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ");
-        
-        $req_json = json_encode(['type' => 'snapshot_analysis', 'reason' => $reason]);
-        $res_json = json_encode($json);
-        $score = $json['risk_score'] ?? 0;
-        $action = $json['verdict'] ?? 'unknown';
-        
-        $stmt->bind_param("issiis", $session_id, $req_json, $res_json, $duration, $score, $action);
-        $stmt->execute();
+        logProctoringAIReview(
+            $session_id,
+            [
+                'type' => 'snapshot_analysis',
+                'reason' => $reason,
+                'detector_event_type' => $triggerEvent,
+                'detector_severity' => $detectorSeverity,
+                'detector_metadata' => $detectorMetadata,
+            ],
+            $json,
+            $duration,
+            $json['risk_score'] ?? 0,
+            $json['validation_verdict'] ?? ($json['verdict'] ?? 'unknown')
+        );
         
         return $json;
         
@@ -496,6 +730,84 @@ function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_ch
         error_log("AI Vision Proctor Error: " . $e->getMessage());
         return ['verdict' => 'error'];
     }
+}
+
+function reviewSnapshotViolation($session_id, $snapshotEventId, $snapshotPath, $eventType, $detectorSeverity = 'medium', array $detectorMetadata = []) {
+    $aiResult = analyzeSnapshotWithAI($session_id, $snapshotPath, $eventType, [
+        'detector_event_type' => $eventType,
+        'detector_severity' => $detectorSeverity,
+        'detector_metadata' => $detectorMetadata,
+    ]);
+
+    $decision = evaluateSnapshotViolationDecision($eventType, is_array($aiResult) ? $aiResult : [], [
+        'confirm_threshold' => getSnapshotValidationConfirmThreshold(),
+        'dismiss_threshold' => getSnapshotValidationDismissThreshold(),
+    ]);
+
+    $eventMetadata = [
+        'detector_event_type' => $eventType,
+        'detector_severity' => $detectorSeverity,
+        'detector_metadata' => $detectorMetadata,
+        'review_status' => $decision['review_status'],
+        'review_verdict' => $decision['review_verdict'],
+        'raw_verdict' => $decision['raw_verdict'],
+        'review_reason' => $decision['reason'],
+        'risk_score' => $decision['risk_score'],
+        'detected_items' => $decision['detected'],
+        'enforcement_action' => $decision['enforcement_action'],
+        'enforced_severity' => $decision['enforced_severity'],
+        'score_impact' => $decision['score_impact'],
+    ];
+
+    appendProctoringEventMetadata($snapshotEventId, $eventMetadata);
+
+    $validatedEventId = null;
+    if ($decision['enforcement_action'] === 'apply_penalty') {
+        $validatedEventId = logProctoringEvent(
+            $session_id,
+            'validated_snapshot_violation',
+            $decision['enforced_severity'],
+            [
+                'source_snapshot_event_id' => $snapshotEventId,
+                'detector_event_type' => $eventType,
+                'detector_severity' => $detectorSeverity,
+                'detector_metadata' => $detectorMetadata,
+                'review_verdict' => $decision['review_verdict'],
+                'raw_verdict' => $decision['raw_verdict'],
+                'review_reason' => $decision['reason'],
+                'detected_items' => $decision['detected'],
+                'risk_score' => $decision['risk_score'],
+            ],
+            null,
+            [
+                'apply_score' => true,
+                'score_impact_override' => $decision['score_impact'],
+            ]
+        );
+    }
+
+    $sessionScore = getProctoringSessionScore($session_id);
+    $terminated = false;
+
+    global $conn;
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT status FROM proctoring_sessions WHERE id = ?");
+        if ($stmt) {
+            $stmt->bind_param("i", $session_id);
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            $terminated = $row && ($row['status'] === 'terminated');
+        }
+    }
+
+    return [
+        'ai_result' => $aiResult,
+        'decision' => $decision,
+        'validated_event_id' => $validatedEventId,
+        'session_score' => $sessionScore['score'] ?? 100,
+        'terminated' => $terminated,
+    ];
 }
 
 function parseAIJSON($response) {

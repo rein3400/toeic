@@ -269,8 +269,11 @@ class ProctorSDK {
                 this.state.lastFaceTime = Date.now();
             }
         } else if (count > 1) {
-            this.logEvent('multiple_faces', 'critical', { count: count });
-            this.captureSnapshot('multiple_faces');
+            this.captureSnapshot('multiple_faces', {
+                detectorEventType: 'multiple_faces',
+                detectorSeverity: 'critical',
+                detectorMetadata: { count: count }
+            });
             this.state.lastFaceTime = Date.now();
         } else {
             this.state.lastFaceTime = Date.now();
@@ -356,7 +359,7 @@ class ProctorSDK {
         }
     }
 
-    captureSnapshot(reason) {
+    captureSnapshot(reason, options = {}) {
         if (!this.videoStream) return;
 
         const track = this.videoStream.getVideoTracks()[0];
@@ -369,6 +372,9 @@ class ProctorSDK {
             formData.append('test_session', this.config.testSession);
             formData.append('snapshot', blob);
             formData.append('event_type', reason);
+            formData.append('detector_event_type', options.detectorEventType || reason);
+            formData.append('detector_severity', options.detectorSeverity || 'medium');
+            formData.append('detector_metadata', JSON.stringify(options.detectorMetadata || {}));
 
             fetch(this.config.ajaxUrl, { method: 'POST', body: formData })
                 .then(r => r.json())
@@ -405,6 +411,9 @@ class ProctorSDK {
             formData.append('test_session', this.config.testSession);
             formData.append('snapshot', blob);
             formData.append('event_type', 'periodic_check');
+            formData.append('detector_event_type', 'periodic_check');
+            formData.append('detector_severity', 'medium');
+            formData.append('detector_metadata', JSON.stringify({ source: 'periodic_snapshot' }));
 
             const res = await fetch(this.config.ajaxUrl, { method: 'POST', body: formData });
             const json = await res.json();
@@ -421,15 +430,20 @@ class ProctorSDK {
     handleAIResponse(json) {
         if (!json) return;
 
-        if (json.ai_detected && json.ai_detected.length > 0) {
+        if (json.review_verdict === 'valid_violation' && json.ai_detected && json.ai_detected.length > 0) {
             const items = json.ai_detected.join(', ');
-            if (json.ai_verdict === 'cheating') {
+            if (json.enforced_severity === 'critical' || json.ai_verdict === 'cheating') {
                 this.showViolationWarning('critical',
                     `Terdeteksi oleh AI: ${items}`);
-            } else if (json.ai_verdict === 'suspicious') {
+            } else {
                 this.showViolationWarning('high',
                     `Aktivitas mencurigakan: ${items}`);
             }
+        }
+
+        if (json.review_verdict === 'uncertain' && json.warn_student) {
+            this.showViolationWarning('medium',
+                'Sistem mendeteksi aktivitas yang perlu ditinjau. Tetap fokus pada ujian.');
         }
 
         if (json.ai_action === 'terminate') {

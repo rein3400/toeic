@@ -294,6 +294,19 @@ $statements = [
             INDEX idx_session_created (session_id, created_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ",
+    'proctoring_ai_logs' => "
+        CREATE TABLE IF NOT EXISTS proctoring_ai_logs (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            session_id INT NOT NULL,
+            request_payload LONGTEXT NULL,
+            response_payload LONGTEXT NULL,
+            response_time_ms INT NOT NULL DEFAULT 0,
+            window_score INT NOT NULL DEFAULT 0,
+            action_taken VARCHAR(100) NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_session_created (session_id, created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ",
 ];
 
 foreach ($statements as $label => $sql) {
