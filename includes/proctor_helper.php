@@ -278,6 +278,37 @@ function ensureProctoringAILogsTable() {
     return $ensured;
 }
 
+function ensureExamAnomaliesTable() {
+    global $conn;
+    static $ensured = false;
+
+    if ($ensured || !$conn) {
+        return (bool)$ensured;
+    }
+
+    $sql = "
+        CREATE TABLE IF NOT EXISTS exam_anomalies (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            test_session VARCHAR(191) NOT NULL,
+            event_type VARCHAR(100) NOT NULL,
+            details LONGTEXT NULL,
+            occurred_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_session_occurred (test_session, occurred_at),
+            INDEX idx_user_occurred (user_id, occurred_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ";
+
+    try {
+        $ensured = (bool)$conn->query($sql);
+    } catch (Throwable $e) {
+        error_log('ensureExamAnomaliesTable failed: ' . $e->getMessage());
+        $ensured = false;
+    }
+
+    return $ensured;
+}
+
 function logProctoringAIReview($session_id, array $requestPayload, array $responsePayload, $durationMs, $score, $actionTaken) {
     global $conn;
 
@@ -1124,13 +1155,22 @@ function updateProctoringHeartbeat($session_id, $lastActivity) {
  */
 function logExamAnomaly($user_id, $test_session, $type, $details) {
     global $conn;
-    
+
+    if (!$conn || !ensureExamAnomaliesTable()) {
+        return false;
+    }
+
     $stmt = $conn->prepare("
         INSERT INTO exam_anomalies (user_id, test_session, event_type, details)
         VALUES (?, ?, ?, ?)
     ");
+    if (!$stmt) {
+        return false;
+    }
     $stmt->bind_param("isss", $user_id, $test_session, $type, $details);
-    return $stmt->execute();
+    $ok = $stmt->execute();
+    $stmt->close();
+    return $ok;
 }
 
 ?>

@@ -28,6 +28,7 @@ $required_tables = [
     'proctoring_sessions',
     'proctoring_events',
     'proctoring_ai_logs',
+    'exam_anomalies',
 ];
 
 foreach ($required_tables as $table) {

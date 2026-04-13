@@ -307,6 +307,18 @@ $statements = [
             INDEX idx_session_created (session_id, created_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ",
+    'exam_anomalies' => "
+        CREATE TABLE IF NOT EXISTS exam_anomalies (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            test_session VARCHAR(191) NOT NULL,
+            event_type VARCHAR(100) NOT NULL,
+            details LONGTEXT NULL,
+            occurred_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_session_occurred (test_session, occurred_at),
+            INDEX idx_user_occurred (user_id, occurred_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ",
 ];
 
 foreach ($statements as $label => $sql) {
