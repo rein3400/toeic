@@ -53,10 +53,10 @@ assertSame(
 );
 
 $absoluteUrl = toeicPhotoUrlCandidates('https://static.example.com/toeic_p1_03.png');
-assertSame(
-    ['https://static.example.com/toeic_p1_03.png'],
-    $absoluteUrl,
-    'absolute URLs are returned unchanged'
+assertSame('../uploads/toeic_photos/toeic_p1_03.png', $absoluteUrl[0] ?? null, 'existing local file is preferred over absolute remote URL');
+assertTrue(
+    in_array('https://static.example.com/toeic_p1_03.png', $absoluteUrl, true),
+    'absolute remote URL is retained as a later fallback candidate'
 );
 
 echo "toeic asset storage tests passed\n";

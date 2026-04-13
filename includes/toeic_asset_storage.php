@@ -43,7 +43,13 @@ function toeicAssetPathCandidates($filePath, $kind) {
 
     $normalized = str_replace('\\', '/', $value);
     if (preg_match('#^https?://#i', $normalized)) {
-        return [$normalized];
+        $paths = [$normalized];
+        $parsedPath = parse_url($normalized, PHP_URL_PATH);
+        $basename = basename((string)$parsedPath);
+        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
+            $paths[] = $basename;
+        }
+        return toeicUniqueAssetValues($paths);
     }
     $normalized = preg_replace('#/+#', '/', $normalized);
 
@@ -105,15 +111,14 @@ function toeicAssetLocalUrlCandidates($filePath, $kind) {
         return [];
     }
 
-    if (preg_match('#^https?://#i', $paths[0])) {
-        return [];
-    }
-
     $directory = toeicAssetDirectory($kind);
     $directoryPrefix = $directory . '/';
     $urls = [];
 
     foreach ($paths as $path) {
+        if (preg_match('#^https?://#i', $path)) {
+            continue;
+        }
         $path = ltrim($path, '/');
         $relativePath = strpos($path, $directoryPrefix) === 0 ? $path : $directoryPrefix . ltrim($path, '/');
         $encodedPath = toeicEncodeAssetPath($relativePath);
@@ -131,15 +136,14 @@ function toeicAssetLocalFileCandidates($filePath, $kind) {
         return [];
     }
 
-    if (preg_match('#^https?://#i', $paths[0])) {
-        return [];
-    }
-
     $directory = toeicAssetDirectory($kind);
     $directoryPrefix = $directory . '/';
     $existingUrls = [];
 
     foreach ($paths as $path) {
+        if (preg_match('#^https?://#i', $path)) {
+            continue;
+        }
         $path = ltrim($path, '/');
         $relativePath = strpos($path, $directoryPrefix) === 0 ? $path : $directoryPrefix . ltrim($path, '/');
         $absolutePath = __DIR__ . '/../' . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
@@ -160,10 +164,6 @@ function toeicPhotoUrlCandidates($filePath) {
     $paths = toeicAssetPathCandidates($filePath, 'photo');
     if (empty($paths)) {
         return [];
-    }
-
-    if (preg_match('#^https?://#i', $paths[0])) {
-        return [$paths[0]];
     }
 
     $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'photo');
