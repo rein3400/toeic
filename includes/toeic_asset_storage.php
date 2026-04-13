@@ -11,6 +11,140 @@ function toeicNormalizeAssetKey($value) {
     return basename(str_replace('\\', '/', $value));
 }
 
+function toeicEncodeAssetPath($path) {
+    $segments = array_values(array_filter(explode('/', str_replace('\\', '/', (string)$path)), 'strlen'));
+    if (empty($segments)) {
+        return '';
+    }
+    return implode('/', array_map('rawurlencode', $segments));
+}
+
+function toeicUniqueAssetValues(array $values) {
+    $unique = [];
+    foreach ($values as $value) {
+        $value = trim((string)$value);
+        if ($value === '' || in_array($value, $unique, true)) {
+            continue;
+        }
+        $unique[] = $value;
+    }
+    return $unique;
+}
+
+function toeicAssetDirectory($kind) {
+    return strtolower((string)$kind) === 'audio' ? 'uploads/toeic_audio' : 'uploads/toeic_photos';
+}
+
+function toeicAssetPathCandidates($filePath, $kind) {
+    $value = trim((string)$filePath);
+    if ($value === '') {
+        return [];
+    }
+
+    $normalized = str_replace('\\', '/', $value);
+    if (preg_match('#^https?://#i', $normalized)) {
+        return [$normalized];
+    }
+    $normalized = preg_replace('#/+#', '/', $normalized);
+
+    $normalized = ltrim($normalized, '/');
+    $directory = toeicAssetDirectory($kind);
+    $candidates = [$normalized];
+
+    $directoryPrefix = $directory . '/';
+    if (strpos($normalized, $directoryPrefix) === 0) {
+        $candidates[] = substr($normalized, strlen($directoryPrefix));
+    } else {
+        $directoryPos = strpos($normalized, '/' . $directoryPrefix);
+        if ($directoryPos !== false) {
+            $candidates[] = substr($normalized, $directoryPos + strlen($directoryPrefix) + 1);
+        }
+    }
+
+    $basename = basename($normalized);
+    if ($basename !== '' && $basename !== $normalized) {
+        $candidates[] = $basename;
+    }
+
+    return toeicUniqueAssetValues($candidates);
+}
+
+function toeicAssetRemoteUrlCandidates($filePath, $kind) {
+    $paths = toeicAssetPathCandidates($filePath, $kind);
+    if (empty($paths)) {
+        return [];
+    }
+
+    if (preg_match('#^https?://#i', $paths[0])) {
+        return [$paths[0]];
+    }
+
+    if (toeicAssetDriver($kind) !== 'r2') {
+        return [];
+    }
+
+    $base = toeicAssetBaseUrl($kind);
+    if ($base === '') {
+        return [];
+    }
+
+    $urls = [];
+    foreach ($paths as $path) {
+        $encodedPath = toeicEncodeAssetPath($path);
+        if ($encodedPath !== '') {
+            $urls[] = $base . '/' . $encodedPath;
+        }
+    }
+
+    return toeicUniqueAssetValues($urls);
+}
+
+function toeicAssetLocalUrlCandidates($filePath, $kind) {
+    $paths = toeicAssetPathCandidates($filePath, $kind);
+    if (empty($paths)) {
+        return [];
+    }
+
+    if (preg_match('#^https?://#i', $paths[0])) {
+        return [];
+    }
+
+    $directory = toeicAssetDirectory($kind);
+    $directoryPrefix = $directory . '/';
+    $urls = [];
+
+    foreach ($paths as $path) {
+        $path = ltrim($path, '/');
+        $relativePath = strpos($path, $directoryPrefix) === 0 ? $path : $directoryPrefix . ltrim($path, '/');
+        $encodedPath = toeicEncodeAssetPath($relativePath);
+        if ($encodedPath !== '') {
+            $urls[] = '../' . $encodedPath;
+        }
+    }
+
+    return toeicUniqueAssetValues($urls);
+}
+
+function toeicPhotoUrlCandidates($filePath) {
+    $paths = toeicAssetPathCandidates($filePath, 'photo');
+    if (empty($paths)) {
+        return [];
+    }
+
+    if (preg_match('#^https?://#i', $paths[0])) {
+        return [$paths[0]];
+    }
+
+    $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'photo');
+    $localCandidates = toeicAssetLocalUrlCandidates($filePath, 'photo');
+
+    if (toeicAssetDriver('photo') === 'r2') {
+        return toeicUniqueAssetValues(array_merge($remoteCandidates, $localCandidates));
+    }
+
+    return toeicUniqueAssetValues(array_merge($localCandidates, $remoteCandidates));
+}
+
 function toeicAssetDriver($kind) {
     $kind = strtolower((string)$kind);
     $specific = getenv('TOEIC_' . strtoupper($kind) . '_STORAGE_DRIVER');
@@ -38,20 +172,8 @@ function toeicAssetBaseUrl($kind) {
 }
 
 function toeicPhotoUrl($filePath) {
-    $key = toeicNormalizeAssetKey($filePath);
-    if ($key === '') {
-        return '';
-    }
-    if (preg_match('#^https?://#i', $key)) {
-        return $key;
-    }
-    if (toeicAssetDriver('photo') === 'r2') {
-        $base = toeicAssetBaseUrl('photo');
-        if ($base !== '') {
-            return $base . '/' . rawurlencode($key);
-        }
-    }
-    return '../uploads/toeic_photos/' . rawurlencode($key);
+    $candidates = toeicPhotoUrlCandidates($filePath);
+    return $candidates[0] ?? '';
 }
 
 function toeicAudioUrl($filePath) {

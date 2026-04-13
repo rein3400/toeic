@@ -532,7 +532,7 @@ $stmt->close();
                 </div>
 
                 <div class="text-center mt-3">
-                    <a href="<?php echo htmlspecialchars($redirect_target); ?>?section=<?php echo htmlspecialchars($section); ?>&test_session=<?php echo htmlspecialchars($test_session); ?>&setup_complete=1&skip_proctoring=1"
+                    <a href="<?php echo htmlspecialchars($redirect_target); ?>?section=<?php echo htmlspecialchars($section); ?>&test_session=<?php echo htmlspecialchars($test_session); ?>&setup_complete=1<?php echo htmlspecialchars($redirect_query, ENT_QUOTES); ?>&skip_proctoring=1"
                        class="btn btn-outline-secondary btn-sm"
                        id="btnSkipProctoring" style="display:none;">
                         <i class="fas fa-forward me-1"></i>Lewati Proctoring — Test Tanpa Kamera
@@ -597,6 +597,8 @@ $stmt->close();
         let faceDetector = null;
         let faceDetected = false;
         let faceDetectionInterval = null;
+        let faceDetectionState = 'idle';
+        let faceDetectionStartedAt = 0;
         let permissionsConsented = false;
 
         // Step -1: Preparation → Consent
@@ -618,21 +620,89 @@ $stmt->close();
                 window.location.href = 'index.php';
             }
         }
+
+        function setStartTestButtonEnabled(enabled) {
+            const btnStartTest = document.getElementById('btnStartTest');
+            btnStartTest.disabled = !enabled;
+            btnStartTest.style.opacity = enabled ? '1' : '0.6';
+            btnStartTest.style.cursor = enabled ? 'pointer' : 'not-allowed';
+            btnStartTest.style.pointerEvents = enabled ? 'auto' : 'none';
+            btnStartTest.classList.toggle('disabled', !enabled);
+        }
+
+        function updateFaceDetectionUi(state, message) {
+            const faceStatus = document.getElementById('faceStatus');
+            const faceSuccessAlert = document.getElementById('faceSuccessAlert');
+            const faceFailAlert = document.getElementById('faceFailAlert');
+
+            faceDetectionState = state;
+
+            switch (state) {
+                case 'detected':
+                    faceDetected = true;
+                    faceStatus.innerHTML = '<i class="fas fa-check-circle text-success"></i> ' + (message || 'Face detected!');
+                    faceSuccessAlert.classList.add('show');
+                    faceFailAlert.classList.remove('show');
+                    setStartTestButtonEnabled(true);
+                    break;
+                case 'detector_error':
+                    faceDetected = false;
+                    faceStatus.innerHTML = '<i class="fas fa-triangle-exclamation text-danger"></i> Face detector unavailable';
+                    faceSuccessAlert.classList.remove('show');
+                    faceFailAlert.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + (message || 'Face detector could not be started. Check your connection and retry.');
+                    faceFailAlert.classList.add('show');
+                    setStartTestButtonEnabled(false);
+                    break;
+                case 'not_found':
+                    faceDetected = false;
+                    faceStatus.innerHTML = '<i class="fas fa-search"></i> Detecting face...';
+                    faceSuccessAlert.classList.remove('show');
+                    faceFailAlert.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + (message || 'No face detected. Please ensure good lighting and position your face clearly in front of the camera.');
+                    faceFailAlert.classList.add('show');
+                    setStartTestButtonEnabled(false);
+                    break;
+                default:
+                    faceDetected = false;
+                    faceStatus.innerHTML = '<i class="fas fa-search"></i> ' + (message || 'Detecting face...');
+                    faceSuccessAlert.classList.remove('show');
+                    faceFailAlert.classList.remove('show');
+                    setStartTestButtonEnabled(false);
+                    break;
+            }
+        }
+
+        function stopFaceDetectionLoop() {
+            if (faceDetectionInterval) {
+                clearInterval(faceDetectionInterval);
+                faceDetectionInterval = null;
+            }
+        }
         
         // Initialize Face Detector
         function initFaceDetector() {
-            faceDetector = new FaceDetection({
-                locateFile: (file) => {
-                    return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`;
-                }
-            });
-            
-            faceDetector.setOptions({
-                model: 'short',
-                minDetectionConfidence: 0.5
-            });
-            
-            faceDetector.onResults(onFaceResults);
+            if (faceDetector) {
+                return faceDetector;
+            }
+
+            try {
+                faceDetector = new FaceDetection({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`;
+                    }
+                });
+
+                faceDetector.setOptions({
+                    model: 'short',
+                    minDetectionConfidence: 0.5
+                });
+
+                faceDetector.onResults(onFaceResults);
+                return faceDetector;
+            } catch (error) {
+                console.error('Face detector initialization error:', error);
+                updateFaceDetectionUi('detector_error', 'Face detector could not be initialized. Check your internet connection and retry.');
+                return null;
+            }
         }
         
         function onFaceResults(results) {
@@ -640,41 +710,27 @@ $stmt->close();
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            if (results.detections.length > 0) {
-                faceDetected = true;
-                console.log('Face detected! Enabling button...');
-                document.getElementById('faceStatus').innerHTML = '<i class="fas fa-check-circle text-success"></i> Face detected!';
-                document.getElementById('faceSuccessAlert').classList.add('show');
-                document.getElementById('faceFailAlert').classList.remove('show');
+            const detections = Array.isArray(results && results.detections) ? results.detections : [];
 
-                // Enable button with explicit styling
-                const btnStartTest = document.getElementById('btnStartTest');
-                btnStartTest.disabled = false;
-                btnStartTest.style.opacity = '1';
-                btnStartTest.style.cursor = 'pointer';
-                btnStartTest.style.pointerEvents = 'auto';
-                btnStartTest.classList.remove('disabled');
-                console.log('Button enabled:', btnStartTest.disabled);
+            if (detections.length > 0) {
+                console.log('Face detected! Enabling button...');
+                updateFaceDetectionUi('detected', 'Face detected!');
 
                 // Draw bounding box
-                const detection = results.detections[0];
+                const detection = detections[0];
                 const bbox = detection.boundingBox;
 
                 ctx.strokeStyle = '#10b981';
                 ctx.lineWidth = 4;
                 ctx.strokeRect(bbox.xMin, bbox.yMin, bbox.width, bbox.height);
             } else {
-                faceDetected = false;
-                console.log('No face detected. Disabling button...');
-                document.getElementById('faceStatus').innerHTML = '<i class="fas fa-search"></i> Detecting face...';
-                document.getElementById('faceSuccessAlert').classList.remove('show');
-                document.getElementById('faceFailAlert').classList.add('show');
-
-                const btnStartTest = document.getElementById('btnStartTest');
-                btnStartTest.disabled = true;
-                btnStartTest.style.opacity = '0.6';
-                btnStartTest.style.cursor = 'not-allowed';
-                btnStartTest.style.pointerEvents = 'none';
+                const elapsed = Date.now() - faceDetectionStartedAt;
+                if (elapsed < 3000) {
+                    updateFaceDetectionUi('detecting', 'Detecting face...');
+                } else {
+                    console.log('No face detected. Disabling button...');
+                    updateFaceDetectionUi('not_found', 'No face detected. Please ensure good lighting and position your face clearly in front of the camera.');
+                }
             }
         }
         
@@ -892,10 +948,18 @@ $stmt->close();
 
         // Step 3: Face Detection - Reuse camera stream
         function startFaceDetection() {
-            initFaceDetector();
+            const detector = initFaceDetector();
+            if (!detector) {
+                return;
+            }
 
             const video = document.getElementById('facePreview');
             const canvas = document.getElementById('faceDetectCanvas');
+            video.muted = true;
+            video.playsInline = true;
+            faceDetectionStartedAt = Date.now();
+            updateFaceDetectionUi('detecting', 'Detecting face...');
+            stopFaceDetectionLoop();
 
             // Set canvas size
             canvas.width = 640;
@@ -918,6 +982,7 @@ $stmt->close();
                     startFaceDetectionLoop(video);
                 }).catch(error => {
                     console.error('Face detection error:', error);
+                    updateFaceDetectionUi('detector_error', 'Could not start face detection. Please ensure the camera is available and try again.');
                     if (error.name === 'NotAllowedError') {
                         alert('Camera access was denied. Please check your browser permissions and try again.');
                     } else {
@@ -929,13 +994,19 @@ $stmt->close();
 
         function startFaceDetectionLoop(video) {
             function beginLoop() {
+                if (faceDetectionInterval) {
+                    return;
+                }
+
                 // Send frames to face detector every 200ms
-                setInterval(async () => {
+                faceDetectionInterval = setInterval(async () => {
                     if (!video.paused && !video.ended) {
                         try {
                             await faceDetector.send({ image: video });
                         } catch (error) {
                             console.error('Face detection frame error:', error);
+                            updateFaceDetectionUi('detector_error', 'Face detector lost access to the video stream. Please retry the setup.');
+                            stopFaceDetectionLoop();
                         }
                     }
                 }, 200);
@@ -997,6 +1068,7 @@ $stmt->close();
 
                 if (result.success) {
                     await savePermissions({ camera: true, microphone: true });
+                    stopFaceDetectionLoop();
                     console.log('Setup completed successfully');
                     // Show summary screen
                     document.getElementById('faceStep').style.display = 'none';

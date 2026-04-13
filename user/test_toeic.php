@@ -397,6 +397,7 @@ $part_info = getTOEICPartInfo($part);
 $is_batch = in_array($part, ['3', '4', '6', '7'], true);
 $audio = null;
 $photo = null;
+$photo_urls = [];
 $text = null;
 $batch_questions = [];
 $batch_answers = [];
@@ -408,6 +409,9 @@ if ($section === 'listening') {
     }
     if ($part === '1' && $audio && !empty($audio['id_photo'])) {
         $photo = getToeicPhoto((int)$audio['id_photo']);
+        if ($photo) {
+            $photo_urls = toeicPhotoUrlCandidates($photo['file_path'] ?? '');
+        }
     }
     if ($is_batch) {
         $batch_questions = getToeicAudioContextQuestions($conn, $test_session, $question_num);
@@ -420,6 +424,13 @@ if ($section === 'listening') {
         $batch_questions = getToeicTextContextQuestions($conn, $test_session, $question_num);
     }
 }
+
+$primary_photo_url = $photo_urls[0] ?? '';
+$fallback_photo_urls = array_values(array_slice($photo_urls, 1));
+$photo_fallback_json = htmlspecialchars(
+    json_encode($fallback_photo_urls, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT),
+    ENT_QUOTES
+);
 
 if ($is_batch) {
     foreach ($batch_questions as $row) {
@@ -539,9 +550,28 @@ $is_last_question = $is_batch
             </div>
 
             <div class="flex-1 overflow-y-auto scroll-smooth p-8 pb-20">
-                <?php if ($part === '1' && $photo): ?>
+                <?php if ($part === '1'): ?>
                     <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm mb-6">
-                        <img src="<?php echo htmlspecialchars(toeicPhotoUrl($photo['file_path'])); ?>" alt="TOEIC Photograph" class="w-full h-auto object-contain bg-slate-100 dark:bg-slate-800" style="max-height: 460px;">
+                        <?php if ($primary_photo_url !== ''): ?>
+                            <img
+                                src="<?php echo htmlspecialchars($primary_photo_url); ?>"
+                                alt="TOEIC Photograph"
+                                class="w-full h-auto object-contain bg-slate-100 dark:bg-slate-800"
+                                style="max-height: 460px;"
+                                data-toeic-photo="true"
+                                data-fallbacks="<?php echo $photo_fallback_json; ?>"
+                                onerror="handleToeicPhotoFallback(this);"
+                            >
+                            <div class="hidden px-6 py-10 text-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300" data-photo-placeholder>
+                                <div class="font-semibold text-slate-700 dark:text-slate-100 mb-2">Photograph unavailable</div>
+                                <p class="mb-0 text-sm">The Part 1 image could not be loaded. Continue with the audio prompt and answer choices.</p>
+                            </div>
+                        <?php else: ?>
+                            <div class="px-6 py-10 text-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300" data-photo-placeholder>
+                                <div class="font-semibold text-slate-700 dark:text-slate-100 mb-2">Photograph unavailable</div>
+                                <p class="mb-0 text-sm">The Part 1 image source is missing. Continue with the audio prompt and answer choices.</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
 
@@ -685,6 +715,32 @@ $is_last_question = $is_batch
         const csrfToken = document.getElementById('csrfToken').value;
         const mode = document.getElementById('mode').value;
         const targetPart = document.getElementById('targetPart').value;
+
+        function handleToeicPhotoFallback(image) {
+            if (!image) {
+                return;
+            }
+
+            let fallbackUrls = [];
+            try {
+                fallbackUrls = JSON.parse(image.dataset.fallbacks || '[]');
+            } catch (error) {
+                console.error('[TOEIC] Invalid photo fallback payload', error);
+            }
+
+            const nextUrl = fallbackUrls.shift();
+            if (nextUrl) {
+                image.dataset.fallbacks = JSON.stringify(fallbackUrls);
+                image.src = nextUrl;
+                return;
+            }
+
+            image.classList.add('hidden');
+            const placeholder = image.parentElement ? image.parentElement.querySelector('[data-photo-placeholder]') : null;
+            if (placeholder) {
+                placeholder.classList.remove('hidden');
+            }
+        }
 
         function saveAnswer(questionId, answer) {
             fetch('ajax_save_toeic_answer.php', {
