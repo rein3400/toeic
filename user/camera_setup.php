@@ -1079,7 +1079,7 @@ $stmt->close();
         // Save permissions to database
         async function savePermissions(permissions) {
             try {
-                await fetch('../api/ajax_proctor.php', {
+                const response = await fetch('../api/ajax_proctor.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1089,8 +1089,16 @@ $stmt->close();
                         microphone: permissions.microphone
                     })
                 });
+
+                if (!response.ok) {
+                    console.warn('Failed to persist permissions. HTTP status:', response.status);
+                    return false;
+                }
+
+                return true;
             } catch (error) {
                 console.error('Failed to save permissions:', error);
+                return false;
             }
         }
         
@@ -1100,6 +1108,8 @@ $stmt->close();
                 alert('Please ensure your face is clearly visible before proceeding.');
                 return;
             }
+
+            let initSucceeded = false;
 
             try {
                 console.log('Completing setup...');
@@ -1119,27 +1129,58 @@ $stmt->close();
 
                 const result = await response.json();
 
-                if (result.success) {
-                    await savePermissions({ camera: true, microphone: true });
-                    stopFaceDetectionLoop();
-                    console.log('Setup completed successfully');
-                    // Show summary screen
-                    document.getElementById('faceStep').style.display = 'none';
-                    document.getElementById('step3').classList.add('completed');
-                    document.getElementById('summaryStep').style.display = 'block';
-                } else {
+                if (!response.ok || !result.success) {
                     console.error('Setup failed:', result);
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-check me-2"></i>Complete Setup & Start Test';
                     const errorMsg = result.error || 'Unknown error';
                     alert('Failed to initialize proctoring session.\n\nError: ' + errorMsg + '\n\nPlease try again or contact support.');
+                    return;
                 }
+
+                initSucceeded = true;
+
+                const permissionsSaved = await savePermissions({ camera: true, microphone: true });
+                if (!permissionsSaved) {
+                    console.warn('Permissions update did not complete cleanly; continuing with redirect fallback.');
+                }
+
+                stopFaceDetectionLoop();
+                console.log('Setup completed successfully');
+
+                const faceStep = document.getElementById('faceStep');
+                const summaryStep = document.getElementById('summaryStep');
+                const step3 = document.getElementById('step3');
+
+                if (!faceStep || !summaryStep || !step3) {
+                    console.warn('Setup summary DOM is incomplete. Redirecting directly to the TOEIC test.');
+                    redirectToTest();
+                    return;
+                }
+
+                faceStep.style.display = 'none';
+                step3.classList.add('completed');
+                summaryStep.style.display = 'block';
+
+                window.setTimeout(() => {
+                    if (summaryStep.style.display === 'block') {
+                        redirectToTest();
+                    }
+                }, 1200);
             } catch (error) {
                 console.error('Setup error:', error);
+
+                if (initSucceeded) {
+                    console.warn('Initialization succeeded before the UI failed. Falling back to direct TOEIC redirect.');
+                    redirectToTest();
+                    return;
+                }
+
                 const btn = document.getElementById('btnStartTest');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-check me-2"></i>Complete Setup & Start Test';
-                alert('Error completing setup. Please try again.');
+                const errorMessage = (error && error.message) ? error.message : 'Please try again.';
+                alert('Error completing setup.\n\n' + errorMessage);
             }
         }
 
