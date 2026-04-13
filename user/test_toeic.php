@@ -660,7 +660,7 @@ $is_last_question = $is_batch
                 <?php else: ?>
                     <input type="hidden" id="isBatch" value="0">
                     <input type="hidden" id="questionId" value="<?php echo (int)$question['question_id']; ?>">
-                    <div class="flex-1 overflow-y-auto p-8 flex flex-col justify-center">
+                    <div class="flex-1 overflow-y-auto p-8 flex flex-col justify-start">
                         <div class="w-full max-w-2xl mx-auto space-y-8">
                             <div>
                                 <span class="text-sm font-bold text-slate-400 uppercase tracking-wide">Question <?php echo (int)$question_num; ?></span>
