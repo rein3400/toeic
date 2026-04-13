@@ -292,6 +292,11 @@ $stmt->close();
         </div>
         
         <div class="setup-body">
+            <div class="alert alert-danger d-none" id="secureContextWarning">
+                <i class="fas fa-lock me-2"></i>
+                <strong>HTTPS required:</strong> Browser only allows camera and microphone access on a secure connection. Open this page with <code>https://</code> on the production domain, or use <code>localhost</code> during local development.
+            </div>
+
             <!-- Step -1: Preparation Checklist -->
             <div id="preparationStep">
                 <h3 class="mb-2"><i class="fas fa-clipboard-list me-2" style="color:#667eea;"></i>Persiapan Sebelum Ujian</h3>
@@ -601,6 +606,26 @@ $stmt->close();
         let faceDetectionStartedAt = 0;
         let permissionsConsented = false;
 
+        function isLocalDevelopmentHost() {
+            const host = window.location.hostname;
+            return host === 'localhost' || host === '127.0.0.1' || host === '::1';
+        }
+
+        function requiresSecureContextForMedia() {
+            return !window.isSecureContext && !isLocalDevelopmentHost();
+        }
+
+        function getInsecureContextMessage(mediaLabel) {
+            return `${mediaLabel} is blocked because this page is running on an insecure connection (${window.location.protocol}//${window.location.host}). Open the TOEIC site with HTTPS first, then try again.`;
+        }
+
+        function showSecureContextWarning() {
+            const warning = document.getElementById('secureContextWarning');
+            if (warning) {
+                warning.classList.remove('d-none');
+            }
+        }
+
         // Step -1: Preparation → Consent
         function proceedToConsent() {
             document.getElementById('preparationStep').style.display = 'none';
@@ -613,6 +638,10 @@ $stmt->close();
             document.getElementById('permissionStep').style.display = 'none';
             document.getElementById('stepIndicator').style.display = 'flex';
             document.getElementById('cameraStep').style.display = 'block';
+
+            if (requiresSecureContextForMedia()) {
+                showSecureContextWarning();
+            }
         }
 
         function rejectPermissions() {
@@ -737,6 +766,12 @@ $stmt->close();
         // Step 1: Test Camera
         async function testCamera() {
             const btn = document.getElementById('btnCamera');
+            if (requiresSecureContextForMedia()) {
+                showSecureContextWarning();
+                alert(getInsecureContextMessage('Camera access'));
+                return;
+            }
+
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Starting camera...';
             
@@ -793,7 +828,10 @@ $stmt->close();
                 document.getElementById('cameraAccessIcon').innerHTML = '<i class="fas fa-times"></i>';
 
                 let errorMsg = 'Camera access denied or not available.';
-                if (error.name === 'NotAllowedError') {
+                if (requiresSecureContextForMedia()) {
+                    showSecureContextWarning();
+                    errorMsg = getInsecureContextMessage('Camera access');
+                } else if (error.name === 'NotAllowedError') {
                     errorMsg = 'Camera permission was denied. Please go to your browser settings, allow camera access for this site, and try again.';
                 } else if (error.name === 'NotFoundError') {
                     errorMsg = 'No camera device found. Please connect a camera and try again.';
@@ -808,6 +846,12 @@ $stmt->close();
         // Step 2: Test Microphone
         async function testMicrophone() {
             const btn = document.getElementById('btnMic');
+            if (requiresSecureContextForMedia()) {
+                showSecureContextWarning();
+                alert(getInsecureContextMessage('Microphone access'));
+                return;
+            }
+
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Requesting microphone access...';
 
@@ -839,7 +883,10 @@ $stmt->close();
                 document.getElementById('micAccessIcon').innerHTML = '<i class="fas fa-times"></i>';
 
                 let errorMsg = 'Microphone access denied or not available.';
-                if (error.name === 'NotAllowedError') {
+                if (requiresSecureContextForMedia()) {
+                    showSecureContextWarning();
+                    errorMsg = getInsecureContextMessage('Microphone access');
+                } else if (error.name === 'NotAllowedError') {
                     errorMsg = 'Microphone permission was denied. Please go to your browser settings, allow microphone access for this site, and try again.';
                 } else if (error.name === 'NotFoundError') {
                     errorMsg = 'No microphone device found. Please connect a microphone and try again.';
@@ -948,6 +995,12 @@ $stmt->close();
 
         // Step 3: Face Detection - Reuse camera stream
         function startFaceDetection() {
+            if (requiresSecureContextForMedia()) {
+                showSecureContextWarning();
+                updateFaceDetectionUi('detector_error', getInsecureContextMessage('Face detection'));
+                return;
+            }
+
             const detector = initFaceDetector();
             if (!detector) {
                 return;
@@ -1099,6 +1152,12 @@ $stmt->close();
         function enableMicButton() {
             document.getElementById('btnMic').disabled = false;
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (requiresSecureContextForMedia()) {
+                showSecureContextWarning();
+            }
+        });
     </script>
 </body>
 </html>
