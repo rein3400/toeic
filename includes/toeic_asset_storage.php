@@ -125,6 +125,37 @@ function toeicAssetLocalUrlCandidates($filePath, $kind) {
     return toeicUniqueAssetValues($urls);
 }
 
+function toeicAssetLocalFileCandidates($filePath, $kind) {
+    $paths = toeicAssetPathCandidates($filePath, $kind);
+    if (empty($paths)) {
+        return [];
+    }
+
+    if (preg_match('#^https?://#i', $paths[0])) {
+        return [];
+    }
+
+    $directory = toeicAssetDirectory($kind);
+    $directoryPrefix = $directory . '/';
+    $existingUrls = [];
+
+    foreach ($paths as $path) {
+        $path = ltrim($path, '/');
+        $relativePath = strpos($path, $directoryPrefix) === 0 ? $path : $directoryPrefix . ltrim($path, '/');
+        $absolutePath = __DIR__ . '/../' . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+        if (!is_file($absolutePath)) {
+            continue;
+        }
+
+        $encodedPath = toeicEncodeAssetPath($relativePath);
+        if ($encodedPath !== '') {
+            $existingUrls[] = '../' . $encodedPath;
+        }
+    }
+
+    return toeicUniqueAssetValues($existingUrls);
+}
+
 function toeicPhotoUrlCandidates($filePath) {
     $paths = toeicAssetPathCandidates($filePath, 'photo');
     if (empty($paths)) {
@@ -137,6 +168,11 @@ function toeicPhotoUrlCandidates($filePath) {
 
     $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'photo');
     $localCandidates = toeicAssetLocalUrlCandidates($filePath, 'photo');
+    $existingLocalCandidates = toeicAssetLocalFileCandidates($filePath, 'photo');
+
+    if (!empty($existingLocalCandidates)) {
+        return toeicUniqueAssetValues(array_merge($existingLocalCandidates, $remoteCandidates, $localCandidates));
+    }
 
     if (toeicAssetDriver('photo') === 'r2') {
         return toeicUniqueAssetValues(array_merge($remoteCandidates, $localCandidates));

@@ -34,15 +34,22 @@ putenv('TOEIC_STORAGE_DRIVER=r2');
 putenv('TOEIC_PHOTO_STORAGE_DRIVER=r2');
 putenv('R2_PHOTO_PUBLIC_BASE_URL=https://cdn.example.com/toeic-photo');
 
-$remoteCandidates = toeicPhotoUrlCandidates('photos/set-a/toeic_p1_02.png');
+$remoteCandidates = toeicPhotoUrlCandidates('photos/set-a/missing-photo.png');
 assertSame(
-    'https://cdn.example.com/toeic-photo/photos/set-a/toeic_p1_02.png',
+    'https://cdn.example.com/toeic-photo/photos/set-a/missing-photo.png',
     $remoteCandidates[0] ?? null,
-    'remote path preserves nested object key for primary candidate'
+    'remote path preserves nested object key when no verified local file exists'
 );
 assertTrue(
-    in_array('../uploads/toeic_photos/toeic_p1_02.png', $remoteCandidates, true),
+    in_array('../uploads/toeic_photos/missing-photo.png', $remoteCandidates, true),
     'remote candidates still include local uploads fallback'
+);
+
+$existingLocalPreferred = toeicPhotoUrlCandidates('toeic_p1_02.png');
+assertSame(
+    '../uploads/toeic_photos/toeic_p1_02.png',
+    $existingLocalPreferred[0] ?? null,
+    'existing local photo is preferred over remote candidate'
 );
 
 $absoluteUrl = toeicPhotoUrlCandidates('https://static.example.com/toeic_p1_03.png');
