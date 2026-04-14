@@ -743,7 +743,7 @@ $is_last_question = $is_batch
         }
 
         function saveAnswer(questionId, answer) {
-            fetch('ajax_save_toeic_answer.php', {
+            return fetch('ajax_save_toeic_answer.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
                 body: JSON.stringify({
@@ -756,6 +756,7 @@ $is_last_question = $is_batch
                 if (!data.success) {
                     console.error('Save failed:', data.error);
                 }
+                return data;
             }).catch((error) => console.error('Save error:', error));
         }
 
@@ -771,19 +772,29 @@ $is_last_question = $is_batch
             });
         });
 
-        function handleNext() {
+        async function handleNext() {
             const isBatch = document.getElementById('isBatch').value === '1';
             const currentOrder = parseInt(document.getElementById('currentOrder').value, 10);
             const totalQuestions = parseInt(document.getElementById('totalQuestions').value, 10);
             const lastOrder = isBatch ? parseInt(document.getElementById('lastOrder').value, 10) : currentOrder;
+            const pendingSaves = [];
 
             if (isBatch) {
                 document.querySelectorAll('.batch-answer-group').forEach((group) => {
                     const checked = group.querySelector('input[type="radio"]:checked');
                     if (checked) {
-                        saveAnswer(group.dataset.questionId, checked.value);
+                        pendingSaves.push(saveAnswer(group.dataset.questionId, checked.value));
                     }
                 });
+            } else {
+                const checked = document.querySelector('.single-answer:checked');
+                if (checked) {
+                    pendingSaves.push(saveAnswer(checked.dataset.questionId, checked.value));
+                }
+            }
+
+            if (pendingSaves.length > 0) {
+                await Promise.allSettled(pendingSaves);
             }
 
             const nextOrder = lastOrder + 1;
