@@ -604,6 +604,7 @@ $stmt->close();
         let faceDetectionInterval = null;
         let faceDetectionState = 'idle';
         let faceDetectionStartedAt = 0;
+        let faceDetectionFrameInFlight = false;
         let permissionsConsented = false;
 
         function isLocalDevelopmentHost() {
@@ -705,6 +706,7 @@ $stmt->close();
                 clearInterval(faceDetectionInterval);
                 faceDetectionInterval = null;
             }
+            faceDetectionFrameInFlight = false;
         }
         
         // Initialize Face Detector
@@ -1054,12 +1056,23 @@ $stmt->close();
                 // Send frames to face detector every 200ms
                 faceDetectionInterval = setInterval(async () => {
                     if (!video.paused && !video.ended) {
+                        if (faceDetectionFrameInFlight) {
+                            return;
+                        }
+
+                        if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || video.videoWidth === 0 || video.videoHeight === 0) {
+                            return;
+                        }
+
+                        faceDetectionFrameInFlight = true;
                         try {
                             await faceDetector.send({ image: video });
                         } catch (error) {
                             console.error('Face detection frame error:', error);
                             updateFaceDetectionUi('detector_error', 'Face detector lost access to the video stream. Please retry the setup.');
                             stopFaceDetectionLoop();
+                        } finally {
+                            faceDetectionFrameInFlight = false;
                         }
                     }
                 }, 200);
