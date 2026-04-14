@@ -338,7 +338,7 @@ function getToeicAudioContextQuestions($conn, $session, $order) {
     $stmt->execute();
     $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
-    return $rows;
+    return filterToeicBatchContextRows($rows, (int)$current['question_order']);
 }
 
 function getToeicTextContextQuestions($conn, $session, $order) {
@@ -372,6 +372,47 @@ function getToeicTextContextQuestions($conn, $session, $order) {
     $stmt->execute();
     $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
+    return filterToeicBatchContextRows($rows, (int)$current['question_order']);
+}
+
+function filterToeicBatchContextRows(array $rows, int $currentOrder): array {
+    if (count($rows) <= 1) {
+        return $rows;
+    }
+
+    usort($rows, static function (array $left, array $right): int {
+        return ((int)$left['question_order']) <=> ((int)$right['question_order']);
+    });
+
+    $groups = [];
+    $currentGroup = [];
+    $previousOrder = null;
+
+    foreach ($rows as $row) {
+        $order = (int)($row['question_order'] ?? 0);
+        if ($previousOrder !== null && $order !== ($previousOrder + 1)) {
+            if (!empty($currentGroup)) {
+                $groups[] = $currentGroup;
+            }
+            $currentGroup = [];
+        }
+
+        $currentGroup[] = $row;
+        $previousOrder = $order;
+    }
+
+    if (!empty($currentGroup)) {
+        $groups[] = $currentGroup;
+    }
+
+    foreach ($groups as $group) {
+        foreach ($group as $row) {
+            if ((int)($row['question_order'] ?? 0) === $currentOrder) {
+                return $group;
+            }
+        }
+    }
+
     return $rows;
 }
 
