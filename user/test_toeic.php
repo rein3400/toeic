@@ -890,6 +890,8 @@ $is_last_question = $is_batch
     </script>
 
     <?php if ($requires_proctoring): ?>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
         <script src="js/proctor.js"></script>
         <script>
             (function () {
