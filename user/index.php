@@ -85,6 +85,12 @@ if (!empty($recent_results)) {
     $latest_session = $recent_results[0]['test_session'];
     $part_stats = getTOEICPartStatistics($user_id, $latest_session);
 }
+
+$initials = strtoupper(substr($user_name, 0, 1));
+if (strpos($user_name, ' ') !== false) {
+    $parts = explode(' ', $user_name, 2);
+    $initials = strtoupper(substr($parts[0], 0, 1) . substr($parts[1], 0, 1));
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -98,89 +104,73 @@ if (!empty($recent_results)) {
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../assets/css/ruangguru-theme.css" rel="stylesheet">
     <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
+    <link href="css/dark-user.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
-    <style>
-        body { color: #10233d; }
-        .page-shell { max-width: 1180px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-        .hero, .card-panel { position: relative; border-radius: 28px; }
-        .hero {
-            background: linear-gradient(135deg, #10233d, #1f3a61);
-            color: #fff;
-            padding: 2.5rem;
-        }
-        .action-card { height: 100%; border-radius: 24px; padding: 1.5rem; }
-        .stat-chip {
-            border-radius: 18px;
-            background: rgba(255,255,255,0.12);
-            padding: 0.85rem 1rem;
-        }
-        .part-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.85rem 0;
-            border-bottom: 1px solid #eef3f8;
-        }
-        .part-row:last-child { border-bottom: none; }
-    </style>
 </head>
 <body>
-    <div class="page-shell">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-            <div class="d-flex align-items-center gap-3">
+    <div class="bg-orbs"></div>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container py-2">
+            <a class="navbar-brand" href="index.php">
                 <?php if (!empty($website_logo) && file_exists('../' . $website_logo)): ?>
-                    <img src="../<?php echo htmlspecialchars($website_logo); ?>" alt="Logo" style="height:40px; width:auto;">
+                    <img src="../<?php echo htmlspecialchars($website_logo); ?>" alt="Logo">
                 <?php else: ?>
-                    <div class="d-flex align-items-center justify-content-center rounded-4" style="width:44px;height:44px;background:#10233d;color:#fff;">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
+                    <i class="fas fa-briefcase"></i>
                 <?php endif; ?>
-                <div>
-                    <div class="small text-muted text-uppercase fw-semibold">TOEIC Command Center</div>
-                    <h1 class="h3 fw-bold mb-0"><?php echo htmlspecialchars($user_name); ?></h1>
+                <span><?php echo htmlspecialchars($website_title); ?></span>
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <a class="btn btn-outline-secondary" href="profile.php">Profile</a>
+                <div class="dropdown">
+                    <div class="avatar-circle" data-bs-toggle="dropdown" role="button"><?php echo htmlspecialchars($initials); ?></div>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-custom mt-2">
+                        <li><a class="dropdown-item" href="analytics.php">Analytics</a></li>
+                        <li><a class="dropdown-item" href="buy_exam.php">Packages</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="profile.php" class="btn btn-outline-secondary rounded-pill px-4">Profil</a>
-                <a href="../logout.php" class="btn btn-outline-danger rounded-pill px-4">Logout</a>
-            </div>
         </div>
+    </nav>
 
-        <section class="hero mb-4">
-            <div class="row g-4 align-items-center toeic-grid-lines">
+    <main class="toeic-page-shell main-content">
+        <section class="toeic-hero-card p-4 p-lg-5 mb-4">
+            <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
-                    <div class="small text-uppercase fw-semibold opacity-75 mb-2">TOEIC Listening & Reading</div>
-                    <h2 class="display-6 fw-bold mb-3">Satu dashboard untuk full simulation, practice simulation, dan weakness map.</h2>
-                    <p class="mb-4 opacity-75">
-                        Full simulation memakai paket TOEIC aktif dan proctoring. Practice simulation menjalankan 200 soal yang sama tanpa proctoring dan tanpa menghabiskan paket aktif.
+                    <div class="toeic-kicker mb-3">Powering global communication</div>
+                    <h1 class="display-5 text-white mb-3">Welcome back, <?php echo htmlspecialchars($user_name); ?>.</h1>
+                    <p class="text-white-50 mb-4">
+                        Continue building your TOEIC global English skills report through a full simulator, a practice-first workflow, and a reporting system built around Listening and Reading performance.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
                         <?php if ($has_full_credit): ?>
-                            <a href="test_instructions.php?test_format=toeic&mode=full" class="btn btn-warning btn-lg rounded-pill px-4 fw-bold">Start Full Simulation</a>
+                            <a href="test_instructions.php?test_format=toeic&mode=full" class="btn btn-warning">Launch Full Simulation</a>
                         <?php else: ?>
-                            <a href="buy_exam.php" class="btn btn-warning btn-lg rounded-pill px-4 fw-bold">Beli Paket TOEIC</a>
+                            <a href="buy_exam.php" class="btn btn-warning">Activate TOEIC Package</a>
                         <?php endif; ?>
-                        <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-light btn-lg rounded-pill px-4 fw-bold">Start Practice Simulation</a>
+                        <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-light">Open Practice Simulation</a>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="row g-3">
-                        <div class="col-6">
-                            <div class="stat-chip">
-                                <div class="small opacity-75">Latest Avg</div>
-                                <div class="h2 fw-bold mb-0"><?php echo $avg_total ?: '0'; ?></div>
+                        <div class="col-sm-6">
+                            <div class="toeic-stat h-100">
+                                <div class="toeic-stat-value"><?php echo $avg_total ?: 0; ?></div>
+                                <div class="toeic-stat-label">Average</div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="stat-chip">
-                                <div class="small opacity-75">Best Score</div>
-                                <div class="h2 fw-bold mb-0"><?php echo $best_total ?: '0'; ?></div>
+                        <div class="col-sm-6">
+                            <div class="toeic-stat h-100">
+                                <div class="toeic-stat-value"><?php echo $best_total ?: 0; ?></div>
+                                <div class="toeic-stat-label">Best Score</div>
                             </div>
                         </div>
                         <div class="col-12">
-                            <div class="stat-chip">
-                                <div class="small opacity-75">Paket Test Aktif</div>
-                                <div class="h4 fw-bold mb-0"><?php echo $full_credit_count; ?> paket</div>
+                            <div class="toeic-stat h-100">
+                                <div class="toeic-stat-value"><?php echo $full_credit_count; ?></div>
+                                <div class="toeic-stat-label">Active TOEIC Packages</div>
                             </div>
                         </div>
                     </div>
@@ -191,86 +181,93 @@ if (!empty($recent_results)) {
         <?php if ($active_session): ?>
             <?php $resume_mode = !empty($active_session['practice_mode']) ? 'prep' : 'full'; ?>
             <?php $resume_part = preg_replace('/[^1-7]/', '', (string)($active_session['target_part'] ?? '')); ?>
-            <div class="card-panel toeic-panel p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                    <div>
-                        <div class="small text-uppercase text-muted fw-semibold mb-1">Active Session</div>
-                        <div class="h5 fw-bold mb-1"><?php echo $resume_mode === 'prep' ? 'Practice simulation ready to resume' : 'Full simulation in progress'; ?></div>
-                        <div class="text-muted">Current section: <?php echo htmlspecialchars(ucfirst($active_session['current_section'])); ?><?php echo $resume_part !== '' ? ' · Part ' . htmlspecialchars($resume_part) : ''; ?></div>
+            <section class="toeic-band mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-8">
+                        <div class="toeic-eyebrow mb-3">Resume current attempt</div>
+                        <h2 class="h2 mb-2"><?php echo $resume_mode === 'prep' ? 'Practice simulation ready to resume.' : 'Full simulation in progress.'; ?></h2>
+                        <p class="toeic-copy mb-0">
+                            Current section: <?php echo htmlspecialchars(ucfirst($active_session['current_section'])); ?><?php echo $resume_part !== '' ? ' - Part ' . htmlspecialchars($resume_part) : ''; ?>.
+                        </p>
                     </div>
-                    <a href="test_toeic.php?resume=1&test_session=<?php echo urlencode($active_session['test_session']); ?>&mode=<?php echo $resume_mode; ?><?php echo $resume_part !== '' ? '&part=' . urlencode($resume_part) : ''; ?>" class="btn btn-warning rounded-pill px-4 fw-bold">Resume Session</a>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="test_toeic.php?resume=1&test_session=<?php echo urlencode($active_session['test_session']); ?>&mode=<?php echo $resume_mode; ?><?php echo $resume_part !== '' ? '&part=' . urlencode($resume_part) : ''; ?>" class="btn btn-warning">Resume Session</a>
+                    </div>
                 </div>
-            </div>
+            </section>
         <?php endif; ?>
 
-        <div class="row g-4 mb-4">
-            <div class="col-lg-4">
-                <div class="action-card toeic-panel">
-                    <div class="small text-uppercase text-muted fw-semibold mb-2">Full Test</div>
-                    <h3 class="h4 fw-bold">Official Section Flow</h3>
-                    <p class="text-muted">Listening 45 menit lalu Reading 75 menit. Menggunakan proctoring dan satu paket TOEIC aktif.</p>
-                    <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=full' : 'buy_exam.php'; ?>" class="btn btn-outline-warning rounded-pill px-4 fw-bold">Open Full Simulation</a>
-                </div>
+        <section class="toeic-card-grid mb-4">
+            <div class="toeic-display-panel toeic-surface h-100">
+                <div class="toeic-eyebrow mb-3">Primary route</div>
+                <h2 class="h3 mb-3">TOEIC Listening and Reading Test</h2>
+                <p class="toeic-copy mb-4">Run a complete 200-question simulation with official section order, timer discipline, and package-based activation.</p>
+                <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=full' : 'buy_exam.php'; ?>" class="btn btn-warning">Open Full Simulation</a>
             </div>
-            <div class="col-lg-4">
-                <div class="action-card toeic-panel">
-                    <div class="small text-uppercase text-muted fw-semibold mb-2">Practice Mode</div>
-                    <h3 class="h4 fw-bold">Full Test Without Proctor</h3>
-                    <p class="text-muted">Menjalankan 200 soal TOEIC yang sama seperti full simulation, tetapi tanpa proctoring dan tanpa memakai paket aktif.</p>
-                    <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-warning rounded-pill px-4 fw-bold">Open Practice Simulation</a>
-                </div>
+            <div class="toeic-display-panel toeic-surface h-100">
+                <div class="toeic-eyebrow mb-3">Practice route</div>
+                <h2 class="h3 mb-3">Practice Simulation</h2>
+                <p class="toeic-copy mb-4">Use the same TOEIC flow without proctoring and without spending an active package so you can build repetition before the monitored run.</p>
+                <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-warning">Open Practice</a>
             </div>
-            <div class="col-lg-4">
-                <div class="action-card toeic-panel">
-                    <div class="small text-uppercase text-muted fw-semibold mb-2">Analytics</div>
-                    <h3 class="h4 fw-bold">Score Trend & Weakness Map</h3>
-                    <p class="text-muted">Lihat tren score TOEIC terbaru dan part breakdown dari full simulation yang sudah selesai.</p>
-                    <a href="analytics.php" class="btn btn-outline-warning rounded-pill px-4 fw-bold">Open Analytics</a>
-                </div>
+            <div class="toeic-display-panel toeic-surface h-100">
+                <div class="toeic-eyebrow mb-3">Review route</div>
+                <h2 class="h3 mb-3">Analytics and Reporting</h2>
+                <p class="toeic-copy mb-4">Explore latest score trends, part breakdown, and the next best action after each attempt.</p>
+                <a href="analytics.php" class="btn btn-outline-secondary">Open Analytics</a>
             </div>
-        </div>
+        </section>
 
         <div class="row g-4">
             <div class="col-lg-7">
-                <div class="card-panel toeic-panel p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h5 fw-bold mb-0">Recent Full TOEIC Reports</h2>
-                        <a href="buy_exam.php" class="text-decoration-none small fw-semibold">Paket TOEIC</a>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <div>
+                            <div class="toeic-eyebrow mb-2">Trusted score history</div>
+                            <h2 class="h4 mb-0">Recent TOEIC reports</h2>
+                        </div>
+                        <a href="buy_exam.php" class="btn btn-outline-warning">Packages</a>
                     </div>
                     <?php if (empty($recent_results)): ?>
-                        <p class="text-muted mb-0">Belum ada hasil TOEIC penuh. Mulai full simulation pertama Anda dari dashboard ini.</p>
+                        <p class="toeic-copy mb-0">No full simulation report is available yet. Start your first TOEIC simulation from this dashboard.</p>
                     <?php else: ?>
                         <?php foreach ($recent_results as $row): ?>
-                            <div class="part-row">
+                            <div class="toeic-table-row">
                                 <div>
                                     <div class="fw-semibold">Score <?php echo (int)$row['total_score']; ?></div>
-                                    <div class="text-muted small"><?php echo date('d M Y H:i', strtotime($row['completed_at'])); ?> · Listening <?php echo (int)$row['listening_scaled']; ?> · Reading <?php echo (int)$row['reading_scaled']; ?></div>
+                                    <div class="small text-muted"><?php echo date('d M Y H:i', strtotime($row['completed_at'])); ?></div>
                                 </div>
-                                <a href="result_toeic.php?session=<?php echo urlencode($row['test_session']); ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">View</a>
+                                <div class="text-end">
+                                    <div class="small text-muted">L <?php echo (int)$row['listening_scaled']; ?> - R <?php echo (int)$row['reading_scaled']; ?></div>
+                                    <a href="result_toeic.php?session=<?php echo urlencode($row['test_session']); ?>" class="fw-semibold text-decoration-none">View report</a>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </div>
+                </section>
             </div>
             <div class="col-lg-5">
-                <div class="card-panel toeic-panel p-4 h-100">
-                    <h2 class="h5 fw-bold mb-3">Latest Part Breakdown</h2>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="toeic-eyebrow mb-3">Latest full simulation breakdown</div>
+                    <h2 class="h4 mb-3">Part accuracy snapshot</h2>
                     <?php if (empty($part_stats)): ?>
-                        <p class="text-muted mb-0">Part breakdown akan muncul setelah Anda menyelesaikan full simulation TOEIC.</p>
+                        <p class="toeic-copy mb-0">Part-level performance will appear after you complete a full TOEIC simulation.</p>
                     <?php else: ?>
                         <?php foreach ($part_stats as $stat): ?>
-                            <div class="part-row">
+                            <div class="toeic-table-row">
                                 <div>
                                     <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
-                                    <div class="text-muted small"><?php echo (int)$stat['correct']; ?> / <?php echo (int)$stat['total']; ?> correct</div>
+                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
                                 </div>
                                 <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </div>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

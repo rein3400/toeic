@@ -61,25 +61,28 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="css/dark-user.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
     <style>
         .status-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 253, 248, 0.97), rgba(252, 248, 240, 0.98));
+            border: 1px solid rgba(23, 38, 63, 0.1);
+            border-radius: 28px;
             padding: 3rem 2rem;
             max-width: 500px;
             margin: 0 auto;
             text-align: center;
+            box-shadow: 0 18px 42px rgba(21, 39, 66, 0.12);
         }
         .pulse-icon { animation: pulse 1.5s infinite; }
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50%       { transform: scale(1.1); opacity: 0.7; }
         }
-        #status-area { min-height: 120px; }
+        #status-area { min-height: 120px; color: var(--toeic-ink); }
+        code { color: var(--toeic-amber-deep); }
     </style>
 </head>
 <body>
@@ -114,6 +117,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                     <div class="mb-4">
                         <i class="fas fa-clock fa-4x pulse-icon" style="color:#f59e0b;"></i>
                     </div>
+                    <div class="toeic-kicker justify-content-center mb-3">Payment status</div>
                     <h4 class="fw-bold mb-2">Menunggu Pembayaran</h4>
                     <p class="text-white-50 mb-1">Order: <code><?php echo htmlspecialchars($order_id); ?></code></p>
                     <p class="text-white-50 mb-3">Total: <strong><?php echo $amount_fmt; ?></strong></p>

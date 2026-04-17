@@ -15,14 +15,15 @@ unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toei
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ujian Dihentikan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="css/dark-user.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
     <style>
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #faf6ee 0%, #f5efe2 100%);
+            color: var(--toeic-ink);
+            font-family: var(--rg-font);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,16 +33,16 @@ unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toei
             padding: 20px;
         }
         .card {
-            background: #1e293b;
+            background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(21,39,66,0.18);
             max-width: 520px;
             width: 100%;
             border: 1px solid rgba(239,68,68,0.2);
         }
-        h1 { color: #ef4444; font-size: 2rem; margin-bottom: 10px; }
-        p { color: #94a3b8; line-height: 1.6; margin-bottom: 16px; }
+        h1 { color: #b42318; font-size: 2rem; margin-bottom: 10px; }
+        p { color: var(--toeic-muted); line-height: 1.6; margin-bottom: 16px; }
         .icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
         .btn-danger {
             background: #ef4444; color: white;
@@ -61,7 +62,7 @@ unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toei
         }
         .btn-success:hover { background: #059669; }
         #statusBox {
-            background: rgba(255,255,255,0.05);
+            background: rgba(21,39,66,0.04);
             border-radius: 10px;
             padding: 14px;
             margin-top: 20px;

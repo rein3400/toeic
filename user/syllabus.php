@@ -40,47 +40,48 @@ $website_logo = getWebsiteLogo();
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="../includes/modern-theme.css" rel="stylesheet">
     <link href="css/dark-user.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Manrope', sans-serif;
             padding-top: 80px;
+            background: linear-gradient(180deg, #faf6ee 0%, #f5efe2 100%);
         }
 
         .syllabus-header {
-            background: rgba(255,255,255,0.05);
+            background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
             backdrop-filter: blur(20px);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(21, 39, 66, 0.1);
             margin-bottom: 2rem;
-            border-left: 5px solid #2563eb;
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.92);
+            border-left: 5px solid #152742;
+            border: 1px solid rgba(23,38,63,0.08);
+            color: var(--toeic-ink);
         }
 
         .analysis-card {
-            background: rgba(37,99,235,0.1);
-            border: 1px solid rgba(37,99,235,0.2);
-            border-radius: 15px;
+            background: rgba(21,39,66,0.06);
+            border: 1px solid rgba(23,38,63,0.08);
+            border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            color: rgba(255,255,255,0.92);
+            color: var(--toeic-ink);
         }
 
         .week-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
+            border: 1px solid rgba(23,38,63,0.08);
+            border-radius: 24px;
+            box-shadow: 0 16px 34px rgba(21,39,66,0.08);
             margin-bottom: 1.5rem;
             overflow: hidden;
             transition: transform 0.2s;
-            color: rgba(255,255,255,0.92);
+            color: var(--toeic-ink);
         }
 
         .week-card:hover {
@@ -88,7 +89,7 @@ $website_logo = getWebsiteLogo();
         }
 
         .week-header {
-            background: rgba(37,99,235,0.2);
+            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
             color: white;
             padding: 1rem 1.5rem;
             font-weight: 600;
@@ -110,8 +111,8 @@ $website_logo = getWebsiteLogo();
         }
 
         .day-badge {
-            background: #f8f9fa;
-            color: #333;
+            background: rgba(21,39,66,0.08);
+            color: var(--toeic-ink);
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -134,7 +135,7 @@ $website_logo = getWebsiteLogo();
             font-weight: 900;
             position: absolute;
             left: 0;
-            color: #28a745;
+            color: #1e8078;
         }
     </style>
 </head>

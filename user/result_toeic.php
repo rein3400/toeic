@@ -30,7 +30,7 @@ $part_stats = getTOEICPartStatistics($_SESSION['user_id'], $test_session);
 if ($is_practice && $practice_summary) {
     $hero_title = $practice_summary['part_info']['name'];
     $hero_label = 'TOEIC Practice Summary';
-    $hero_copy = 'Practice part selesai. Gunakan hasil ini untuk melihat kekuatan Anda pada part yang baru dikerjakan sebelum masuk ke full simulation.';
+    $hero_copy = 'Practice part selesai. Gunakan ringkasan ini untuk melihat kekuatan part yang baru Anda kerjakan sebelum beralih ke full simulation.';
     $hero_value = (int)round($practice_summary['accuracy']) . '%';
     $hero_subvalue = $practice_summary['part_info']['name'];
 } else {
@@ -59,13 +59,13 @@ if ($is_practice && $practice_summary) {
     }
 
     $level = $results['level'] ?? getTOEICScoreLevel($results['total_score']);
-    $hero_title = $is_practice ? 'Practice Simulation Score Report' : 'Score Report';
-    $hero_label = $is_practice ? 'TOEIC Practice Simulation' : 'TOEIC Listening & Reading';
+    $hero_title = $is_practice ? 'Practice Simulation Score Report' : 'TOEIC Score Report';
+    $hero_label = $is_practice ? 'Practice Simulation' : 'TOEIC Listening and Reading';
     $hero_copy = $is_practice
-        ? 'Practice simulation selesai. Anda telah mengerjakan 200 soal TOEIC penuh tanpa proctoring, dengan hasil score report yang sama formatnya seperti full simulation.'
-        : 'Simulasi TOEIC penuh selesai. Gunakan score report ini untuk melihat performa Listening, Reading, dan weakness map per part.';
+        ? 'Practice simulation selesai. Anda telah menjalankan alur TOEIC yang sama tanpa proctoring, dan sekarang Anda bisa meninjau hasilnya seperti report penuh.'
+        : 'Full simulation selesai. Review score report ini untuk melihat performa Listening, Reading, dan weakness map yang akan membentuk langkah berikutnya.';
     $hero_value = (int)$results['total_score'];
-    $hero_subvalue = 'CEFR ' . htmlspecialchars($level[1] ?? 'A1') . ' · ' . htmlspecialchars($level[0] ?? 'TOEIC');
+    $hero_subvalue = 'CEFR ' . htmlspecialchars($level[1] ?? 'A1') . ' - ' . htmlspecialchars($level[0] ?? 'TOEIC');
 }
 ?>
 <!DOCTYPE html>
@@ -81,150 +81,99 @@ if ($is_practice && $practice_summary) {
     <link href="../assets/css/ruangguru-theme.css" rel="stylesheet">
     <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
-    <style>
-        body { color: #10233d; }
-        .result-shell { max-width: 1080px; margin: 0 auto; padding: 3rem 1rem 4rem; }
-        .hero-card, .metric-card, .panel-card { border-radius: 28px; }
-        .hero-card {
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 360px;
-        }
-        .hero-left { padding: 3rem; }
-        .hero-right {
-            background: linear-gradient(135deg, #d97706, #f59e0b);
-            color: #fff;
-            padding: 3rem 2.25rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .score-display { font-size: 5rem; font-weight: 800; line-height: 1; }
-        .metric-card, .panel-card { padding: 1.5rem; }
-        .part-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.9rem 0;
-            border-bottom: 1px solid #eef3f8;
-        }
-        .part-row:last-child { border-bottom: none; }
-        @media (max-width: 991px) {
-            .hero-card { grid-template-columns: 1fr; }
-        }
-    </style>
 </head>
 <body>
-    <div class="result-shell">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-            <a href="index.php" class="btn btn-outline-secondary rounded-pill px-4">
-                <i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard
-            </a>
-            <div class="text-muted small">Session: <?php echo htmlspecialchars($test_session); ?></div>
+    <main class="toeic-page-shell">
+        <div class="toeic-page-header">
+            <div>
+                <div class="toeic-kicker mb-3"><?php echo $hero_label; ?></div>
+                <h1 class="display-6 mb-3"><?php echo htmlspecialchars($hero_title); ?></h1>
+                <p class="toeic-subcopy"><?php echo htmlspecialchars($hero_copy); ?></p>
+            </div>
+            <a href="index.php" class="btn btn-outline-secondary">Back to Dashboard</a>
         </div>
 
-        <section class="hero-card toeic-panel toeic-grid-lines mb-4">
-            <div class="hero-left">
-                <div class="text-uppercase text-muted fw-semibold small mb-2"><?php echo $hero_label; ?></div>
-                <h1 class="display-6 fw-bold mb-3"><?php echo htmlspecialchars($hero_title); ?></h1>
-                <p class="text-muted mb-4"><?php echo htmlspecialchars($hero_copy); ?></p>
-
-                <?php if ($is_practice && $practice_summary): ?>
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="metric-card toeic-stat h-100">
-                                <div class="text-muted small mb-2">Correct</div>
-                                <div class="h2 fw-bold mb-0"><?php echo (int)$practice_summary['correct']; ?></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="metric-card toeic-stat h-100">
-                                <div class="text-muted small mb-2">Incorrect</div>
-                                <div class="h2 fw-bold mb-0"><?php echo (int)$practice_summary['incorrect']; ?></div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="metric-card toeic-stat h-100">
-                                <div class="text-muted small mb-2">Questions</div>
-                                <div class="h2 fw-bold mb-0"><?php echo (int)$practice_summary['total']; ?></div>
-                            </div>
-                        </div>
+        <section class="toeic-hero-card p-4 p-lg-5 mb-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <div class="toeic-kicker mb-3">Session report</div>
+                    <h2 class="display-6 text-white mb-3">Review the score report that follows your TOEIC simulation.</h2>
+                    <p class="text-white-50 mb-0">Session: <?php echo htmlspecialchars($test_session); ?></p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="toeic-band text-center">
+                        <div class="toeic-eyebrow mb-3">Total result</div>
+                        <div class="display-2 mb-2"><?php echo htmlspecialchars((string)$hero_value); ?></div>
+                        <div class="small text-muted"><?php echo $hero_subvalue; ?></div>
                     </div>
-                <?php else: ?>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="metric-card toeic-stat h-100">
-                                <div class="text-muted small mb-2">Listening</div>
-                                <div class="h2 fw-bold mb-0"><?php echo (int)$results['listening_scaled']; ?> <span class="fs-6 text-muted">/ 495</span></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="metric-card toeic-stat h-100">
-                                <div class="text-muted small mb-2">Reading</div>
-                                <div class="h2 fw-bold mb-0"><?php echo (int)$results['reading_scaled']; ?> <span class="fs-6 text-muted">/ 495</span></div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <div class="hero-right">
-                <?php if ($is_practice && $practice_summary): ?>
-                    <div class="text-uppercase small fw-semibold mb-2 opacity-75">Accuracy</div>
-                <?php else: ?>
-                    <div class="text-uppercase small fw-semibold mb-2 opacity-75">Total Score</div>
-                <?php endif; ?>
-                <div class="score-display"><?php echo htmlspecialchars((string)$hero_value); ?></div>
-                <div class="mt-3 opacity-75"><?php echo $hero_subvalue; ?></div>
+                </div>
             </div>
         </section>
 
         <div class="row g-4">
             <div class="col-lg-7">
-                <div class="panel-card toeic-panel h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="h5 fw-bold mb-0">Part Breakdown</h2>
-                        <span class="text-muted small"><?php echo ($is_practice && $practice_summary) ? 'Single part analysis' : 'Listening + Reading analysis'; ?></span>
-                    </div>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="toeic-eyebrow mb-3">Part breakdown</div>
+                    <h2 class="h4 mb-3"><?php echo ($is_practice && $practice_summary) ? 'Single-part performance' : 'Listening and Reading analysis'; ?></h2>
                     <?php foreach ($part_stats as $key => $stat): ?>
                         <?php if ($is_practice && $practice_summary && $practice_summary['part'] !== str_replace('part_', '', $key)) continue; ?>
-                        <div class="part-row">
+                        <div class="toeic-table-row">
                             <div>
                                 <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
-                                <div class="text-muted small"><?php echo (int)$stat['correct']; ?> benar dari <?php echo (int)$stat['total']; ?> soal</div>
+                                <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
                             </div>
-                            <div class="text-end">
-                                <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
-                            </div>
+                            <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
                         </div>
                     <?php endforeach; ?>
-                </div>
+                </section>
             </div>
-
             <div class="col-lg-5">
-                <div class="panel-card toeic-panel h-100">
-                    <h2 class="h5 fw-bold mb-3">Next Best Action</h2>
-                    <div class="d-grid gap-3">
-                        <?php if ($is_practice): ?>
-                            <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-warning py-3 fw-bold">Ulangi Practice Simulation</a>
-                            <a href="test_instructions.php?test_format=toeic&mode=full" class="btn btn-warning py-3 fw-bold">Mulai Full Simulation</a>
-                        <?php else: ?>
-                            <a href="analytics.php" class="btn btn-outline-warning py-3 fw-bold">Buka TOEIC Analytics</a>
-                            <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-warning py-3 fw-bold">Mulai Practice Simulation</a>
-                        <?php endif; ?>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="toeic-eyebrow mb-3">Score view</div>
+                    <h2 class="h4 mb-3">Section summary</h2>
+                    <?php if ($is_practice && $practice_summary): ?>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Correct</div>
+                            <div class="fw-bold"><?php echo (int)$practice_summary['correct']; ?></div>
+                        </div>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Incorrect</div>
+                            <div class="fw-bold"><?php echo (int)$practice_summary['incorrect']; ?></div>
+                        </div>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Questions</div>
+                            <div class="fw-bold"><?php echo (int)$practice_summary['total']; ?></div>
+                        </div>
+                    <?php else: ?>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Listening</div>
+                            <div class="fw-bold"><?php echo (int)$results['listening_scaled']; ?> / 495</div>
+                        </div>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Reading</div>
+                            <div class="fw-bold"><?php echo (int)$results['reading_scaled']; ?> / 495</div>
+                        </div>
+                        <div class="toeic-table-row">
+                            <div class="fw-semibold">Total</div>
+                            <div class="fw-bold"><?php echo (int)$results['total_score']; ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="toeic-band mt-4">
+                        <div class="toeic-eyebrow mb-3">Next best action</div>
+                        <div class="d-grid gap-3">
+                            <?php if ($is_practice): ?>
+                                <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-warning">Repeat Practice Simulation</a>
+                                <a href="test_instructions.php?test_format=toeic&mode=full" class="btn btn-warning">Start Full Simulation</a>
+                            <?php else: ?>
+                                <a href="analytics.php" class="btn btn-outline-warning">Open TOEIC Analytics</a>
+                                <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-warning">Start Practice Simulation</a>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <div class="mt-4 text-muted small">
-                        <?php if ($is_practice): ?>
-                            Practice simulation memakai soal dan alur TOEIC yang sama seperti full simulation, hanya tanpa proctoring dan tanpa memakai paket aktif.
-                        <?php else: ?>
-                            Full simulation memakai proctoring dan satu paket TOEIC aktif untuk menghasilkan score report TOEIC penuh.
-                        <?php endif; ?>
-                    </div>
-                </div>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

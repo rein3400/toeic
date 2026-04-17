@@ -79,6 +79,7 @@ $stmt->close();
     <?php if (function_exists('getFaviconHTML')) echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="css/proctor.css" rel="stylesheet">
     <link href="css/dark-user.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
@@ -91,7 +92,7 @@ $stmt->close();
     
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, #faf6ee 0%, #f5efe2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -100,16 +101,17 @@ $stmt->close();
         }
         
         .setup-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(21,39,66,0.16);
             max-width: 900px;
             width: 100%;
             overflow: hidden;
+            border: 1px solid rgba(23,38,63,0.08);
         }
         
         .setup-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -129,14 +131,14 @@ $stmt->close();
             flex: 1;
             text-align: center;
             padding: 15px;
-            background: #f0f0f0;
+            background: rgba(23,38,63,0.06);
             margin: 0 5px;
             border-radius: 10px;
             transition: all 0.3s;
         }
         
         .step.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
             color: white;
             transform: scale(1.05);
         }
@@ -203,7 +205,7 @@ $stmt->close();
         }
         
         .checklist {
-            background: #f8f9fa;
+            background: rgba(23,38,63,0.04);
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
@@ -214,7 +216,7 @@ $stmt->close();
             align-items: center;
             padding: 10px;
             margin: 10px 0;
-            background: white;
+            background: rgba(255,255,255,0.72);
             border-radius: 8px;
         }
         
@@ -229,7 +231,7 @@ $stmt->close();
         }
         
         .checklist-icon.pending {
-            background: #f0f0f0;
+            background: rgba(23,38,63,0.08);
             color: #999;
         }
         
@@ -244,7 +246,7 @@ $stmt->close();
         }
         
         .btn-start {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
             color: white;
             padding: 15px 40px;
             border: none;

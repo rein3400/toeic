@@ -112,31 +112,31 @@ $sectionColors = [
     <link href="css/mobile-responsive.css" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-hover: #334155;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent: #6366f1;
-            --accent-glow: rgba(99,102,241,0.3);
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --bg-dark: #faf6ee;
+            --bg-card: #fffdf8;
+            --bg-card-hover: #f5efe2;
+            --text-main: #17263f;
+            --text-muted: #61718b;
+            --accent: #152742;
+            --accent-glow: rgba(21,39,66,0.18);
+            --success: #1e8078;
+            --warning: #d18b1f;
+            --danger: #b42318;
         }
         * { box-sizing: border-box; }
-        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; }
+        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Manrope', sans-serif; margin: 0; }
         
         /* Layout */
         .lp-layout { display: flex; min-height: 100vh; }
         .lp-sidebar { 
-            width: 320px; min-width: 320px; background: #0b1120; border-right: 1px solid #1e293b;
+            width: 320px; min-width: 320px; background: #f3ead8; border-right: 1px solid rgba(23,38,63,0.08);
             overflow-y: auto; position: sticky; top: 0; height: 100vh;
         }
         .lp-main { flex: 1; padding: 2rem 3rem; max-width: 900px; }
         
         /* Sidebar */
         .lp-sidebar-header { padding: 1.5rem; border-bottom: 1px solid #1e293b; }
-        .lp-sidebar-header h3 { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; margin: 0; color: #fff; }
+        .lp-sidebar-header h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin: 0; color: var(--text-main); }
         .lp-sidebar-header p { font-size: 0.75rem; color: var(--text-muted); margin: 0.3rem 0 0; }
         
         .lp-module-list { padding: 0.5rem; }
@@ -145,14 +145,14 @@ $sectionColors = [
             padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 4px;
             cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--text-main);
         }
-        .lp-module-item:hover { background: var(--bg-card); color: #fff; }
+        .lp-module-item:hover { background: var(--bg-card-hover); color: var(--text-main); }
         .lp-module-item.active { background: var(--accent); color: #fff; }
         .lp-module-item.locked { opacity: 0.4; cursor: not-allowed; }
         .lp-module-item.completed .lp-module-icon { background: var(--success); }
         
         .lp-module-icon {
             width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center;
-            justify-content: center; font-size: 0.8rem; flex-shrink: 0; background: var(--bg-card);
+            justify-content: center; font-size: 0.8rem; flex-shrink: 0; background: var(--bg-card-hover);
         }
         .lp-module-info { flex: 1; min-width: 0; }
         .lp-module-title { font-size: 0.82rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -164,21 +164,21 @@ $sectionColors = [
         
         /* Progress bar in sidebar */
         .lp-progress-bar { padding: 1rem 1.5rem; border-bottom: 1px solid #1e293b; }
-        .lp-progress-fill { height: 6px; border-radius: 3px; background: #1e293b; overflow: hidden; }
-        .lp-progress-fill-inner { height: 100%; background: linear-gradient(90deg, var(--accent), #8b5cf6); border-radius: 3px; transition: width 0.5s; }
+        .lp-progress-fill { height: 6px; border-radius: 3px; background: rgba(23,38,63,0.08); overflow: hidden; }
+        .lp-progress-fill-inner { height: 100%; background: linear-gradient(90deg, var(--accent), #365d88); border-radius: 3px; transition: width 0.5s; }
         .lp-progress-text { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
         
         /* Main content */
         .lp-welcome {
             text-align: center; padding: 4rem 2rem;
-            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05));
-            border-radius: 16px; border: 1px solid rgba(99,102,241,0.2);
+            background: linear-gradient(135deg, rgba(21,39,66,0.06), rgba(209,139,31,0.08));
+            border-radius: 24px; border: 1px solid rgba(23,38,63,0.08);
         }
-        .lp-welcome h2 { font-family: 'DM Sans', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
+        .lp-welcome h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 1rem; }
         .lp-welcome p { color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem; }
         
         .btn-generate {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none;
+            background: linear-gradient(135deg, #152742, #365d88); border: none;
             padding: 1rem 2.5rem; font-size: 1.1rem; font-weight: 700; border-radius: 12px;
             color: #fff; cursor: pointer; transition: transform 0.2s;
         }
@@ -187,9 +187,9 @@ $sectionColors = [
         
         /* Module content */
         .module-content { line-height: 1.8; font-size: 0.95rem; }
-        .module-content h2 { font-family: 'DM Sans', sans-serif; color: #fff; margin-top: 2rem; font-size: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        .module-content h3 { color: #c4b5fd; margin-top: 1.5rem; font-size: 1.2rem; }
-        .module-content h4 { color: #93c5fd; margin-top: 1.2rem; font-size: 1.05rem; }
+        .module-content h2 { font-family: 'Fraunces', serif; color: var(--text-main); margin-top: 2rem; font-size: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+        .module-content h3 { color: var(--accent); margin-top: 1.5rem; font-size: 1.2rem; }
+        .module-content h4 { color: #365d88; margin-top: 1.2rem; font-size: 1.05rem; }
         .module-content p { color: var(--text-main); margin-bottom: 1rem; }
         .module-content ul, .module-content ol { color: var(--text-main); padding-left: 1.5rem; }
         .module-content li { margin-bottom: 0.5rem; }
@@ -197,8 +197,8 @@ $sectionColors = [
         .module-content th { background: var(--accent); color: #fff; padding: 0.6rem 1rem; text-align: left; font-size: 0.85rem; }
         .module-content td { padding: 0.5rem 1rem; border-bottom: 1px solid #334155; font-size: 0.85rem; }
         .module-content tr:hover td { background: rgba(99,102,241,0.05); }
-        .module-content code { background: #334155; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: #fbbf24; }
-        .module-content blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: rgba(99,102,241,0.05); border-radius: 0 8px 8px 0; }
+        .module-content code { background: rgba(21,39,66,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: #ab6711; }
+        .module-content blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: rgba(21,39,66,0.04); border-radius: 0 8px 8px 0; }
         .module-content .example { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 8px; padding: 1rem; margin: 0.5rem 0; }
         .module-content .warning { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; padding: 1rem; margin: 0.5rem 0; }
         
@@ -254,7 +254,7 @@ $sectionColors = [
         .btn-complete-module:disabled { opacity: 0.5; }
         
         .score-summary {
-            background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,163,74,0.05));
+            background: linear-gradient(135deg, rgba(30,128,120,0.08), rgba(209,139,31,0.05));
             border: 1px solid rgba(34,197,94,0.3); border-radius: 12px;
             padding: 1.5rem; text-align: center; margin-top: 1.5rem;
         }

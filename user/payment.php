@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/csrf_helper.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -32,44 +33,23 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
-    <style>
-        body { background: #0f172a; color: #fff; font-family: var(--rg-font); }
-        .shell { max-width: 1080px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-        .card-panel {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 32px;
-            box-shadow: 0 26px 80px rgba(0,0,0,0.22);
-            backdrop-filter: blur(12px);
-        }
-        .method-label {
-            display: block;
-            padding: 1rem 1.1rem;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            cursor: pointer;
-        }
-        .method-label.active {
-            border-color: rgba(245,158,11,0.65);
-            background: rgba(245,158,11,0.12);
-        }
-    </style>
 </head>
 <body>
-    <div class="shell">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <main class="toeic-page-shell">
+        <div class="toeic-page-header">
             <div>
-                <div class="small text-uppercase text-white-50 fw-semibold">Pembayaran Produk</div>
-                <h1 class="h3 fw-bold mb-0"><?php echo htmlspecialchars($product_name); ?></h1>
+                <div class="toeic-kicker mb-3">Payment</div>
+                <h1 class="display-6 mb-3">Choose a payment method for your TOEIC simulator package.</h1>
+                <p class="toeic-subcopy">Select the payment route that matches your workflow, then return to the TOEIC dashboard once the transaction is confirmed.</p>
             </div>
-            <a href="buy_exam.php" class="btn btn-outline-light rounded-pill px-4">Kembali</a>
+            <a href="buy_exam.php" class="btn btn-outline-secondary">Back</a>
         </div>
 
         <div class="row g-4">
             <div class="col-lg-7">
-                <div class="card-panel p-4 p-lg-5">
-                    <h2 class="h5 fw-bold mb-4">Pilih metode pembayaran</h2>
+                <section class="toeic-panel p-4 p-lg-5 h-100">
+                    <div class="toeic-eyebrow mb-3">Payment methods</div>
+                    <h2 class="h3 mb-4">Proceed with Tripay or redeem a TOEIC voucher.</h2>
                     <div class="row g-3">
                         <?php foreach ([
                             ['QRIS', 'QRIS', 'fa-qrcode'],
@@ -82,12 +62,12 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                             ['MANDIRIVA', 'Mandiri Virtual Account', 'fa-building-columns'],
                         ] as $index => $method): ?>
                             <div class="col-md-6">
-                                <label class="method-label <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <label class="d-block p-4 h-100 toeic-surface payment-method <?php echo $index === 0 ? 'payment-method-active' : ''; ?>">
                                     <input type="radio" name="payment_method" value="<?php echo $method[0]; ?>" <?php echo $index === 0 ? 'checked' : ''; ?> hidden>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
                                         <div>
                                             <div class="fw-semibold"><?php echo htmlspecialchars($method[1]); ?></div>
-                                            <div class="small text-white-50">Pembayaran TOEIC via <?php echo htmlspecialchars($method[1]); ?></div>
+                                            <div class="small text-muted">Pembayaran TOEIC via <?php echo htmlspecialchars($method[1]); ?></div>
                                         </div>
                                         <i class="fas <?php echo $method[2]; ?> text-warning"></i>
                                     </div>
@@ -96,45 +76,59 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                         <?php endforeach; ?>
                     </div>
 
-                    <div class="mt-4">
-                        <h3 class="h6 fw-bold mb-3">Redeem voucher TOEIC</h3>
+                    <div class="mt-4 pt-4 border-top" style="border-color: rgba(23, 38, 63, 0.08) !important;">
+                        <div class="toeic-eyebrow mb-3">Redeem voucher</div>
+                        <h3 class="h4 mb-3">Use a TOEIC voucher instead.</h3>
                         <div class="input-group">
-                            <input type="text" id="voucherCode" class="form-control form-control-lg" placeholder="Masukkan kode voucher" style="border-radius:18px 0 0 18px;">
-                            <button class="btn btn-outline-warning btn-lg" type="button" onclick="redeemVoucher()" style="border-radius:0 18px 18px 0;">Redeem</button>
+                            <input type="text" id="voucherCode" class="form-control" placeholder="Masukkan kode voucher">
+                            <button class="btn btn-outline-warning" type="button" onclick="redeemVoucher()">Redeem</button>
                         </div>
-                        <div id="voucherMessage" class="small mt-3 text-white-50"></div>
+                        <div id="voucherMessage" class="small mt-3 text-muted"></div>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div class="col-lg-5">
-                <div class="card-panel p-4 p-lg-5">
-                    <div class="small text-uppercase text-white-50 fw-semibold mb-2">Ringkasan</div>
-                    <div class="display-6 fw-bold mb-1"><?php echo $price_formatted; ?></div>
-                    <div class="text-white-50 mb-4"><?php echo htmlspecialchars($product_name); ?></div>
-                    <ul class="list-unstyled text-white-50 small mb-4">
-                        <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Full simulation 200 soal</li>
-                        <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Prep mode Part 1-7</li>
-                        <li class="mb-2"><i class="fas fa-check text-warning me-2"></i> Score report dan analytics</li>
+                <section class="toeic-band h-100">
+                    <div class="toeic-eyebrow mb-3">Summary</div>
+                    <h2 class="display-6 mb-2"><?php echo $price_formatted; ?></h2>
+                    <p class="toeic-copy mb-4"><?php echo htmlspecialchars($product_name); ?></p>
+                    <ul class="toeic-list-check mb-4">
+                        <li>Full simulation 200 soal</li>
+                        <li>Practice simulation</li>
+                        <li>Score report and analytics</li>
                     </ul>
                     <?php if ($tripay_ready): ?>
-                        <button id="payButton" class="btn btn-warning w-100 py-3 fw-bold rounded-pill" onclick="createTransaction()">Bayar Sekarang</button>
+                        <button id="payButton" class="btn btn-warning w-100" onclick="createTransaction()">Pay Now</button>
                     <?php else: ?>
-                        <div class="alert alert-warning mb-0">Payment gateway belum dikonfigurasi.</div>
+                        <div class="alert alert-warning rounded-4 border-0 mb-0">Payment gateway belum dikonfigurasi.</div>
                     <?php endif; ?>
-                    <div id="paymentMessage" class="small mt-3 text-white-50"></div>
-                </div>
+                    <div id="paymentMessage" class="small mt-3 text-muted"></div>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
+
+    <style>
+        .payment-method {
+            cursor: pointer;
+            transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .payment-method-active {
+            border-color: rgba(209, 139, 31, 0.5) !important;
+            box-shadow: 0 18px 34px rgba(209, 139, 31, 0.14);
+            transform: translateY(-1px);
+        }
+    </style>
 
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-        const labels = document.querySelectorAll('.method-label');
+        const labels = document.querySelectorAll('.payment-method');
         labels.forEach((label) => {
             label.addEventListener('click', () => {
-                labels.forEach((item) => item.classList.remove('active'));
-                label.classList.add('active');
+                labels.forEach((item) => item.classList.remove('payment-method-active'));
+                label.classList.add('payment-method-active');
             });
         });
 
@@ -162,7 +156,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 message.textContent = error.message;
             } finally {
                 button.disabled = false;
-                button.textContent = 'Bayar Sekarang';
+                button.textContent = 'Pay Now';
             }
         }
 

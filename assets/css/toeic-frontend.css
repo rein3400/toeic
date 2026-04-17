@@ -1,162 +1,615 @@
 :root {
-    --toeic-navy: #0f1f3d;
-    --toeic-navy-soft: #1b315b;
-    --toeic-amber: #f0a11a;
-    --toeic-amber-deep: #d68300;
-    --toeic-cream: #fbf8f1;
-    --toeic-paper: #fffdf8;
-    --toeic-ink: #14243f;
+    --toeic-night: #152742;
+    --toeic-night-soft: #21385c;
+    --toeic-ink: #17263f;
     --toeic-muted: #61718b;
-    --toeic-border: #e7dfcf;
-    --toeic-shadow: 0 24px 70px rgba(15, 31, 61, 0.08);
-    --rg-primary: var(--toeic-navy);
-    --rg-primary-dark: #0a1730;
-    --rg-primary-light: #eef3fb;
+    --toeic-muted-strong: #435167;
+    --toeic-paper: #fffdf8;
+    --toeic-cream: #f5efe2;
+    --toeic-sand: #ece1cc;
+    --toeic-shell: #f8f3ea;
+    --toeic-shell-deep: #efe6d5;
+    --toeic-amber: #d18b1f;
+    --toeic-amber-deep: #ab6711;
+    --toeic-amber-soft: #f8ebc8;
+    --toeic-teal: #1e8078;
+    --toeic-border: rgba(23, 38, 63, 0.12);
+    --toeic-border-strong: rgba(23, 38, 63, 0.2);
+    --toeic-shadow-sm: 0 16px 40px rgba(21, 39, 66, 0.08);
+    --toeic-shadow-lg: 0 30px 80px rgba(21, 39, 66, 0.16);
+    --toeic-radius-lg: 32px;
+    --toeic-radius-md: 24px;
+    --toeic-radius-sm: 18px;
+    --rg-primary: var(--toeic-night);
+    --rg-primary-dark: #102036;
+    --rg-primary-light: rgba(30, 128, 120, 0.12);
     --rg-secondary: var(--toeic-amber);
-    --rg-secondary-light: #fff2d7;
+    --rg-secondary-light: var(--toeic-amber-soft);
     --rg-text: var(--toeic-ink);
     --rg-text-secondary: var(--toeic-muted);
-    --rg-text-muted: #8491a6;
+    --rg-text-muted: #7b8698;
     --rg-border: var(--toeic-border);
-    --rg-border-light: #f3ecdf;
-    --rg-bg: var(--toeic-cream);
+    --rg-border-light: rgba(23, 38, 63, 0.08);
+    --rg-bg: var(--toeic-shell);
     --rg-bg-white: var(--toeic-paper);
-    --rg-bg-hero: linear-gradient(135deg, #0f1f3d 0%, #1b315b 45%, #34548c 100%);
-    --rg-itp: #7d8fab;
-    --rg-toeic: var(--toeic-amber);
-    --rg-toeic-light: #fff5df;
-    --rg-font: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --rg-display: 'Fraunces', Georgia, serif;
+    --rg-bg-hero: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+    --rg-accent-blue: #365d88;
+    --rg-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --rg-display: "Fraunces", Georgia, serif;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     background:
-        radial-gradient(circle at top right, rgba(240, 161, 26, 0.1), transparent 30%),
-        linear-gradient(180deg, #f7f3eb 0%, #f4f7fb 55%, #f7f3eb 100%);
-    color: var(--rg-text);
+        radial-gradient(circle at top right, rgba(209, 139, 31, 0.16), transparent 28%),
+        radial-gradient(circle at 10% 20%, rgba(30, 128, 120, 0.08), transparent 22%),
+        linear-gradient(180deg, #faf6ee 0%, #f5efe2 42%, #f7f2e8 100%);
+    color: var(--toeic-ink);
     font-family: var(--rg-font);
 }
 
-h1, h2, h3, h4, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+    color: var(--toeic-ink);
     font-family: var(--rg-display);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
 }
 
-.rg-navbar {
-    background: rgba(255, 253, 248, 0.88);
-    border-bottom: 1px solid rgba(231, 223, 207, 0.85);
-    box-shadow: 0 10px 35px rgba(15, 31, 61, 0.04);
+a {
+    color: var(--toeic-night);
 }
 
-.rg-navbar .navbar-brand,
-.rg-navbar .nav-link {
-    color: var(--toeic-ink) !important;
+a:hover {
+    color: var(--toeic-amber-deep);
 }
 
-.rg-navbar .nav-link:hover,
-.rg-navbar .nav-link.active {
-    background: rgba(240, 161, 26, 0.12);
-    color: var(--toeic-navy) !important;
+.toeic-page-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4.5rem;
 }
 
-.btn-rg-primary {
-    background: var(--toeic-navy);
-    box-shadow: 0 14px 40px rgba(15, 31, 61, 0.18);
+.toeic-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.btn-rg-primary:hover {
-    background: var(--toeic-navy-soft);
-}
-
-.btn-rg-secondary,
-.btn-warning {
-    background: linear-gradient(135deg, var(--toeic-amber), var(--toeic-amber-deep));
-    border: none;
-    color: #1d1400 !important;
-    box-shadow: 0 14px 36px rgba(240, 161, 26, 0.2);
-}
-
-.btn-rg-secondary:hover,
-.btn-warning:hover {
-    background: linear-gradient(135deg, #f5b53f, var(--toeic-amber-deep));
-    color: #1d1400 !important;
-}
-
-.btn-outline-light,
-.btn-outline-secondary,
-.btn-outline-warning {
-    border-width: 1.5px;
-}
-
-.rg-footer {
-    background:
-        radial-gradient(circle at top right, rgba(240, 161, 26, 0.2), transparent 22%),
-        linear-gradient(135deg, #091224 0%, #10213f 100%);
-}
-
-.auth-shell,
-.toeic-surface {
-    border-radius: 32px;
-    border: 1px solid rgba(231, 223, 207, 0.92);
-    background: rgba(255, 253, 248, 0.92);
-    box-shadow: var(--toeic-shadow);
-    backdrop-filter: blur(12px);
-}
-
-.toeic-badge {
+.toeic-kicker,
+.toeic-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 0.95rem;
-    border-radius: 999px;
-    background: rgba(240, 161, 26, 0.14);
-    color: #7f4f00;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--toeic-muted-strong);
 }
 
-.toeic-stat {
-    background: rgba(255, 255, 255, 0.58);
-    border: 1px solid rgba(231, 223, 207, 0.9);
-    border-radius: 22px;
-    box-shadow: 0 16px 40px rgba(15, 31, 61, 0.05);
+.toeic-kicker::before,
+.toeic-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 2px;
+    background: var(--toeic-amber);
 }
 
-.toeic-panel {
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,252,245,0.98));
-    border: 1px solid rgba(231, 223, 207, 0.92);
-    border-radius: 28px;
-    box-shadow: var(--toeic-shadow);
+.toeic-headline {
+    max-width: 11ch;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 0.95;
+    margin-bottom: 1rem;
+}
+
+.toeic-subcopy {
+    max-width: 58rem;
+    color: var(--toeic-muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.toeic-hero-card,
+.toeic-panel,
+.toeic-surface,
+.toeic-stat,
+.toeic-form-shell,
+.toeic-band {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(252, 248, 240, 0.98));
+    border: 1px solid var(--toeic-border);
+    border-radius: var(--toeic-radius-lg);
+    box-shadow: var(--toeic-shadow-sm);
+}
+
+.toeic-panel::before,
+.toeic-surface::before,
+.toeic-stat::before,
+.toeic-form-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(21, 39, 66, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 39, 66, 0.035) 1px, transparent 1px);
+    background-size: 34px 34px;
+    opacity: 0.55;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 100%);
 }
 
 .toeic-grid-lines {
     position: relative;
 }
 
-.toeic-grid-lines::before {
-    content: '';
+.toeic-grid-lines::after {
+    content: "";
     position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(15, 31, 61, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 31, 61, 0.035) 1px, transparent 1px);
-    background-size: 32px 32px;
+    inset: auto -5rem -6rem auto;
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    background: rgba(209, 139, 31, 0.08);
     pointer-events: none;
-    mask-image: linear-gradient(180deg, rgba(0,0,0,0.65), transparent 100%);
 }
 
-.toeic-highlight-text {
-    background: linear-gradient(120deg, rgba(240, 161, 26, 0.2), rgba(240, 161, 26, 0.06));
-    padding: 0 0.18em;
-    border-radius: 0.22em;
+.toeic-hero-card {
+    background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--toeic-shadow-lg);
 }
 
-@media (max-width: 768px) {
-    .auth-shell,
-    .toeic-surface,
-    .toeic-panel {
+.toeic-hero-card h1,
+.toeic-hero-card h2,
+.toeic-hero-card h3,
+.toeic-hero-card p,
+.toeic-hero-card .toeic-kicker,
+.toeic-hero-card .toeic-eyebrow,
+.toeic-hero-card .text-muted {
+    color: inherit !important;
+}
+
+.toeic-hero-card .toeic-kicker,
+.toeic-hero-card .toeic-eyebrow {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.toeic-hero-card .toeic-kicker::before,
+.toeic-hero-card .toeic-eyebrow::before {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.toeic-card-grid,
+.toeic-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.toeic-card-grid > *,
+.toeic-proof-grid > * {
+    grid-column: span 4;
+}
+
+.toeic-band {
+    padding: 2rem;
+    background:
+        radial-gradient(circle at top right, rgba(209, 139, 31, 0.14), transparent 24%),
+        linear-gradient(135deg, rgba(255, 249, 235, 0.98), rgba(245, 239, 226, 0.98));
+}
+
+.toeic-stat {
+    padding: 1.4rem 1.45rem;
+    min-height: 100%;
+}
+
+.toeic-stat .toeic-stat-value {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+    color: var(--toeic-night);
+    font-family: var(--rg-display);
+    font-weight: 800;
+}
+
+.toeic-stat .toeic-stat-label {
+    margin-top: 0.45rem;
+    color: var(--toeic-muted);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.toeic-display-panel {
+    padding: 2.4rem;
+}
+
+.toeic-feature-list,
+.toeic-list-check {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toeic-feature-row,
+.toeic-list-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(23, 38, 63, 0.09);
+}
+
+.toeic-feature-row:last-child,
+.toeic-list-check li:last-child {
+    border-bottom: none;
+}
+
+.toeic-feature-icon,
+.toeic-list-check li::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgba(209, 139, 31, 0.14);
+    color: var(--toeic-amber-deep);
+    font-size: 0.9rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.toeic-list-check li::before {
+    content: "OK";
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+}
+
+.toeic-form-shell {
+    padding: 2.2rem;
+}
+
+.toeic-form-panel {
+    background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 30%),
+        linear-gradient(145deg, #152742 0%, #21385c 55%, #c5851c 200%);
+    color: #fff;
+    border-radius: var(--toeic-radius-lg);
+    padding: 2.4rem;
+    box-shadow: var(--toeic-shadow-lg);
+}
+
+.toeic-form-panel h1,
+.toeic-form-panel h2,
+.toeic-form-panel h3,
+.toeic-form-panel p,
+.toeic-form-panel li {
+    color: inherit;
+}
+
+.toeic-form-panel .toeic-kicker {
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.toeic-form-panel .toeic-kicker::before {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.toeic-field-label {
+    color: var(--toeic-muted-strong);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+}
+
+.toeic-form-control,
+.form-control,
+.form-select {
+    border: 1px solid rgba(23, 38, 63, 0.14);
+    border-radius: 18px;
+    padding: 0.95rem 1rem;
+    min-height: 3.25rem;
+    background: rgba(255, 253, 248, 0.9);
+    color: var(--toeic-ink);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.toeic-form-control:focus,
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(209, 139, 31, 0.55);
+    box-shadow: 0 0 0 4px rgba(209, 139, 31, 0.12);
+    background: #fffefb;
+    color: var(--toeic-ink);
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+    min-height: 3.65rem;
+    padding-top: 1.2rem;
+}
+
+.form-floating > label {
+    color: var(--toeic-muted);
+    padding-left: 1rem;
+}
+
+.btn,
+.btn-rg-primary,
+.btn-rg-secondary {
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    padding: 0.9rem 1.6rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.btn:hover,
+.btn-rg-primary:hover,
+.btn-rg-secondary:hover {
+    transform: translateY(-1px);
+}
+
+.btn-warning,
+.btn-rg-secondary {
+    background: linear-gradient(135deg, var(--toeic-amber), var(--toeic-amber-deep));
+    border: none;
+    color: #1f1605 !important;
+    box-shadow: 0 16px 32px rgba(209, 139, 31, 0.26);
+}
+
+.btn-warning:hover,
+.btn-rg-secondary:hover {
+    background: linear-gradient(135deg, #e0a13b, var(--toeic-amber-deep));
+    color: #1f1605 !important;
+}
+
+.btn-outline-warning {
+    border: 1px solid rgba(209, 139, 31, 0.5);
+    color: var(--toeic-amber-deep);
+    background: rgba(255, 249, 235, 0.85);
+}
+
+.btn-outline-warning:hover {
+    background: var(--toeic-amber-soft);
+    border-color: var(--toeic-amber);
+    color: var(--toeic-amber-deep);
+}
+
+.btn-outline-secondary,
+.btn-outline-light {
+    border: 1px solid rgba(23, 38, 63, 0.16);
+    color: var(--toeic-night);
+    background: rgba(255, 253, 248, 0.74);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-light:hover {
+    background: rgba(236, 225, 204, 0.7);
+    color: var(--toeic-night);
+    border-color: rgba(23, 38, 63, 0.22);
+}
+
+.toeic-hero-card .btn-outline-light,
+.toeic-form-panel .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+.toeic-hero-card .btn-outline-light:hover,
+.toeic-form-panel .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}
+
+.badge,
+.toeic-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.text-bg-warning,
+.toeic-pill-warning {
+    background: rgba(209, 139, 31, 0.14) !important;
+    color: var(--toeic-amber-deep) !important;
+    border: 1px solid rgba(209, 139, 31, 0.22);
+}
+
+.text-bg-light,
+.toeic-pill-soft {
+    background: rgba(255, 255, 255, 0.7) !important;
+    color: var(--toeic-muted-strong) !important;
+    border: 1px solid rgba(23, 38, 63, 0.08);
+}
+
+.toeic-copy {
+    color: var(--toeic-muted);
+    line-height: 1.8;
+}
+
+.toeic-copy strong,
+.toeic-copy b {
+    color: var(--toeic-ink);
+}
+
+.toeic-table-row,
+.row-item,
+.part-row,
+.feature-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(23, 38, 63, 0.08);
+}
+
+.toeic-table-row:last-child,
+.row-item:last-child,
+.part-row:last-child,
+.feature-row:last-child {
+    border-bottom: none;
+}
+
+.rg-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    background: rgba(250, 246, 238, 0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(23, 38, 63, 0.08);
+    box-shadow: 0 10px 40px rgba(21, 39, 66, 0.05);
+}
+
+.rg-navbar .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 800;
+    color: var(--toeic-night) !important;
+}
+
+.rg-navbar .navbar-brand img {
+    height: 34px;
+    width: auto;
+}
+
+.rg-navbar .nav-link {
+    color: var(--toeic-muted-strong) !important;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.85rem !important;
+    border-radius: 999px;
+}
+
+.rg-navbar .nav-link:hover,
+.rg-navbar .nav-link.active {
+    color: var(--toeic-night) !important;
+    background: rgba(209, 139, 31, 0.12);
+}
+
+.rg-footer {
+    margin-top: 4rem;
+    padding: 4rem 0 1.75rem;
+    background:
+        radial-gradient(circle at top right, rgba(209, 139, 31, 0.16), transparent 24%),
+        linear-gradient(135deg, #13243d 0%, #203557 54%, #12243f 100%);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.rg-footer h5 {
+    color: #fff;
+    font-family: var(--rg-display);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.rg-footer p,
+.rg-footer li,
+.rg-footer a {
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+}
+
+.rg-footer a:hover {
+    color: #fff;
+}
+
+.rg-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.rg-footer-bottom {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.86rem;
+}
+
+.auth-shell,
+.glass-card,
+.card,
+.status-card {
+    background: linear-gradient(180deg, rgba(255, 253, 248, 0.96), rgba(252, 248, 240, 0.98));
+    border: 1px solid var(--toeic-border) !important;
+    border-radius: var(--toeic-radius-md) !important;
+    box-shadow: var(--toeic-shadow-sm);
+    color: var(--toeic-ink);
+}
+
+.text-white-50,
+.text-muted {
+    color: var(--toeic-muted) !important;
+}
+
+@media (max-width: 991px) {
+    .toeic-headline {
+        max-width: none;
+    }
+
+    .toeic-card-grid > *,
+    .toeic-proof-grid > * {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 767px) {
+    .toeic-page-shell {
+        padding: 1.25rem 0.85rem 3rem;
+    }
+
+    .toeic-card-grid,
+    .toeic-proof-grid {
+        gap: 1rem;
+    }
+
+    .toeic-card-grid > *,
+    .toeic-proof-grid > * {
+        grid-column: span 12;
+    }
+
+    .toeic-display-panel,
+    .toeic-form-shell,
+    .toeic-form-panel,
+    .toeic-band,
+    .toeic-panel,
+    .toeic-surface {
         border-radius: 24px;
     }
 }

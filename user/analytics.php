@@ -50,87 +50,76 @@ $latest_score = $total_attempts ? (int)$results[0]['total_score'] : 0;
     <link href="../assets/css/ruangguru-theme.css" rel="stylesheet">
     <link href="../assets/css/toeic-frontend.css" rel="stylesheet">
     <link href="css/mobile-responsive.css" rel="stylesheet">
-    <style>
-        body { color: #10233d; }
-        .shell { max-width: 1120px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-        .hero, .card-panel { border-radius: 28px; }
-        .hero { padding: 2rem; }
-        .metric {
-            background: #fff7ed;
-            border: 1px solid #ffedd5;
-            border-radius: 20px;
-            padding: 1.2rem;
-        }
-        .row-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.9rem 0;
-            border-bottom: 1px solid #eef3f8;
-        }
-        .row-item:last-child { border-bottom: none; }
-    </style>
 </head>
 <body>
-    <div class="shell">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <main class="toeic-page-shell">
+        <div class="toeic-page-header">
             <div>
-                <div class="small text-uppercase text-muted fw-semibold">TOEIC Analytics</div>
-                <h1 class="h3 fw-bold mb-0">Score trend dan weakness map TOEIC Anda</h1>
+                <div class="toeic-kicker mb-3">TOEIC analytics</div>
+                <h1 class="display-6 mb-3">Score trend and weakness map for every TOEIC attempt.</h1>
+                <p class="toeic-subcopy">Track the score movement behind your Listening and Reading preparation, then convert the latest report into the next simulator action.</p>
             </div>
-            <a href="index.php" class="btn btn-outline-secondary rounded-pill px-4">Kembali ke Dashboard</a>
+            <a href="index.php" class="btn btn-outline-secondary">Back to Dashboard</a>
         </div>
 
-        <section class="hero toeic-panel toeic-grid-lines mb-4">
-            <div class="row g-3">
-                <div class="col-md-3"><div class="metric toeic-stat"><div class="small text-muted mb-1">Attempts</div><div class="h2 fw-bold mb-0"><?php echo $total_attempts; ?></div></div></div>
-                <div class="col-md-3"><div class="metric toeic-stat"><div class="small text-muted mb-1">Latest</div><div class="h2 fw-bold mb-0"><?php echo $latest_score; ?></div></div></div>
-                <div class="col-md-3"><div class="metric toeic-stat"><div class="small text-muted mb-1">Average</div><div class="h2 fw-bold mb-0"><?php echo $avg_score; ?></div></div></div>
-                <div class="col-md-3"><div class="metric toeic-stat"><div class="small text-muted mb-1">Best</div><div class="h2 fw-bold mb-0"><?php echo $best_score; ?></div></div></div>
+        <section class="toeic-card-grid mb-4">
+            <div class="toeic-stat h-100">
+                <div class="toeic-stat-value"><?php echo $total_attempts; ?></div>
+                <div class="toeic-stat-label">Attempts</div>
+            </div>
+            <div class="toeic-stat h-100">
+                <div class="toeic-stat-value"><?php echo $latest_score; ?></div>
+                <div class="toeic-stat-label">Latest</div>
+            </div>
+            <div class="toeic-stat h-100">
+                <div class="toeic-stat-value"><?php echo $avg_score; ?></div>
+                <div class="toeic-stat-label">Average</div>
             </div>
         </section>
 
         <div class="row g-4">
             <div class="col-lg-6">
-                <div class="card-panel toeic-panel p-4 h-100">
-                    <h2 class="h5 fw-bold mb-3">Latest Full Simulation Breakdown</h2>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="toeic-eyebrow mb-3">Latest full simulation breakdown</div>
+                    <h2 class="h4 mb-3">Part-level performance</h2>
                     <?php if (empty($latest_stats)): ?>
-                        <p class="text-muted mb-0">Belum ada full simulation TOEIC yang selesai.</p>
+                        <p class="toeic-copy mb-0">No completed full simulation is available yet.</p>
                     <?php else: ?>
                         <?php foreach ($latest_stats as $stat): ?>
-                            <div class="row-item">
+                            <div class="toeic-table-row">
                                 <div>
                                     <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
-                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> benar dari <?php echo (int)$stat['total']; ?> soal</div>
+                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
                                 </div>
                                 <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </div>
+                </section>
             </div>
             <div class="col-lg-6">
-                <div class="card-panel toeic-panel p-4 h-100">
-                    <h2 class="h5 fw-bold mb-3">Recent TOEIC Sessions</h2>
+                <section class="toeic-panel p-4 h-100">
+                    <div class="toeic-eyebrow mb-3">Recent TOEIC sessions</div>
+                    <h2 class="h4 mb-3">Report history</h2>
                     <?php if (empty($results)): ?>
-                        <p class="text-muted mb-0">Belum ada riwayat score TOEIC.</p>
+                        <p class="toeic-copy mb-0">No TOEIC score history is available yet.</p>
                     <?php else: ?>
                         <?php foreach (array_slice($results, 0, 8) as $row): ?>
-                            <div class="row-item">
+                            <div class="toeic-table-row">
                                 <div>
                                     <div class="fw-semibold">Score <?php echo (int)$row['total_score']; ?></div>
                                     <div class="small text-muted"><?php echo date('d M Y H:i', strtotime($row['completed_at'])); ?></div>
                                 </div>
                                 <div class="text-end">
-                                    <div class="small text-muted">L <?php echo (int)$row['listening_scaled']; ?> · R <?php echo (int)$row['reading_scaled']; ?></div>
-                                    <a href="result_toeic.php?session=<?php echo urlencode($row['test_session']); ?>" class="small fw-semibold text-decoration-none">View report</a>
+                                    <div class="small text-muted">L <?php echo (int)$row['listening_scaled']; ?> - R <?php echo (int)$row['reading_scaled']; ?></div>
+                                    <a href="result_toeic.php?session=<?php echo urlencode($row['test_session']); ?>" class="fw-semibold text-decoration-none">View report</a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </div>
+                </section>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>
