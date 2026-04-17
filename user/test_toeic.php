@@ -519,7 +519,7 @@ $is_last_question = $is_batch
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="css/mobile-responsive.css" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -626,7 +626,7 @@ $is_last_question = $is_batch
                         </div>
                         <?php if ($audio && !empty($audio['file_path']) && FEATURE_SECURE_AUDIO): ?>
                             <div id="secure-player-container-<?php echo (int)$audio['id_audio']; ?>" class="w-full"></div>
-                            <script src="js/SecureAudioPlayer.js"></script>
+                            <script src="<?php echo htmlspecialchars(getVersionedAssetUrl('user/js/SecureAudioPlayer.js', 'js/SecureAudioPlayer.js')); ?>"></script>
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     new SecureAudioPlayer('secure-player-container-<?php echo (int)$audio['id_audio']; ?>', '<?php echo (int)$audio['id_audio']; ?>', 'toeic');
@@ -944,7 +944,7 @@ $is_last_question = $is_batch
     <?php if ($requires_proctoring): ?>
         <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
-        <script src="js/proctor.js"></script>
+        <script src="<?php echo htmlspecialchars(getVersionedAssetUrl('user/js/proctor.js', 'js/proctor.js')); ?>"></script>
         <script>
             (function () {
                 document.addEventListener('DOMContentLoaded', function () {

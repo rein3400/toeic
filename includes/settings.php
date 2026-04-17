@@ -86,4 +86,17 @@ function getFaviconHTML() {
     }
     return '';
 }
+
+// Append a filemtime-based cache-busting query string to public assets.
+function getVersionedAssetUrl($assetPath, $href = null) {
+    $publicPath = ltrim((string)$assetPath, '/');
+    $hrefPath = $href ?? $publicPath;
+    $absolutePath = __DIR__ . '/../' . $publicPath;
+
+    if (file_exists($absolutePath)) {
+        return $hrefPath . '?v=' . filemtime($absolutePath);
+    }
+
+    return $hrefPath;
+}
 ?>

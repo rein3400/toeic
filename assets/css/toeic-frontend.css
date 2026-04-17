@@ -520,6 +520,24 @@ a:hover {
     background: rgba(209, 139, 31, 0.12);
 }
 
+.rg-navbar .navbar-toggler {
+    border: 1px solid rgba(23, 38, 63, 0.12);
+    padding: 0.5rem 0.75rem;
+    border-radius: 14px;
+    background: rgba(255, 253, 248, 0.84);
+    box-shadow: 0 8px 20px rgba(21, 39, 66, 0.06);
+}
+
+.rg-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 4px rgba(209, 139, 31, 0.12);
+}
+
+.rg-navbar .navbar-toggler-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2821,39,66,0.92%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 .rg-footer {
     margin-top: 4rem;
     padding: 4rem 0 1.75rem;
@@ -586,6 +604,27 @@ a:hover {
     .toeic-card-grid > *,
     .toeic-proof-grid > * {
         grid-column: span 6;
+    }
+
+    .rg-navbar .navbar-collapse {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid rgba(23, 38, 63, 0.08);
+        border-radius: 22px;
+        background: rgba(255, 253, 248, 0.97);
+        box-shadow: 0 16px 36px rgba(21, 39, 66, 0.08);
+    }
+
+    .rg-navbar .navbar-collapse .ms-auto {
+        width: 100%;
+        align-items: stretch !important;
+    }
+
+    .rg-navbar .navbar-collapse .nav-link,
+    .rg-navbar .navbar-collapse .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
     }
 }
 
