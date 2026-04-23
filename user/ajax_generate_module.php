@@ -9,7 +9,7 @@ require_once '../includes/settings.php';
 require_once '../includes/curriculum_generator.php';
 
 header('Content-Type: application/json');
-set_time_limit(120);
+set_time_limit(300);
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);

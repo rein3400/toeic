@@ -133,7 +133,7 @@ class CurriculumGenerator {
             $modulePlan['description'] ?? ''
         );
 
-        $response = $this->requestAI($prompt);
+        $response = $this->requestAI($prompt, 16000);
         $decoded = $this->parseJsonResponse($response);
         if (!$decoded) {
             return ['success' => false, 'error' => 'Invalid AI response'];
@@ -228,7 +228,7 @@ PROMPT;
             $prompt
         );
 
-        $decoded = $this->parseJsonResponse($this->requestAI($prompt));
+        $decoded = $this->parseJsonResponse($this->requestAI($prompt, 4000));
         if (!$decoded || !isset($decoded['modules']) || !is_array($decoded['modules'])) {
             throw new Exception('Failed to generate TOEIC syllabus');
         }
@@ -272,8 +272,8 @@ PANDUAN:
 PROMPT;
     }
 
-    private function requestAI(string $prompt): string {
-        $response = callAI($prompt, $this->config, 4000, [], 150000);
+    private function requestAI(string $prompt, int $max_tokens = 8000): string {
+        $response = callAI($prompt, $this->config, $max_tokens, [], 240000);
         if (!is_string($response) || trim($response) === '') {
             throw new Exception('AI response is empty');
         }
@@ -282,8 +282,9 @@ PROMPT;
 
     private function parseJsonResponse(string $response): ?array {
         $response = trim($response);
-        $response = preg_replace('/^```(?:json)?\s*/m', '', $response);
-        $response = preg_replace('/\s*```\s*$/m', '', $response);
+        $response = preg_replace('/<think>.*?<\/think>/is', '', $response);
+        $response = preg_replace('/^```(?:json)?\s*/i', '', $response);
+        $response = preg_replace('/\s*```\s*$/', '', $response);
         $response = trim($response);
 
         $decoded = json_decode($response, true);
@@ -291,8 +292,15 @@ PROMPT;
             return $decoded;
         }
 
-        if (preg_match('/\{.*\}/s', $response, $matches)) {
-            $decoded = json_decode($matches[0], true);
+        $start = strpos($response, '{');
+        $end = strrpos($response, '}');
+        if ($start === false || $end === false || $end <= $start) {
+            return null;
+        }
+
+        $candidate = substr($response, $start, $end - $start + 1);
+        foreach ([$candidate, preg_replace('/,\s*([}\]])/', '$1', $candidate)] as $json) {
+            $decoded = json_decode($json, true);
             if (json_last_error() === JSON_ERROR_NONE) {
                 return $decoded;
             }

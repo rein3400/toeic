@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/toeic_helper.php';
 require_once '../includes/db_utils.php';
+require_once '../includes/ai_helper.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -72,6 +73,34 @@ $stmt->bind_param("s", $test_session);
 $stmt->execute();
 $question_rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
+$cached_score_explanation = null;
+try {
+    if (checkTableExists($conn, 'admin_analysis_cache')) {
+        $stmt = $conn->prepare("
+            SELECT analysis_content, generated_at
+            FROM admin_analysis_cache
+            WHERE test_session = ? AND analysis_type = 'score_explanation'
+            ORDER BY generated_at DESC
+            LIMIT 1
+        ");
+        if ($stmt) {
+            $stmt->bind_param("s", $test_session);
+            $stmt->execute();
+            $cached_score_explanation = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+        }
+    }
+} catch (Throwable $e) {
+    $cached_score_explanation = null;
+}
+
+$ai_configured = false;
+try {
+    $ai_configured = (bool)getActiveAIProvider();
+} catch (Throwable $e) {
+    $ai_configured = false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -83,6 +112,22 @@ $stmt->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../includes/modern-theme.css" rel="stylesheet">
+    <style>
+        .score-explanation-box {
+            background: #f8fafc;
+            border: 1px solid #dbe4ef;
+            border-radius: 12px;
+            color: #0f172a;
+            line-height: 1.65;
+            padding: 1rem;
+            white-space: pre-wrap;
+        }
+        .score-explanation-box.is-error {
+            background: #fff5f5;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid p-0">
@@ -142,6 +187,44 @@ $stmt->close();
                     <?php endif; ?>
                 </div>
 
+                <div class="content-card mb-4">
+                    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1"><i class="fas fa-circle-question me-2"></i>Mengapa Skor Ini?</h5>
+                            <p class="text-muted mb-0">Penjelasan singkat berbasis data nilai, jawaban benar/salah, dan jawaban kosong.</p>
+                        </div>
+                        <?php if ($ai_configured): ?>
+                            <button type="button" class="btn btn-primary" id="btnGenerateScoreExplanation" onclick="generateScoreExplanation(<?php echo $cached_score_explanation ? 'true' : 'false'; ?>)">
+                                <i class="fas fa-magic me-2"></i><?php echo $cached_score_explanation ? 'Regenerasi Penjelasan' : 'Generate Penjelasan'; ?>
+                            </button>
+                        <?php else: ?>
+                            <a href="ai_api_settings.php" class="btn btn-outline-secondary">
+                                <i class="fas fa-gear me-2"></i>Atur AI Provider
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if ($cached_score_explanation): ?>
+                        <div class="alert alert-success py-2 mb-3">
+                            <i class="fas fa-clock me-1"></i>Penjelasan tersimpan dari <?php echo date('d M Y H:i', strtotime($cached_score_explanation['generated_at'])); ?>.
+                        </div>
+                    <?php elseif (!$ai_configured): ?>
+                        <div class="alert alert-warning py-2 mb-3">
+                            <i class="fas fa-triangle-exclamation me-1"></i>AI belum dikonfigurasi. Pilih provider aktif di AI API Settings untuk membuat penjelasan.
+                        </div>
+                    <?php endif; ?>
+
+                    <div id="score-explanation-placeholder" class="text-center py-4" style="<?php echo $cached_score_explanation ? 'display:none;' : ''; ?>">
+                        <i class="fas fa-robot fa-2x text-muted mb-3"></i>
+                        <p class="text-muted mb-0">Belum ada penjelasan AI untuk sesi ini.</p>
+                    </div>
+                    <div id="score-explanation-content" class="score-explanation-box" style="<?php echo $cached_score_explanation ? '' : 'display:none;'; ?>"><?php echo $cached_score_explanation ? htmlspecialchars($cached_score_explanation['analysis_content']) : ''; ?></div>
+                    <div id="score-explanation-loading" class="text-center py-4" style="display:none;">
+                        <div class="spinner-border text-primary mb-3" role="status"></div>
+                        <p class="text-muted mb-0">Menghasilkan penjelasan nilai berbasis data...</p>
+                    </div>
+                </div>
+
                 <div class="content-card">
                     <h5 class="fw-bold mb-3">Question Log</h5>
                     <div class="table-responsive">
@@ -186,5 +269,70 @@ $stmt->close();
             </div>
         </div>
     </div>
+    <script>
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value || '';
+            return div.innerHTML;
+        }
+
+        function generateScoreExplanation(regenerate) {
+            const btn = document.getElementById('btnGenerateScoreExplanation');
+            const placeholder = document.getElementById('score-explanation-placeholder');
+            const content = document.getElementById('score-explanation-content');
+            const loading = document.getElementById('score-explanation-loading');
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generating...';
+            }
+            if (placeholder) placeholder.style.display = 'none';
+            if (content) {
+                content.classList.remove('is-error');
+                content.style.display = 'none';
+            }
+            if (loading) loading.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('test_session', <?php echo json_encode($test_session); ?>);
+            formData.append('test_format', 'toeic');
+            if (regenerate) formData.append('regenerate', '1');
+
+            fetch('ajax_generate_score_explanation.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (loading) loading.style.display = 'none';
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Regenerasi Penjelasan';
+                        btn.setAttribute('onclick', 'generateScoreExplanation(true)');
+                    }
+                    if (content) {
+                        content.style.display = 'block';
+                        if (data.success) {
+                            content.innerHTML = escapeHtml(data.content);
+                        } else {
+                            content.classList.add('is-error');
+                            content.innerHTML = escapeHtml(data.error || 'Gagal menghasilkan penjelasan.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    if (loading) loading.style.display = 'none';
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Regenerasi Penjelasan';
+                    }
+                    if (content) {
+                        content.style.display = 'block';
+                        content.classList.add('is-error');
+                        content.innerHTML = escapeHtml('Gagal menghubungi server: ' + error.message);
+                    }
+                });
+        }
+    </script>
 </body>
 </html>
