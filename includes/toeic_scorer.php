@@ -32,6 +32,7 @@ class ToeicScorer {
             FROM toeic_test_questions tq
             JOIN $sourceTable s ON tq.question_id = s.id_soal
             WHERE tq.test_session = ? AND tq.section = ?
+            ORDER BY tq.question_order ASC
         ");
         $stmt->bind_param("ss", $testSession, $section);
         $stmt->execute();
@@ -62,6 +63,10 @@ class ToeicScorer {
             $updateStmt->close();
         }
         $stmt->close();
+
+        if ($total <= 0) {
+            throw new Exception('No scoreable TOEIC questions found for section: ' . $section);
+        }
 
         $percentage = $total > 0 ? ($raw / $total) * 100 : 0;
 
@@ -194,7 +199,9 @@ class ToeicScorer {
      */
     public function getRawScore($testSession, $section) {
         $stmt = $this->conn->prepare("
-            SELECT COUNT(*) as total, SUM(is_correct) as correct
+            SELECT
+                COUNT(*) as total,
+                SUM(CASE WHEN COALESCE(is_correct, 0) = 1 THEN 1 ELSE 0 END) as correct
             FROM toeic_test_questions
             WHERE test_session = ? AND section = ?
         ");

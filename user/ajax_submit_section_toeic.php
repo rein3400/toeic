@@ -38,6 +38,11 @@ if (!validateCsrfToken()) {
 }
 
 $input        = json_decode(file_get_contents('php://input'), true);
+if (!is_array($input)) {
+    echo json_encode(['success' => false, 'error' => 'Invalid JSON input']);
+    exit();
+}
+
 $test_session = trim($input['test_session'] ?? '');
 $section      = trim($input['section'] ?? '');
 
@@ -47,7 +52,7 @@ if (!$test_session || !$section) {
 }
 
 $valid_sections = ['listening', 'reading'];
-if (!in_array($section, $valid_sections)) {
+if (!in_array($section, $valid_sections, true)) {
     echo json_encode(['success' => false, 'error' => 'Invalid section']);
     exit();
 }
@@ -55,7 +60,7 @@ if (!in_array($section, $valid_sections)) {
 ensureTOEICSessionModeColumns($conn);
 
 // Verify session ownership
-$stmt = $conn->prepare("SELECT id, status, practice_mode, target_part FROM toeic_test_sessions WHERE test_session = ? AND user_id = ?");
+$stmt = $conn->prepare("SELECT id, status, current_section, practice_mode, target_part FROM toeic_test_sessions WHERE test_session = ? AND user_id = ?");
 $stmt->bind_param("si", $test_session, $_SESSION['user_id']);
 $stmt->execute();
 $sessionRow = $stmt->get_result()->fetch_assoc();
@@ -76,6 +81,23 @@ $isLegacyPartPractice = $isPracticeMode && $targetPart !== '';
 $redirect_suffix = $isPracticeMode
     ? ('&mode=prep' . ($targetPart !== '' ? '&part=' . urlencode($targetPart) : ''))
     : '&mode=full';
+
+$expectedSection = in_array(($sessionRow['current_section'] ?? ''), $valid_sections, true)
+    ? $sessionRow['current_section']
+    : 'listening';
+if ($isLegacyPartPractice) {
+    $practiceConfig = getTOEICPracticeConfig($targetPart);
+    if (!$practiceConfig || empty($practiceConfig['section'])) {
+        echo json_encode(['success' => false, 'error' => 'Invalid practice part']);
+        exit();
+    }
+    $expectedSection = $practiceConfig['section'];
+}
+
+if ($section !== $expectedSection) {
+    echo json_encode(['success' => false, 'error' => 'Section is no longer active']);
+    exit();
+}
 
 if ($isLegacyPartPractice) {
     $sourceTable = $section === 'listening' ? 'toeic_soal_listening' : 'toeic_soal_reading';
@@ -121,6 +143,9 @@ if ($isLegacyPartPractice) {
 
     if (($_SESSION['toeic_test_session'] ?? null) === $test_session || ($_SESSION['test_session'] ?? null) === $test_session) {
         unset($_SESSION['toeic_test_session'], $_SESSION['test_session'], $_SESSION['current_section'], $_SESSION['section_start_time']);
+        if (isset($_SESSION['toeic_section_start_times']) && is_array($_SESSION['toeic_section_start_times'])) {
+            unset($_SESSION['toeic_section_start_times'][$test_session . ':listening'], $_SESSION['toeic_section_start_times'][$test_session . ':reading']);
+        }
     }
 
     echo json_encode([
@@ -150,6 +175,9 @@ if ($isLastSection) {
 
     if (($_SESSION['toeic_test_session'] ?? null) === $test_session || ($_SESSION['test_session'] ?? null) === $test_session) {
         unset($_SESSION['toeic_test_session'], $_SESSION['test_session'], $_SESSION['current_section'], $_SESSION['section_start_time']);
+        if (isset($_SESSION['toeic_section_start_times']) && is_array($_SESSION['toeic_section_start_times'])) {
+            unset($_SESSION['toeic_section_start_times'][$test_session . ':listening'], $_SESSION['toeic_section_start_times'][$test_session . ':reading']);
+        }
     }
 
         echo json_encode([
@@ -167,6 +195,13 @@ if ($isLastSection) {
     $updateStmt->bind_param("ss", $nextSection, $test_session);
     $updateStmt->execute();
     $updateStmt->close();
+
+    $_SESSION['current_section'] = $nextSection;
+    $_SESSION['section_start_time'] = time();
+    if (!isset($_SESSION['toeic_section_start_times']) || !is_array($_SESSION['toeic_section_start_times'])) {
+        $_SESSION['toeic_section_start_times'] = [];
+    }
+    $_SESSION['toeic_section_start_times'][$test_session . ':' . $nextSection] = $_SESSION['section_start_time'];
 
         echo json_encode([
             'success'       => true,

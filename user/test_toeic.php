@@ -122,6 +122,9 @@ if ($start_new) {
     $_SESSION['test_format'] = 'toeic';
     $_SESSION['current_section'] = $start_section;
     $_SESSION['section_start_time'] = time();
+    $_SESSION['toeic_section_start_times'] = [
+        $test_session . ':' . $start_section => $_SESSION['section_start_time'],
+    ];
 
     $redirect = "test_toeic.php?section=" . urlencode($start_section) . "&test_session=" . urlencode($test_session) . "&setup_complete=1&mode=" . ($practice_mode ? 'prep' : 'full');
     if ($practice_part !== '') {
@@ -207,9 +210,14 @@ $requires_proctoring = $proctoring_enabled && FEATURE_ANTI_CHEAT && !$practice_m
 $section = ($practice_mode && $practice_config) ? $practice_config['section'] : ($session_info['current_section'] ?: $section);
 $_SESSION['current_section'] = $section;
 
-if (!isset($_GET['q']) || $question_num === 1) {
-    $_SESSION['section_start_time'] = time();
+$timer_key = $test_session . ':' . $section;
+if (!isset($_SESSION['toeic_section_start_times']) || !is_array($_SESSION['toeic_section_start_times'])) {
+    $_SESSION['toeic_section_start_times'] = [];
 }
+if (empty($_SESSION['toeic_section_start_times'][$timer_key])) {
+    $_SESSION['toeic_section_start_times'][$timer_key] = time();
+}
+$_SESSION['section_start_time'] = (int)$_SESSION['toeic_section_start_times'][$timer_key];
 
 if ($requires_proctoring) {
     $stmt = $conn->prepare("
@@ -730,7 +738,7 @@ $is_last_question = $is_batch
                 <?php endif; ?>
 
                 <div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0 flex justify-between items-center">
-                    <a href="<?php echo $prev_link; ?>" class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
+                    <a href="<?php echo $prev_link; ?>" id="prevBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
                         <span class="material-symbols-outlined text-[20px]">arrow_back</span>
                         Previous
                     </a>
@@ -757,6 +765,7 @@ $is_last_question = $is_batch
         const mode = document.getElementById('mode').value;
         const targetPart = document.getElementById('targetPart').value;
         const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
         const nextBtnDefaultHtml = nextBtn ? nextBtn.innerHTML : '';
         let isNavigating = false;
         let isSubmitting = false;
@@ -875,6 +884,30 @@ $is_last_question = $is_batch
                     .catch((error) => console.error('Save error:', error));
             });
         });
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', async function (event) {
+                if (this.getAttribute('href') === '#' || this.classList.contains('pointer-events-none')) {
+                    return;
+                }
+                event.preventDefault();
+                if (isNavigating || isSubmitting) {
+                    return;
+                }
+
+                isNavigating = true;
+                setNextButtonBusy(true, 'Saving');
+
+                try {
+                    await flushSelectedAnswers();
+                    window.location.href = this.href;
+                } catch (error) {
+                    isNavigating = false;
+                    setNextButtonBusy(false);
+                    alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
+                }
+            });
+        }
 
         async function handleNext() {
             if (isNavigating || isSubmitting) {

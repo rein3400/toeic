@@ -7,6 +7,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/csrf_helper.php';
+require_once '../includes/toeic_helper.php';
 
 header('Content-Type: application/json');
 
@@ -26,6 +27,11 @@ if (!validateCsrfToken()) {
 }
 
 $input = json_decode(file_get_contents('php://input'), true);
+if (!is_array($input)) {
+    echo json_encode(['success' => false, 'error' => 'Invalid JSON input']);
+    exit();
+}
+
 $test_session = trim($input['test_session'] ?? '');
 $question_id  = (int)($input['question_id'] ?? 0);
 $section      = trim((string)($input['section'] ?? ''));
@@ -41,11 +47,11 @@ if ($answer === '' || !preg_match('/^[A-D]$/', $answer)) {
     exit();
 }
 
-// Verify the session belongs to this user and is still active
-$stmt = $conn->prepare("SELECT id, status FROM toeic_test_sessions WHERE test_session = ? AND user_id = ?");
+// Verify the session belongs to this user and is still active.
+$stmt = $conn->prepare("SELECT id, status, current_section, practice_mode, target_part FROM toeic_test_sessions WHERE test_session = ? AND user_id = ?");
 $stmt->bind_param("si", $test_session, $_SESSION['user_id']);
 $stmt->execute();
- $session_row = $stmt->get_result()->fetch_assoc();
+$session_row = $stmt->get_result()->fetch_assoc();
 if (!$session_row) {
     echo json_encode(['success' => false, 'error' => 'Session not found']);
     $stmt->close();
@@ -55,6 +61,22 @@ $stmt->close();
 
 if (($session_row['status'] ?? '') !== 'active') {
     echo json_encode(['success' => false, 'error' => 'Session is no longer active']);
+    exit();
+}
+
+$expected_section = in_array(($session_row['current_section'] ?? ''), ['listening', 'reading'], true)
+    ? $session_row['current_section']
+    : 'listening';
+$target_part = preg_replace('/[^1-7]/', '', (string)($session_row['target_part'] ?? ''));
+if (!empty($session_row['practice_mode']) && $target_part !== '' && function_exists('getTOEICPracticeConfig')) {
+    $practice_config = getTOEICPracticeConfig($target_part);
+    if ($practice_config && !empty($practice_config['section'])) {
+        $expected_section = $practice_config['section'];
+    }
+}
+
+if ($section !== $expected_section) {
+    echo json_encode(['success' => false, 'error' => 'Section is no longer active']);
     exit();
 }
 

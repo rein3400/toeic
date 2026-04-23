@@ -35,9 +35,9 @@ if ($is_practice && $practice_summary) {
     $hero_subvalue = $practice_summary['part_info']['name'];
 } else {
     if (!$is_practice) {
-        $results = calculateTOEICResults($_SESSION['user_id'], $test_session);
+        $results = getTOEICTestResults($_SESSION['user_id'], $test_session);
         if (!$results) {
-            $results = getTOEICTestResults($_SESSION['user_id'], $test_session);
+            $results = calculateTOEICResults($_SESSION['user_id'], $test_session);
         }
     } else {
         $results = [
