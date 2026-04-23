@@ -9,6 +9,13 @@ function adminTableExists($conn, $table) {
     return $result && $result->num_rows > 0;
 }
 
+function adminColumnExists($conn, $table, $column) {
+    $escapedTable = $conn->real_escape_string($table);
+    $escapedColumn = $conn->real_escape_string($column);
+    $result = $conn->query("SHOW COLUMNS FROM `$escapedTable` LIKE '$escapedColumn'");
+    return $result && $result->num_rows > 0;
+}
+
 // Fix for MySQL 8.0+ Strict Mode (GROUP BY issue)
 $conn->query("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 
@@ -183,7 +190,12 @@ $total_pages = ceil($total_users / $per_page);
 
 // Get users with test statistics
 $result_sources = [];
-if (adminTableExists($conn, 'toeic_test_results')) {
+if (
+    adminTableExists($conn, 'toeic_test_results')
+    && adminColumnExists($conn, 'toeic_test_results', 'user_id')
+    && adminColumnExists($conn, 'toeic_test_results', 'total_score')
+    && adminColumnExists($conn, 'toeic_test_results', 'completed_at')
+) {
     $result_sources[] = "SELECT user_id AS user_id, total_score, completed_at FROM toeic_test_results";
 }
 

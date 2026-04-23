@@ -37,7 +37,7 @@ try {
             $result = testGroq($api_key, $llm);
             break;
         case 'openrouter':
-            $result = testOpenRouter($api_key, $llm);
+            $result = testOpenRouter($api_key, $llm, $reasoning_effort);
             break;
         default:
             $result = ['success' => false, 'error' => 'Unknown provider: ' . $provider];
@@ -140,7 +140,11 @@ function testGroq($api_key, $model) {
     return makeCurlRequest($url, $data, $headers, 'groq');
 }
 
-function testOpenRouter($api_key, $model) {
+function isOpenRouterGpt5ConnectionModel($model) {
+    return stripos($model, 'openai/gpt-5') === 0;
+}
+
+function testOpenRouter($api_key, $model, $reasoning_effort = 'none') {
     $url = 'https://openrouter.ai/api/v1/chat/completions';
     
     // Fix model name format for OpenRouter
@@ -170,10 +174,18 @@ function testOpenRouter($api_key, $model) {
         'model' => $model,
         'messages' => [
             ['role' => 'user', 'content' => 'Test']
-        ],
-        'max_tokens' => 5,
-        'temperature' => 0.1
+        ]
     ];
+
+    if (isOpenRouterGpt5ConnectionModel($model)) {
+        $data['max_completion_tokens'] = 64;
+        if (!empty($reasoning_effort) && $reasoning_effort !== 'none') {
+            $data['reasoning'] = ['effort' => $reasoning_effort];
+        }
+    } else {
+        $data['max_tokens'] = 5;
+        $data['temperature'] = 0.1;
+    }
     
     $headers = [
         'Content-Type: application/json',

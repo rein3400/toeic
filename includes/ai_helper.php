@@ -77,7 +77,7 @@ function callAI($prompt, $config, $max_tokens = 2000, $images = [], $timeout_ms 
         case 'gemini':
             return callGeminiAPI($prompt, $api_key, $model, $max_tokens, $timeout_ms);
         case 'openrouter':
-            return callOpenRouterAPI($prompt, $api_key, $model, $max_tokens, $images, $timeout_ms);
+            return callOpenRouterAPI($prompt, $api_key, $model, $max_tokens, $images, $timeout_ms, $config['reasoning_effort'] ?? 'none');
         default:
             throw new Exception("Unsupported AI provider: " . $provider);
     }
@@ -232,7 +232,12 @@ function callGeminiAPI($prompt, $api_key, $model, $max_tokens, $timeout_ms = nul
  * 
  * @param int|null $timeout_ms Timeout in milliseconds; if null/<=0, defaults to 60000ms
  */
-function callOpenRouterAPI($prompt, $api_key, $model, $max_tokens, $images = [], $timeout_ms = null)
+function isOpenRouterGpt5ChatModel(string $model): bool
+{
+    return stripos($model, 'openai/gpt-5') === 0;
+}
+
+function callOpenRouterAPI($prompt, $api_key, $model, $max_tokens, $images = [], $timeout_ms = null, $reasoning_effort = 'none')
 {
     $url = "https://openrouter.ai/api/v1/chat/completions";
 
@@ -253,14 +258,24 @@ function callOpenRouterAPI($prompt, $api_key, $model, $max_tokens, $images = [],
         }
     }
 
+    $selected_model = $model ?: $default_model;
+
     $data = [
-        'model' => $model ?: $default_model,
+        'model' => $selected_model,
         'messages' => [
             ['role' => 'user', 'content' => $content]
-        ],
-        'max_tokens' => $max_tokens,
-        'temperature' => 0.7
+        ]
     ];
+
+    if (isOpenRouterGpt5ChatModel($selected_model)) {
+        $data['max_completion_tokens'] = max(64, (int)$max_tokens);
+        if (!empty($reasoning_effort) && $reasoning_effort !== 'none') {
+            $data['reasoning'] = ['effort' => $reasoning_effort];
+        }
+    } else {
+        $data['max_tokens'] = $max_tokens;
+        $data['temperature'] = 0.7;
+    }
 
     // OpenRouter uses custom headers
     $response = makeHttpRequestWithHeaders($url, $api_key, $data, [

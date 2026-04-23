@@ -186,6 +186,50 @@ $website_title = getWebsiteTitle();
             font-size: 1.1rem;
         }
 
+        .api-settings-table th,
+        .api-settings-table td {
+            vertical-align: middle;
+        }
+
+        .active-provider-cell {
+            min-width: 120px;
+        }
+
+        .active-provider-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.7rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 700;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .active-provider-option:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+
+        .active-provider-radio {
+            margin-top: 0;
+        }
+
+        .active-provider-radio:checked + .active-provider-option {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+        }
+
+        .active-provider-row td {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
         .info-card {
             background: var(--primary-light);
             border: 1px solid var(--glass-border);
@@ -241,20 +285,25 @@ $website_title = getWebsiteTitle();
                         <h4><i class="fas fa-list me-2"></i>API Providers</h4>
                         <div class="table-container">
                             <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                                <table class="table table-hover align-middle mb-0 api-settings-table">
                                     <thead>
                                         <tr>
                                             <th>Provider</th>
+                                            <th>Active</th>
                                             <th>API Key</th>
                                             <th>LLM/Model</th>
                                             <th>Reasoning</th>
                                             <th>Test Connection</th>
-                                            <th>Active</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($providers as $prov => $meta): ?>
-                                            <tr>
+                                            <?php
+                                            $provider_slug = strtolower($prov);
+                                            $provider_setting_key = 'ai_api_' . $provider_slug;
+                                            $is_active_provider = $active_api === $provider_setting_key;
+                                            ?>
+                                            <tr class="<?php echo $is_active_provider ? 'active-provider-row' : ''; ?>">
                                                 <td>
                                                     <div class="provider-name"><?php echo $prov; ?></div>
                                                     <div class="api-info">
@@ -274,6 +323,20 @@ $website_title = getWebsiteTitle();
                                                                 break;
                                                         }
                                                         ?>
+                                                    </div>
+                                                </td>
+                                                <td class="active-provider-cell">
+                                                    <div class="d-inline-flex align-items-center">
+                                                        <input class="form-check-input active-provider-radio" type="radio" name="active_api"
+                                                            value="<?php echo $provider_setting_key; ?>"
+                                                            id="active_<?php echo $provider_slug; ?>" <?php if ($is_active_provider)
+                                                                   echo 'checked'; ?>
+                                                            required>
+                                                        <label class="active-provider-option ms-2"
+                                                            for="active_<?php echo $provider_slug; ?>">
+                                                            <i class="fas fa-check-circle"></i>
+                                                            <span class="active-provider-label-text"><?php echo $is_active_provider ? 'Aktif' : 'Pilih'; ?></span>
+                                                        </label>
                                                     </div>
                                                 </td>
                                                 <td style="min-width:200px;">
@@ -326,20 +389,6 @@ $website_title = getWebsiteTitle();
                                                     <div class="connection-status"
                                                         id="status_<?php echo strtolower($prov); ?>"></div>
                                                 </td>
-                                                <td class="text-center">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="radio" name="active_api"
-                                                            value="ai_api_<?php echo strtolower($prov); ?>"
-                                                            id="switch_<?php echo strtolower($prov); ?>" <?php if ($active_api == 'ai_api_' . strtolower($prov))
-                                                                   echo 'checked'; ?>
-                                                            required>
-                                                        <label class="form-check-label"
-                                                            for="switch_<?php echo strtolower($prov); ?>">
-                                                            <span
-                                                                class="ms-1"><?php echo ($active_api == 'ai_api_' . strtolower($prov)) ? 'ON' : 'OFF'; ?></span>
-                                                        </label>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -349,6 +398,7 @@ $website_title = getWebsiteTitle();
                         <div class="mt-3">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save
                                 Settings</button>
+                            <div class="api-info mt-2">Pilih provider aktif di kolom Active, lalu klik Save Settings.</div>
                         </div>
                     </div>
 
@@ -461,8 +511,28 @@ $website_title = getWebsiteTitle();
             }
         }
 
+        function updateActiveProviderLabels() {
+            document.querySelectorAll('input[name="active_api"]').forEach(input => {
+                const labelText = document.querySelector('label[for="' + input.id + '"] .active-provider-label-text');
+                const row = input.closest('tr');
+
+                if (labelText) {
+                    labelText.textContent = input.checked ? 'Aktif' : 'Pilih';
+                }
+
+                if (row) {
+                    row.classList.toggle('active-provider-row', input.checked);
+                }
+            });
+        }
+
         // Show/hide API keys
         document.addEventListener('DOMContentLoaded', function () {
+            updateActiveProviderLabels();
+            document.querySelectorAll('input[name="active_api"]').forEach(input => {
+                input.addEventListener('change', updateActiveProviderLabels);
+            });
+
             const apiKeyInputs = document.querySelectorAll('input[type="password"]');
             apiKeyInputs.forEach(input => {
                 const toggleBtn = document.createElement('button');

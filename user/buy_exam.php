@@ -10,6 +10,40 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+$user_id = (int)$_SESSION['user_id'];
+$hasAvailableToeicFullAccess = false;
+
+if (hasTestCredit($conn, $user_id, 'toeic')) {
+    $hasCompletedRealToeicSession = false;
+
+    try {
+        if (checkTableExists($conn, 'toeic_test_sessions')) {
+            $conditions = ["user_id = ?"];
+
+            if (checkColumnExists($conn, 'toeic_test_sessions', 'practice_mode')) {
+                $conditions[] = "(practice_mode = 0 OR practice_mode IS NULL)";
+            }
+
+            if (checkColumnExists($conn, 'toeic_test_sessions', 'status')) {
+                $conditions[] = "status = 'completed'";
+            }
+
+            $sql = "SELECT test_session FROM toeic_test_sessions WHERE " . implode(' AND ', $conditions) . " LIMIT 1";
+            $checkStmt = $conn->prepare($sql);
+            if ($checkStmt) {
+                $checkStmt->bind_param('i', $user_id);
+                $checkStmt->execute();
+                $hasCompletedRealToeicSession = $checkStmt->get_result()->num_rows > 0;
+                $checkStmt->close();
+            }
+        }
+    } catch (\Throwable $e) {
+        $hasCompletedRealToeicSession = false;
+    }
+
+    $hasAvailableToeicFullAccess = !$hasCompletedRealToeicSession;
+}
+
 $website_title = getWebsiteTitle();
 $toeic_name = htmlspecialchars(getSiteSetting('name_toeic', 'TOEIC Listening & Reading'));
 $toeic_price = number_format((int)getSiteSetting('price_toeic', '175000'), 0, ',', '.');
@@ -65,7 +99,15 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     <div class="toeic-band h-100">
                         <div class="toeic-eyebrow mb-3">Price</div>
                         <div class="display-4 mb-3">Rp <?php echo $toeic_price; ?></div>
-                        <?php if ($tripay_ready): ?>
+                        <?php if ($hasAvailableToeicFullAccess): ?>
+                            <div class="alert alert-success rounded-4 border-0 mb-3">
+                                Your account already has active TOEIC full-access credit. Start the full simulation now without buying an additional package first.
+                            </div>
+                            <a href="test_instructions.php?mode=full" class="btn btn-warning w-100 mb-2">Start Full Simulation Now</a>
+                            <?php if ($tripay_ready): ?>
+                                <a href="payment.php?exam_type=toeic" class="btn btn-outline-secondary w-100">Buy Additional Package</a>
+                            <?php endif; ?>
+                        <?php elseif ($tripay_ready): ?>
                             <a href="payment.php?exam_type=toeic" class="btn btn-warning w-100">Proceed to Payment</a>
                         <?php else: ?>
                             <div class="alert alert-warning rounded-4 border-0 mb-0">Payment gateway belum siap. Anda tetap bisa redeem voucher TOEIC di bawah.</div>
