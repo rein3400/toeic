@@ -756,6 +756,22 @@ $is_last_question = $is_batch
         const csrfToken = document.getElementById('csrfToken').value;
         const mode = document.getElementById('mode').value;
         const targetPart = document.getElementById('targetPart').value;
+        const nextBtn = document.getElementById('nextBtn');
+        const nextBtnDefaultHtml = nextBtn ? nextBtn.innerHTML : '';
+        let isNavigating = false;
+        let isSubmitting = false;
+
+        function setNextButtonBusy(isBusy, label) {
+            if (!nextBtn) {
+                return;
+            }
+            nextBtn.disabled = isBusy;
+            nextBtn.classList.toggle('opacity-70', isBusy);
+            nextBtn.classList.toggle('cursor-not-allowed', isBusy);
+            nextBtn.innerHTML = isBusy
+                ? `${label || 'Saving'} <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>`
+                : nextBtnDefaultHtml;
+        }
 
         function handleToeicPhotoFallback(image) {
             if (!image) {
@@ -793,32 +809,25 @@ $is_last_question = $is_batch
                     question_id: parseInt(questionId, 10),
                     answer: answer
                 })
-            }).then((response) => response.json()).then((data) => {
-                if (!data.success) {
-                    console.error('Save failed:', data.error);
+            }).then(async (response) => {
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (error) {
+                    throw new Error('Server returned an invalid save response.');
                 }
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to save answer.');
+                }
+
                 return data;
-            }).catch((error) => console.error('Save error:', error));
+            });
         }
 
-        document.querySelectorAll('.single-answer').forEach((radio) => {
-            radio.addEventListener('change', function () {
-                saveAnswer(this.dataset.questionId, this.value);
-            });
-        });
-
-        document.querySelectorAll('.batch-answer').forEach((radio) => {
-            radio.addEventListener('change', function () {
-                saveAnswer(this.dataset.questionId, this.value);
-            });
-        });
-
-        async function handleNext() {
-            const isBatch = document.getElementById('isBatch').value === '1';
-            const currentOrder = parseInt(document.getElementById('currentOrder').value, 10);
-            const totalQuestions = parseInt(document.getElementById('totalQuestions').value, 10);
-            const lastOrder = isBatch ? parseInt(document.getElementById('lastOrder').value, 10) : currentOrder;
+        function collectSelectedAnswerSaves() {
             const pendingSaves = [];
+            const isBatch = document.getElementById('isBatch').value === '1';
 
             if (isBatch) {
                 document.querySelectorAll('.batch-answer-group').forEach((group) => {
@@ -834,8 +843,59 @@ $is_last_question = $is_batch
                 }
             }
 
-            if (pendingSaves.length > 0) {
-                await Promise.allSettled(pendingSaves);
+            return pendingSaves;
+        }
+
+        async function flushSelectedAnswers() {
+            const pendingSaves = collectSelectedAnswerSaves();
+            if (pendingSaves.length === 0) {
+                return;
+            }
+
+            const results = await Promise.allSettled(pendingSaves);
+            const failed = results.filter((result) => result.status === 'rejected');
+            if (failed.length > 0) {
+                const firstError = failed[0].reason instanceof Error
+                    ? failed[0].reason.message
+                    : 'Failed to save answer.';
+                throw new Error(firstError);
+            }
+        }
+
+        document.querySelectorAll('.single-answer').forEach((radio) => {
+            radio.addEventListener('change', function () {
+                saveAnswer(this.dataset.questionId, this.value)
+                    .catch((error) => console.error('Save error:', error));
+            });
+        });
+
+        document.querySelectorAll('.batch-answer').forEach((radio) => {
+            radio.addEventListener('change', function () {
+                saveAnswer(this.dataset.questionId, this.value)
+                    .catch((error) => console.error('Save error:', error));
+            });
+        });
+
+        async function handleNext() {
+            if (isNavigating || isSubmitting) {
+                return;
+            }
+
+            isNavigating = true;
+            setNextButtonBusy(true, 'Saving');
+
+            const isBatch = document.getElementById('isBatch').value === '1';
+            const currentOrder = parseInt(document.getElementById('currentOrder').value, 10);
+            const totalQuestions = parseInt(document.getElementById('totalQuestions').value, 10);
+            const lastOrder = isBatch ? parseInt(document.getElementById('lastOrder').value, 10) : currentOrder;
+
+            try {
+                await flushSelectedAnswers();
+            } catch (error) {
+                isNavigating = false;
+                setNextButtonBusy(false);
+                alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
+                return;
             }
 
             const nextOrder = lastOrder + 1;
@@ -844,15 +904,23 @@ $is_last_question = $is_batch
                 return;
             }
 
+            isNavigating = false;
             submitSection();
         }
 
         function submitSection() {
+            if (isSubmitting) {
+                return;
+            }
+
+            isSubmitting = true;
+            setNextButtonBusy(true, 'Submitting');
+
             if (window.proctorSDK) {
                 window.proctorSDK.pause();
             }
 
-            fetch('ajax_submit_section_toeic.php', {
+            flushSelectedAnswers().then(() => fetch('ajax_submit_section_toeic.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
                 body: JSON.stringify({
@@ -861,17 +929,17 @@ $is_last_question = $is_batch
                     mode: mode,
                     target_part: targetPart
                 })
-            }).then((response) => response.json()).then((data) => {
+            })).then((response) => response.json()).then((data) => {
                 if (data.success && data.redirect) {
                     window.location.href = data.redirect;
                     return;
                 }
-                alert('Error: ' + (data.error || 'Unknown error'));
-                if (window.proctorSDK) {
-                    window.proctorSDK.resume();
-                }
+                throw new Error(data.error || 'Unknown error');
             }).catch((error) => {
                 alert('Submit failed: ' + error.message);
+                isSubmitting = false;
+                isNavigating = false;
+                setNextButtonBusy(false);
                 if (window.proctorSDK) {
                     window.proctorSDK.resume();
                 }
