@@ -83,7 +83,7 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                         <p class="text-muted mb-0">Manager proper untuk bank soal TOEIC dengan URL publik audio dan image.</p>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="../scripts/view_all_questions_answers.php" target="_blank" class="btn btn-outline-light">Inspector</a>
+                        <a href="toeic_question_bank_preview.php" target="_blank" class="btn btn-outline-light">Inspector</a>
                         <a href="../scripts/audit_toeic_question_bank.php" target="_blank" class="btn btn-outline-light">Audit</a>
                     </div>
                 </div>
