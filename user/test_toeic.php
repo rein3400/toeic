@@ -719,17 +719,23 @@ $is_last_question = $is_batch
                             </div>
                             <div class="space-y-4" id="singleAnswerContainer">
                                 <?php $options = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D']; ?>
+                                <?php $audio_only_choices = in_array($part, ['1', '2'], true); ?>
                                 <?php foreach ($options as $opt): ?>
-                                    <?php $option_value = $question['opsi_' . strtolower($opt)] ?? ''; ?>
-                                    <?php if ($option_value === '') continue; ?>
-                                    <?php $display = htmlspecialchars((string)$option_value); ?>
+                                    <?php $option_value = trim((string)($question['opsi_' . strtolower($opt)] ?? '')); ?>
+                                    <?php if ($option_value === '' && !$audio_only_choices) continue; ?>
                                     <?php $is_selected = $user_answer === $opt; ?>
-                                    <label class="group relative flex items-start gap-4 p-5 rounded-xl border <?php echo $is_selected ? 'border-2 border-primary bg-primary/5 shadow-sm' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-surface-dark hover:border-primary/50 hover:shadow-md'; ?> cursor-pointer transition-all">
+                                    <label class="group relative flex <?php echo $audio_only_choices ? 'items-center' : 'items-start'; ?> gap-4 p-5 rounded-xl border <?php echo $is_selected ? 'border-2 border-primary bg-primary/5 shadow-sm' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-surface-dark hover:border-primary/50 hover:shadow-md'; ?> cursor-pointer transition-all">
                                         <input class="mt-1 size-5 border-slate-300 text-primary focus:ring-primary focus:ring-offset-0 bg-transparent single-answer" name="answer" value="<?php echo $opt; ?>" type="radio" data-question-id="<?php echo (int)$question['question_id']; ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
                                         <div class="flex-1">
-                                            <span class="block text-base <?php echo $is_selected ? 'font-bold text-slate-900 dark:text-white' : 'font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary'; ?> transition-colors"><?php echo $display; ?></span>
+                                            <?php if ($audio_only_choices): ?>
+                                                <span class="block text-lg <?php echo $is_selected ? 'font-bold text-slate-900 dark:text-white' : 'font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary'; ?> transition-colors">Choice <?php echo $opt; ?></span>
+                                            <?php else: ?>
+                                                <span class="block text-base <?php echo $is_selected ? 'font-bold text-slate-900 dark:text-white' : 'font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary'; ?> transition-colors"><?php echo htmlspecialchars($option_value); ?></span>
+                                            <?php endif; ?>
                                         </div>
-                                        <span class="absolute right-4 top-4 text-xs font-bold <?php echo $is_selected ? 'text-primary' : 'text-slate-300 dark:text-slate-600'; ?>"><?php echo $opt; ?></span>
+                                        <?php if (!$audio_only_choices): ?>
+                                            <span class="absolute right-4 top-4 text-xs font-bold <?php echo $is_selected ? 'text-primary' : 'text-slate-300 dark:text-slate-600'; ?>"><?php echo $opt; ?></span>
+                                        <?php endif; ?>
                                     </label>
                                 <?php endforeach; ?>
                             </div>
