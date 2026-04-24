@@ -75,6 +75,43 @@ function normalizeChoiceMapWeb($raw): array {
     return $normalized;
 }
 
+function normalizeAnswerComparableWeb(string $value): string {
+    $value = preg_replace('/^\s*[A-D]\s*[\.\):\-]\s*/i', '', trim($value)) ?? trim($value);
+    $value = preg_replace('/\s+/u', ' ', trim($value)) ?? trim($value);
+    return function_exists('mb_strtolower') ? mb_strtolower($value, 'UTF-8') : strtolower($value);
+}
+
+function normalizeCorrectAnswerWeb($raw, array $options): string {
+    $value = trim((string)$raw);
+    if ($value === '') {
+        return '';
+    }
+    if (preg_match('/^\s*([A-D])(?:\s*[\.\):\-]|\s*$)/i', $value, $m)) {
+        return strtoupper($m[1]);
+    }
+
+    $needle = normalizeAnswerComparableWeb($value);
+    foreach ($options as $letter => $text) {
+        $letter = strtoupper((string)$letter);
+        if (!in_array($letter, ['A', 'B', 'C', 'D'], true)) {
+            continue;
+        }
+        $optionText = trim((string)$text);
+        if ($optionText === '') {
+            continue;
+        }
+        $optionNeedle = normalizeAnswerComparableWeb($optionText);
+        if ($needle === $optionNeedle) {
+            return $letter;
+        }
+        if (strlen($needle) >= 8 && strpos($optionNeedle, $needle) === 0) {
+            return $letter;
+        }
+    }
+
+    return strtoupper($value);
+}
+
 function normalizeQuestionItemWeb(array $questionItem): array {
     $rawOptions = $questionItem['options'] ?? [];
     $questionItem['options'] = normalizeChoiceMapWeb($rawOptions);
@@ -93,7 +130,7 @@ function normalizeQuestionItemWeb(array $questionItem): array {
         $questionItem['question_text'] = $questionItem['question'];
     }
     if (!isset($questionItem['correct_answer']) && isset($questionItem['correct_option'])) {
-        $questionItem['correct_answer'] = strtoupper(trim((string)$questionItem['correct_option']));
+        $questionItem['correct_answer'] = trim((string)$questionItem['correct_option']);
     }
     if (!isset($questionItem['correct_answer']) && array_key_exists('correct_index', $questionItem)) {
         $letters = ['A', 'B', 'C', 'D'];
@@ -103,10 +140,13 @@ function normalizeQuestionItemWeb(array $questionItem): array {
         }
     }
     if (!isset($questionItem['correct_answer']) && isset($questionItem['answer'])) {
-        $candidate = strtoupper(trim((string)$questionItem['answer']));
-        if (in_array($candidate, ['A', 'B', 'C', 'D'], true)) {
+        $candidate = trim((string)$questionItem['answer']);
+        if ($candidate !== '') {
             $questionItem['correct_answer'] = $candidate;
         }
+    }
+    if (isset($questionItem['correct_answer'])) {
+        $questionItem['correct_answer'] = normalizeCorrectAnswerWeb($questionItem['correct_answer'], $questionItem['options']);
     }
     if (!isset($questionItem['explanation'])) {
         $questionItem['explanation'] = '';
@@ -349,6 +389,7 @@ function importToeicProductionContent(mysqli $conn, string $contentDir, string $
 
         foreach (($available['part1']['items'] ?? []) as $index => $item) {
             $item['options'] = normalizeChoiceMapWeb($item['options'] ?? []);
+            $item['correct_answer'] = normalizeCorrectAnswerWeb($item['correct_answer'] ?? '', $item['options']);
             $imageFile = basename((string)($item['image_file'] ?? ''));
             $audioFile = basename((string)($item['audio_file'] ?? ''));
             if ($imageFile === '' || $audioFile === '') {
@@ -390,6 +431,7 @@ function importToeicProductionContent(mysqli $conn, string $contentDir, string $
 
         foreach (($available['part2']['items'] ?? []) as $index => $item) {
             $item['options'] = normalizeChoiceMapWeb($item['options'] ?? []);
+            $item['correct_answer'] = normalizeCorrectAnswerWeb($item['correct_answer'] ?? '', $item['options']);
             $audioFile = basename((string)($item['audio_file'] ?? ''));
             if ($audioFile === '') {
                 $listeningNumber++;

@@ -420,7 +420,12 @@ if ($isCli) {
                     Warnings <code><?php echo (int)$issueCounts['warning']; ?></code>
                 </div>
             </div>
-            <a href="../admin/manage_toeic.php" class="btn btn-outline-light">Kembali ke Admin</a>
+            <div class="d-flex flex-wrap gap-2">
+                <?php if ((int)$issueCounts['danger'] > 0): ?>
+                    <a href="repair_toeic_correct_answers.php" class="btn btn-warning">Preview Perbaikan</a>
+                <?php endif; ?>
+                <a href="../admin/manage_toeic.php" class="btn btn-outline-light">Kembali ke Admin</a>
+            </div>
         </div>
 
         <div class="panel mb-4">

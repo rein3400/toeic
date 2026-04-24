@@ -274,7 +274,7 @@
             "May 1, 2026",
             "May 16, 2026"
           ],
-          "correct_answer": "May 16, 2026"
+          "correct_answer": "D"
         },
         {
           "question_id": "Q2",
@@ -285,7 +285,7 @@
             "The notice introduces a new three‑day remote‑work allowance for Sales.",
             "The policy and notice are consistent; both allow three days remote work."
           ],
-          "correct_answer": "The notice overrides the policy for Sales, limiting them to only Friday remote work."
+          "correct_answer": "A"
         }
       ]
     },
@@ -504,7 +504,7 @@
             "C) The VPN update deadline is later than the remote work policy effective date.",
             "D) Employees may work remotely up to five days per week."
           ],
-          "correct_answer": "A) Remote work is allowed only after VPN update is completed."
+          "correct_answer": "A"
         },
         {
           "question_id": "q2",
@@ -515,7 +515,7 @@
             "C) February 1, 2025",
             "D) February 5, 2025"
           ],
-          "correct_answer": "C) February 1, 2025"
+          "correct_answer": "C"
         }
       ]
     },
@@ -534,7 +534,7 @@
             "C) Development → Requirements → Design → Testing → Deployment",
             "D) Testing → Development → Design → Requirements → Deployment"
           ],
-          "correct_answer": "A) Requirements → Design → Development → Testing → Deployment"
+          "correct_answer": "A"
         },
         {
           "question_id": "q2",
@@ -545,7 +545,7 @@
             "C) Data breach",
             "D) None of the above"
           ],
-          "correct_answer": "A) Key developer leaving"
+          "correct_answer": "A"
         }
       ]
     },
@@ -672,7 +672,7 @@
             "C) April 5, 2026",
             "D) March 25, 2026"
           ],
-          "correct_answer": "A) March 30, 2026"
+          "correct_answer": "A"
         },
         {
           "question_id": "q2",
@@ -683,7 +683,7 @@
             "C) Both documents agree on an April 5 deadline.",
             "D) Both documents agree on a March 30 deadline."
           ],
-          "correct_answer": "A) The HR memo states April 5, while the Facilities notice states March 30."
+          "correct_answer": "A"
         }
       ]
     },
@@ -702,7 +702,7 @@
             "C) March 12, 2026",
             "D) March 15, 2026"
           ],
-          "correct_answer": "B) March 10, 2026"
+          "correct_answer": "B"
         },
         {
           "question_id": "q2",
@@ -713,7 +713,7 @@
             "C) Contact the vendor for compensation",
             "D) Reschedule the delivery without notification"
           ],
-          "correct_answer": "B) Offer a 10 % discount on the next order"
+          "correct_answer": "B"
         }
       ]
     },
