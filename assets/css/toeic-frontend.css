@@ -198,6 +198,19 @@ a:hover {
     background: rgba(255, 255, 255, 0.55);
 }
 
+.toeic-hero-card .toeic-band {
+    color: var(--toeic-ink);
+}
+
+.toeic-hero-card .toeic-band .toeic-eyebrow,
+.toeic-hero-card .toeic-band .text-muted {
+    color: var(--toeic-muted-strong) !important;
+}
+
+.toeic-hero-card .toeic-band .toeic-eyebrow::before {
+    background: var(--toeic-amber);
+}
+
 .toeic-card-grid,
 .toeic-proof-grid {
     display: grid;
