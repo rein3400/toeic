@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                 <h1 class="display-6 mb-3"><?php echo $mode === 'prep' ? 'Practice simulation instructions' : 'Full simulation instructions'; ?></h1>
                 <p class="toeic-subcopy">
                     <?php if ($mode === 'prep'): ?>
-                        Practice simulation runs the complete TOEIC structure without proctoring and without consuming an active package.
+                        Practice simulation runs the complete TOEIC structure without proctoring and uses one active TOEIC package.
                     <?php else: ?>
                         Full simulation runs the complete TOEIC structure with proctoring enabled and uses one active TOEIC package.
                     <?php endif; ?>
@@ -82,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                 <div class="col-lg-4">
                     <div class="toeic-band h-100">
                         <div class="toeic-eyebrow mb-3">Access product</div>
-                        <div class="h3 mb-2"><?php echo $mode === 'prep' ? 'Practice always available' : ($has_full_credit ? 'Active TOEIC package detected' : 'Active TOEIC package required'); ?></div>
+                        <div class="h3 mb-2"><?php echo $has_full_credit ? 'Active TOEIC package detected' : 'Active TOEIC package required'; ?></div>
                         <div class="small text-muted mb-2">Active packages: <strong><?php echo $full_credit_count; ?></strong></div>
                         <p class="small text-muted mb-0">
                             <?php if ($mode === 'prep'): ?>
-                                Practice simulation does not consume an active TOEIC package.
+                                Practice simulation uses one active TOEIC package while keeping proctoring off.
                             <?php elseif ($has_full_credit): ?>
                                 Your account is ready to launch the full TOEIC simulation.
                             <?php else: ?>
@@ -113,9 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                         </div>
                         <div class="col-md-6">
                             <div class="toeic-surface p-4 h-100 <?php echo $mode === 'prep' ? 'border border-warning' : ''; ?>">
-                                <div class="toeic-eyebrow mb-3">No Package + No Proctor</div>
+                                <div class="toeic-eyebrow mb-3">Package + No Proctor</div>
                                 <h3 class="h4 mb-2">Practice Simulation</h3>
-                                <p class="toeic-copy mb-0">The same TOEIC flow without proctoring and without spending an active package.</p>
+                                <p class="toeic-copy mb-0">The same TOEIC flow without proctoring, using one active package at launch.</p>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                         <li>The timer runs continuously while a section is active. There is no pause during the session.</li>
                         <li>Both modes keep the TOEIC order: Listening first, then Reading.</li>
                         <?php if ($mode === 'prep'): ?>
-                            <li>Practice simulation keeps the same layout, timer, and question flow without proctoring.</li>
+                            <li>Practice simulation keeps the same layout, timer, and question flow without proctoring, and uses one active package at launch.</li>
                         <?php else: ?>
                             <li>Full simulation uses proctoring. Do not switch tabs, excessively resize the window, or replay audio by other means.</li>
                         <?php endif; ?>
@@ -160,8 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                             <?php echo $mode === 'prep' ? 'Start Practice Simulation' : 'Start Full Simulation'; ?>
                         </button>
                     </form>
-                    <?php if (!$has_full_credit && $mode !== 'prep'): ?>
-                        <div class="small text-muted mt-3">Full simulation requires one active TOEIC package. Practice simulation remains available without package activation.</div>
+                    <?php if (!$has_full_credit): ?>
+                        <div class="small text-muted mt-3">TOEIC simulation requires one active package for each new attempt.</div>
                     <?php endif; ?>
                 </section>
             </div>

@@ -72,7 +72,7 @@ if ($start_new) {
         exit();
     }
 
-    if (!$practice_mode && !hasStrictTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
+    if (!hasStrictTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
         header("Location: buy_exam.php");
         exit();
     }
@@ -95,12 +95,10 @@ if ($start_new) {
         exit();
     }
 
-    if (!$practice_mode) {
-        if (!consumeTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
-            $_SESSION['error'] = 'Paket TOEIC aktif tidak dapat dipakai. Silakan cek kembali paket Anda.';
-            header("Location: buy_exam.php");
-            exit();
-        }
+    if (!consumeTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
+        $_SESSION['error'] = 'Paket TOEIC aktif tidak dapat dipakai. Silakan cek kembali paket Anda.';
+        header("Location: buy_exam.php");
+        exit();
     }
 
     $test_session = 'toeic_' . date('Ymd_His') . '_' . bin2hex(random_bytes(8));

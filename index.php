@@ -177,7 +177,7 @@ $dashboard_link = $is_admin ? 'admin/index.php' : 'user/index.php';
                 <div class="toeic-display-panel toeic-surface h-100">
                     <div class="toeic-eyebrow mb-3">Practice route</div>
                     <h3 class="h3 mb-3">Practice Simulation</h3>
-                    <p class="toeic-copy mb-4">Run the same full TOEIC sequence without proctoring and without spending an active package so you can build repetition before a monitored attempt.</p>
+                    <p class="toeic-copy mb-4">Run the same full TOEIC sequence without proctoring while using one active package for each new practice attempt.</p>
                     <a href="<?php echo $is_logged_in ? 'user/test_instructions.php?mode=prep' : 'register.php'; ?>" class="btn btn-outline-warning">Learn More</a>
                 </div>
                 <div class="toeic-display-panel toeic-surface h-100">

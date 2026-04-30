@@ -150,7 +150,9 @@ if (strpos($user_name, ' ') !== false) {
                         <?php else: ?>
                             <a href="buy_exam.php" class="btn btn-warning">Activate TOEIC Package</a>
                         <?php endif; ?>
-                        <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-light">Open Practice Simulation</a>
+                        <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=prep' : 'buy_exam.php'; ?>" class="btn btn-outline-light">
+                            <?php echo $has_full_credit ? 'Open Practice Simulation' : 'Activate Practice Package'; ?>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -207,8 +209,10 @@ if (strpos($user_name, ' ') !== false) {
             <div class="toeic-display-panel toeic-surface h-100">
                 <div class="toeic-eyebrow mb-3">Practice route</div>
                 <h2 class="h3 mb-3">Practice Simulation</h2>
-                <p class="toeic-copy mb-4">Use the same TOEIC flow without proctoring and without spending an active package so you can build repetition before the monitored run.</p>
-                <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-outline-warning">Open Practice</a>
+                <p class="toeic-copy mb-4">Use the same TOEIC flow without proctoring while spending one active package for each new practice attempt.</p>
+                <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=prep' : 'buy_exam.php'; ?>" class="btn btn-outline-warning">
+                    <?php echo $has_full_credit ? 'Open Practice' : 'Activate Package'; ?>
+                </a>
             </div>
             <div class="toeic-display-panel toeic-surface h-100">
                 <div class="toeic-eyebrow mb-3">Review route</div>
