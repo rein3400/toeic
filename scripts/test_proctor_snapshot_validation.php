@@ -41,6 +41,52 @@ assertSameValue('invalid_violation', $dismissed['review_verdict'] ?? null, 'clea
 assertSameValue('dismiss', $dismissed['enforcement_action'] ?? null, 'dismissed snapshot applies no penalty');
 assertSameValue(0, $dismissed['score_impact'] ?? null, 'dismissed snapshot keeps zero score impact');
 
+$allowedAudio = evaluateSnapshotViolationDecision('periodic_check', [
+    'verdict' => 'cheating',
+    'validation_verdict' => 'valid_violation',
+    'risk_score' => 90,
+    'detected' => ['headphones'],
+    'reason' => 'User is wearing headphones during the TOEIC listening test.',
+], [
+    'confirm_threshold' => 80,
+    'dismiss_threshold' => 35,
+]);
+
+assertSameValue('dismissed', $allowedAudio['review_status'] ?? null, 'TOEIC headphones are dismissed');
+assertSameValue('invalid_violation', $allowedAudio['review_verdict'] ?? null, 'TOEIC headphones are not a valid violation');
+assertSameValue('dismiss', $allowedAudio['enforcement_action'] ?? null, 'TOEIC headphones apply no penalty');
+assertSameValue(0, $allowedAudio['score_impact'] ?? null, 'TOEIC headphones keep zero score impact');
+
+$genericAudioDevice = evaluateSnapshotViolationDecision('periodic_check', [
+    'verdict' => 'cheating',
+    'validation_verdict' => 'valid_violation',
+    'risk_score' => 45,
+    'detected' => ['electronic devices'],
+    'reason' => 'User is clearly wearing wired earbuds/headphones during a periodic check.',
+], [
+    'confirm_threshold' => 80,
+    'dismiss_threshold' => 35,
+]);
+
+assertSameValue('dismissed', $genericAudioDevice['review_status'] ?? null, 'generic electronic-device label is dismissed when reason is only TOEIC audio');
+assertSameValue('dismiss', $genericAudioDevice['enforcement_action'] ?? null, 'generic TOEIC audio label applies no penalty');
+assertSameValue(0, $genericAudioDevice['score_impact'] ?? null, 'generic TOEIC audio label keeps zero score impact');
+
+$lookingAwayWithAudio = evaluateSnapshotViolationDecision('periodic_check', [
+    'verdict' => 'cheating',
+    'validation_verdict' => 'valid_violation',
+    'risk_score' => 90,
+    'detected' => ['headphones', 'looking away'],
+    'reason' => 'User is looking away while wearing headphones.',
+], [
+    'confirm_threshold' => 80,
+    'dismiss_threshold' => 35,
+]);
+
+assertSameValue('validated', $lookingAwayWithAudio['review_status'] ?? null, 'looking away with headphones stays validated');
+assertSameValue('high', $lookingAwayWithAudio['enforced_severity'] ?? null, 'headphones do not make looking away critical');
+assertSameValue(10, $lookingAwayWithAudio['score_impact'] ?? null, 'looking away with headphones uses high score impact');
+
 $uncertain = evaluateSnapshotViolationDecision('periodic_check', [
     'verdict' => 'suspicious',
     'risk_score' => 58,

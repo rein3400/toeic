@@ -49,6 +49,7 @@ class ProctorSDK {
 
         // Restore violation counts from sessionStorage (persists across section changes)
         this._storageKey = 'proctor_violations_' + (config.testSession || '');
+        this._rulesStorageKey = 'proctor_rules_seen_' + (config.testSession || '');
         const saved = sessionStorage.getItem(this._storageKey);
         if (saved) {
             try {
@@ -720,6 +721,17 @@ class ProctorSDK {
      * Show proctoring rules toast at exam start
      */
     showProctoringRules() {
+        try {
+            if (sessionStorage.getItem(this._rulesStorageKey) === '1') {
+                return;
+            }
+            sessionStorage.setItem(this._rulesStorageKey, '1');
+        } catch(e) {}
+
+        if (document.getElementById('proctor-rules-toast')) {
+            return;
+        }
+
         const rules = document.createElement('div');
         rules.id = 'proctor-rules-toast';
         rules.style.cssText = `

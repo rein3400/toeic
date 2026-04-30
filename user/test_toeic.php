@@ -776,6 +776,12 @@ $is_last_question = $is_batch
         let isNavigating = false;
         let isSubmitting = false;
 
+        function pauseProctorForNavigation() {
+            if (window.proctorSDK) {
+                window.proctorSDK.pause(5000);
+            }
+        }
+
         function setNextButtonBusy(isBusy, label) {
             if (!nextBtn) {
                 return;
@@ -903,6 +909,7 @@ $is_last_question = $is_batch
 
                 isNavigating = true;
                 setNextButtonBusy(true, 'Saving');
+                pauseProctorForNavigation();
 
                 try {
                     await flushSelectedAnswers();
@@ -910,6 +917,9 @@ $is_last_question = $is_batch
                 } catch (error) {
                     isNavigating = false;
                     setNextButtonBusy(false);
+                    if (window.proctorSDK) {
+                        window.proctorSDK.resume();
+                    }
                     alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
                 }
             });
@@ -922,6 +932,7 @@ $is_last_question = $is_batch
 
             isNavigating = true;
             setNextButtonBusy(true, 'Saving');
+            pauseProctorForNavigation();
 
             const isBatch = document.getElementById('isBatch').value === '1';
             const currentOrder = parseInt(document.getElementById('currentOrder').value, 10);
@@ -933,6 +944,9 @@ $is_last_question = $is_batch
             } catch (error) {
                 isNavigating = false;
                 setNextButtonBusy(false);
+                if (window.proctorSDK) {
+                    window.proctorSDK.resume();
+                }
                 alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
                 return;
             }

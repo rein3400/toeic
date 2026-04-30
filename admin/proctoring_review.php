@@ -237,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         ?>
                                         <div class="small text-muted mt-1">
                                             <?php foreach ($meta as $k => $v): ?>
-                                                <span class="me-2"><?php echo htmlspecialchars($k); ?>: <?php echo htmlspecialchars(is_array($v) ? json_encode($v) : $v); ?></span>
+                                                <span class="me-2"><?php echo htmlspecialchars((string)$k); ?>: <?php echo htmlspecialchars(is_array($v) ? json_encode($v) : (string)($v ?? '')); ?></span>
                                             <?php endforeach; ?>
                                         </div>
                                         <?php endif; ?>

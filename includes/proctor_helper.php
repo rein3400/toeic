@@ -475,8 +475,12 @@ function determineSnapshotValidationSeverity($eventType, array $detectedItems = 
         return 'critical';
     }
 
-    foreach (['phone', 'tablet', 'earbud', 'earbuds', 'headphone', 'headphones', 'book', 'books', 'note', 'notes', 'cheat'] as $needle) {
-        if (strpos($haystack, $needle) !== false) {
+    $criticalPatterns = [
+        '/\b(cell\s+phones?|mobile\s+phones?|smartphones?|phones?|tablets?)\b/i',
+        '/\b(books?|notes?|cheat(?:\s+sheets?)?)\b/i',
+    ];
+    foreach ($criticalPatterns as $pattern) {
+        if (preg_match($pattern, $haystack)) {
             return 'critical';
         }
     }
@@ -492,6 +496,41 @@ function determineSnapshotValidationSeverity($eventType, array $detectedItems = 
     }
 
     return 'medium';
+}
+
+function isAllowedToeicAudioOnlySnapshotFinding(array $detectedItems, $reason) {
+    $haystack = strtolower(trim(implode(' ', $detectedItems) . ' ' . (string)$reason));
+    if ($haystack === '' || !preg_match('/\b(earbuds?|earphones?|headphones?|headsets?)\b/i', $haystack)) {
+        return false;
+    }
+
+    $prohibitedPatterns = [
+        '/\b(cell\s+phones?|mobile\s+phones?|smartphones?|phones?|tablets?|laptops?|computers?)\b/i',
+        '/\b(books?|notes?|cheat(?:\s+sheets?)?|papers?)\b/i',
+        '/\b(multiple\s+people|multiple\s+persons|two\s+faces|second\s+person|another\s+person)\b/i',
+        '/\b(look(?:ing)?\s+away|out\s+of\s+frame|away\s+from\s+camera|leav(?:e|ing)\s+the\s+frame)\b/i',
+    ];
+
+    foreach ($prohibitedPatterns as $pattern) {
+        if (preg_match($pattern, $haystack)) {
+            return false;
+        }
+    }
+
+    foreach ($detectedItems as $item) {
+        $item = strtolower(trim((string)$item));
+        if ($item === '') {
+            continue;
+        }
+
+        $isAllowedAudio = preg_match('/\b(earbuds?|earphones?|headphones?|headsets?)\b/i', $item);
+        $isGenericDevice = preg_match('/\b(electronic\s+devices?|electronics?|audio\s+devices?|devices?)\b/i', $item);
+        if (!$isAllowedAudio && !$isGenericDevice) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function evaluateSnapshotViolationDecision($eventType, array $aiResult, array $options = []) {
@@ -512,6 +551,20 @@ function evaluateSnapshotViolationDecision($eventType, array $aiResult, array $o
             'detected' => $detectedItems,
             'reason' => $reason !== '' ? $reason : 'LLM review failed',
             'enforcement_action' => 'fail_open',
+            'enforced_severity' => null,
+            'score_impact' => 0,
+        ];
+    }
+
+    if (isAllowedToeicAudioOnlySnapshotFinding($detectedItems, $reason)) {
+        return [
+            'review_status' => 'dismissed',
+            'review_verdict' => 'invalid_violation',
+            'raw_verdict' => $rawVerdict,
+            'risk_score' => $riskScore,
+            'detected' => $detectedItems,
+            'reason' => $reason !== '' ? $reason : 'TOEIC audio devices are allowed',
+            'enforcement_action' => 'dismiss',
             'enforced_severity' => null,
             'score_impact' => 0,
         ];
@@ -724,12 +777,13 @@ function analyzeSnapshotWithAI($session_id, $snapshot_path, $reason = 'manual_ch
               "Detector metadata: " . json_encode($detectorMetadata, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n" .
               "Reason for capture: {$reason}\n\n" .
               "Validate whether the detector alert is actually supported by the image.\n" .
+              "TOEIC listening tests require audio output; headphones, earphones, earbuds, and headsets are allowed when they are only used for test audio.\n" .
               "Check for:\n" .
               "1. Multiple people in frame.\n" .
-              "2. Electronic devices (phones, tablets, earbuds).\n" .
+              "2. Prohibited electronic devices (phones, tablets, laptops), excluding audio-only headphones, earphones, earbuds, and headsets.\n" .
               "3. Books, notes, or cheat sheets.\n" .
               "4. User looking away significantly or leaving the frame.\n" .
-              "5. User wearing headphones (unless allowed).\n\n" .
+              "Do not report allowed audio-only headphones, earphones, earbuds, or headsets as violations unless another prohibited item or behavior is visible.\n\n" .
               "Return JSON ONLY: { \"detected\": [\"list\", \"items\"], \"risk_score\": 0-100, \"verdict\": \"clean|suspicious|cheating\", \"validation_verdict\": \"valid_violation|invalid_violation|uncertain\", \"reason\": \"short explanation\" }";
 
     try {
