@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/components/toeic_progress_bar.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -30,6 +31,17 @@ if (checkTableExists($conn, 'toeic_test_results')) {
 $latest_stats = [];
 if (!empty($results)) {
     $latest_stats = getTOEICPartStatistics($user_id, $results[0]['test_session']);
+}
+
+$latest_progress_items = [];
+foreach ($latest_stats as $stat) {
+    $percentage = (float)($stat['percentage'] ?? 0);
+    $latest_progress_items[] = [
+        'label' => (string)($stat['name'] ?? ''),
+        'meta' => (int)($stat['correct'] ?? 0) . ' correct of ' . (int)($stat['total'] ?? 0),
+        'value' => $percentage,
+        'value_label' => (int)round($percentage) . '%',
+    ];
 }
 
 $total_attempts = count($results);
@@ -85,15 +97,7 @@ $latest_score = $total_attempts ? (int)$results[0]['total_score'] : 0;
                     <?php if (empty($latest_stats)): ?>
                         <p class="toeic-copy mb-0">No completed full simulation is available yet.</p>
                     <?php else: ?>
-                        <?php foreach ($latest_stats as $stat): ?>
-                            <div class="toeic-table-row">
-                                <div>
-                                    <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
-                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
-                                </div>
-                                <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
-                            </div>
-                        <?php endforeach; ?>
+                        <?php renderToeicProgressRows($latest_progress_items, ['aria_label' => 'Latest TOEIC part performance']); ?>
                     <?php endif; ?>
                 </section>
             </div>

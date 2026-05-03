@@ -13,6 +13,8 @@
     --toeic-amber-deep: #ab6711;
     --toeic-amber-soft: #f8ebc8;
     --toeic-teal: #1e8078;
+    --toeic-text-on-dark: rgba(255, 255, 255, 0.92);
+    --toeic-muted-on-dark: rgba(255, 255, 255, 0.82);
     --toeic-border: rgba(23, 38, 63, 0.12);
     --toeic-border-strong: rgba(23, 38, 63, 0.2);
     --toeic-shadow-sm: 0 16px 40px rgba(21, 39, 66, 0.08);
@@ -191,6 +193,11 @@ a:hover {
 .toeic-hero-card .toeic-kicker,
 .toeic-hero-card .toeic-eyebrow {
     color: rgba(255, 255, 255, 0.78);
+}
+
+.toeic-hero-card .text-white-50,
+.toeic-form-panel .text-white-50 {
+    color: rgba(255, 255, 255, 0.88) !important;
 }
 
 .toeic-hero-card .toeic-kicker::before,
@@ -494,6 +501,91 @@ a:hover {
     border-bottom: none;
 }
 
+.toeic-progress-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.toeic-progress-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.42fr) minmax(10rem, 1fr) auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(23, 38, 63, 0.08);
+}
+
+.toeic-progress-row:last-child {
+    border-bottom: none;
+}
+
+.toeic-progress-label {
+    min-width: 0;
+}
+
+.toeic-progress-label strong {
+    display: block;
+    color: var(--toeic-ink);
+    font-weight: 800;
+}
+
+.toeic-progress-meta {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--toeic-muted);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.toeic-progress-track {
+    height: 0.72rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(21, 39, 66, 0.1);
+}
+
+.toeic-progress-fill {
+    display: block;
+    width: var(--toeic-progress, 0%);
+    max-width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--toeic-night), var(--toeic-amber));
+}
+
+.toeic-progress-value {
+    color: var(--toeic-night);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.toeic-hero-card .toeic-progress-row,
+.toeic-form-panel .toeic-progress-row {
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.toeic-hero-card .toeic-progress-label strong,
+.toeic-hero-card .toeic-progress-value,
+.toeic-form-panel .toeic-progress-label strong,
+.toeic-form-panel .toeic-progress-value {
+    color: var(--toeic-text-on-dark);
+}
+
+.toeic-hero-card .toeic-progress-meta,
+.toeic-form-panel .toeic-progress-meta {
+    color: var(--toeic-muted-on-dark);
+}
+
+.toeic-hero-card .toeic-progress-track,
+.toeic-form-panel .toeic-progress-track {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.toeic-hero-card .toeic-progress-fill,
+.toeic-form-panel .toeic-progress-fill {
+    background: linear-gradient(90deg, #f5c964, #fff0c7);
+}
+
 .rg-navbar {
     position: sticky;
     top: 0;
@@ -604,7 +696,6 @@ a:hover {
     color: var(--toeic-ink);
 }
 
-.text-white-50,
 .text-muted {
     color: var(--toeic-muted) !important;
 }
@@ -654,6 +745,11 @@ a:hover {
     .toeic-card-grid > *,
     .toeic-proof-grid > * {
         grid-column: span 12;
+    }
+
+    .toeic-progress-row {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
     }
 
     .toeic-display-panel,

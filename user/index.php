@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/components/toeic_progress_bar.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -84,6 +85,17 @@ $part_stats = [];
 if (!empty($recent_results)) {
     $latest_session = $recent_results[0]['test_session'];
     $part_stats = getTOEICPartStatistics($user_id, $latest_session);
+}
+
+$part_progress_items = [];
+foreach ($part_stats as $stat) {
+    $percentage = (float)($stat['percentage'] ?? 0);
+    $part_progress_items[] = [
+        'label' => (string)($stat['name'] ?? ''),
+        'meta' => (int)($stat['correct'] ?? 0) . ' correct of ' . (int)($stat['total'] ?? 0),
+        'value' => $percentage,
+        'value_label' => (int)round($percentage) . '%',
+    ];
 }
 
 $initials = strtoupper(substr($user_name, 0, 1));
@@ -257,15 +269,7 @@ if (strpos($user_name, ' ') !== false) {
                     <?php if (empty($part_stats)): ?>
                         <p class="toeic-copy mb-0">Part-level performance will appear after you complete a full TOEIC simulation.</p>
                     <?php else: ?>
-                        <?php foreach ($part_stats as $stat): ?>
-                            <div class="toeic-table-row">
-                                <div>
-                                    <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
-                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
-                                </div>
-                                <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
-                            </div>
-                        <?php endforeach; ?>
+                        <?php renderToeicProgressRows($part_progress_items, ['aria_label' => 'Latest TOEIC part accuracy']); ?>
                     <?php endif; ?>
                 </section>
             </div>

@@ -231,7 +231,7 @@ $website_logo = getWebsiteLogo();
                     <div class="card-body p-4 text-center">
                         <h5 class="mb-3">Ready to Practice?</h5>
                         <p class="small text-muted mb-4">Apply what you've learned in a new practice session.</p>
-                        <a href="test.php?section=listening&start=1&type=trial" class="btn btn-primary w-100">Start
+                        <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-primary w-100">Start
                             Practice Test</a>
                     </div>
                 </div>
