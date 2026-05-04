@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TOEIC Camera Setup - Preview</title>
+    <link rel="stylesheet" href="toeic-preview-system.css">
+</head>
+<body>
+    <div class="preview-page">
+        <header class="preview-topbar">
+            <nav class="preview-nav">
+                <a class="brand" href="preview-suite.html">
+                    <span class="brand-mark">TOEIC</span>
+                    <span class="brand-text"><strong>TOEIC Simulator</strong><span>Equipment setup</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="test-instructions-redesign-preview.html">Instructions</a>
+                    <a class="is-active" href="camera-setup-redesign-preview.html">Camera</a>
+                    <a href="test-toeic-redesign-preview.html">Test</a>
+                    <a href="disqualified-redesign-preview.html">Stopped</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn btn-light" href="test-instructions-redesign-preview.html">Back</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="shell">
+            <section class="page-title">
+                <div>
+                    <span class="kicker">TOEIC Simulator Equipment Setup</span>
+                    <h1>Pastikan kamera, mikrofon, dan deteksi wajah siap sebelum ujian.</h1>
+                    <p>Preview ini mempertahankan alur izin perangkat, secure context warning, status proctoring, dan kesiapan sebelum masuk ke full simulation.</p>
+                </div>
+                <a class="btn btn-primary" href="test-toeic-redesign-preview.html">Continue to Test</a>
+            </section>
+
+            <section class="split-layout">
+                <article class="panel stack">
+                    <div class="visual-panel" style="min-height: 420px;">
+                        <div class="floating-card">
+                            <span class="pill red">Camera preview</span>
+                            <h2>Face centered</h2>
+                            <p>Video preview area with clear safe-zone framing and status feedback.</p>
+                        </div>
+                    </div>
+                    <div class="three-col">
+                        <div class="status-card success"><span class="status-label">Camera</span><h3>Ready</h3><p>Permission granted and video stream visible.</p></div>
+                        <div class="status-card success"><span class="status-label">Microphone</span><h3>Ready</h3><p>Audio input detected for proctoring checks.</p></div>
+                        <div class="status-card pending"><span class="status-label">Face</span><h3>Checking</h3><p>Face detection is aligning before start.</p></div>
+                    </div>
+                </article>
+
+                <aside class="panel stack">
+                    <h2>Before Test</h2>
+                    <ul class="list">
+                        <li>Duduk di tempat terang dan stabil.</li>
+                        <li>Pastikan wajah terlihat jelas sepanjang ujian.</li>
+                        <li>Gunakan koneksi internet yang stabil.</li>
+                        <li>Tutup tab atau aplikasi yang tidak diperlukan.</li>
+                    </ul>
+                    <div class="alert warning">Secure context warning appears here if camera access requires HTTPS or localhost.</div>
+                    <div class="divider"></div>
+                    <button class="btn btn-primary" type="button">Request Camera and Microphone</button>
+                    <button class="btn btn-light" type="button">Run Face Detection Check</button>
+                </aside>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

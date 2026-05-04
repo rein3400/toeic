@@ -1,0 +1,1106 @@
+{
+    "generated_at": "2026-05-04T01:26:37+00:00",
+    "target_cefr": "C2",
+    "accent_requirement": "US or British English",
+    "files": {
+        "toeic_pkg05_p1_01.mp3": {
+            "part": "1",
+            "title": "Compliance Review Room",
+            "spoken_transcript": {
+                "statements": [
+                    "Several employees are removing chairs from the conference room.",
+                    "A senior analyst is standing beside a glass wall covered with risk notes.",
+                    "A technician is repairing a ceiling-mounted projector.",
+                    "The meeting table has been cleared of all printed documents."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p1_02.mp3": {
+            "part": "1",
+            "title": "Warehouse Quality Inspection",
+            "spoken_transcript": {
+                "statements": [
+                    "A forklift is lifting cartons onto a loading dock.",
+                    "The cartons are being unpacked on the floor.",
+                    "A supervisor is scanning a label on a stacked pallet.",
+                    "A worker is painting safety markings near the shelves."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p1_03.mp3": {
+            "part": "1",
+            "title": "Airport Service Counter",
+            "spoken_transcript": {
+                "statements": [
+                    "A passenger is placing a suitcase on a conveyor belt.",
+                    "Several travelers are boarding an aircraft through a jet bridge.",
+                    "A cleaner is mopping the floor near the departure screens.",
+                    "An employee is reviewing a document with a passenger at a service counter."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p1_04.mp3": {
+            "part": "1",
+            "title": "Laboratory Calibration Bench",
+            "spoken_transcript": {
+                "statements": [
+                    "A technician is calibrating an instrument at a laboratory bench.",
+                    "A researcher is pouring liquid into a beaker.",
+                    "Two employees are installing cabinets above the bench.",
+                    "The laboratory equipment has been packed into cardboard boxes."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p1_05.mp3": {
+            "part": "1",
+            "title": "Hotel Event Desk",
+            "spoken_transcript": {
+                "statements": [
+                    "A guest is hanging decorations from the ceiling.",
+                    "A coordinator is checking a guest list at a registration table.",
+                    "The brochures are being loaded into a delivery truck.",
+                    "Several attendees are eating lunch at round tables."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p1_06.mp3": {
+            "part": "1",
+            "title": "Print Production Area",
+            "spoken_transcript": {
+                "statements": [
+                    "A customer is signing a delivery receipt at the front desk.",
+                    "A mechanic is replacing a wheel on a delivery van.",
+                    "A print operator is inspecting proof sheets under a lamp.",
+                    "The side cart is empty and folded against the wall."
+                ]
+            },
+            "voice_cast": {
+                "narrator": "English_expressive_narrator"
+            }
+        },
+        "toeic_pkg05_p2_01.mp3": {
+            "part": "2",
+            "title": "Conditional Approval Request",
+            "spoken_transcript": {
+                "prompt": "If the device traceability validation review is not cleared by November 22, can we still release the client summary?",
+                "response_1": "The summary was printed in the training room yesterday.",
+                "response_2": "I have not reserved the larger conference room yet.",
+                "response_3": "Only if Legal signs off on the exception before the summary is circulated."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_02.mp3": {
+            "part": "2",
+            "title": "Vendor Status Escalation",
+            "spoken_transcript": {
+                "prompt": "Would it be premature to escalate a late policy clarification that changes the approval sequence to the steering committee?",
+                "response_1": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "response_2": "The committee usually meets in the west conference room.",
+                "response_3": "I can send you the travel itinerary after lunch."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_03.mp3": {
+            "part": "2",
+            "title": "Budget Reallocation Caveat",
+            "spoken_transcript": {
+                "prompt": "Do you think Finance will object to reallocating $13,875 from the contingency line?",
+                "response_1": "The office printer has already been serviced.",
+                "response_2": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "response_3": "The client lunch was moved to Thursday."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_04.mp3": {
+            "part": "2",
+            "title": "Policy Interpretation",
+            "spoken_transcript": {
+                "prompt": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "response_1": "The portal password expires every ninety days.",
+                "response_2": "I thought the cafeteria was closed for renovations.",
+                "response_3": "Use the signed policy until Compliance confirms that the notice supersedes it."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_05.mp3": {
+            "part": "2",
+            "title": "Timeline Feasibility",
+            "spoken_transcript": {
+                "prompt": "Can we compress the final testing window without compromising the audit trail?",
+                "response_1": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "response_2": "The audit trail is stored in the old lobby cabinet.",
+                "response_3": "Testing windows are always larger on the south side."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_06.mp3": {
+            "part": "2",
+            "title": "Conditional Approval Request",
+            "spoken_transcript": {
+                "prompt": "If the factory yield stabilization review is not cleared by July 15, can we still release the client summary?",
+                "response_1": "The summary was printed in the training room yesterday.",
+                "response_2": "Only if Legal signs off on the exception before the summary is circulated.",
+                "response_3": "I have not reserved the larger conference room yet."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_07.mp3": {
+            "part": "2",
+            "title": "Vendor Status Escalation",
+            "spoken_transcript": {
+                "prompt": "Would it be premature to escalate a contract clause whose wording conflicts with the latest portal notice to the steering committee?",
+                "response_1": "The committee usually meets in the west conference room.",
+                "response_2": "I can send you the travel itinerary after lunch.",
+                "response_3": "Not if the vendor misses the revised checkpoint this afternoon."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_08.mp3": {
+            "part": "2",
+            "title": "Budget Reallocation Caveat",
+            "spoken_transcript": {
+                "prompt": "Do you think Finance will object to reallocating $20,750 from the contingency line?",
+                "response_1": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "response_2": "The office printer has already been serviced.",
+                "response_3": "The client lunch was moved to Thursday."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_09.mp3": {
+            "part": "2",
+            "title": "Policy Interpretation",
+            "spoken_transcript": {
+                "prompt": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "response_1": "The portal password expires every ninety days.",
+                "response_2": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "response_3": "I thought the cafeteria was closed for renovations."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_10.mp3": {
+            "part": "2",
+            "title": "Timeline Feasibility",
+            "spoken_transcript": {
+                "prompt": "Can we compress the final testing window without compromising the audit trail?",
+                "response_1": "The audit trail is stored in the old lobby cabinet.",
+                "response_2": "Testing windows are always larger on the south side.",
+                "response_3": "Possibly, but only if we freeze noncritical changes before regression testing starts."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_11.mp3": {
+            "part": "2",
+            "title": "Conditional Approval Request",
+            "spoken_transcript": {
+                "prompt": "If the cross-border customs compliance review is not cleared by March 8, can we still release the client summary?",
+                "response_1": "Only if Legal signs off on the exception before the summary is circulated.",
+                "response_2": "The summary was printed in the training room yesterday.",
+                "response_3": "I have not reserved the larger conference room yet."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_12.mp3": {
+            "part": "2",
+            "title": "Vendor Status Escalation",
+            "spoken_transcript": {
+                "prompt": "Would it be premature to escalate a capacity constraint that affects only the accelerated workstream to the steering committee?",
+                "response_1": "The committee usually meets in the west conference room.",
+                "response_2": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "response_3": "I can send you the travel itinerary after lunch."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_13.mp3": {
+            "part": "2",
+            "title": "Budget Reallocation Caveat",
+            "spoken_transcript": {
+                "prompt": "Do you think Finance will object to reallocating $27,625 from the contingency line?",
+                "response_1": "The office printer has already been serviced.",
+                "response_2": "The client lunch was moved to Thursday.",
+                "response_3": "They might, unless we document why the original reserve no longer covers the exposure."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_14.mp3": {
+            "part": "2",
+            "title": "Policy Interpretation",
+            "spoken_transcript": {
+                "prompt": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "response_1": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "response_2": "The portal password expires every ninety days.",
+                "response_3": "I thought the cafeteria was closed for renovations."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_15.mp3": {
+            "part": "2",
+            "title": "Timeline Feasibility",
+            "spoken_transcript": {
+                "prompt": "Can we compress the final testing window without compromising the audit trail?",
+                "response_1": "The audit trail is stored in the old lobby cabinet.",
+                "response_2": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "response_3": "Testing windows are always larger on the south side."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_16.mp3": {
+            "part": "2",
+            "title": "Conditional Approval Request",
+            "spoken_transcript": {
+                "prompt": "If the market-risk reporting review is not cleared by August 23, can we still release the client summary?",
+                "response_1": "The summary was printed in the training room yesterday.",
+                "response_2": "I have not reserved the larger conference room yet.",
+                "response_3": "Only if Legal signs off on the exception before the summary is circulated."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_17.mp3": {
+            "part": "2",
+            "title": "Vendor Status Escalation",
+            "spoken_transcript": {
+                "prompt": "Would it be premature to escalate a documentation discrepancy that could trigger a secondary audit to the steering committee?",
+                "response_1": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "response_2": "The committee usually meets in the west conference room.",
+                "response_3": "I can send you the travel itinerary after lunch."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_18.mp3": {
+            "part": "2",
+            "title": "Budget Reallocation Caveat",
+            "spoken_transcript": {
+                "prompt": "Do you think Finance will object to reallocating $34,500 from the contingency line?",
+                "response_1": "The office printer has already been serviced.",
+                "response_2": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "response_3": "The client lunch was moved to Thursday."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_19.mp3": {
+            "part": "2",
+            "title": "Policy Interpretation",
+            "spoken_transcript": {
+                "prompt": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "response_1": "The portal password expires every ninety days.",
+                "response_2": "I thought the cafeteria was closed for renovations.",
+                "response_3": "Use the signed policy until Compliance confirms that the notice supersedes it."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_20.mp3": {
+            "part": "2",
+            "title": "Timeline Feasibility",
+            "spoken_transcript": {
+                "prompt": "Can we compress the final testing window without compromising the audit trail?",
+                "response_1": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "response_2": "The audit trail is stored in the old lobby cabinet.",
+                "response_3": "Testing windows are always larger on the south side."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_21.mp3": {
+            "part": "2",
+            "title": "Conditional Approval Request",
+            "spoken_transcript": {
+                "prompt": "If the claims automation oversight review is not cleared by April 16, can we still release the client summary?",
+                "response_1": "The summary was printed in the training room yesterday.",
+                "response_2": "Only if Legal signs off on the exception before the summary is circulated.",
+                "response_3": "I have not reserved the larger conference room yet."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_22.mp3": {
+            "part": "2",
+            "title": "Vendor Status Escalation",
+            "spoken_transcript": {
+                "prompt": "Would it be premature to escalate a regional blackout window that invalidates the original migration plan to the steering committee?",
+                "response_1": "The committee usually meets in the west conference room.",
+                "response_2": "I can send you the travel itinerary after lunch.",
+                "response_3": "Not if the vendor misses the revised checkpoint this afternoon."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_23.mp3": {
+            "part": "2",
+            "title": "Budget Reallocation Caveat",
+            "spoken_transcript": {
+                "prompt": "Do you think Finance will object to reallocating $41,375 from the contingency line?",
+                "response_1": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "response_2": "The office printer has already been serviced.",
+                "response_3": "The client lunch was moved to Thursday."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_24.mp3": {
+            "part": "2",
+            "title": "Policy Interpretation",
+            "spoken_transcript": {
+                "prompt": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "response_1": "The portal password expires every ninety days.",
+                "response_2": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "response_3": "I thought the cafeteria was closed for renovations."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p2_25.mp3": {
+            "part": "2",
+            "title": "Timeline Feasibility",
+            "spoken_transcript": {
+                "prompt": "Can we compress the final testing window without compromising the audit trail?",
+                "response_1": "The audit trail is stored in the old lobby cabinet.",
+                "response_2": "Testing windows are always larger on the south side.",
+                "response_3": "Possibly, but only if we freeze noncritical changes before regression testing starts."
+            },
+            "voice_cast": {
+                "prompt": "English_Trustworth_Man",
+                "responses": "English_Graceful_Lady"
+            }
+        },
+        "toeic_pkg05_p3_01.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Ethan",
+                        "text": "Victor, thanks for joining on short notice. The device traceability validation workstream has become more complicated because a documentation discrepancy that could trigger a secondary audit."
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "I saw the note. Our original checkpoint was November 22, but the vendor now says the evidence pack will not be ready until November 31."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $11,125 review fee."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "Good. If Finance signs off by November 20, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_02.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Clara",
+                        "text": "Grace, thanks for joining on short notice. The fleet maintenance scheduling workstream has become more complicated because a late policy clarification that changes the approval sequence."
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "I saw the note. Our original checkpoint was March 25, but the vendor now says the evidence pack will not be ready until March 34."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $12,500 review fee."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "Good. If Finance signs off by March 23, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_03.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Rafael",
+                        "text": "Liam, thanks for joining on short notice. The venue capacity planning workstream has become more complicated because an unresolved dependency between compliance sign-off and vendor provisioning."
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "I saw the note. Our original checkpoint was April 6, but the vendor now says the evidence pack will not be ready until April 15."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $13,875 review fee."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "Good. If Finance signs off by April 4, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_04.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Nadia",
+                        "text": "Amelia, thanks for joining on short notice. The supplier qualification review workstream has become more complicated because a capacity constraint that affects only the accelerated workstream."
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "I saw the note. Our original checkpoint was May 9, but the vendor now says the evidence pack will not be ready until May 18."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $15,250 review fee."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "Good. If Finance signs off by May 7, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_05.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Oliver",
+                        "text": "Daniel, thanks for joining on short notice. The claims automation oversight workstream has become more complicated because a cost-allocation exception that must be approved before work continues."
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "I saw the note. Our original checkpoint was June 12, but the vendor now says the evidence pack will not be ready until June 21."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $16,625 review fee."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "Good. If Finance signs off by June 10, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_06.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Maya",
+                        "text": "Sophie, thanks for joining on short notice. The factory yield stabilization workstream has become more complicated because a regional blackout window that invalidates the original migration plan."
+                    },
+                    {
+                        "speaker": "Sophie",
+                        "text": "I saw the note. Our original checkpoint was July 15, but the vendor now says the evidence pack will not be ready until July 24."
+                    },
+                    {
+                        "speaker": "Maya",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Sophie",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $18,000 review fee."
+                    },
+                    {
+                        "speaker": "Maya",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Sophie",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Maya",
+                        "text": "Good. If Finance signs off by July 13, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Sophie",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_07.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Jonathan",
+                        "text": "Martin, thanks for joining on short notice. The battery storage commissioning workstream has become more complicated because a contract clause whose wording conflicts with the latest portal notice."
+                    },
+                    {
+                        "speaker": "Martin",
+                        "text": "I saw the note. Our original checkpoint was August 18, but the vendor now says the evidence pack will not be ready until August 27."
+                    },
+                    {
+                        "speaker": "Jonathan",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Martin",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $19,375 review fee."
+                    },
+                    {
+                        "speaker": "Jonathan",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Martin",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Jonathan",
+                        "text": "Good. If Finance signs off by August 16, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Martin",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_08.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Priya",
+                        "text": "Elena, thanks for joining on short notice. The pharmacovigilance reporting workstream has become more complicated because a data-retention requirement that applies retroactively to pilot records."
+                    },
+                    {
+                        "speaker": "Elena",
+                        "text": "I saw the note. Our original checkpoint was September 21, but the vendor now says the evidence pack will not be ready until September 30."
+                    },
+                    {
+                        "speaker": "Priya",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Elena",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $20,750 review fee."
+                    },
+                    {
+                        "speaker": "Priya",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Elena",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Priya",
+                        "text": "Good. If Finance signs off by September 19, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Elena",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_09.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Ethan",
+                        "text": "Victor, thanks for joining on short notice. The content licensing reconciliation workstream has become more complicated because a documentation discrepancy that could trigger a secondary audit."
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "I saw the note. Our original checkpoint was October 24, but the vendor now says the evidence pack will not be ready until October 33."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $22,125 review fee."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Ethan",
+                        "text": "Good. If Finance signs off by October 22, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Victor",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_10.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Clara",
+                        "text": "Grace, thanks for joining on short notice. The strategic sourcing governance workstream has become more complicated because a late policy clarification that changes the approval sequence."
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "I saw the note. Our original checkpoint was November 5, but the vendor now says the evidence pack will not be ready until November 14."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $23,500 review fee."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Clara",
+                        "text": "Good. If Finance signs off by November 3, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Grace",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_11.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Rafael",
+                        "text": "Liam, thanks for joining on short notice. The cross-border customs compliance workstream has become more complicated because an unresolved dependency between compliance sign-off and vendor provisioning."
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "I saw the note. Our original checkpoint was March 8, but the vendor now says the evidence pack will not be ready until March 17."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $24,875 review fee."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Rafael",
+                        "text": "Good. If Finance signs off by March 6, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Liam",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_12.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Nadia",
+                        "text": "Amelia, thanks for joining on short notice. The clinical data governance workstream has become more complicated because a capacity constraint that affects only the accelerated workstream."
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "I saw the note. Our original checkpoint was April 11, but the vendor now says the evidence pack will not be ready until April 20."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $26,250 review fee."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Nadia",
+                        "text": "Good. If Finance signs off by April 9, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Amelia",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p3_13.mp3": {
+            "part": "3",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "spoken_transcript": {
+                "segments": [
+                    {
+                        "speaker": "Oliver",
+                        "text": "Daniel, thanks for joining on short notice. The predictive inventory modeling workstream has become more complicated because a cost-allocation exception that must be approved before work continues."
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "I saw the note. Our original checkpoint was May 14, but the vendor now says the evidence pack will not be ready until May 23."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?"
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $27,625 review fee."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?"
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation."
+                    },
+                    {
+                        "speaker": "Oliver",
+                        "text": "Good. If Finance signs off by May 12, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement."
+                    },
+                    {
+                        "speaker": "Daniel",
+                        "text": "Understood. I will send the documents within the hour."
+                    }
+                ]
+            },
+            "voice_cast": {
+                "dialogue": "mixed_us_british_business_english"
+            }
+        },
+        "toeic_pkg05_p4_01.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Summit Urban Rail employees. This is an operational update regarding the claims automation oversight transition scheduled for April 16. Because a cost-allocation exception that must be approved before work continues, the first validation window will now run from April 16 through April 22, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_02.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Keystone Hospitality employees. This is an operational update regarding the factory yield stabilization transition scheduled for May 19. Because a regional blackout window that invalidates the original migration plan, the first validation window will now run from May 19 through May 25, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_03.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Prism Semiconductor employees. This is an operational update regarding the battery storage commissioning transition scheduled for June 22. Because a contract clause whose wording conflicts with the latest portal notice, the first validation window will now run from June 22 through June 28, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_04.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Brightline Insurance employees. This is an operational update regarding the pharmacovigilance reporting transition scheduled for July 25. Because a data-retention requirement that applies retroactively to pilot records, the first validation window will now run from July 25 through July 31, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_05.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all HarborWorks Manufacturing employees. This is an operational update regarding the content licensing reconciliation transition scheduled for August 6. Because a documentation discrepancy that could trigger a secondary audit, the first validation window will now run from August 6 through August 12, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_06.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Nexus Renewable Energy employees. This is an operational update regarding the strategic sourcing governance transition scheduled for September 9. Because a late policy clarification that changes the approval sequence, the first validation window will now run from September 9 through September 15, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_07.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Crescent Pharma employees. This is an operational update regarding the cross-border customs compliance transition scheduled for October 12. Because an unresolved dependency between compliance sign-off and vendor provisioning, the first validation window will now run from October 12 through October 18, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_08.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Aperture Media Labs employees. This is an operational update regarding the clinical data governance transition scheduled for November 15. Because a capacity constraint that affects only the accelerated workstream, the first validation window will now run from November 15 through November 21, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_09.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Pinnacle Procurement employees. This is an operational update regarding the predictive inventory modeling transition scheduled for March 18. Because a cost-allocation exception that must be approved before work continues, the first validation window will now run from March 18 through March 24, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        },
+        "toeic_pkg05_p4_10.mp3": {
+            "part": "4",
+            "title": "Operational Transition Announcement",
+            "spoken_transcript": {
+                "talk": "Attention, all Aster Global Logistics employees. This is an operational update regarding the subscription revenue recognition transition scheduled for April 21. Because a regional blackout window that invalidates the original migration plan, the first validation window will now run from April 21 through April 27, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification."
+            },
+            "voice_cast": {
+                "narrator": "English_CaptivatingStoryteller"
+            }
+        }
+    }
+}

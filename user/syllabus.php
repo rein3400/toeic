@@ -140,7 +140,7 @@ $website_logo = getWebsiteLogo();
     </style>
 </head>
 
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">

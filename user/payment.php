@@ -34,7 +34,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <main class="toeic-page-shell">
         <div class="toeic-page-header">
             <div>

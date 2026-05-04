@@ -76,7 +76,7 @@ $redirect = $_GET['redirect'] ?? '';
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css')); ?>" rel="stylesheet">
 </head>
-<body>
+<body class="toeic-redesign-body toeic-auth-page">
     <main class="toeic-page-shell">
         <div class="row g-4 align-items-stretch">
             <div class="col-lg-5">

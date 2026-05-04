@@ -1,0 +1,99 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile - TOEIC Student Preview</title>
+    <link rel="stylesheet" href="toeic-preview-system.css">
+</head>
+<body>
+    <div class="preview-page">
+        <header class="preview-topbar">
+            <nav class="preview-nav">
+                <a class="brand" href="preview-suite.html">
+                    <span class="brand-mark">TOEIC</span>
+                    <span class="brand-text"><strong>TOEIC Simulator</strong><span>Student workspace</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="user-dashboard-redesign-preview.html">Dashboard</a>
+                    <a href="analytics-redesign-preview.html">Analytics</a>
+                    <a href="buy-exam-redesign-preview.html">Buy Package</a>
+                    <a class="is-active" href="profile-redesign-preview.html">Profile</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn btn-light" href="action-states-redesign-preview.html">Logout</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="shell">
+            <section class="page-title">
+                <div>
+                    <span class="kicker">Student profile</span>
+                    <h1>Account identity, TOEIC history, and security in one calm workspace.</h1>
+                    <p>Preserves the current profile form, password-change form, test history, and account statistics while removing the old heavy panel styling.</p>
+                </div>
+                <a class="btn btn-primary" href="user-dashboard-redesign-preview.html">Back to Dashboard</a>
+            </section>
+
+            <section class="metric-grid">
+                <div class="metric"><span>Total TOEIC tests</span><strong>8</strong><small>Full simulations and practice attempts.</small></div>
+                <div class="metric"><span>Best score</span><strong>835</strong><small>Highest TOEIC Listening and Reading report.</small></div>
+                <div class="metric"><span>Average score</span><strong>762</strong><small>Across completed TOEIC reports.</small></div>
+                <div class="metric"><span>Active credits</span><strong>2</strong><small>Available full simulation access.</small></div>
+            </section>
+
+            <section class="split-layout section">
+                <div class="stack">
+                    <article class="form-card">
+                        <div class="section-head">
+                            <div>
+                                <h2>Profile Information</h2>
+                                <p>Keep student identity data simple, readable, and ready for report history.</p>
+                            </div>
+                            <span class="pill dark">Editable</span>
+                        </div>
+                        <div class="form-grid">
+                            <label class="field"><span>Full name</span><input type="text" value="Nadia TOEIC Learner"></label>
+                            <label class="field"><span>Username</span><input type="text" value="nadia_toeic"></label>
+                            <label class="field"><span>Email</span><input type="email" value="nadia@example.com"></label>
+                            <label class="field"><span>Phone</span><input type="text" value="+62 812 0000 0000"></label>
+                        </div>
+                        <div class="divider"></div>
+                        <button class="btn btn-primary" type="button">Save Profile</button>
+                    </article>
+
+                    <article class="form-card">
+                        <div class="section-head">
+                            <div>
+                                <h2>Password</h2>
+                                <p>Same current validation flow, presented without browser alert dependency.</p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <label class="field"><span>Current password</span><input type="password" value="password"></label>
+                            <label class="field"><span>New password</span><input type="password" value="password"></label>
+                            <label class="field"><span>Confirm new password</span><input type="password" value="password"></label>
+                        </div>
+                        <div class="divider"></div>
+                        <button class="btn btn-dark" type="button">Update Password</button>
+                    </article>
+                </div>
+
+                <aside class="panel stack">
+                    <h2>TOEIC History</h2>
+                    <table class="data-table">
+                        <thead><tr><th>Date</th><th>Mode</th><th>Score</th></tr></thead>
+                        <tbody>
+                            <tr><td>03 May 2026</td><td>Full</td><td>835</td></tr>
+                            <tr><td>27 Apr 2026</td><td>Practice</td><td>78%</td></tr>
+                            <tr><td>15 Apr 2026</td><td>Full</td><td>790</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="alert success">Profile updated successfully. The success state stays visible and readable.</div>
+                </aside>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

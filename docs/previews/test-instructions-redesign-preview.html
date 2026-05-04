@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TOEIC Test Instructions - Preview</title>
+    <link rel="stylesheet" href="toeic-preview-system.css">
+</head>
+<body>
+    <div class="preview-page">
+        <header class="preview-topbar">
+            <nav class="preview-nav">
+                <a class="brand" href="preview-suite.html">
+                    <span class="brand-mark">TOEIC</span>
+                    <span class="brand-text"><strong>TOEIC Simulator</strong><span>Instructions</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="user-dashboard-redesign-preview.html">Dashboard</a>
+                    <a class="is-active" href="test-instructions-redesign-preview.html">Instructions</a>
+                    <a href="camera-setup-redesign-preview.html">Camera</a>
+                    <a href="test-toeic-redesign-preview.html">Test</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn btn-light" href="buy-exam-redesign-preview.html">Package</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="shell">
+            <section class="hero hero-compact">
+                <div class="hero-copy">
+                    <div>
+                        <span class="kicker">Before you start</span>
+                        <h1>Choose the right TOEIC mode and understand the test rules.</h1>
+                        <p>The preview keeps the current full simulation and practice simulation split. Practice links use `mode=prep`; full simulation can require proctoring and active package access.</p>
+                    </div>
+                    <div class="button-row">
+                        <a class="btn btn-primary" href="../../user/camera_setup.php?test_format=toeic&amp;mode=full">Start Full Simulation</a>
+                        <a class="btn btn-light" href="../../user/test_toeic.php?test_format=toeic&amp;mode=prep">Start Practice Simulation</a>
+                    </div>
+                </div>
+                <aside class="visual-panel">
+                    <div class="floating-card">
+                        <span class="pill red">120 minutes</span>
+                        <h2>TOEIC Listening &amp; Reading</h2>
+                        <div class="bar-stack">
+                            <div class="bar-row"><span>Listening</span><span class="bar-track"><span class="bar-fill" style="--value: 45%"></span></span><strong>45 min</strong></div>
+                            <div class="bar-row"><span>Reading</span><span class="bar-track"><span class="bar-fill" style="--value: 75%"></span></span><strong>75 min</strong></div>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="three-col section">
+                <article class="card">
+                    <h3>Full Simulation</h3>
+                    <p>Best for a realistic TOEIC report with full timing and proctoring checks before entering the test runner.</p>
+                    <ul class="list">
+                        <li>Requires active TOEIC package access.</li>
+                        <li>Uses camera setup before the test starts.</li>
+                        <li>Produces Listening, Reading, and total score report.</li>
+                    </ul>
+                </article>
+                <article class="card">
+                    <h3>Practice Simulation</h3>
+                    <p>Best for preparation and repetition without the full simulation pressure.</p>
+                    <ul class="list">
+                        <li>Uses `mode=prep` route.</li>
+                        <li>Can start directly from instructions.</li>
+                        <li>Produces practice score and part feedback.</li>
+                    </ul>
+                </article>
+                <article class="card">
+                    <h3>Rules</h3>
+                    <p>Keep the rules visible so students understand what could invalidate a full simulation.</p>
+                    <ul class="list">
+                        <li>Stay in the test window during proctored sessions.</li>
+                        <li>Keep camera and microphone permissions active.</li>
+                        <li>Do not refresh, close, or switch tabs during the test.</li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

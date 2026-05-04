@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment Pending - TOEIC Student Preview</title>
+    <link rel="stylesheet" href="toeic-preview-system.css">
+</head>
+<body>
+    <div class="preview-page">
+        <header class="preview-topbar">
+            <nav class="preview-nav">
+                <a class="brand" href="preview-suite.html">
+                    <span class="brand-mark">TOEIC</span>
+                    <span class="brand-text"><strong>TOEIC Simulator</strong><span>Payment status</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="payment-redesign-preview.html">Payment</a>
+                    <a class="is-active" href="payment-pending-redesign-preview.html">Pending</a>
+                    <a href="buy-exam-redesign-preview.html">Package</a>
+                    <a href="user-dashboard-redesign-preview.html">Dashboard</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn btn-light" href="payment-redesign-preview.html">Back to Payment</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="shell">
+            <section class="hero hero-compact">
+                <div class="hero-copy">
+                    <div>
+                        <span class="kicker">Waiting for payment confirmation</span>
+                        <h1>Your TOEIC package is reserved while the bank confirms payment.</h1>
+                        <p>This page keeps the current pending, success, failed, timeout, Tripay link, VA/QRIS display, and `ajax_payment_status.php` polling concepts.</p>
+                    </div>
+                    <div class="mini-stat-grid">
+                        <div class="metric"><span>Order ID</span><strong>TOEIC-240503</strong><small>Visible transaction reference.</small></div>
+                        <div class="metric"><span>Amount</span><strong>Rp 175.000</strong><small>Current checkout total.</small></div>
+                        <div class="metric"><span>Status</span><strong>Pending</strong><small>Polling every few seconds.</small></div>
+                    </div>
+                </div>
+                <aside class="visual-panel">
+                    <div class="floating-card stack">
+                        <span class="pill red">QRIS</span>
+                        <div class="qr-block">Scan</div>
+                        <p>QR and virtual account information can be recovered from session storage if the page refreshes.</p>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="three-col section">
+                <article class="status-card pending">
+                    <span class="status-label">Pending</span>
+                    <h2>Awaiting payment</h2>
+                    <p>Keep the student informed that the TOEIC package is not active until confirmation arrives.</p>
+                    <a class="btn btn-light" href="#">Open Tripay Payment Link</a>
+                </article>
+                <article class="status-card success">
+                    <span class="status-label">Success</span>
+                    <h2>Package active</h2>
+                    <p>Once Tripay reports paid, the student can continue to the dashboard or start the TOEIC test.</p>
+                    <a class="btn btn-primary" href="user-dashboard-redesign-preview.html">Go to Dashboard</a>
+                </article>
+                <article class="status-card danger">
+                    <span class="status-label">Failed or timeout</span>
+                    <h2>Payment not completed</h2>
+                    <p>Show a clear recovery action without trapping the student on a dead status page.</p>
+                    <a class="btn btn-light" href="payment-redesign-preview.html">Try Again</a>
+                </article>
+            </section>
+
+            <section class="section two-col">
+                <article class="card">
+                    <h2>Polling Timeline</h2>
+                    <div class="timeline">
+                        <div class="timeline-item"><span class="timeline-dot"></span><div><strong>Payment page opened</strong><p>Order reference and method details are visible.</p></div></div>
+                        <div class="timeline-item"><span class="timeline-dot"></span><div><strong>Status checked</strong><p>`ajax_payment_status.php` returns pending, paid, failed, or expired.</p></div></div>
+                        <div class="timeline-item"><span class="timeline-dot"></span><div><strong>Access updated</strong><p>Successful payment activates full TOEIC simulation credit.</p></div></div>
+                    </div>
+                </article>
+                <article class="card">
+                    <h2>Virtual Account</h2>
+                    <table class="data-table">
+                        <tbody>
+                            <tr><th>Bank</th><td>BCA Virtual Account</td></tr>
+                            <tr><th>Number</th><td>88081234567890</td></tr>
+                            <tr><th>Expiry</th><td>03 May 2026, 21:00 WIB</td></tr>
+                            <tr><th>Instruction</th><td>Transfer exact amount to activate TOEIC package.</td></tr>
+                        </tbody>
+                    </table>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

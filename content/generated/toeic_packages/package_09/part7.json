@@ -1,0 +1,797 @@
+{
+    "part": "7",
+    "single_sets": [
+        {
+            "set_id": "PKG09-P7S-01",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Prism Semiconductor Policy Office\nDate: March 24, 2026\nSubject: Interim Rules for battery storage commissioning\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a contract clause whose wording conflicts with the latest portal notice must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $35,375. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "Which approval rule applies during the interim period",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-02",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Brightline Insurance Policy Office\nDate: April 5, 2026\nSubject: Interim Rules for pharmacovigilance reporting\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a data-retention requirement that applies retroactively to pilot records must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $36,750. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "Which approval rule applies during the interim period",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It applies only to requests without cost estimates.",
+                        "D": "It should be disregarded because it conflicts with the interim approval rule."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-03",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: HarborWorks Manufacturing Policy Office\nDate: May 8, 2026\nSubject: Interim Rules for content licensing reconciliation\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a documentation discrepancy that could trigger a secondary audit must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $38,125. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "When the customer milestone will be cancelled",
+                        "D": "Which approval rule applies during the interim period"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "B": "It allows managers to approve exceptions only after the audit.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-04",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Nexus Renewable Energy Policy Office\nDate: June 11, 2026\nSubject: Interim Rules for strategic sourcing governance\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a late policy clarification that changes the approval sequence must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $39,500. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Which approval rule applies during the interim period",
+                        "B": "Why the company is discontinuing regional director roles",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-05",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Crescent Pharma Policy Office\nDate: July 14, 2026\nSubject: Interim Rules for cross-border customs compliance\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving an unresolved dependency between compliance sign-off and vendor provisioning must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $40,875. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "Which approval rule applies during the interim period",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-06",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Aperture Media Labs Policy Office\nDate: August 17, 2026\nSubject: Interim Rules for clinical data governance\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a capacity constraint that affects only the accelerated workstream must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $42,250. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "Which approval rule applies during the interim period",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It applies only to requests without cost estimates.",
+                        "D": "It should be disregarded because it conflicts with the interim approval rule."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-07",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Pinnacle Procurement Policy Office\nDate: September 20, 2026\nSubject: Interim Rules for predictive inventory modeling\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a cost-allocation exception that must be approved before work continues must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $43,625. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "When the customer milestone will be cancelled",
+                        "D": "Which approval rule applies during the interim period"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "B": "It allows managers to approve exceptions only after the audit.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-08",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Aster Global Logistics Policy Office\nDate: October 23, 2026\nSubject: Interim Rules for subscription revenue recognition\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a regional blackout window that invalidates the original migration plan must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $45,000. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Which approval rule applies during the interim period",
+                        "B": "Why the company is discontinuing regional director roles",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-09",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Meridian BioSystems Policy Office\nDate: November 26, 2026\nSubject: Interim Rules for cloud migration assurance\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a contract clause whose wording conflicts with the latest portal notice must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $46,375. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "Which approval rule applies during the interim period",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-10",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Northbridge Analytics Policy Office\nDate: March 7, 2026\nSubject: Interim Rules for market-risk reporting\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a data-retention requirement that applies retroactively to pilot records must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $47,750. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "Which approval rule applies during the interim period",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It applies only to requests without cost estimates.",
+                        "D": "It should be disregarded because it conflicts with the interim approval rule."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-11",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Cobalt Retail Group Policy Office\nDate: April 10, 2026\nSubject: Interim Rules for device traceability validation\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a documentation discrepancy that could trigger a secondary audit must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $49,125. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "When the customer milestone will be cancelled",
+                        "D": "Which approval rule applies during the interim period"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "B": "It allows managers to approve exceptions only after the audit.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-12",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Vantage Cloud Services Policy Office\nDate: May 13, 2026\nSubject: Interim Rules for fleet maintenance scheduling\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a late policy clarification that changes the approval sequence must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $50,500. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Which approval rule applies during the interim period",
+                        "B": "Why the company is discontinuing regional director roles",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-13",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Helix Financial Markets Policy Office\nDate: June 16, 2026\nSubject: Interim Rules for venue capacity planning\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving an unresolved dependency between compliance sign-off and vendor provisioning must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $51,875. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "Which approval rule applies during the interim period",
+                        "C": "How employees should register for a training seminar",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-14",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Orion Medical Devices Policy Office\nDate: July 19, 2026\nSubject: Interim Rules for supplier qualification review\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a capacity constraint that affects only the accelerated workstream must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $53,250. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "Which approval rule applies during the interim period",
+                        "D": "When the customer milestone will be cancelled"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It allows managers to approve exceptions only after the audit.",
+                        "B": "It supersedes the attached director-level addendum.",
+                        "C": "It applies only to requests without cost estimates.",
+                        "D": "It should be disregarded because it conflicts with the interim approval rule."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7S-15",
+            "title": "Interim Policy Memorandum",
+            "text_type": "single",
+            "passage_1": "MEMORANDUM\n\nTo: Department Leads\nFrom: Summit Urban Rail Policy Office\nDate: August 22, 2026\nSubject: Interim Rules for claims automation oversight\n\nThe interim rules issued last quarter remain in force, except where they conflict with the attached director-level addendum. The addendum narrows the approval window for exceptions from five business days to three, but it does not alter the documentation standard. Any request involving a cost-allocation exception that must be approved before work continues must include a signed justification, a cost estimate, and evidence that the affected customer-facing milestone cannot be moved without contractual consequences.\n\nAn earlier portal notice incorrectly stated that managers could approve all exceptions under $54,625. That notice should be disregarded. Until the permanent policy is released, only regional directors may approve exceptions, regardless of amount. The Compliance Desk will audit a sample of approved requests two weeks after the interim period ends.",
+            "questions": [
+                {
+                    "question_text": "What is the memo mainly intended to clarify?",
+                    "options": {
+                        "A": "Why the company is discontinuing regional director roles",
+                        "B": "How employees should register for a training seminar",
+                        "C": "When the customer milestone will be cancelled",
+                        "D": "Which approval rule applies during the interim period"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The memo resolves the relationship between the interim rules, the addendum, and the incorrect portal notice."
+                },
+                {
+                    "question_text": "Which statement about the portal notice is accurate?",
+                    "options": {
+                        "A": "It should be disregarded because it conflicts with the interim approval rule.",
+                        "B": "It allows managers to approve exceptions only after the audit.",
+                        "C": "It supersedes the attached director-level addendum.",
+                        "D": "It applies only to requests without cost estimates."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The passage says the portal notice incorrectly described manager authority and should be disregarded."
+                }
+            ]
+        }
+    ],
+    "double_sets": [
+        {
+            "set_id": "PKG09-P7D-01",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Jonathan to Martin\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for cloud migration assurance and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why a contract clause whose wording conflicts with the latest portal notice requires director review. Finance has tentatively reserved $44,375, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It omits the name of the cafeteria vendor.",
+                        "B": "It refers to an exception workflow that is no longer valid.",
+                        "C": "It was uploaded after the committee had already met.",
+                        "D": "It asks Finance to cancel a director review."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be approved automatically.",
+                        "B": "The reserve will become permanent.",
+                        "C": "The item will be deferred to the next meeting.",
+                        "D": "The chair will rewrite the evidence pack."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are available indefinitely once Finance creates them.",
+                        "B": "They are unrelated to the steering committee process.",
+                        "C": "They can be spent without director review.",
+                        "D": "They are conditional on timely agenda submission."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7D-02",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Priya to Elena\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for market-risk reporting and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why a data-retention requirement that applies retroactively to pilot records requires director review. Finance has tentatively reserved $45,750, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It omits the name of the cafeteria vendor.",
+                        "B": "It was uploaded after the committee had already met.",
+                        "C": "It refers to an exception workflow that is no longer valid.",
+                        "D": "It asks Finance to cancel a director review."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be approved automatically.",
+                        "B": "The reserve will become permanent.",
+                        "C": "The chair will rewrite the evidence pack.",
+                        "D": "The item will be deferred to the next meeting."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are conditional on timely agenda submission.",
+                        "B": "They are available indefinitely once Finance creates them.",
+                        "C": "They are unrelated to the steering committee process.",
+                        "D": "They can be spent without director review."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7D-03",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Ethan to Victor\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for device traceability validation and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why a documentation discrepancy that could trigger a secondary audit requires director review. Finance has tentatively reserved $47,125, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It omits the name of the cafeteria vendor.",
+                        "B": "It was uploaded after the committee had already met.",
+                        "C": "It asks Finance to cancel a director review.",
+                        "D": "It refers to an exception workflow that is no longer valid."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be deferred to the next meeting.",
+                        "B": "The item will be approved automatically.",
+                        "C": "The reserve will become permanent.",
+                        "D": "The chair will rewrite the evidence pack."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are available indefinitely once Finance creates them.",
+                        "B": "They are conditional on timely agenda submission.",
+                        "C": "They are unrelated to the steering committee process.",
+                        "D": "They can be spent without director review."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7D-04",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Clara to Grace\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for fleet maintenance scheduling and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why a late policy clarification that changes the approval sequence requires director review. Finance has tentatively reserved $48,500, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It refers to an exception workflow that is no longer valid.",
+                        "B": "It omits the name of the cafeteria vendor.",
+                        "C": "It was uploaded after the committee had already met.",
+                        "D": "It asks Finance to cancel a director review."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be approved automatically.",
+                        "B": "The item will be deferred to the next meeting.",
+                        "C": "The reserve will become permanent.",
+                        "D": "The chair will rewrite the evidence pack."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are available indefinitely once Finance creates them.",
+                        "B": "They are unrelated to the steering committee process.",
+                        "C": "They are conditional on timely agenda submission.",
+                        "D": "They can be spent without director review."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7D-05",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Rafael to Liam\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for venue capacity planning and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why an unresolved dependency between compliance sign-off and vendor provisioning requires director review. Finance has tentatively reserved $49,875, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It omits the name of the cafeteria vendor.",
+                        "B": "It refers to an exception workflow that is no longer valid.",
+                        "C": "It was uploaded after the committee had already met.",
+                        "D": "It asks Finance to cancel a director review."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be approved automatically.",
+                        "B": "The reserve will become permanent.",
+                        "C": "The item will be deferred to the next meeting.",
+                        "D": "The chair will rewrite the evidence pack."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are available indefinitely once Finance creates them.",
+                        "B": "They are unrelated to the steering committee process.",
+                        "C": "They can be spent without director review.",
+                        "D": "They are conditional on timely agenda submission."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7D-06",
+            "title": "Email and Portal Notice: Evidence Pack Submission",
+            "text_type": "double",
+            "passage_1": "Email from Nadia to Amelia\nSubject: Revised Evidence Pack\n\nI reviewed the evidence pack for supplier qualification review and found that the approval memo still references the retired exception workflow. Please revise the memo by Thursday and add a paragraph explaining why a capacity constraint that affects only the accelerated workstream requires director review. Finance has tentatively reserved $51,250, but the reserve will lapse if the revised file is not uploaded before the steering committee agenda closes.",
+            "passage_2": "Portal Notice\n\nAgenda submissions for the steering committee close at 4:00 p.m. on Friday. Files uploaded after the deadline will be deferred to the next meeting unless the chair grants an emergency exception. Reserved funds are not carried forward automatically; departments must resubmit the budget request if an item is deferred.",
+            "questions": [
+                {
+                    "question_text": "Why does the memo need to be revised?",
+                    "options": {
+                        "A": "It omits the name of the cafeteria vendor.",
+                        "B": "It was uploaded after the committee had already met.",
+                        "C": "It refers to an exception workflow that is no longer valid.",
+                        "D": "It asks Finance to cancel a director review."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The email states that the memo still references the retired workflow."
+                },
+                {
+                    "question_text": "What will happen if the file is uploaded after the agenda deadline and no emergency exception is granted?",
+                    "options": {
+                        "A": "The item will be approved automatically.",
+                        "B": "The reserve will become permanent.",
+                        "C": "The chair will rewrite the evidence pack.",
+                        "D": "The item will be deferred to the next meeting."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The portal notice says late files are deferred unless the chair grants an emergency exception."
+                },
+                {
+                    "question_text": "What can be inferred about the reserved funds?",
+                    "options": {
+                        "A": "They are conditional on timely agenda submission.",
+                        "B": "They are available indefinitely once Finance creates them.",
+                        "C": "They are unrelated to the steering committee process.",
+                        "D": "They can be spent without director review."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The email and notice together show that the reserve lapses or must be resubmitted if the agenda item is not timely."
+                }
+            ]
+        }
+    ],
+    "triple_sets": [
+        {
+            "set_id": "PKG09-P7T-01",
+            "title": "Policy, Chat, and Calendar Notice: Exception Authority",
+            "text_type": "triple",
+            "passage_1": "Policy Excerpt\nException requests for predictive inventory modeling must be approved by a regional director when the request changes a customer-facing date, affects regulated data, or exceeds $39,625.",
+            "passage_2": "Chat Message\nOliver: The request does not exceed the budget threshold, but it changes the client demonstration date and involves regulated records from Singapore. Can my manager approve it?\nDaniel: I do not think so. The amount is not the deciding factor if either of the other triggers applies.",
+            "passage_3": "Calendar Notice\nThe regional director will review exception requests submitted by noon on Tuesday. Requests submitted later will be considered the following week unless the legal department certifies an immediate compliance risk.",
+            "questions": [
+                {
+                    "question_text": "Why is manager approval insufficient for the request described in the chat?",
+                    "options": {
+                        "A": "The request exceeds every budget threshold in the policy.",
+                        "B": "The request changes a customer-facing date and involves regulated records.",
+                        "C": "The manager is unavailable until the following week.",
+                        "D": "The calendar notice cancels all exception reviews."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "Two director-review triggers apply even though the amount threshold may not."
+                },
+                {
+                    "question_text": "By when should the request be submitted to be reviewed in the current cycle?",
+                    "options": {
+                        "A": "By close of business on Friday",
+                        "B": "After the legal department updates the portal",
+                        "C": "By noon on Tuesday",
+                        "D": "The following week regardless of urgency"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The calendar notice gives noon on Tuesday as the submission cutoff."
+                },
+                {
+                    "question_text": "Under what condition could a late request still be reviewed before the following week?",
+                    "options": {
+                        "A": "If the manager says the budget is available",
+                        "B": "If the customer-facing date remains unchanged",
+                        "C": "If the request is submitted by the facilities team",
+                        "D": "If Legal certifies an immediate compliance risk"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The final sentence gives a narrow exception for late requests certified by Legal."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG09-P7T-02",
+            "title": "Policy, Chat, and Calendar Notice: Exception Authority",
+            "text_type": "triple",
+            "passage_1": "Policy Excerpt\nException requests for subscription revenue recognition must be approved by a regional director when the request changes a customer-facing date, affects regulated data, or exceeds $41,000.",
+            "passage_2": "Chat Message\nMaya: The request does not exceed the budget threshold, but it changes the client demonstration date and involves regulated records from Frankfurt. Can my manager approve it?\nSophie: I do not think so. The amount is not the deciding factor if either of the other triggers applies.",
+            "passage_3": "Calendar Notice\nThe regional director will review exception requests submitted by noon on Tuesday. Requests submitted later will be considered the following week unless the legal department certifies an immediate compliance risk.",
+            "questions": [
+                {
+                    "question_text": "Why is manager approval insufficient for the request described in the chat?",
+                    "options": {
+                        "A": "The request exceeds every budget threshold in the policy.",
+                        "B": "The manager is unavailable until the following week.",
+                        "C": "The request changes a customer-facing date and involves regulated records.",
+                        "D": "The calendar notice cancels all exception reviews."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "Two director-review triggers apply even though the amount threshold may not."
+                },
+                {
+                    "question_text": "By when should the request be submitted to be reviewed in the current cycle?",
+                    "options": {
+                        "A": "By close of business on Friday",
+                        "B": "After the legal department updates the portal",
+                        "C": "The following week regardless of urgency",
+                        "D": "By noon on Tuesday"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The calendar notice gives noon on Tuesday as the submission cutoff."
+                },
+                {
+                    "question_text": "Under what condition could a late request still be reviewed before the following week?",
+                    "options": {
+                        "A": "If Legal certifies an immediate compliance risk",
+                        "B": "If the manager says the budget is available",
+                        "C": "If the customer-facing date remains unchanged",
+                        "D": "If the request is submitted by the facilities team"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The final sentence gives a narrow exception for late requests certified by Legal."
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,137 @@
+{
+    "part": "1",
+    "items": [
+        {
+            "item_id": "PKG07-P1-01",
+            "title": "Compliance Review Room",
+            "image_prompt": "A realistic corporate compliance review room in Sao Paulo, a senior analyst standing beside a glass wall covered with color-coded risk notes, two colleagues seated at a table comparing printed compliance schedules, a closed laptop, a muted wall clock, neutral office lighting, no readable text, no logos, documentary photography style.",
+            "photo_description": "A senior analyst is standing beside a glass wall covered with color-coded risk notes while two colleagues compare printed compliance schedules at a conference table.",
+            "audio_script": {
+                "A": "Several employees are removing chairs from the conference room.",
+                "B": "A technician is repairing a ceiling-mounted projector.",
+                "C": "The meeting table has been cleared of all printed documents.",
+                "D": "A senior analyst is standing beside a glass wall covered with risk notes."
+            },
+            "options": {
+                "A": "Several employees are removing chairs from the conference room.",
+                "B": "A technician is repairing a ceiling-mounted projector.",
+                "C": "The meeting table has been cleared of all printed documents.",
+                "D": "A senior analyst is standing beside a glass wall covered with risk notes."
+            },
+            "correct_answer": "D",
+            "explanation": "The image centers on the described workplace action: a senior analyst is standing beside a glass wall covered with risk notes. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_01.png",
+            "audio_file": "toeic_pkg07_p1_01.mp3"
+        },
+        {
+            "item_id": "PKG07-P1-02",
+            "title": "Warehouse Quality Inspection",
+            "image_prompt": "A high-resolution warehouse inspection area, a quality supervisor scanning a pallet label with a handheld device, sealed cartons stacked neatly beside an inspection table, safety cones, overhead industrial lighting, no brand names, no readable text, realistic TOEIC photograph.",
+            "photo_description": "A quality supervisor is scanning a pallet label while sealed cartons remain stacked beside an inspection table.",
+            "audio_script": {
+                "A": "A supervisor is scanning a label on a stacked pallet.",
+                "B": "A forklift is lifting cartons onto a loading dock.",
+                "C": "The cartons are being unpacked on the floor.",
+                "D": "A worker is painting safety markings near the shelves."
+            },
+            "options": {
+                "A": "A supervisor is scanning a label on a stacked pallet.",
+                "B": "A forklift is lifting cartons onto a loading dock.",
+                "C": "The cartons are being unpacked on the floor.",
+                "D": "A worker is painting safety markings near the shelves."
+            },
+            "correct_answer": "A",
+            "explanation": "The image centers on the described workplace action: a supervisor is scanning a label on a stacked pallet. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_02.png",
+            "audio_file": "toeic_pkg07_p1_02.mp3"
+        },
+        {
+            "item_id": "PKG07-P1-03",
+            "title": "Airport Service Counter",
+            "image_prompt": "A modern airport service counter, an airline employee reviewing a boarding document with a passenger, an upright suitcase beside the counter, blurred departure boards with unreadable text, bright terminal lighting, realistic photograph, no logos.",
+            "photo_description": "An airline employee is reviewing a boarding document with a passenger while a suitcase stands upright beside the counter.",
+            "audio_script": {
+                "A": "A passenger is placing a suitcase on a conveyor belt.",
+                "B": "An employee is reviewing a document with a passenger at a service counter.",
+                "C": "Several travelers are boarding an aircraft through a jet bridge.",
+                "D": "A cleaner is mopping the floor near the departure screens."
+            },
+            "options": {
+                "A": "A passenger is placing a suitcase on a conveyor belt.",
+                "B": "An employee is reviewing a document with a passenger at a service counter.",
+                "C": "Several travelers are boarding an aircraft through a jet bridge.",
+                "D": "A cleaner is mopping the floor near the departure screens."
+            },
+            "correct_answer": "B",
+            "explanation": "The image centers on the described workplace action: an employee is reviewing a document with a passenger at a service counter. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_03.png",
+            "audio_file": "toeic_pkg07_p1_03.mp3"
+        },
+        {
+            "item_id": "PKG07-P1-04",
+            "title": "Laboratory Calibration Bench",
+            "image_prompt": "A clean corporate laboratory calibration bench, a technician with safety glasses adjusting a compact instrument, another employee recording values on a clipboard, small sample trays, bright task lighting, realistic photograph, no readable labels.",
+            "photo_description": "A technician wearing safety glasses is calibrating a compact instrument while another employee records values on a clipboard.",
+            "audio_script": {
+                "A": "A researcher is pouring liquid into a beaker.",
+                "B": "Two employees are installing cabinets above the bench.",
+                "C": "A technician is calibrating an instrument at a laboratory bench.",
+                "D": "The laboratory equipment has been packed into cardboard boxes."
+            },
+            "options": {
+                "A": "A researcher is pouring liquid into a beaker.",
+                "B": "Two employees are installing cabinets above the bench.",
+                "C": "A technician is calibrating an instrument at a laboratory bench.",
+                "D": "The laboratory equipment has been packed into cardboard boxes."
+            },
+            "correct_answer": "C",
+            "explanation": "The image centers on the described workplace action: a technician is calibrating an instrument at a laboratory bench. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_04.png",
+            "audio_file": "toeic_pkg07_p1_04.mp3"
+        },
+        {
+            "item_id": "PKG07-P1-05",
+            "title": "Hotel Event Desk",
+            "image_prompt": "A hotel conference registration desk, a coordinator checking a guest list on a tablet, badges and folded brochures arranged on a table, a lobby background, warm professional lighting, no visible brand text, realistic TOEIC-style image.",
+            "photo_description": "A coordinator is checking a guest list on a tablet while badges and folded brochures are arranged on a registration table.",
+            "audio_script": {
+                "A": "A guest is hanging decorations from the ceiling.",
+                "B": "The brochures are being loaded into a delivery truck.",
+                "C": "Several attendees are eating lunch at round tables.",
+                "D": "A coordinator is checking a guest list at a registration table."
+            },
+            "options": {
+                "A": "A guest is hanging decorations from the ceiling.",
+                "B": "The brochures are being loaded into a delivery truck.",
+                "C": "Several attendees are eating lunch at round tables.",
+                "D": "A coordinator is checking a guest list at a registration table."
+            },
+            "correct_answer": "D",
+            "explanation": "The image centers on the described workplace action: a coordinator is checking a guest list at a registration table. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_05.png",
+            "audio_file": "toeic_pkg07_p1_05.mp3"
+        },
+        {
+            "item_id": "PKG07-P1-06",
+            "title": "Print Production Area",
+            "image_prompt": "A commercial print production area, a print operator inspecting proof sheets under a desk lamp, packaged materials stacked on a side cart, large printer in the background, realistic indoor lighting, no readable text, no logos.",
+            "photo_description": "A print operator is inspecting proof sheets under a desk lamp while packaged materials are stacked on a side cart.",
+            "audio_script": {
+                "A": "A print operator is inspecting proof sheets under a lamp.",
+                "B": "A customer is signing a delivery receipt at the front desk.",
+                "C": "A mechanic is replacing a wheel on a delivery van.",
+                "D": "The side cart is empty and folded against the wall."
+            },
+            "options": {
+                "A": "A print operator is inspecting proof sheets under a lamp.",
+                "B": "A customer is signing a delivery receipt at the front desk.",
+                "C": "A mechanic is replacing a wheel on a delivery van.",
+                "D": "The side cart is empty and folded against the wall."
+            },
+            "correct_answer": "A",
+            "explanation": "The image centers on the described workplace action: a print operator is inspecting proof sheets under a lamp. The other statements alter the action, location, or object and are therefore not supported by the photograph.",
+            "image_file": "toeic_pkg07_p1_06.png",
+            "audio_file": "toeic_pkg07_p1_06.mp3"
+        }
+    ]
+}

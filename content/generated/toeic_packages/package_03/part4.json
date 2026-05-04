@@ -1,0 +1,425 @@
+{
+    "part": "4",
+    "sets": [
+        {
+            "set_id": "PKG03-P4-01",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Prism Semiconductor employees. This is an operational update regarding the battery storage commissioning transition scheduled for August 18. Because a contract clause whose wording conflicts with the latest portal notice, the first validation window will now run from August 18 through August 24, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To announce that the transition has been permanently cancelled",
+                        "C": "To invite employees to a voluntary social event",
+                        "D": "To explain a revised validation window and related approval requirements"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Upload revised staffing rosters by the stated deadline",
+                        "B": "Delete all legacy workflow records",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It conflicts with the signed memo and should not be relied on.",
+                        "C": "It applies only to employees in the finance department.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_01.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-02",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Brightline Insurance employees. This is an operational update regarding the pharmacovigilance reporting transition scheduled for September 21. Because a data-retention requirement that applies retroactively to pilot records, the first validation window will now run from September 21 through September 27, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To explain a revised validation window and related approval requirements",
+                        "B": "To introduce a new employee wellness benefit",
+                        "C": "To announce that the transition has been permanently cancelled",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Upload revised staffing rosters by the stated deadline",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It applies only to employees in the finance department.",
+                        "C": "It conflicts with the signed memo and should not be relied on.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_02.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-03",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all HarborWorks Manufacturing employees. This is an operational update regarding the content licensing reconciliation transition scheduled for October 24. Because a documentation discrepancy that could trigger a secondary audit, the first validation window will now run from October 24 through October 30, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To explain a revised validation window and related approval requirements",
+                        "C": "To announce that the transition has been permanently cancelled",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Call every customer in the affected region",
+                        "C": "Upload revised staffing rosters by the stated deadline",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It applies only to employees in the finance department.",
+                        "C": "It has already been approved by the client liaison.",
+                        "D": "It conflicts with the signed memo and should not be relied on."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_03.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-04",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Nexus Renewable Energy employees. This is an operational update regarding the strategic sourcing governance transition scheduled for November 5. Because a late policy clarification that changes the approval sequence, the first validation window will now run from November 5 through November 11, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To announce that the transition has been permanently cancelled",
+                        "C": "To explain a revised validation window and related approval requirements",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Call every customer in the affected region",
+                        "C": "Approve director exceptions without review",
+                        "D": "Upload revised staffing rosters by the stated deadline"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It conflicts with the signed memo and should not be relied on.",
+                        "B": "It extends the validation window by one quarter.",
+                        "C": "It applies only to employees in the finance department.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_04.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-05",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Crescent Pharma employees. This is an operational update regarding the cross-border customs compliance transition scheduled for March 8. Because an unresolved dependency between compliance sign-off and vendor provisioning, the first validation window will now run from March 8 through March 14, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To announce that the transition has been permanently cancelled",
+                        "C": "To invite employees to a voluntary social event",
+                        "D": "To explain a revised validation window and related approval requirements"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Upload revised staffing rosters by the stated deadline",
+                        "B": "Delete all legacy workflow records",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It conflicts with the signed memo and should not be relied on.",
+                        "C": "It applies only to employees in the finance department.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_05.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-06",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Aperture Media Labs employees. This is an operational update regarding the clinical data governance transition scheduled for April 11. Because a capacity constraint that affects only the accelerated workstream, the first validation window will now run from April 11 through April 17, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To explain a revised validation window and related approval requirements",
+                        "B": "To introduce a new employee wellness benefit",
+                        "C": "To announce that the transition has been permanently cancelled",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Upload revised staffing rosters by the stated deadline",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It applies only to employees in the finance department.",
+                        "C": "It conflicts with the signed memo and should not be relied on.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_06.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-07",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Pinnacle Procurement employees. This is an operational update regarding the predictive inventory modeling transition scheduled for May 14. Because a cost-allocation exception that must be approved before work continues, the first validation window will now run from May 14 through May 20, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To explain a revised validation window and related approval requirements",
+                        "C": "To announce that the transition has been permanently cancelled",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Call every customer in the affected region",
+                        "C": "Upload revised staffing rosters by the stated deadline",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It applies only to employees in the finance department.",
+                        "C": "It has already been approved by the client liaison.",
+                        "D": "It conflicts with the signed memo and should not be relied on."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_07.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-08",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Aster Global Logistics employees. This is an operational update regarding the subscription revenue recognition transition scheduled for June 17. Because a regional blackout window that invalidates the original migration plan, the first validation window will now run from June 17 through June 23, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To announce that the transition has been permanently cancelled",
+                        "C": "To explain a revised validation window and related approval requirements",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Call every customer in the affected region",
+                        "C": "Approve director exceptions without review",
+                        "D": "Upload revised staffing rosters by the stated deadline"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It conflicts with the signed memo and should not be relied on.",
+                        "B": "It extends the validation window by one quarter.",
+                        "C": "It applies only to employees in the finance department.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_08.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-09",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Meridian BioSystems employees. This is an operational update regarding the cloud migration assurance transition scheduled for July 20. Because a contract clause whose wording conflicts with the latest portal notice, the first validation window will now run from July 20 through July 26, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To introduce a new employee wellness benefit",
+                        "B": "To announce that the transition has been permanently cancelled",
+                        "C": "To invite employees to a voluntary social event",
+                        "D": "To explain a revised validation window and related approval requirements"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Upload revised staffing rosters by the stated deadline",
+                        "B": "Delete all legacy workflow records",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It conflicts with the signed memo and should not be relied on.",
+                        "C": "It applies only to employees in the finance department.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_09.mp3"
+        },
+        {
+            "set_id": "PKG03-P4-10",
+            "title": "Operational Transition Announcement",
+            "context": "A company announcement explains a revised transition window and exception process.",
+            "audio_script": "Attention, all Northbridge Analytics employees. This is an operational update regarding the market-risk reporting transition scheduled for August 23. Because a data-retention requirement that applies retroactively to pilot records, the first validation window will now run from August 23 through August 29, and only teams with completed access certification may submit production changes during that period. Managers must upload their revised staffing rosters by 5:00 p.m. two business days before the window opens. Requests submitted after the deadline will be routed to the exception queue and will require director approval. Please note that the earlier intranet notice remains incorrect where it states that all teams may continue using the legacy workflow. The signed transition memo supersedes that notice. Employees with critical customer-impacting work should contact the operations desk and include the project code, the affected region, and a brief justification.",
+            "questions": [
+                {
+                    "question_text": "What is the main purpose of the announcement?",
+                    "options": {
+                        "A": "To explain a revised validation window and related approval requirements",
+                        "B": "To introduce a new employee wellness benefit",
+                        "C": "To announce that the transition has been permanently cancelled",
+                        "D": "To invite employees to a voluntary social event"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The announcement centers on the revised validation window, certification requirement, roster deadline, and exception queue."
+                },
+                {
+                    "question_text": "What must managers do before the validation window opens?",
+                    "options": {
+                        "A": "Delete all legacy workflow records",
+                        "B": "Upload revised staffing rosters by the stated deadline",
+                        "C": "Call every customer in the affected region",
+                        "D": "Approve director exceptions without review"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "Managers are told to upload revised rosters by 5:00 p.m. two business days before the window starts."
+                },
+                {
+                    "question_text": "What does the announcement imply about the earlier intranet notice?",
+                    "options": {
+                        "A": "It extends the validation window by one quarter.",
+                        "B": "It applies only to employees in the finance department.",
+                        "C": "It conflicts with the signed memo and should not be relied on.",
+                        "D": "It has already been approved by the client liaison."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speaker says the intranet notice is incorrect and that the signed transition memo supersedes it."
+                }
+            ],
+            "audio_file": "toeic_pkg03_p4_10.mp3"
+        }
+    ]
+}

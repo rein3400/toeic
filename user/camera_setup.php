@@ -286,7 +286,7 @@ $stmt->close();
         }
     </style>
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <div class="setup-container">
         <div class="setup-header">
             <h1><i class="fas fa-camera"></i> <?php echo htmlspecialchars($setup_title); ?></h1>

@@ -288,7 +288,7 @@ if (strpos($user_name, ' ') !== false) {
         }
     </style>
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <div class="bg-orbs"></div>
 
     <!-- Navbar -->

@@ -24,7 +24,7 @@ $dashboard_link = $is_admin ? 'admin/index.php' : 'user/index.php';
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css')); ?>" rel="stylesheet">
 </head>
-<body>
+<body class="toeic-redesign-body toeic-public-page">
     <?php require_once 'includes/components/navbar.php'; ?>
 
     <main class="toeic-page-shell">

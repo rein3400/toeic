@@ -1,0 +1,555 @@
+{
+    "part": "2",
+    "items": [
+        {
+            "item_id": "PKG06-P2-01",
+            "title": "Conditional Approval Request",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "If the pharmacovigilance reporting review is not cleared by September 21, can we still release the client summary?",
+                "responses": {
+                    "A": "Only if Legal signs off on the exception before the summary is circulated.",
+                    "B": "The summary was printed in the training room yesterday.",
+                    "C": "I have not reserved the larger conference room yet."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Only if Legal signs off on the exception before the summary is circulated.",
+                "B": "The summary was printed in the training room yesterday.",
+                "C": "I have not reserved the larger conference room yet."
+            },
+            "correct_answer": "A",
+            "explanation": "The best response recognizes the conditional dependency and gives a constrained, professionally hedged answer rather than ignoring the approval risk. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_01.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-02",
+            "title": "Vendor Status Escalation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Would it be premature to escalate a documentation discrepancy that could trigger a secondary audit to the steering committee?",
+                "responses": {
+                    "A": "The committee usually meets in the west conference room.",
+                    "B": "Not if the vendor misses the revised checkpoint this afternoon.",
+                    "C": "I can send you the travel itinerary after lunch."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The committee usually meets in the west conference room.",
+                "B": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "C": "I can send you the travel itinerary after lunch."
+            },
+            "correct_answer": "B",
+            "explanation": "The correct option handles the negative question pragmatically and ties escalation to a measurable trigger. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_02.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-03",
+            "title": "Budget Reallocation Caveat",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Do you think Finance will object to reallocating $23,500 from the contingency line?",
+                "responses": {
+                    "A": "The office printer has already been serviced.",
+                    "B": "The client lunch was moved to Thursday.",
+                    "C": "They might, unless we document why the original reserve no longer covers the exposure."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The office printer has already been serviced.",
+                "B": "The client lunch was moved to Thursday.",
+                "C": "They might, unless we document why the original reserve no longer covers the exposure."
+            },
+            "correct_answer": "C",
+            "explanation": "The answer gives a nuanced conditional forecast and uses formal financial register. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_03.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-04",
+            "title": "Policy Interpretation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "responses": {
+                    "A": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                    "B": "The portal password expires every ninety days.",
+                    "C": "I thought the cafeteria was closed for renovations."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "B": "The portal password expires every ninety days.",
+                "C": "I thought the cafeteria was closed for renovations."
+            },
+            "correct_answer": "A",
+            "explanation": "The response resolves a document hierarchy issue without overclaiming authority. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_04.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-05",
+            "title": "Timeline Feasibility",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Can we compress the final testing window without compromising the audit trail?",
+                "responses": {
+                    "A": "The audit trail is stored in the old lobby cabinet.",
+                    "B": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                    "C": "Testing windows are always larger on the south side."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The audit trail is stored in the old lobby cabinet.",
+                "B": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "C": "Testing windows are always larger on the south side."
+            },
+            "correct_answer": "B",
+            "explanation": "The correct option answers indirectly and identifies the operational condition required. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_05.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-06",
+            "title": "Conditional Approval Request",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "If the predictive inventory modeling review is not cleared by May 14, can we still release the client summary?",
+                "responses": {
+                    "A": "The summary was printed in the training room yesterday.",
+                    "B": "I have not reserved the larger conference room yet.",
+                    "C": "Only if Legal signs off on the exception before the summary is circulated."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The summary was printed in the training room yesterday.",
+                "B": "I have not reserved the larger conference room yet.",
+                "C": "Only if Legal signs off on the exception before the summary is circulated."
+            },
+            "correct_answer": "C",
+            "explanation": "The best response recognizes the conditional dependency and gives a constrained, professionally hedged answer rather than ignoring the approval risk. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_06.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-07",
+            "title": "Vendor Status Escalation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Would it be premature to escalate a regional blackout window that invalidates the original migration plan to the steering committee?",
+                "responses": {
+                    "A": "Not if the vendor misses the revised checkpoint this afternoon.",
+                    "B": "The committee usually meets in the west conference room.",
+                    "C": "I can send you the travel itinerary after lunch."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "B": "The committee usually meets in the west conference room.",
+                "C": "I can send you the travel itinerary after lunch."
+            },
+            "correct_answer": "A",
+            "explanation": "The correct option handles the negative question pragmatically and ties escalation to a measurable trigger. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_07.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-08",
+            "title": "Budget Reallocation Caveat",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Do you think Finance will object to reallocating $30,375 from the contingency line?",
+                "responses": {
+                    "A": "The office printer has already been serviced.",
+                    "B": "They might, unless we document why the original reserve no longer covers the exposure.",
+                    "C": "The client lunch was moved to Thursday."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The office printer has already been serviced.",
+                "B": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "C": "The client lunch was moved to Thursday."
+            },
+            "correct_answer": "B",
+            "explanation": "The answer gives a nuanced conditional forecast and uses formal financial register. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_08.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-09",
+            "title": "Policy Interpretation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "responses": {
+                    "A": "The portal password expires every ninety days.",
+                    "B": "I thought the cafeteria was closed for renovations.",
+                    "C": "Use the signed policy until Compliance confirms that the notice supersedes it."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The portal password expires every ninety days.",
+                "B": "I thought the cafeteria was closed for renovations.",
+                "C": "Use the signed policy until Compliance confirms that the notice supersedes it."
+            },
+            "correct_answer": "C",
+            "explanation": "The response resolves a document hierarchy issue without overclaiming authority. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_09.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-10",
+            "title": "Timeline Feasibility",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Can we compress the final testing window without compromising the audit trail?",
+                "responses": {
+                    "A": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                    "B": "The audit trail is stored in the old lobby cabinet.",
+                    "C": "Testing windows are always larger on the south side."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "B": "The audit trail is stored in the old lobby cabinet.",
+                "C": "Testing windows are always larger on the south side."
+            },
+            "correct_answer": "A",
+            "explanation": "The correct option answers indirectly and identifies the operational condition required. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_10.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-11",
+            "title": "Conditional Approval Request",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "If the fleet maintenance scheduling review is not cleared by October 7, can we still release the client summary?",
+                "responses": {
+                    "A": "The summary was printed in the training room yesterday.",
+                    "B": "Only if Legal signs off on the exception before the summary is circulated.",
+                    "C": "I have not reserved the larger conference room yet."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The summary was printed in the training room yesterday.",
+                "B": "Only if Legal signs off on the exception before the summary is circulated.",
+                "C": "I have not reserved the larger conference room yet."
+            },
+            "correct_answer": "B",
+            "explanation": "The best response recognizes the conditional dependency and gives a constrained, professionally hedged answer rather than ignoring the approval risk. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_11.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-12",
+            "title": "Vendor Status Escalation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Would it be premature to escalate an unresolved dependency between compliance sign-off and vendor provisioning to the steering committee?",
+                "responses": {
+                    "A": "The committee usually meets in the west conference room.",
+                    "B": "I can send you the travel itinerary after lunch.",
+                    "C": "Not if the vendor misses the revised checkpoint this afternoon."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The committee usually meets in the west conference room.",
+                "B": "I can send you the travel itinerary after lunch.",
+                "C": "Not if the vendor misses the revised checkpoint this afternoon."
+            },
+            "correct_answer": "C",
+            "explanation": "The correct option handles the negative question pragmatically and ties escalation to a measurable trigger. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_12.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-13",
+            "title": "Budget Reallocation Caveat",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Do you think Finance will object to reallocating $37,250 from the contingency line?",
+                "responses": {
+                    "A": "They might, unless we document why the original reserve no longer covers the exposure.",
+                    "B": "The office printer has already been serviced.",
+                    "C": "The client lunch was moved to Thursday."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "B": "The office printer has already been serviced.",
+                "C": "The client lunch was moved to Thursday."
+            },
+            "correct_answer": "A",
+            "explanation": "The answer gives a nuanced conditional forecast and uses formal financial register. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_13.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-14",
+            "title": "Policy Interpretation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "responses": {
+                    "A": "The portal password expires every ninety days.",
+                    "B": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                    "C": "I thought the cafeteria was closed for renovations."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The portal password expires every ninety days.",
+                "B": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "C": "I thought the cafeteria was closed for renovations."
+            },
+            "correct_answer": "B",
+            "explanation": "The response resolves a document hierarchy issue without overclaiming authority. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_14.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-15",
+            "title": "Timeline Feasibility",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Can we compress the final testing window without compromising the audit trail?",
+                "responses": {
+                    "A": "The audit trail is stored in the old lobby cabinet.",
+                    "B": "Testing windows are always larger on the south side.",
+                    "C": "Possibly, but only if we freeze noncritical changes before regression testing starts."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The audit trail is stored in the old lobby cabinet.",
+                "B": "Testing windows are always larger on the south side.",
+                "C": "Possibly, but only if we freeze noncritical changes before regression testing starts."
+            },
+            "correct_answer": "C",
+            "explanation": "The correct option answers indirectly and identifies the operational condition required. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_15.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-16",
+            "title": "Conditional Approval Request",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "If the battery storage commissioning review is not cleared by June 22, can we still release the client summary?",
+                "responses": {
+                    "A": "Only if Legal signs off on the exception before the summary is circulated.",
+                    "B": "The summary was printed in the training room yesterday.",
+                    "C": "I have not reserved the larger conference room yet."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Only if Legal signs off on the exception before the summary is circulated.",
+                "B": "The summary was printed in the training room yesterday.",
+                "C": "I have not reserved the larger conference room yet."
+            },
+            "correct_answer": "A",
+            "explanation": "The best response recognizes the conditional dependency and gives a constrained, professionally hedged answer rather than ignoring the approval risk. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_16.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-17",
+            "title": "Vendor Status Escalation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Would it be premature to escalate a data-retention requirement that applies retroactively to pilot records to the steering committee?",
+                "responses": {
+                    "A": "The committee usually meets in the west conference room.",
+                    "B": "Not if the vendor misses the revised checkpoint this afternoon.",
+                    "C": "I can send you the travel itinerary after lunch."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The committee usually meets in the west conference room.",
+                "B": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "C": "I can send you the travel itinerary after lunch."
+            },
+            "correct_answer": "B",
+            "explanation": "The correct option handles the negative question pragmatically and ties escalation to a measurable trigger. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_17.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-18",
+            "title": "Budget Reallocation Caveat",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Do you think Finance will object to reallocating $44,125 from the contingency line?",
+                "responses": {
+                    "A": "The office printer has already been serviced.",
+                    "B": "The client lunch was moved to Thursday.",
+                    "C": "They might, unless we document why the original reserve no longer covers the exposure."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The office printer has already been serviced.",
+                "B": "The client lunch was moved to Thursday.",
+                "C": "They might, unless we document why the original reserve no longer covers the exposure."
+            },
+            "correct_answer": "C",
+            "explanation": "The answer gives a nuanced conditional forecast and uses formal financial register. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_18.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-19",
+            "title": "Policy Interpretation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "responses": {
+                    "A": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                    "B": "The portal password expires every ninety days.",
+                    "C": "I thought the cafeteria was closed for renovations."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Use the signed policy until Compliance confirms that the notice supersedes it.",
+                "B": "The portal password expires every ninety days.",
+                "C": "I thought the cafeteria was closed for renovations."
+            },
+            "correct_answer": "A",
+            "explanation": "The response resolves a document hierarchy issue without overclaiming authority. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_19.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-20",
+            "title": "Timeline Feasibility",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Can we compress the final testing window without compromising the audit trail?",
+                "responses": {
+                    "A": "The audit trail is stored in the old lobby cabinet.",
+                    "B": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                    "C": "Testing windows are always larger on the south side."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The audit trail is stored in the old lobby cabinet.",
+                "B": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "C": "Testing windows are always larger on the south side."
+            },
+            "correct_answer": "B",
+            "explanation": "The correct option answers indirectly and identifies the operational condition required. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_20.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-21",
+            "title": "Conditional Approval Request",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "If the clinical data governance review is not cleared by November 15, can we still release the client summary?",
+                "responses": {
+                    "A": "The summary was printed in the training room yesterday.",
+                    "B": "I have not reserved the larger conference room yet.",
+                    "C": "Only if Legal signs off on the exception before the summary is circulated."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The summary was printed in the training room yesterday.",
+                "B": "I have not reserved the larger conference room yet.",
+                "C": "Only if Legal signs off on the exception before the summary is circulated."
+            },
+            "correct_answer": "C",
+            "explanation": "The best response recognizes the conditional dependency and gives a constrained, professionally hedged answer rather than ignoring the approval risk. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_21.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-22",
+            "title": "Vendor Status Escalation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Would it be premature to escalate a cost-allocation exception that must be approved before work continues to the steering committee?",
+                "responses": {
+                    "A": "Not if the vendor misses the revised checkpoint this afternoon.",
+                    "B": "The committee usually meets in the west conference room.",
+                    "C": "I can send you the travel itinerary after lunch."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Not if the vendor misses the revised checkpoint this afternoon.",
+                "B": "The committee usually meets in the west conference room.",
+                "C": "I can send you the travel itinerary after lunch."
+            },
+            "correct_answer": "A",
+            "explanation": "The correct option handles the negative question pragmatically and ties escalation to a measurable trigger. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_22.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-23",
+            "title": "Budget Reallocation Caveat",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Do you think Finance will object to reallocating $51,000 from the contingency line?",
+                "responses": {
+                    "A": "The office printer has already been serviced.",
+                    "B": "They might, unless we document why the original reserve no longer covers the exposure.",
+                    "C": "The client lunch was moved to Thursday."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The office printer has already been serviced.",
+                "B": "They might, unless we document why the original reserve no longer covers the exposure.",
+                "C": "The client lunch was moved to Thursday."
+            },
+            "correct_answer": "B",
+            "explanation": "The answer gives a nuanced conditional forecast and uses formal financial register. Option B is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_23.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-24",
+            "title": "Policy Interpretation",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "The portal notice and the signed policy seem to conflict; which one should we rely on for now?",
+                "responses": {
+                    "A": "The portal password expires every ninety days.",
+                    "B": "I thought the cafeteria was closed for renovations.",
+                    "C": "Use the signed policy until Compliance confirms that the notice supersedes it."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "The portal password expires every ninety days.",
+                "B": "I thought the cafeteria was closed for renovations.",
+                "C": "Use the signed policy until Compliance confirms that the notice supersedes it."
+            },
+            "correct_answer": "C",
+            "explanation": "The response resolves a document hierarchy issue without overclaiming authority. Option C is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_24.mp3"
+        },
+        {
+            "item_id": "PKG06-P2-25",
+            "title": "Timeline Feasibility",
+            "transcript_prompt": "Listen to the question and choose the best response.",
+            "audio_script": {
+                "question": "Can we compress the final testing window without compromising the audit trail?",
+                "responses": {
+                    "A": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                    "B": "The audit trail is stored in the old lobby cabinet.",
+                    "C": "Testing windows are always larger on the south side."
+                }
+            },
+            "prompt_text": "Listen to the question and choose the best response.",
+            "options": {
+                "A": "Possibly, but only if we freeze noncritical changes before regression testing starts.",
+                "B": "The audit trail is stored in the old lobby cabinet.",
+                "C": "Testing windows are always larger on the south side."
+            },
+            "correct_answer": "A",
+            "explanation": "The correct option answers indirectly and identifies the operational condition required. Option A is therefore the most appropriate response.",
+            "audio_file": "toeic_pkg06_p2_25.mp3"
+        }
+    ]
+}

@@ -76,7 +76,7 @@ unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toei
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
     </style>
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <div class="card disqualified-card">
         <span class="icon">🚫</span>
         <h1>Ujian Dihentikan</h1>

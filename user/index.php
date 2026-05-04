@@ -119,7 +119,7 @@ if (strpos($user_name, ' ') !== false) {
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/dark-user.css', 'css/dark-user.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <div class="bg-orbs"></div>
 
     <nav class="navbar navbar-expand-lg">

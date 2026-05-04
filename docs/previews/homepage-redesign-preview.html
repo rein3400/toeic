@@ -1,0 +1,1723 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC Simulator - Premium Homepage Preview</title>
+    <meta name="description" content="Static preview for a premium TOEIC-only homepage redesign.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #101827;
+            --ink-soft: #273349;
+            --muted: #687386;
+            --paper: #fbf8f1;
+            --paper-deep: #efe6d7;
+            --linen: #f6f0e6;
+            --navy: #111d35;
+            --red: #c81524;
+            --red-deep: #8f101c;
+            --green: #527266;
+            --amber: #bf8128;
+            --line: rgba(16, 24, 39, 0.14);
+            --line-strong: rgba(16, 24, 39, 0.22);
+            --white: #fffdf8;
+            --shadow: 0 28px 80px rgba(17, 29, 53, 0.15);
+            --ease: cubic-bezier(0.32, 0.72, 0, 1);
+            --display: "Fraunces", Georgia, serif;
+            --sans: "Outfit", "Manrope", system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                linear-gradient(90deg, rgba(16, 24, 39, 0.035) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(16, 24, 39, 0.035) 1px, transparent 1px),
+                var(--paper);
+            background-size: 72px 72px;
+            font-family: var(--sans);
+            letter-spacing: 0;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            pointer-events: none;
+            opacity: 0.08;
+            background-image:
+                repeating-linear-gradient(0deg, rgba(16, 24, 39, 0.16) 0, rgba(16, 24, 39, 0.16) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: multiply;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .site {
+            min-height: 100dvh;
+            overflow: hidden;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 36;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--amber), var(--white));
+            transform: scaleX(0);
+            transform-origin: left center;
+            animation: scrollProgress both;
+            animation-timeline: scroll(root);
+            box-shadow: 0 0 28px rgba(200, 21, 36, 0.22);
+        }
+
+        @keyframes scrollProgress {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .container {
+            width: min(100% - 40px, 1240px);
+            margin: 0 auto;
+        }
+
+        .nav-shell {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            padding: 18px 0 12px;
+        }
+
+        .nav {
+            width: min(100% - 32px, 1180px);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 24px;
+            padding: 10px 12px;
+            color: var(--white);
+            background: rgba(17, 29, 53, 0.82);
+            border: 1px solid rgba(255, 253, 248, 0.15);
+            border-radius: 999px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 70px rgba(17, 29, 53, 0.16);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            font-weight: 800;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            display: inline-grid;
+            place-items: center;
+            overflow: hidden;
+            flex: 0 0 auto;
+            border-radius: 16px;
+            color: var(--white);
+            background:
+                radial-gradient(circle at 35% 28%, rgba(255, 253, 248, 0.2), transparent 30%),
+                linear-gradient(145deg, var(--red), #15213b 72%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 253, 248, 0.28),
+                0 14px 34px rgba(200, 21, 36, 0.22);
+        }
+
+        .brand-mark::before {
+            content: "";
+            position: absolute;
+            inset: 7px;
+            border: 1px solid rgba(255, 253, 248, 0.34);
+            border-radius: 11px;
+            transform: rotate(45deg);
+            animation: markTurn 9s var(--ease) infinite;
+        }
+
+        .brand-mark span {
+            position: relative;
+            z-index: 1;
+            font-size: 0.66rem;
+            font-weight: 900;
+        }
+
+        .brand-copy {
+            display: grid;
+            gap: 1px;
+            line-height: 1;
+        }
+
+        .brand-copy strong {
+            font-size: 1rem;
+        }
+
+        .brand-copy span {
+            color: rgba(255, 253, 248, 0.6);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        @keyframes markTurn {
+            0%,
+            100% {
+                transform: rotate(45deg) scale(1);
+                opacity: 0.68;
+            }
+            50% {
+                transform: rotate(225deg) scale(0.86);
+                opacity: 1;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .nav-links a,
+        .nav-actions a {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition:
+                transform 420ms var(--ease),
+                background-color 420ms var(--ease),
+                color 420ms var(--ease),
+                border-color 420ms var(--ease);
+        }
+
+        .nav-links a {
+            padding: 0 13px;
+            color: rgba(255, 253, 248, 0.74);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            background: rgba(255, 253, 248, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .nav-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-radius: 999px;
+            padding: 7px 7px 7px 18px;
+            border: 1px solid transparent;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            transition:
+                transform 420ms var(--ease),
+                background-color 420ms var(--ease),
+                color 420ms var(--ease),
+                border-color 420ms var(--ease),
+                box-shadow 420ms var(--ease);
+        }
+
+        .btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .btn-mark {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            transition:
+                transform 420ms var(--ease),
+                background-color 420ms var(--ease);
+        }
+
+        .btn-primary {
+            color: var(--white);
+            background: var(--red);
+            box-shadow: 0 18px 38px rgba(200, 21, 36, 0.28);
+        }
+
+        .btn-primary .btn-mark {
+            background: rgba(255, 253, 248, 0.18);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-deep);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:hover .btn-mark {
+            transform: translateX(2px) translateY(-1px);
+        }
+
+        .btn-secondary {
+            color: var(--white);
+            border-color: rgba(255, 253, 248, 0.22);
+            background: rgba(255, 253, 248, 0.08);
+            padding-right: 18px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 253, 248, 0.14);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            position: relative;
+            min-height: min(760px, calc(100dvh - 76px));
+            margin-top: -72px;
+            color: var(--white);
+            display: grid;
+            align-items: end;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url("../../uploads/toeic_photos/part_1_photo_1.jpg");
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.02);
+            filter: saturate(0.92) contrast(1.05);
+            animation: heroImageDrift 18s var(--ease) infinite alternate;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(90deg, rgba(17, 29, 53, 0.96) 0%, rgba(17, 29, 53, 0.74) 42%, rgba(17, 29, 53, 0.22) 100%),
+                linear-gradient(0deg, rgba(17, 29, 53, 0.72) 0%, rgba(17, 29, 53, 0.05) 48%, rgba(17, 29, 53, 0.65) 100%);
+        }
+
+        .hero-lines {
+            position: absolute;
+            inset: 118px 32px auto auto;
+            width: min(40vw, 520px);
+            height: 360px;
+            pointer-events: none;
+            opacity: 0.34;
+            background:
+                repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.2) 0 1px, transparent 1px 42px),
+                repeating-linear-gradient(0deg, rgba(255, 253, 248, 0.14) 0 1px, transparent 1px 42px);
+            mask-image: radial-gradient(circle at 70% 50%, #000 0%, transparent 68%);
+            animation: lineDrift 14s var(--ease) infinite alternate;
+        }
+
+        .hero-seal {
+            position: absolute;
+            right: clamp(22px, 6vw, 92px);
+            bottom: clamp(42px, 11vw, 138px);
+            width: clamp(124px, 16vw, 220px);
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            opacity: 0.78;
+            border: 1px solid rgba(255, 253, 248, 0.18);
+            border-radius: 999px;
+            animation: sealFloat 10s var(--ease) infinite alternate;
+        }
+
+        .hero-seal::before,
+        .hero-seal::after {
+            content: "";
+            position: absolute;
+            inset: 14px;
+            border: 1px solid rgba(255, 253, 248, 0.18);
+            border-radius: inherit;
+        }
+
+        .hero-seal::after {
+            inset: 31px;
+            border-color: rgba(200, 21, 36, 0.5);
+            animation: sealSpin 18s var(--ease) infinite;
+        }
+
+        .hero-seal span {
+            max-width: 82px;
+            color: rgba(255, 253, 248, 0.68);
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1.25;
+        }
+
+        @keyframes heroImageDrift {
+            to {
+                transform: scale(1.08) translate3d(-1.5%, 1%, 0);
+            }
+        }
+
+        @keyframes lineDrift {
+            to {
+                transform: translate3d(-18px, 14px, 0);
+                opacity: 0.18;
+            }
+        }
+
+        @keyframes sealFloat {
+            to {
+                transform: translate3d(10px, -18px, 0);
+            }
+        }
+
+        @keyframes sealSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-grid {
+            width: min(100% - 40px, 1240px);
+            margin: 0 auto;
+            padding: 162px 0 54px;
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.55fr);
+            gap: clamp(32px, 7vw, 104px);
+            align-items: end;
+        }
+
+        .eyebrow {
+            margin: 0 0 18px;
+            color: rgba(255, 253, 248, 0.78);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .section-eyebrow {
+            margin: 0 0 14px;
+            color: var(--red);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1,
+        h2,
+        .display {
+            font-family: var(--display);
+            letter-spacing: 0;
+            text-wrap: balance;
+        }
+
+        .hero h1 {
+            max-width: 9.5ch;
+            margin-bottom: 24px;
+            font-size: clamp(3.8rem, 8.8vw, 8.6rem);
+            line-height: 0.88;
+            font-weight: 800;
+        }
+
+        .hero-copy {
+            max-width: 700px;
+            margin-bottom: 30px;
+            color: rgba(255, 253, 248, 0.78);
+            font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+            line-height: 1.72;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-spec {
+            align-self: stretch;
+            display: grid;
+            align-content: end;
+            gap: 14px;
+            color: var(--white);
+        }
+
+        .spec-line {
+            display: grid;
+            grid-template-columns: 92px 1fr;
+            gap: 16px;
+            align-items: baseline;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 253, 248, 0.2);
+        }
+
+        .spec-value {
+            font-family: "DM Mono", ui-monospace, monospace;
+            font-size: clamp(1.8rem, 3vw, 2.55rem);
+            line-height: 1;
+            color: var(--white);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .spec-label {
+            display: grid;
+            gap: 5px;
+        }
+
+        .spec-label strong {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .spec-label span {
+            color: rgba(255, 253, 248, 0.62);
+            line-height: 1.45;
+        }
+
+        .intro-ribbon {
+            position: relative;
+            z-index: 2;
+            margin-top: -22px;
+        }
+
+        .ribbon-inner {
+            display: grid;
+            grid-template-columns: 0.72fr 1fr;
+            gap: 28px;
+            align-items: center;
+            padding: 26px 30px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .ribbon-title {
+            margin: 0;
+            color: var(--navy);
+            font-weight: 800;
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+        }
+
+        .ribbon-copy {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .format-marquee {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            padding: 18px 0;
+            color: var(--white);
+            background: var(--navy);
+            border-top: 1px solid rgba(255, 253, 248, 0.08);
+            border-bottom: 1px solid rgba(255, 253, 248, 0.08);
+        }
+
+        .format-track {
+            display: flex;
+            width: max-content;
+            gap: 12px;
+            animation: formatMarquee 34s var(--ease) infinite;
+        }
+
+        .format-track span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 18px;
+            color: rgba(255, 253, 248, 0.72);
+            border: 1px solid rgba(255, 253, 248, 0.14);
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            white-space: nowrap;
+            background: rgba(255, 253, 248, 0.045);
+        }
+
+        @keyframes formatMarquee {
+            to {
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+
+        section {
+            padding: clamp(76px, 9vw, 132px) 0;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.72fr) minmax(320px, 0.52fr);
+            gap: clamp(36px, 7vw, 96px);
+            align-items: start;
+        }
+
+        .section-title {
+            max-width: 760px;
+            margin-bottom: 22px;
+            color: var(--ink);
+            font-size: clamp(2.45rem, 5vw, 5.4rem);
+            line-height: 0.96;
+        }
+
+        .section-copy {
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.78;
+        }
+
+        .check-list {
+            list-style: none;
+            display: grid;
+            gap: 0;
+            margin: 34px 0 0;
+            padding: 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .check-list li {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 14px;
+            padding: 18px 0;
+            color: var(--ink-soft);
+            border-bottom: 1px solid var(--line);
+            line-height: 1.55;
+        }
+
+        .check-list li::before {
+            content: "";
+            width: 22px;
+            height: 22px;
+            margin-top: 1px;
+            border-radius: 999px;
+            border: 7px solid var(--green);
+            box-shadow: inset 0 0 0 4px var(--paper);
+        }
+
+        .photo-slab {
+            position: sticky;
+            top: 106px;
+            overflow: hidden;
+            min-height: 520px;
+            background: var(--navy);
+            border: 1px solid var(--line-strong);
+            box-shadow: var(--shadow);
+        }
+
+        .photo-slab img {
+            width: 100%;
+            height: 100%;
+            min-height: 520px;
+            object-fit: cover;
+            opacity: 0.88;
+            filter: saturate(0.78) contrast(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+            display: grid;
+            gap: 8px;
+            padding: 18px;
+            color: var(--white);
+            background: rgba(17, 29, 53, 0.74);
+            border: 1px solid rgba(255, 253, 248, 0.15);
+        }
+
+        .photo-caption strong {
+            font-size: 1.05rem;
+        }
+
+        .photo-caption span {
+            color: rgba(255, 253, 248, 0.68);
+            line-height: 1.55;
+        }
+
+        .capabilities {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .capabilities .section-title,
+        .capabilities .section-copy {
+            color: var(--white);
+        }
+
+        .capabilities .section-copy {
+            color: rgba(255, 253, 248, 0.68);
+        }
+
+        .capability-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+            gap: clamp(36px, 7vw, 98px);
+            align-items: start;
+        }
+
+        .capability-list {
+            display: grid;
+            gap: 0;
+            border-top: 1px solid rgba(255, 253, 248, 0.18);
+        }
+
+        .capability-row {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            gap: 18px;
+            padding: 26px 0;
+            border-bottom: 1px solid rgba(255, 253, 248, 0.18);
+        }
+
+        .capability-index {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            background: rgba(255, 253, 248, 0.08);
+            border: 1px solid rgba(255, 253, 248, 0.14);
+            font-family: "DM Mono", ui-monospace, monospace;
+            font-size: 0.85rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .capability-row h3 {
+            margin-bottom: 8px;
+            color: var(--white);
+            font-size: clamp(1.35rem, 2.1vw, 2rem);
+        }
+
+        .capability-row p {
+            margin-bottom: 0;
+            color: rgba(255, 253, 248, 0.66);
+            line-height: 1.68;
+        }
+
+        .system-board {
+            display: grid;
+            gap: 14px;
+            padding: 16px;
+            background: rgba(255, 253, 248, 0.06);
+            border: 1px solid rgba(255, 253, 248, 0.14);
+        }
+
+        .board-top {
+            display: grid;
+            grid-template-columns: 1fr 0.58fr;
+            gap: 14px;
+        }
+
+        .board-panel {
+            min-height: 190px;
+            padding: 22px;
+            background: var(--white);
+            color: var(--ink);
+            border: 1px solid rgba(255, 253, 248, 0.16);
+        }
+
+        .board-panel.dark {
+            color: var(--white);
+            background: #192842;
+        }
+
+        .board-kicker {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .board-panel.dark .board-kicker {
+            color: rgba(255, 253, 248, 0.62);
+        }
+
+        .meter {
+            height: 9px;
+            margin-top: 16px;
+            overflow: hidden;
+            background: rgba(16, 24, 39, 0.1);
+        }
+
+        .meter span {
+            display: block;
+            height: 100%;
+            background: var(--red);
+            transform-origin: left;
+            animation: meterGrow 1200ms var(--ease) both;
+        }
+
+        @keyframes meterGrow {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .score-section {
+            background:
+                linear-gradient(90deg, rgba(200, 21, 36, 0.06), transparent 36%),
+                var(--linen);
+        }
+
+        .score-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.9fr);
+            gap: clamp(36px, 7vw, 90px);
+            align-items: center;
+        }
+
+        .score-console {
+            background: var(--white);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            padding: clamp(22px, 3vw, 34px);
+        }
+
+        .console-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: flex-start;
+            padding-bottom: 22px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .console-title {
+            margin-bottom: 6px;
+            color: var(--ink);
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .console-subtitle {
+            margin-bottom: 0;
+            color: var(--muted);
+        }
+
+        .score-total {
+            text-align: right;
+            font-family: "DM Mono", ui-monospace, monospace;
+            font-size: clamp(2.6rem, 5vw, 5rem);
+            line-height: 0.9;
+            color: var(--red);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .console-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1fr;
+            gap: 24px;
+            padding-top: 26px;
+        }
+
+        .score-pair {
+            display: grid;
+            gap: 12px;
+        }
+
+        .score-pair div {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 12px;
+            color: var(--ink-soft);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .score-pair strong {
+            color: var(--ink);
+            font-family: "DM Mono", ui-monospace, monospace;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .part-bars {
+            display: grid;
+            gap: 12px;
+        }
+
+        .part-bars label {
+            display: grid;
+            grid-template-columns: 72px 1fr;
+            gap: 12px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .bar {
+            height: 8px;
+            overflow: hidden;
+            background: rgba(16, 24, 39, 0.09);
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            background: var(--green);
+        }
+
+        .w-63 { width: 63%; }
+        .w-66 { width: 66%; }
+        .w-68 { width: 68%; }
+        .w-70 { width: 70%; }
+        .w-72 { width: 72%; }
+        .w-74 { width: 74%; }
+        .w-79 { width: 79%; }
+        .w-82 { width: 82%; }
+
+        .proof-list {
+            display: grid;
+            gap: 0;
+            margin-top: 34px;
+            border-top: 1px solid var(--line);
+        }
+
+        .proof-item {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 22px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .proof-item span {
+            color: var(--red);
+            font-weight: 800;
+        }
+
+        .proof-item h3 {
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-size: 1.28rem;
+        }
+
+        .proof-item p {
+            margin-bottom: 0;
+            color: var(--muted);
+            line-height: 1.68;
+        }
+
+        .simulator {
+            background: var(--paper);
+        }
+
+        .capability-board-wrap {
+            padding-top: 56px;
+        }
+
+        .module-stack {
+            display: grid;
+            gap: 16px;
+            margin-top: 44px;
+        }
+
+        .module {
+            display: grid;
+            grid-template-columns: 180px 1fr auto;
+            gap: 28px;
+            align-items: center;
+            padding: clamp(22px, 3vw, 34px);
+            background: var(--white);
+            border: 1px solid var(--line);
+            box-shadow: 0 16px 48px rgba(17, 29, 53, 0.08);
+            transition:
+                transform 520ms var(--ease),
+                box-shadow 520ms var(--ease),
+                border-color 520ms var(--ease);
+        }
+
+        .module:hover {
+            transform: translateY(-4px);
+            border-color: rgba(200, 21, 36, 0.28);
+            box-shadow: 0 26px 78px rgba(17, 29, 53, 0.13);
+        }
+
+        .module small {
+            color: var(--red);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .module h3 {
+            margin: 0 0 8px;
+            color: var(--ink);
+            font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+        }
+
+        .module p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.68;
+        }
+
+        .module a {
+            min-width: 134px;
+            justify-self: end;
+            padding: 13px 18px;
+            color: var(--navy);
+            border: 1px solid var(--line-strong);
+            font-weight: 800;
+            text-align: center;
+            transition:
+                transform 420ms var(--ease),
+                color 420ms var(--ease),
+                background-color 420ms var(--ease),
+                border-color 420ms var(--ease);
+        }
+
+        .module a:hover {
+            color: var(--white);
+            background: var(--navy);
+            border-color: var(--navy);
+            transform: translateY(-2px);
+        }
+
+        .final-cta {
+            position: relative;
+            padding: clamp(78px, 10vw, 146px) 0;
+            color: var(--white);
+            background: var(--navy);
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("../../uploads/toeic_photos/part_1_photo_2.jpg");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.22;
+            filter: saturate(0.7);
+        }
+
+        .final-cta::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(17, 29, 53, 0.96), rgba(17, 29, 53, 0.74));
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) auto;
+            gap: 36px;
+            align-items: end;
+        }
+
+        .final-cta h2 {
+            max-width: 820px;
+            margin-bottom: 18px;
+            color: var(--white);
+            font-size: clamp(2.6rem, 6vw, 6.4rem);
+            line-height: 0.94;
+        }
+
+        .final-cta p {
+            max-width: 760px;
+            margin-bottom: 0;
+            color: rgba(255, 253, 248, 0.7);
+            font-size: 1.08rem;
+            line-height: 1.78;
+        }
+
+        .footer {
+            padding: 54px 0 28px;
+            color: rgba(255, 253, 248, 0.72);
+            background: #0e1729;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr repeat(4, 0.6fr);
+            gap: 36px;
+        }
+
+        .footer h3,
+        .footer h4 {
+            margin: 0 0 14px;
+            color: var(--white);
+        }
+
+        .footer h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .footer .brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 12px;
+        }
+
+        .footer .brand-mark::before {
+            inset: 6px;
+            border-radius: 8px;
+        }
+
+        .footer .brand-mark span {
+            font-size: 0.52rem;
+        }
+
+        .footer p,
+        .footer li {
+            color: rgba(255, 253, 248, 0.65);
+            line-height: 1.68;
+        }
+
+        .footer ul {
+            display: grid;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer a {
+            transition: color 320ms var(--ease);
+        }
+
+        .footer a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            margin-top: 34px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 253, 248, 0.12);
+            color: rgba(255, 253, 248, 0.5);
+        }
+
+        [data-reveal] {
+            opacity: 1;
+            transform: translateY(0);
+            animation: revealLift 850ms var(--ease) both;
+        }
+
+        [data-reveal].is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes revealLift {
+            from {
+                opacity: 0.01;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1040px) {
+            .nav {
+                grid-template-columns: 1fr auto;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-grid,
+            .section-grid,
+            .capability-layout,
+            .score-layout,
+            .cta-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                max-width: 11ch;
+            }
+
+            .hero-spec {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .spec-line {
+                grid-template-columns: 82px 1fr;
+            }
+
+            .photo-slab {
+                position: relative;
+                top: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            .container,
+            .hero-grid {
+                width: min(100% - 28px, 1240px);
+            }
+
+            .nav-shell {
+                padding-top: 10px;
+            }
+
+            .nav {
+                width: min(100% - 20px, 1180px);
+                gap: 10px;
+                padding: 8px;
+                border-radius: 24px;
+            }
+
+            .brand-copy strong {
+                font-size: 0.9rem;
+            }
+
+            .brand-copy span {
+                display: none;
+            }
+
+            .brand-mark {
+                width: 38px;
+                height: 38px;
+            }
+
+            .nav-actions a:first-child {
+                display: none;
+            }
+
+            .btn {
+                min-height: 46px;
+                padding-left: 15px;
+            }
+
+            .hero {
+                min-height: auto;
+                margin-top: -66px;
+            }
+
+            .hero-grid {
+                padding-top: 138px;
+                padding-bottom: 38px;
+            }
+
+            .hero-lines,
+            .hero-seal {
+                display: none;
+            }
+
+            .hero h1 {
+                max-width: 8.5ch;
+                font-size: clamp(3.25rem, 18vw, 5rem);
+            }
+
+            .hero-spec {
+                grid-template-columns: 1fr;
+            }
+
+            .ribbon-inner {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+
+            section {
+                padding: 72px 0;
+            }
+
+            .section-title {
+                font-size: clamp(2.35rem, 13vw, 3.9rem);
+            }
+
+            .photo-slab,
+            .photo-slab img {
+                min-height: 360px;
+            }
+
+            .capability-row,
+            .proof-item,
+            .module,
+            .console-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module a {
+                justify-self: stretch;
+            }
+
+            .board-top {
+                grid-template-columns: 1fr;
+            }
+
+            .console-header {
+                display: grid;
+            }
+
+            .score-total {
+                text-align: left;
+            }
+
+            .cta-inner {
+                align-items: start;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .scroll-progress {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="site">
+        <header class="nav-shell">
+            <nav class="nav" aria-label="Main navigation">
+                <a class="brand" href="../../index.php">
+                    <span class="brand-mark" aria-hidden="true"><span>TOEIC</span></span>
+                    <span class="brand-copy">
+                        <strong>TOEIC Simulator</strong>
+                        <span>Listening and Reading</span>
+                    </span>
+                </a>
+                <div class="nav-links">
+                    <a href="#overview">Overview</a>
+                    <a href="#why-toeic">Why TOEIC</a>
+                    <a href="#proof">Score Report</a>
+                    <a href="#simulator">The TOEIC Tests</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn-secondary" href="../../login.php">Sign In</a>
+                    <a class="btn btn-primary" href="../../register.php">
+                        Get Started
+                        <span class="btn-mark" aria-hidden="true">-&gt;</span>
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero" id="overview">
+                <div class="hero-lines" aria-hidden="true"></div>
+                <div class="hero-seal" aria-hidden="true"><span>score range 10-990</span></div>
+                <div class="hero-grid">
+                    <div data-reveal>
+                        <p class="eyebrow">Powering global communication</p>
+                        <h1>TOEIC global English skills simulator.</h1>
+                        <p class="hero-copy">
+                            Standardized practice for serious preparation. Build real-world readiness with a TOEIC-only platform designed around the Listening and Reading flow, controlled audio delivery, score reporting, and repeatable practice.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="btn btn-primary" href="../../register.php">
+                                Get Started
+                                <span class="btn-mark" aria-hidden="true">-&gt;</span>
+                            </a>
+                            <a class="btn btn-secondary" href="../../login.php">Sign In</a>
+                        </div>
+                    </div>
+                    <div class="hero-spec" aria-label="TOEIC simulator facts" data-reveal>
+                        <div class="spec-line">
+                            <div class="spec-value">200</div>
+                            <div class="spec-label">
+                                <strong>Questions</strong>
+                                <span>Part 1-7 in one complete simulator flow.</span>
+                            </div>
+                        </div>
+                        <div class="spec-line">
+                            <div class="spec-value">120</div>
+                            <div class="spec-label">
+                                <strong>Minutes</strong>
+                                <span>45 minutes Listening and 75 minutes Reading.</span>
+                            </div>
+                        </div>
+                        <div class="spec-line">
+                            <div class="spec-value">10-990</div>
+                            <div class="spec-label">
+                                <strong>Score Range</strong>
+                                <span>Listening, Reading, and total score report.</span>
+                            </div>
+                        </div>
+                        <div class="spec-line">
+                            <div class="spec-value">2</div>
+                            <div class="spec-label">
+                                <strong>Modes</strong>
+                                <span>Full Simulation and Practice Simulation.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="intro-ribbon">
+                <div class="container">
+                    <div class="ribbon-inner" data-reveal>
+                        <h2 class="ribbon-title">TOEIC listening and reading test</h2>
+                        <p class="ribbon-copy">
+                            Part 1-7 in one complete simulator flow, 45 minutes Listening and 75 minutes Reading, with a score report covering Listening, Reading, and total score.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-marquee" aria-hidden="true">
+                <div class="format-track">
+                    <span>Part 1-7 complete flow</span>
+                    <span>45 minutes Listening</span>
+                    <span>75 minutes Reading</span>
+                    <span>Secure audio delivery</span>
+                    <span>Score report 10-990</span>
+                    <span>Practice simulation</span>
+                    <span>Proctoring-ready full test</span>
+                    <span>Part 1-7 complete flow</span>
+                    <span>45 minutes Listening</span>
+                    <span>75 minutes Reading</span>
+                    <span>Secure audio delivery</span>
+                    <span>Score report 10-990</span>
+                    <span>Practice simulation</span>
+                    <span>Proctoring-ready full test</span>
+                </div>
+            </div>
+
+            <section id="why-toeic">
+                <div class="container section-grid">
+                    <div data-reveal>
+                        <p class="section-eyebrow">Trusted test architecture</p>
+                        <h2 class="section-title">Why TOEIC?</h2>
+                        <p class="section-copy">
+                            In today's business environment, the future belongs to up-to-date, real-world communication. This simulator is built to mirror that requirement with a focused TOEIC practice environment, disciplined section timing, and a score report you can review after every attempt.
+                        </p>
+                        <ul class="check-list">
+                            <li>Workplace-focused Listening and Reading practice.</li>
+                            <li>Official section order with a score-driven review loop.</li>
+                            <li>Repeatable simulator sessions for targeted improvement.</li>
+                        </ul>
+                    </div>
+                    <figure class="photo-slab" data-reveal>
+                        <img src="../../uploads/toeic_photos/part_1_photo_2.jpg" alt="Workplace discussion used as TOEIC listening practice context">
+                        <figcaption class="photo-caption">
+                            <strong>Built around the TOEIC format</strong>
+                            <span>Learn more about the learners who use focused TOEIC preparation.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="capabilities">
+                <div class="container capability-layout">
+                    <div data-reveal>
+                        <p class="section-eyebrow">Practice with intent</p>
+                        <h2 class="section-title">Why standardized English proficiency assessment matters for serious preparation.</h2>
+                        <p class="section-copy">
+                            TOEIC preparation is stronger when the structure stays consistent. This product removes unrelated formats and keeps every public, student, and reporting flow anchored to TOEIC Listening and Reading only.
+                        </p>
+                    </div>
+                    <div class="capability-list" data-reveal>
+                        <article class="capability-row">
+                            <span class="capability-index">01</span>
+                            <div>
+                                <h3>Secure Listening Delivery</h3>
+                                <p>Controlled playback for Listening stimuli and audio completion tracking.</p>
+                            </div>
+                        </article>
+                        <article class="capability-row">
+                            <span class="capability-index">02</span>
+                            <div>
+                                <h3>Score Report and Analytics</h3>
+                                <p>Review total score, section score, and part-level accuracy after each completed session.</p>
+                            </div>
+                        </article>
+                        <article class="capability-row">
+                            <span class="capability-index">03</span>
+                            <div>
+                                <h3>Proctoring-Ready Full Test</h3>
+                                <p>Run a full simulation flow with pre-check, monitoring, and disqualification handling.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="container capability-board-wrap">
+                    <div class="system-board" data-reveal>
+                        <div class="board-top">
+                            <div class="board-panel">
+                                <span class="board-kicker">Full simulation flow</span>
+                                <h3>Listening and Reading stay in one disciplined sequence.</h3>
+                                <div class="meter"><span class="w-82"></span></div>
+                            </div>
+                            <div class="board-panel dark">
+                                <span class="board-kicker">Controlled audio</span>
+                                <h3>Playback, completion, and review stay measurable.</h3>
+                            </div>
+                        </div>
+                        <div class="board-panel">
+                            <span class="board-kicker">Score-driven review loop</span>
+                            <h3>Every completed session points back to section score, part accuracy, and the next improvement cycle.</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="score-section" id="proof">
+                <div class="container score-layout">
+                    <div data-reveal>
+                        <p class="section-eyebrow">Trusted by focused learners</p>
+                        <h2 class="section-title">A score report designed for decision-making after every session.</h2>
+                        <p class="section-copy">
+                            Move from generic drills to a simulator that exposes Listening and Reading performance, part-level gaps, and the next best action after every attempt.
+                        </p>
+                    </div>
+                    <div class="score-console" data-reveal>
+                        <div class="console-header">
+                            <div>
+                                <h3 class="console-title">Latest full simulation breakdown</h3>
+                                <p class="console-subtitle">Listening, Reading, and total score</p>
+                            </div>
+                            <div class="score-total">10-990</div>
+                        </div>
+                        <div class="console-grid">
+                            <div class="score-pair">
+                                <div><span>Listening</span><strong>Score</strong></div>
+                                <div><span>Reading</span><strong>Score</strong></div>
+                                <div><span>Total</span><strong>Report</strong></div>
+                            </div>
+                            <div class="part-bars" aria-label="Part-level accuracy visual preview">
+                                <label>Part 1 <span class="bar"><span class="w-74"></span></span></label>
+                                <label>Part 2 <span class="bar"><span class="w-68"></span></span></label>
+                                <label>Part 3 <span class="bar"><span class="w-72"></span></span></label>
+                                <label>Part 4 <span class="bar"><span class="w-63"></span></span></label>
+                                <label>Part 5 <span class="bar"><span class="w-79"></span></span></label>
+                                <label>Part 6 <span class="bar"><span class="w-70"></span></span></label>
+                                <label>Part 7 <span class="bar"><span class="w-66"></span></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="proof-list" data-reveal>
+                        <article class="proof-item">
+                            <span>Performance proof</span>
+                            <div>
+                                <h3>Latest full simulation breakdown</h3>
+                                <p>Track how many answers were correct in each part and compare where your time and attention should go next.</p>
+                            </div>
+                        </article>
+                        <article class="proof-item">
+                            <span>Score visibility</span>
+                            <div>
+                                <h3>Listening, Reading, and total score</h3>
+                                <p>View section-level scaled scores together with a full report page and follow-up analytics flow.</p>
+                            </div>
+                        </article>
+                        <article class="proof-item">
+                            <span>Practice continuity</span>
+                            <div>
+                                <h3>Resume sessions and review results</h3>
+                                <p>Keep progress alive with active-session handling, practice summaries, and repeatable part-by-part improvement loops.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="simulator" id="simulator">
+                <div class="container">
+                    <div data-reveal>
+                        <p class="section-eyebrow">The TOEIC tests</p>
+                        <h2 class="section-title">Choose the practice flow that matches the score you want to build.</h2>
+                        <p class="section-copy">
+                            Aligned with the TOEIC Listening and Reading structure, these modules let you prepare through a full monitored simulation, a practice-first simulation, and review-led progress tools.
+                        </p>
+                    </div>
+                    <div class="module-stack" data-reveal>
+                        <article class="module">
+                            <small>Primary module</small>
+                            <div>
+                                <h3>TOEIC Listening and Reading Test</h3>
+                                <p>Assesses intermediate to advanced listening and reading skills needed in the workplace through a complete 200-question simulator.</p>
+                            </div>
+                            <a href="../../register.php">Learn More</a>
+                        </article>
+                        <article class="module">
+                            <small>Practice route</small>
+                            <div>
+                                <h3>Practice Simulation</h3>
+                                <p>Run the same full TOEIC sequence without proctoring while using one active package for each new practice attempt.</p>
+                            </div>
+                            <a href="../../register.php">Learn More</a>
+                        </article>
+                        <article class="module">
+                            <small>Progress system</small>
+                            <div>
+                                <h3>Analytics and AI Analysis</h3>
+                                <p>Use trend data, part breakdown, and AI-generated study focus to turn each report into the next improvement cycle.</p>
+                            </div>
+                            <a href="../../login.php">Learn More</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="final-cta">
+                <div class="container cta-inner">
+                    <div data-reveal>
+                        <p class="eyebrow">Explore the simulator</p>
+                        <h2>Build real workforce effectiveness through focused TOEIC practice.</h2>
+                        <p>
+                            From account creation to result review, every surface in this product is oriented around one goal: make TOEIC practice more structured, measurable, and repeatable.
+                        </p>
+                    </div>
+                    <a class="btn btn-primary" href="../../register.php" data-reveal>
+                        Create TOEIC Account
+                        <span class="btn-mark" aria-hidden="true">-&gt;</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <h3>
+                            <span class="brand-mark" aria-hidden="true"><span>TOEIC</span></span>
+                            TOEIC Simulator
+                        </h3>
+                        <p>
+                            Powering focused TOEIC preparation through a simulator built around the Listening and Reading format, official timing flow, score reporting, and structured practice.
+                        </p>
+                    </div>
+                    <div>
+                        <h4>Explore</h4>
+                        <ul>
+                            <li><a href="#overview">Global English Skills</a></li>
+                            <li><a href="#proof">Score Report</a></li>
+                            <li><a href="#simulator">Learning Modules</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Platform</h4>
+                        <ul>
+                            <li><a href="../../register.php">Create Account</a></li>
+                            <li><a href="../../login.php">Sign In</a></li>
+                            <li><a href="../../user/index.php">Student Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Simulator</h4>
+                        <ul>
+                            <li><a href="../../user/test_instructions.php?mode=full">Full Simulation</a></li>
+                            <li><a href="../../user/test_instructions.php?mode=prep">Practice Simulation</a></li>
+                            <li><a href="../../user/analytics.php">Analytics</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Contact</h4>
+                        <ul>
+                            <li>support@osgli.com</li>
+                            <li>TOEIC-only simulator</li>
+                            <li>Listening and Reading focus</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 TOEIC Simulator. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.16 });
+
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+            revealObserver.observe(element);
+        });
+    </script>
+</body>
+</html>

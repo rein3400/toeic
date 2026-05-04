@@ -1,0 +1,395 @@
+{
+    "part": "5",
+    "items": [
+        {
+            "item_id": "PKG02-P5-01",
+            "sentence": "Only after the compliance committee had reconciled the two contradictory notices ___ the procurement team permitted to issue the amended purchase order.",
+            "options": {
+                "A": "did",
+                "B": "has",
+                "C": "was",
+                "D": "will"
+            },
+            "correct_answer": "C",
+            "explanation": "Inversion after a fronted restrictive adverbial with a passive main clause. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Inversion after a fronted restrictive adverbial with a passive main clause"
+        },
+        {
+            "item_id": "PKG02-P5-02",
+            "sentence": "The revised policy is binding ___ expressly superseded by a later memorandum signed by the general counsel.",
+            "options": {
+                "A": "whereas",
+                "B": "notwithstanding",
+                "C": "therefore",
+                "D": "unless"
+            },
+            "correct_answer": "D",
+            "explanation": "Subordinating conjunction expressing exception. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Subordinating conjunction expressing exception"
+        },
+        {
+            "item_id": "PKG02-P5-03",
+            "sentence": "The auditors questioned whether the revenue estimate had been ___ by one-time rebates that would not recur next quarter.",
+            "options": {
+                "A": "inflated",
+                "B": "elaborated",
+                "C": "heightened",
+                "D": "magnified"
+            },
+            "correct_answer": "A",
+            "explanation": "Precise financial verb choice. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Precise financial verb choice"
+        },
+        {
+            "item_id": "PKG02-P5-04",
+            "sentence": "Had the battery storage commissioning vendor disclosed the dependency earlier, the steering committee ___ a less aggressive deployment window.",
+            "options": {
+                "A": "will approve",
+                "B": "would have approved",
+                "C": "approves",
+                "D": "has approved"
+            },
+            "correct_answer": "B",
+            "explanation": "Mixed conditional with past counterfactual result. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mixed conditional with past counterfactual result"
+        },
+        {
+            "item_id": "PKG02-P5-05",
+            "sentence": "The board accepted the proposal, ___ that all regional subsidiaries adopt the same retention schedule.",
+            "options": {
+                "A": "providing",
+                "B": "to provide",
+                "C": "provided",
+                "D": "having provided"
+            },
+            "correct_answer": "C",
+            "explanation": "Past participle clause expressing a condition. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Past participle clause expressing a condition"
+        },
+        {
+            "item_id": "PKG02-P5-06",
+            "sentence": "The contract requires invoices to be submitted within ten business days, a provision ___ enforcement has historically been inconsistent.",
+            "options": {
+                "A": "which",
+                "B": "that",
+                "C": "whereby",
+                "D": "whose"
+            },
+            "correct_answer": "D",
+            "explanation": "Relative determiner linking provision and enforcement. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Relative determiner linking provision and enforcement"
+        },
+        {
+            "item_id": "PKG02-P5-07",
+            "sentence": "The migration team postponed the cutover, not because testing had failed, ___ because the approval evidence remained incomplete.",
+            "options": {
+                "A": "but rather",
+                "B": "even so",
+                "C": "insofar",
+                "D": "unless"
+            },
+            "correct_answer": "A",
+            "explanation": "Correlative contrast and discourse logic. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Correlative contrast and discourse logic"
+        },
+        {
+            "item_id": "PKG02-P5-08",
+            "sentence": "The revised dashboard aggregates exceptions ___ severity, region, and remediation owner.",
+            "options": {
+                "A": "with",
+                "B": "by",
+                "C": "onto",
+                "D": "beside"
+            },
+            "correct_answer": "B",
+            "explanation": "Prepositional collocation with aggregate. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Prepositional collocation with aggregate"
+        },
+        {
+            "item_id": "PKG02-P5-09",
+            "sentence": "No sooner had the warranty clause been amended ___ the supplier requested a change to the liability cap.",
+            "options": {
+                "A": "when",
+                "B": "then",
+                "C": "than",
+                "D": "that"
+            },
+            "correct_answer": "C",
+            "explanation": "No sooner ... than construction. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "No sooner ... than construction"
+        },
+        {
+            "item_id": "PKG02-P5-10",
+            "sentence": "The committee recommended that the disclosure note ___ rewritten to clarify the basis for recognizing deferred revenue.",
+            "options": {
+                "A": "is",
+                "B": "was",
+                "C": "being",
+                "D": "be"
+            },
+            "correct_answer": "D",
+            "explanation": "Mandative subjunctive after recommend. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mandative subjunctive after recommend"
+        },
+        {
+            "item_id": "PKG02-P5-11",
+            "sentence": "Only after the compliance committee had reconciled the two contradictory notices ___ the procurement team permitted to issue the amended purchase order.",
+            "options": {
+                "A": "was",
+                "B": "did",
+                "C": "has",
+                "D": "will"
+            },
+            "correct_answer": "A",
+            "explanation": "Inversion after a fronted restrictive adverbial with a passive main clause. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Inversion after a fronted restrictive adverbial with a passive main clause"
+        },
+        {
+            "item_id": "PKG02-P5-12",
+            "sentence": "The revised policy is binding ___ expressly superseded by a later memorandum signed by the general counsel.",
+            "options": {
+                "A": "whereas",
+                "B": "unless",
+                "C": "notwithstanding",
+                "D": "therefore"
+            },
+            "correct_answer": "B",
+            "explanation": "Subordinating conjunction expressing exception. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Subordinating conjunction expressing exception"
+        },
+        {
+            "item_id": "PKG02-P5-13",
+            "sentence": "The auditors questioned whether the revenue estimate had been ___ by one-time rebates that would not recur next quarter.",
+            "options": {
+                "A": "elaborated",
+                "B": "heightened",
+                "C": "inflated",
+                "D": "magnified"
+            },
+            "correct_answer": "C",
+            "explanation": "Precise financial verb choice. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Precise financial verb choice"
+        },
+        {
+            "item_id": "PKG02-P5-14",
+            "sentence": "Had the device traceability validation vendor disclosed the dependency earlier, the steering committee ___ a less aggressive deployment window.",
+            "options": {
+                "A": "will approve",
+                "B": "approves",
+                "C": "has approved",
+                "D": "would have approved"
+            },
+            "correct_answer": "D",
+            "explanation": "Mixed conditional with past counterfactual result. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mixed conditional with past counterfactual result"
+        },
+        {
+            "item_id": "PKG02-P5-15",
+            "sentence": "The board accepted the proposal, ___ that all regional subsidiaries adopt the same retention schedule.",
+            "options": {
+                "A": "provided",
+                "B": "providing",
+                "C": "to provide",
+                "D": "having provided"
+            },
+            "correct_answer": "A",
+            "explanation": "Past participle clause expressing a condition. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Past participle clause expressing a condition"
+        },
+        {
+            "item_id": "PKG02-P5-16",
+            "sentence": "The contract requires invoices to be submitted within ten business days, a provision ___ enforcement has historically been inconsistent.",
+            "options": {
+                "A": "which",
+                "B": "whose",
+                "C": "that",
+                "D": "whereby"
+            },
+            "correct_answer": "B",
+            "explanation": "Relative determiner linking provision and enforcement. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Relative determiner linking provision and enforcement"
+        },
+        {
+            "item_id": "PKG02-P5-17",
+            "sentence": "The migration team postponed the cutover, not because testing had failed, ___ because the approval evidence remained incomplete.",
+            "options": {
+                "A": "even so",
+                "B": "insofar",
+                "C": "but rather",
+                "D": "unless"
+            },
+            "correct_answer": "C",
+            "explanation": "Correlative contrast and discourse logic. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Correlative contrast and discourse logic"
+        },
+        {
+            "item_id": "PKG02-P5-18",
+            "sentence": "The revised dashboard aggregates exceptions ___ severity, region, and remediation owner.",
+            "options": {
+                "A": "with",
+                "B": "onto",
+                "C": "beside",
+                "D": "by"
+            },
+            "correct_answer": "D",
+            "explanation": "Prepositional collocation with aggregate. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Prepositional collocation with aggregate"
+        },
+        {
+            "item_id": "PKG02-P5-19",
+            "sentence": "No sooner had the warranty clause been amended ___ the supplier requested a change to the liability cap.",
+            "options": {
+                "A": "than",
+                "B": "when",
+                "C": "then",
+                "D": "that"
+            },
+            "correct_answer": "A",
+            "explanation": "No sooner ... than construction. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "No sooner ... than construction"
+        },
+        {
+            "item_id": "PKG02-P5-20",
+            "sentence": "The committee recommended that the disclosure note ___ rewritten to clarify the basis for recognizing deferred revenue.",
+            "options": {
+                "A": "is",
+                "B": "be",
+                "C": "was",
+                "D": "being"
+            },
+            "correct_answer": "B",
+            "explanation": "Mandative subjunctive after recommend. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mandative subjunctive after recommend"
+        },
+        {
+            "item_id": "PKG02-P5-21",
+            "sentence": "Only after the compliance committee had reconciled the two contradictory notices ___ the procurement team permitted to issue the amended purchase order.",
+            "options": {
+                "A": "did",
+                "B": "has",
+                "C": "was",
+                "D": "will"
+            },
+            "correct_answer": "C",
+            "explanation": "Inversion after a fronted restrictive adverbial with a passive main clause. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Inversion after a fronted restrictive adverbial with a passive main clause"
+        },
+        {
+            "item_id": "PKG02-P5-22",
+            "sentence": "The revised policy is binding ___ expressly superseded by a later memorandum signed by the general counsel.",
+            "options": {
+                "A": "whereas",
+                "B": "notwithstanding",
+                "C": "therefore",
+                "D": "unless"
+            },
+            "correct_answer": "D",
+            "explanation": "Subordinating conjunction expressing exception. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Subordinating conjunction expressing exception"
+        },
+        {
+            "item_id": "PKG02-P5-23",
+            "sentence": "The auditors questioned whether the revenue estimate had been ___ by one-time rebates that would not recur next quarter.",
+            "options": {
+                "A": "inflated",
+                "B": "elaborated",
+                "C": "heightened",
+                "D": "magnified"
+            },
+            "correct_answer": "A",
+            "explanation": "Precise financial verb choice. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Precise financial verb choice"
+        },
+        {
+            "item_id": "PKG02-P5-24",
+            "sentence": "Had the cross-border customs compliance vendor disclosed the dependency earlier, the steering committee ___ a less aggressive deployment window.",
+            "options": {
+                "A": "will approve",
+                "B": "would have approved",
+                "C": "approves",
+                "D": "has approved"
+            },
+            "correct_answer": "B",
+            "explanation": "Mixed conditional with past counterfactual result. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mixed conditional with past counterfactual result"
+        },
+        {
+            "item_id": "PKG02-P5-25",
+            "sentence": "The board accepted the proposal, ___ that all regional subsidiaries adopt the same retention schedule.",
+            "options": {
+                "A": "providing",
+                "B": "to provide",
+                "C": "provided",
+                "D": "having provided"
+            },
+            "correct_answer": "C",
+            "explanation": "Past participle clause expressing a condition. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Past participle clause expressing a condition"
+        },
+        {
+            "item_id": "PKG02-P5-26",
+            "sentence": "The contract requires invoices to be submitted within ten business days, a provision ___ enforcement has historically been inconsistent.",
+            "options": {
+                "A": "which",
+                "B": "that",
+                "C": "whereby",
+                "D": "whose"
+            },
+            "correct_answer": "D",
+            "explanation": "Relative determiner linking provision and enforcement. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Relative determiner linking provision and enforcement"
+        },
+        {
+            "item_id": "PKG02-P5-27",
+            "sentence": "The migration team postponed the cutover, not because testing had failed, ___ because the approval evidence remained incomplete.",
+            "options": {
+                "A": "but rather",
+                "B": "even so",
+                "C": "insofar",
+                "D": "unless"
+            },
+            "correct_answer": "A",
+            "explanation": "Correlative contrast and discourse logic. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Correlative contrast and discourse logic"
+        },
+        {
+            "item_id": "PKG02-P5-28",
+            "sentence": "The revised dashboard aggregates exceptions ___ severity, region, and remediation owner.",
+            "options": {
+                "A": "with",
+                "B": "by",
+                "C": "onto",
+                "D": "beside"
+            },
+            "correct_answer": "B",
+            "explanation": "Prepositional collocation with aggregate. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Prepositional collocation with aggregate"
+        },
+        {
+            "item_id": "PKG02-P5-29",
+            "sentence": "No sooner had the warranty clause been amended ___ the supplier requested a change to the liability cap.",
+            "options": {
+                "A": "when",
+                "B": "then",
+                "C": "than",
+                "D": "that"
+            },
+            "correct_answer": "C",
+            "explanation": "No sooner ... than construction. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "No sooner ... than construction"
+        },
+        {
+            "item_id": "PKG02-P5-30",
+            "sentence": "The committee recommended that the disclosure note ___ rewritten to clarify the basis for recognizing deferred revenue.",
+            "options": {
+                "A": "is",
+                "B": "was",
+                "C": "being",
+                "D": "be"
+            },
+            "correct_answer": "D",
+            "explanation": "Mandative subjunctive after recommend. The correct choice is the only option that preserves both the grammar and the formal business meaning of the sentence.",
+            "grammar_focus": "Mandative subjunctive after recommend"
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment - TOEIC Student Preview</title>
+    <link rel="stylesheet" href="toeic-preview-system.css">
+</head>
+<body>
+    <div class="preview-page">
+        <header class="preview-topbar">
+            <nav class="preview-nav">
+                <a class="brand" href="preview-suite.html">
+                    <span class="brand-mark">TOEIC</span>
+                    <span class="brand-text"><strong>TOEIC Simulator</strong><span>TOEIC payment</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="user-dashboard-redesign-preview.html">Dashboard</a>
+                    <a href="buy-exam-redesign-preview.html">Package</a>
+                    <a class="is-active" href="payment-redesign-preview.html">Payment</a>
+                    <a href="payment-pending-redesign-preview.html">Pending</a>
+                </div>
+                <div class="nav-actions">
+                    <a class="btn btn-light" href="buy-exam-redesign-preview.html">Change Package</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="shell">
+            <section class="page-title">
+                <div>
+                    <span class="kicker">Checkout</span>
+                    <h1>Pay for TOEIC Listening &amp; Reading with a method that feels trustworthy.</h1>
+                    <p>The page keeps the existing package summary, QRIS, BCA VA, BNI VA, BRI VA, Mandiri VA, voucher action, and gateway readiness messaging.</p>
+                </div>
+            </section>
+
+            <section class="split-layout">
+                <div class="stack">
+                    <article class="card">
+                        <div class="section-head">
+                            <div><h2>Select Payment Method</h2><p>Students can compare methods without leaving the checkout context.</p></div>
+                            <span class="pill red">Tripay</span>
+                        </div>
+                        <div class="stack">
+                            <div class="method-card is-selected">
+                                <span class="method-icon">QR</span>
+                                <div><strong>QRIS</strong><p>Scan from any supported mobile banking or e-wallet app.</p></div>
+                                <span class="pill red">Selected</span>
+                            </div>
+                            <div class="method-card">
+                                <span class="method-icon">BCA</span>
+                                <div><strong>BCA Virtual Account</strong><p>Pay from BCA mobile, ATM, or internet banking.</p></div>
+                                <span class="pill">VA</span>
+                            </div>
+                            <div class="method-card">
+                                <span class="method-icon">BNI</span>
+                                <div><strong>BNI Virtual Account</strong><p>Virtual account payment with instant status update.</p></div>
+                                <span class="pill">VA</span>
+                            </div>
+                            <div class="method-card">
+                                <span class="method-icon">BRI</span>
+                                <div><strong>BRI Virtual Account</strong><p>Continue through BRI transfer channels.</p></div>
+                                <span class="pill">VA</span>
+                            </div>
+                            <div class="method-card">
+                                <span class="method-icon">MAN</span>
+                                <div><strong>Mandiri Virtual Account</strong><p>Mandiri VA route for TOEIC package activation.</p></div>
+                                <span class="pill">VA</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="form-card">
+                        <div class="section-head">
+                            <div><h2>Voucher</h2><p>Redeem existing voucher codes before creating the payment transaction.</p></div>
+                        </div>
+                        <div class="form-grid">
+                            <label class="field"><span>Voucher code</span><input type="text" value="TOEIC-SCORE-READY"></label>
+                            <div class="field"><span>&nbsp;</span><button class="btn btn-dark" type="button">Apply Voucher</button></div>
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="panel stack">
+                    <h2>Order Summary</h2>
+                    <div class="qr-block">QRIS</div>
+                    <table class="data-table">
+                        <tbody>
+                            <tr><th>Product</th><td>TOEIC Listening &amp; Reading</td></tr>
+                            <tr><th>Access</th><td>Full TOEIC simulation and practice simulation</td></tr>
+                            <tr><th>Report</th><td>Score report and analytics</td></tr>
+                            <tr><th>Total</th><td><strong>Rp 175.000</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="alert warning">Payment gateway readiness warning appears here when Tripay credentials are not configured.</div>
+                    <a class="btn btn-primary" href="payment-pending-redesign-preview.html">Pay Now</a>
+                </aside>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

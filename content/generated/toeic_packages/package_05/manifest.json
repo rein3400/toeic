@@ -1,0 +1,29 @@
+{
+    "package": "05",
+    "target_cefr": "C2",
+    "generated_at": "2026-05-04T01:26:37+00:00",
+    "counts": {
+        "part1": 6,
+        "part2": 25,
+        "part3_questions": 39,
+        "part4_questions": 30,
+        "part5": 30,
+        "part6_questions": 16,
+        "part7_questions": 54,
+        "listening_total": 100,
+        "reading_total": 100,
+        "total": 200,
+        "audio_files": 54,
+        "image_files": 6
+    },
+    "files": [
+        "part1.json",
+        "part2.json",
+        "part3.json",
+        "part4.json",
+        "part5.json",
+        "part6.json",
+        "part7.json",
+        "media/transcripts.json"
+    ]
+}

@@ -1,0 +1,229 @@
+{
+    "part": "6",
+    "sets": [
+        {
+            "set_id": "PKG10-P6-01",
+            "title": "Control Register Implementation Notice",
+            "text_type": "internal memo",
+            "passage_with_blanks": "To: Regional Managers\nFrom: Nexus Renewable Energy Operations Office\nSubject: strategic sourcing governance Control Update\n\nFollowing the latest internal audit, the company will ___1___ a revised control register for all projects associated with strategic sourcing governance. The register will apply to active workstreams ___2___ managers can demonstrate that a local regulation requires a different approval sequence. During the transition, department leads are responsible for ___3___ legacy notices with the signed policy so that employees do not rely on outdated portal guidance. Each manager must ___4___ a short exception report by the fifth business day of the month.",
+            "questions": [
+                {
+                    "blank_number": "1",
+                    "question_text": "Choose the best word or phrase for blank #1.",
+                    "options": {
+                        "A": "simplify",
+                        "B": "postpone",
+                        "C": "formalize",
+                        "D": "detach"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: collocation with governance controls."
+                },
+                {
+                    "blank_number": "2",
+                    "question_text": "Choose the best word or phrase for blank #2.",
+                    "options": {
+                        "A": "although",
+                        "B": "so that",
+                        "C": "even if",
+                        "D": "provided that"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: conditional connector."
+                },
+                {
+                    "blank_number": "3",
+                    "question_text": "Choose the best word or phrase for blank #3.",
+                    "options": {
+                        "A": "reconciling",
+                        "B": "reconcile",
+                        "C": "reconciled",
+                        "D": "to reconcile"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: parallel participial structure."
+                },
+                {
+                    "blank_number": "4",
+                    "question_text": "Choose the best word or phrase for blank #4.",
+                    "options": {
+                        "A": "convey",
+                        "B": "submit",
+                        "C": "store",
+                        "D": "compose"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: formal reporting collocation."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG10-P6-02",
+            "title": "Control Register Implementation Notice",
+            "text_type": "internal memo",
+            "passage_with_blanks": "To: Regional Managers\nFrom: Crescent Pharma Operations Office\nSubject: cross-border customs compliance Control Update\n\nFollowing the latest internal audit, the company will ___1___ a revised control register for all projects associated with cross-border customs compliance. The register will apply to active workstreams ___2___ managers can demonstrate that a local regulation requires a different approval sequence. During the transition, department leads are responsible for ___3___ legacy notices with the signed policy so that employees do not rely on outdated portal guidance. Each manager must ___4___ a short exception report by the fifth business day of the month.",
+            "questions": [
+                {
+                    "blank_number": "1",
+                    "question_text": "Choose the best word or phrase for blank #1.",
+                    "options": {
+                        "A": "simplify",
+                        "B": "postpone",
+                        "C": "detach",
+                        "D": "formalize"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: collocation with governance controls."
+                },
+                {
+                    "blank_number": "2",
+                    "question_text": "Choose the best word or phrase for blank #2.",
+                    "options": {
+                        "A": "provided that",
+                        "B": "although",
+                        "C": "so that",
+                        "D": "even if"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: conditional connector."
+                },
+                {
+                    "blank_number": "3",
+                    "question_text": "Choose the best word or phrase for blank #3.",
+                    "options": {
+                        "A": "reconcile",
+                        "B": "reconciling",
+                        "C": "reconciled",
+                        "D": "to reconcile"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: parallel participial structure."
+                },
+                {
+                    "blank_number": "4",
+                    "question_text": "Choose the best word or phrase for blank #4.",
+                    "options": {
+                        "A": "convey",
+                        "B": "store",
+                        "C": "submit",
+                        "D": "compose"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: formal reporting collocation."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG10-P6-03",
+            "title": "Control Register Implementation Notice",
+            "text_type": "internal memo",
+            "passage_with_blanks": "To: Regional Managers\nFrom: Aperture Media Labs Operations Office\nSubject: clinical data governance Control Update\n\nFollowing the latest internal audit, the company will ___1___ a revised control register for all projects associated with clinical data governance. The register will apply to active workstreams ___2___ managers can demonstrate that a local regulation requires a different approval sequence. During the transition, department leads are responsible for ___3___ legacy notices with the signed policy so that employees do not rely on outdated portal guidance. Each manager must ___4___ a short exception report by the fifth business day of the month.",
+            "questions": [
+                {
+                    "blank_number": "1",
+                    "question_text": "Choose the best word or phrase for blank #1.",
+                    "options": {
+                        "A": "formalize",
+                        "B": "simplify",
+                        "C": "postpone",
+                        "D": "detach"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: collocation with governance controls."
+                },
+                {
+                    "blank_number": "2",
+                    "question_text": "Choose the best word or phrase for blank #2.",
+                    "options": {
+                        "A": "although",
+                        "B": "provided that",
+                        "C": "so that",
+                        "D": "even if"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: conditional connector."
+                },
+                {
+                    "blank_number": "3",
+                    "question_text": "Choose the best word or phrase for blank #3.",
+                    "options": {
+                        "A": "reconcile",
+                        "B": "reconciled",
+                        "C": "reconciling",
+                        "D": "to reconcile"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: parallel participial structure."
+                },
+                {
+                    "blank_number": "4",
+                    "question_text": "Choose the best word or phrase for blank #4.",
+                    "options": {
+                        "A": "convey",
+                        "B": "store",
+                        "C": "compose",
+                        "D": "submit"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: formal reporting collocation."
+                }
+            ]
+        },
+        {
+            "set_id": "PKG10-P6-04",
+            "title": "Control Register Implementation Notice",
+            "text_type": "internal memo",
+            "passage_with_blanks": "To: Regional Managers\nFrom: Pinnacle Procurement Operations Office\nSubject: predictive inventory modeling Control Update\n\nFollowing the latest internal audit, the company will ___1___ a revised control register for all projects associated with predictive inventory modeling. The register will apply to active workstreams ___2___ managers can demonstrate that a local regulation requires a different approval sequence. During the transition, department leads are responsible for ___3___ legacy notices with the signed policy so that employees do not rely on outdated portal guidance. Each manager must ___4___ a short exception report by the fifth business day of the month.",
+            "questions": [
+                {
+                    "blank_number": "1",
+                    "question_text": "Choose the best word or phrase for blank #1.",
+                    "options": {
+                        "A": "simplify",
+                        "B": "formalize",
+                        "C": "postpone",
+                        "D": "detach"
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: collocation with governance controls."
+                },
+                {
+                    "blank_number": "2",
+                    "question_text": "Choose the best word or phrase for blank #2.",
+                    "options": {
+                        "A": "although",
+                        "B": "so that",
+                        "C": "provided that",
+                        "D": "even if"
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: conditional connector."
+                },
+                {
+                    "blank_number": "3",
+                    "question_text": "Choose the best word or phrase for blank #3.",
+                    "options": {
+                        "A": "reconcile",
+                        "B": "reconciled",
+                        "C": "to reconcile",
+                        "D": "reconciling"
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: parallel participial structure."
+                },
+                {
+                    "blank_number": "4",
+                    "question_text": "Choose the best word or phrase for blank #4.",
+                    "options": {
+                        "A": "submit",
+                        "B": "convey",
+                        "C": "store",
+                        "D": "compose"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The correct answer fits the sentence grammar and the passage cohesion: formal reporting collocation."
+                }
+            ]
+        }
+    ]
+}

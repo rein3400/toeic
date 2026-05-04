@@ -85,7 +85,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
         code { color: var(--toeic-amber-deep); }
     </style>
 </head>
-<body>
+<body class="toeic-redesign-body toeic-student-page">
     <div class="bg-orbs"></div>
 
     <!-- NAVBAR -->

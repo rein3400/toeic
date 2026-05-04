@@ -1,0 +1,551 @@
+{
+    "part": "3",
+    "sets": [
+        {
+            "set_id": "PKG02-P3-01",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a capacity constraint that affects only the accelerated workstream affects a clinical data governance schedule.",
+            "audio_script": "Nadia: Amelia, thanks for joining on short notice. The clinical data governance workstream has become more complicated because a capacity constraint that affects only the accelerated workstream.\nAmelia: I saw the note. Our original checkpoint was August 25, but the vendor now says the evidence pack will not be ready until August 34.\nNadia: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nAmelia: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $28,250 review fee.\nNadia: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nAmelia: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nNadia: Good. If Finance signs off by August 23, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nAmelia: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "A capacity constraint that affects only the accelerated workstream has affected the evidence and review timeline.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The project lead must travel to Rotterdam immediately.",
+                        "D": "The vendor must receive system access and written approval for the added fee."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The project lead will ask the client to postpone the briefing by two days.",
+                        "B": "The vendor will deliver the evidence pack without further review.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_01.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-02",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a cost-allocation exception that must be approved before work continues affects a predictive inventory modeling schedule.",
+            "audio_script": "Oliver: Daniel, thanks for joining on short notice. The predictive inventory modeling workstream has become more complicated because a cost-allocation exception that must be approved before work continues.\nDaniel: I saw the note. Our original checkpoint was September 6, but the vendor now says the evidence pack will not be ready until September 15.\nOliver: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nDaniel: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $29,625 review fee.\nOliver: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nDaniel: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nOliver: Good. If Finance signs off by September 4, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nDaniel: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "The project lead wants to replace the finance team.",
+                        "D": "A cost-allocation exception that must be approved before work continues has affected the evidence and review timeline."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The vendor must receive system access and written approval for the added fee.",
+                        "B": "The client must move the briefing to the following quarter.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Singapore immediately."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The project lead will ask the client to postpone the briefing by two days.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_02.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-03",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a regional blackout window that invalidates the original migration plan affects a subscription revenue recognition schedule.",
+            "audio_script": "Maya: Sophie, thanks for joining on short notice. The subscription revenue recognition workstream has become more complicated because a regional blackout window that invalidates the original migration plan.\nSophie: I saw the note. Our original checkpoint was October 9, but the vendor now says the evidence pack will not be ready until October 18.\nMaya: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nSophie: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $31,000 review fee.\nMaya: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nSophie: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nMaya: Good. If Finance signs off by October 7, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nSophie: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "A regional blackout window that invalidates the original migration plan has affected the evidence and review timeline.",
+                        "B": "The client has cancelled the entire briefing series.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "The vendor must receive system access and written approval for the added fee.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Frankfurt immediately."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The project lead will ask the client to postpone the briefing by two days.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_03.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-04",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a contract clause whose wording conflicts with the latest portal notice affects a cloud migration assurance schedule.",
+            "audio_script": "Jonathan: Martin, thanks for joining on short notice. The cloud migration assurance workstream has become more complicated because a contract clause whose wording conflicts with the latest portal notice.\nMartin: I saw the note. Our original checkpoint was November 12, but the vendor now says the evidence pack will not be ready until November 21.\nJonathan: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nMartin: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $32,375 review fee.\nJonathan: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nMartin: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nJonathan: Good. If Finance signs off by November 10, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nMartin: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "A contract clause whose wording conflicts with the latest portal notice has affected the evidence and review timeline.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The vendor must receive system access and written approval for the added fee.",
+                        "D": "The project lead must travel to Sao Paulo immediately."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The controls testing will be transferred to the facilities department.",
+                        "D": "The project lead will ask the client to postpone the briefing by two days."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_04.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-05",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a data-retention requirement that applies retroactively to pilot records affects a market-risk reporting schedule.",
+            "audio_script": "Priya: Elena, thanks for joining on short notice. The market-risk reporting workstream has become more complicated because a data-retention requirement that applies retroactively to pilot records.\nElena: I saw the note. Our original checkpoint was March 15, but the vendor now says the evidence pack will not be ready until March 24.\nPriya: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nElena: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $33,750 review fee.\nPriya: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nElena: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nPriya: Good. If Finance signs off by March 13, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nElena: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "A data-retention requirement that applies retroactively to pilot records has affected the evidence and review timeline.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The project lead must travel to Denver immediately.",
+                        "D": "The vendor must receive system access and written approval for the added fee."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The project lead will ask the client to postpone the briefing by two days.",
+                        "B": "The vendor will deliver the evidence pack without further review.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_05.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-06",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a documentation discrepancy that could trigger a secondary audit affects a device traceability validation schedule.",
+            "audio_script": "Ethan: Victor, thanks for joining on short notice. The device traceability validation workstream has become more complicated because a documentation discrepancy that could trigger a secondary audit.\nVictor: I saw the note. Our original checkpoint was April 18, but the vendor now says the evidence pack will not be ready until April 27.\nEthan: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nVictor: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $35,125 review fee.\nEthan: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nVictor: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nEthan: Good. If Finance signs off by April 16, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nVictor: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "The project lead wants to replace the finance team.",
+                        "D": "A documentation discrepancy that could trigger a secondary audit has affected the evidence and review timeline."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The vendor must receive system access and written approval for the added fee.",
+                        "B": "The client must move the briefing to the following quarter.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Toronto immediately."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The project lead will ask the client to postpone the briefing by two days.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_06.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-07",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a late policy clarification that changes the approval sequence affects a fleet maintenance scheduling schedule.",
+            "audio_script": "Clara: Grace, thanks for joining on short notice. The fleet maintenance scheduling workstream has become more complicated because a late policy clarification that changes the approval sequence.\nGrace: I saw the note. Our original checkpoint was May 21, but the vendor now says the evidence pack will not be ready until May 30.\nClara: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nGrace: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $36,500 review fee.\nClara: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nGrace: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nClara: Good. If Finance signs off by May 19, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nGrace: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "A late policy clarification that changes the approval sequence has affected the evidence and review timeline.",
+                        "B": "The client has cancelled the entire briefing series.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "The vendor must receive system access and written approval for the added fee.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Manchester immediately."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The project lead will ask the client to postpone the briefing by two days.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_07.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-08",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how an unresolved dependency between compliance sign-off and vendor provisioning affects a venue capacity planning schedule.",
+            "audio_script": "Rafael: Liam, thanks for joining on short notice. The venue capacity planning workstream has become more complicated because an unresolved dependency between compliance sign-off and vendor provisioning.\nLiam: I saw the note. Our original checkpoint was June 24, but the vendor now says the evidence pack will not be ready until June 33.\nRafael: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nLiam: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $37,875 review fee.\nRafael: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nLiam: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nRafael: Good. If Finance signs off by June 22, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nLiam: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "An unresolved dependency between compliance sign-off and vendor provisioning has affected the evidence and review timeline.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The vendor must receive system access and written approval for the added fee.",
+                        "D": "The project lead must travel to Osaka immediately."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The controls testing will be transferred to the facilities department.",
+                        "D": "The project lead will ask the client to postpone the briefing by two days."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_08.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-09",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a capacity constraint that affects only the accelerated workstream affects a supplier qualification review schedule.",
+            "audio_script": "Nadia: Amelia, thanks for joining on short notice. The supplier qualification review workstream has become more complicated because a capacity constraint that affects only the accelerated workstream.\nAmelia: I saw the note. Our original checkpoint was July 5, but the vendor now says the evidence pack will not be ready until July 14.\nNadia: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nAmelia: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $39,250 review fee.\nNadia: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nAmelia: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nNadia: Good. If Finance signs off by July 3, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nAmelia: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "A capacity constraint that affects only the accelerated workstream has affected the evidence and review timeline.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The project lead must travel to Austin immediately.",
+                        "D": "The vendor must receive system access and written approval for the added fee."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The project lead will ask the client to postpone the briefing by two days.",
+                        "B": "The vendor will deliver the evidence pack without further review.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_09.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-10",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a cost-allocation exception that must be approved before work continues affects a claims automation oversight schedule.",
+            "audio_script": "Oliver: Daniel, thanks for joining on short notice. The claims automation oversight workstream has become more complicated because a cost-allocation exception that must be approved before work continues.\nDaniel: I saw the note. Our original checkpoint was August 8, but the vendor now says the evidence pack will not be ready until August 17.\nOliver: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nDaniel: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $40,625 review fee.\nOliver: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nDaniel: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nOliver: Good. If Finance signs off by August 6, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nDaniel: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "The project lead wants to replace the finance team.",
+                        "D": "A cost-allocation exception that must be approved before work continues has affected the evidence and review timeline."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The vendor must receive system access and written approval for the added fee.",
+                        "B": "The client must move the briefing to the following quarter.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Dublin immediately."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The project lead will ask the client to postpone the briefing by two days.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_10.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-11",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a regional blackout window that invalidates the original migration plan affects a factory yield stabilization schedule.",
+            "audio_script": "Maya: Sophie, thanks for joining on short notice. The factory yield stabilization workstream has become more complicated because a regional blackout window that invalidates the original migration plan.\nSophie: I saw the note. Our original checkpoint was September 11, but the vendor now says the evidence pack will not be ready until September 20.\nMaya: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nSophie: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $42,000 review fee.\nMaya: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nSophie: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nMaya: Good. If Finance signs off by September 9, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nSophie: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "A regional blackout window that invalidates the original migration plan has affected the evidence and review timeline.",
+                        "B": "The client has cancelled the entire briefing series.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "The vendor must receive system access and written approval for the added fee.",
+                        "C": "Finance must cancel the contingency budget entirely.",
+                        "D": "The project lead must travel to Seattle immediately."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The project lead will ask the client to postpone the briefing by two days.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_11.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-12",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a contract clause whose wording conflicts with the latest portal notice affects a battery storage commissioning schedule.",
+            "audio_script": "Jonathan: Martin, thanks for joining on short notice. The battery storage commissioning workstream has become more complicated because a contract clause whose wording conflicts with the latest portal notice.\nMartin: I saw the note. Our original checkpoint was October 14, but the vendor now says the evidence pack will not be ready until October 23.\nJonathan: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nMartin: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $43,375 review fee.\nJonathan: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nMartin: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nJonathan: Good. If Finance signs off by October 12, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nMartin: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "A contract clause whose wording conflicts with the latest portal notice has affected the evidence and review timeline.",
+                        "C": "The vendor has requested a permanent reduction in scope.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "B",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The vendor must receive system access and written approval for the added fee.",
+                        "D": "The project lead must travel to Milan immediately."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The vendor will deliver the evidence pack without further review.",
+                        "B": "The client presentation will be expanded into a training session.",
+                        "C": "The controls testing will be transferred to the facilities department.",
+                        "D": "The project lead will ask the client to postpone the briefing by two days."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_12.mp3"
+        },
+        {
+            "set_id": "PKG02-P3-13",
+            "title": "Risk-Driven Timeline Renegotiation",
+            "context": "A project lead and a vendor manager discuss how a data-retention requirement that applies retroactively to pilot records affects a pharmacovigilance reporting schedule.",
+            "audio_script": "Priya: Elena, thanks for joining on short notice. The pharmacovigilance reporting workstream has become more complicated because a data-retention requirement that applies retroactively to pilot records.\nElena: I saw the note. Our original checkpoint was November 17, but the vendor now says the evidence pack will not be ready until November 26.\nPriya: That puts the client briefing at risk. Could your team split the review so the critical controls are tested first?\nElena: We can do that, provided we receive read-only system access by noon tomorrow and a written approval for the additional $44,750 review fee.\nPriya: The fee is acceptable, but I need Finance to approve the exception before I commit. Can you send a revised milestone table and a one-page risk note today?\nElena: Yes. I will mark the controls that are blocking the briefing and identify which items can wait until after the client presentation.\nPriya: Good. If Finance signs off by November 15, we will keep the briefing on the calendar. Otherwise, I will ask the client for a two-day postponement.\nElena: Understood. I will send the documents within the hour.",
+            "questions": [
+                {
+                    "question_text": "What is the main reason the schedule is being reconsidered?",
+                    "options": {
+                        "A": "The client has cancelled the entire briefing series.",
+                        "B": "The vendor has requested a permanent reduction in scope.",
+                        "C": "A data-retention requirement that applies retroactively to pilot records has affected the evidence and review timeline.",
+                        "D": "The project lead wants to replace the finance team."
+                    },
+                    "correct_answer": "C",
+                    "explanation": "The speakers focus on the operational risk and its effect on the review timeline, not on cancellation, scope removal, or staffing changes."
+                },
+                {
+                    "question_text": "What condition must be met before the vendor can proceed with the split review?",
+                    "options": {
+                        "A": "The client must move the briefing to the following quarter.",
+                        "B": "Finance must cancel the contingency budget entirely.",
+                        "C": "The project lead must travel to Zurich immediately.",
+                        "D": "The vendor must receive system access and written approval for the added fee."
+                    },
+                    "correct_answer": "D",
+                    "explanation": "The vendor explicitly makes the split review contingent on read-only access and written approval for the additional fee."
+                },
+                {
+                    "question_text": "What will most likely happen if Finance does not approve the exception by the stated date?",
+                    "options": {
+                        "A": "The project lead will ask the client to postpone the briefing by two days.",
+                        "B": "The vendor will deliver the evidence pack without further review.",
+                        "C": "The client presentation will be expanded into a training session.",
+                        "D": "The controls testing will be transferred to the facilities department."
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The final exchange states that a two-day postponement will be requested if Finance does not sign off."
+                }
+            ],
+            "audio_file": "toeic_pkg02_p3_13.mp3"
+        }
+    ]
+}
