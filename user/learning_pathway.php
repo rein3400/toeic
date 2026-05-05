@@ -109,7 +109,6 @@ $sectionColors = [
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
     <style>
         :root {
@@ -281,8 +280,9 @@ $sectionColors = [
             .lp-module-item { min-width: 200px; flex-shrink: 0; }
         }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="generating-overlay hidden" id="generatingOverlay">
         <div class="spinner mb-4"></div>
         <h3 style="color:#fff;font-family:'DM Sans',sans-serif;">Membuat Kurikulum Personal...</h3>

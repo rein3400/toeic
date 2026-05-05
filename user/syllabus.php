@@ -138,9 +138,10 @@ $website_logo = getWebsiteLogo();
             color: #1e8078;
         }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
 
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
@@ -231,7 +232,7 @@ $website_logo = getWebsiteLogo();
                     <div class="card-body p-4 text-center">
                         <h5 class="mb-3">Ready to Practice?</h5>
                         <p class="small text-muted mb-4">Apply what you've learned in a new practice session.</p>
-                        <a href="test_instructions.php?test_format=toeic&mode=prep" class="btn btn-primary w-100">Start
+                        <a href="test.php?section=listening&start=1&type=trial" class="btn btn-primary w-100">Start
                             Practice Test</a>
                     </div>
                 </div>

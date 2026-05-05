@@ -1,0 +1,888 @@
+/* ================================================================
+   TOEIC Production UI Upgrade
+   Scoped visual layer for public, student, payment, proctoring, and test pages.
+   ================================================================ */
+
+:root {
+    --toeic-ui-ink: #14213d;
+    --toeic-ui-ink-2: #24365f;
+    --toeic-ui-muted: #63728a;
+    --toeic-ui-soft: #f7f4ed;
+    --toeic-ui-paper: #fffdf8;
+    --toeic-ui-line: rgba(20, 33, 61, 0.11);
+    --toeic-ui-line-strong: rgba(20, 33, 61, 0.19);
+    --toeic-ui-orange: #ff7a4f;
+    --toeic-ui-orange-2: #e85f36;
+    --toeic-ui-gold: #f5b84b;
+    --toeic-ui-teal: #1d8178;
+    --toeic-ui-blue: #315d9a;
+    --toeic-ui-danger: #b42318;
+    --toeic-ui-radius-xl: 30px;
+    --toeic-ui-radius-lg: 22px;
+    --toeic-ui-radius-md: 16px;
+    --toeic-ui-shadow: 0 18px 52px rgba(20, 33, 61, 0.11);
+    --toeic-ui-shadow-lg: 0 34px 90px rgba(20, 33, 61, 0.18);
+}
+
+html {
+    background: #f7f4ed;
+}
+
+body {
+    color: var(--toeic-ui-ink);
+    background:
+        linear-gradient(rgba(20, 33, 61, 0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 33, 61, 0.026) 1px, transparent 1px),
+        radial-gradient(circle at 8% 8%, rgba(255, 122, 79, 0.14), transparent 26rem),
+        radial-gradient(circle at 92% 14%, rgba(49, 93, 154, 0.12), transparent 28rem),
+        linear-gradient(180deg, #fffdf8 0%, #f7f4ed 46%, #f4efe4 100%) !important;
+    background-size: 32px 32px, 32px 32px, auto, auto, auto !important;
+    font-family: var(--rg-font, "Manrope", system-ui, sans-serif);
+}
+
+body::selection {
+    color: #fff;
+    background: var(--toeic-ui-orange);
+}
+
+body.toeic-estudy-home {
+    background:
+        linear-gradient(rgba(20, 33, 61, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 33, 61, 0.022) 1px, transparent 1px),
+        radial-gradient(circle at 78% 12%, rgba(255, 122, 79, 0.2), transparent 30rem),
+        linear-gradient(180deg, #fffdf8 0%, #f8f4ee 42%, #ffffff 100%) !important;
+    background-size: 34px 34px, 34px 34px, auto, auto !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+    color: var(--toeic-ui-ink);
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+}
+
+p,
+.toeic-copy,
+.toeic-subcopy,
+.text-muted {
+    color: var(--toeic-ui-muted) !important;
+}
+
+.toeic-page-shell {
+    width: min(1220px, calc(100% - 34px));
+    max-width: 1220px;
+    padding-top: clamp(1.4rem, 3vw, 3rem);
+}
+
+.toeic-page-header {
+    position: relative;
+    margin-bottom: 1.45rem;
+    padding: clamp(1.5rem, 3vw, 2.45rem);
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 92% 12%, rgba(255, 122, 79, 0.16), transparent 18rem),
+        linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(246, 241, 230, 0.9));
+    border: 1px solid var(--toeic-ui-line);
+    border-radius: var(--toeic-ui-radius-xl);
+    box-shadow: var(--toeic-ui-shadow);
+}
+
+.toeic-page-header::after {
+    content: "";
+    position: absolute;
+    right: -54px;
+    bottom: -72px;
+    width: 210px;
+    height: 210px;
+    border: 1px solid rgba(255, 122, 79, 0.24);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.toeic-page-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+.toeic-kicker,
+.toeic-eyebrow,
+.est-kicker {
+    color: var(--toeic-ui-orange-2) !important;
+    letter-spacing: 0.11em;
+}
+
+.toeic-kicker::before,
+.toeic-eyebrow::before {
+    width: 22px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--toeic-ui-orange), var(--toeic-ui-gold));
+}
+
+.toeic-panel,
+.toeic-surface,
+.toeic-stat,
+.toeic-band,
+.toeic-form-shell,
+.glass-card,
+.toeic-page-shell .card,
+.setup-container .card,
+.status-card,
+.analysis-card,
+.week-card,
+.stats-card {
+    position: relative;
+    overflow: hidden;
+    color: var(--toeic-ui-ink);
+    background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(249, 245, 236, 0.98)) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    border-radius: var(--toeic-ui-radius-xl) !important;
+    box-shadow: var(--toeic-ui-shadow) !important;
+}
+
+.toeic-panel::before,
+.toeic-surface::before,
+.toeic-stat::before,
+.toeic-form-shell::before,
+.status-card::before,
+.stats-card::before,
+.week-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(20, 33, 61, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 33, 61, 0.035) 1px, transparent 1px);
+    background-size: 38px 38px;
+    opacity: 0.5;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.74), transparent 88%);
+}
+
+.toeic-panel > *,
+.toeic-surface > *,
+.toeic-stat > *,
+.toeic-form-shell > *,
+.status-card > *,
+.stats-card > *,
+.week-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.toeic-hero-card,
+.toeic-form-panel,
+.setup-header,
+.week-header {
+    position: relative;
+    overflow: hidden;
+    color: #fff !important;
+    background:
+        radial-gradient(circle at 82% 18%, rgba(255, 184, 75, 0.22), transparent 20rem),
+        radial-gradient(circle at 14% 90%, rgba(29, 129, 120, 0.23), transparent 24rem),
+        linear-gradient(135deg, #101d35 0%, #1c3760 56%, #ff7a4f 165%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: var(--toeic-ui-radius-xl) !important;
+    box-shadow: var(--toeic-ui-shadow-lg) !important;
+}
+
+.toeic-hero-card::after,
+.toeic-form-panel::after,
+.setup-header::after {
+    content: "";
+    position: absolute;
+    right: -84px;
+    top: -80px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: inset 0 0 0 36px rgba(255, 255, 255, 0.035);
+}
+
+.toeic-hero-card h1,
+.toeic-hero-card h2,
+.toeic-hero-card h3,
+.toeic-hero-card p,
+.toeic-hero-card .toeic-kicker,
+.toeic-hero-card .toeic-eyebrow,
+.toeic-form-panel h1,
+.toeic-form-panel h2,
+.toeic-form-panel h3,
+.toeic-form-panel p,
+.toeic-form-panel li,
+.setup-header h1,
+.setup-header h2,
+.setup-header p,
+.week-header,
+.week-header * {
+    color: #fff !important;
+}
+
+.toeic-hero-card .text-white-50,
+.toeic-form-panel .text-white-50,
+.setup-header .text-white-50 {
+    color: rgba(255, 255, 255, 0.76) !important;
+}
+
+.toeic-hero-card .toeic-stat {
+    background: rgba(255, 255, 255, 0.13) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: none !important;
+    color: #fff;
+}
+
+.toeic-hero-card .toeic-stat-value,
+.toeic-hero-card .toeic-stat-label {
+    color: #fff !important;
+}
+
+.toeic-card-grid {
+    gap: 1.15rem;
+}
+
+.toeic-display-panel,
+.toeic-panel,
+.toeic-band {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.toeic-display-panel:hover,
+.toeic-panel:hover,
+.toeic-band:hover,
+.payment-method:hover,
+.stats-card:hover,
+.week-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 122, 79, 0.28) !important;
+    box-shadow: var(--toeic-ui-shadow-lg) !important;
+}
+
+.toeic-stat-value,
+.stats-card h3 {
+    color: var(--toeic-ui-orange-2) !important;
+    font-family: var(--rg-display, "Fraunces", Georgia, serif);
+}
+
+.toeic-table-row,
+.row-item,
+.part-row,
+.feature-row {
+    padding: 1rem 0;
+    border-color: rgba(20, 33, 61, 0.09) !important;
+}
+
+.toeic-table-row strong,
+.toeic-table-row .fw-semibold,
+.row-item strong,
+.part-row strong {
+    color: var(--toeic-ui-ink);
+}
+
+.btn,
+.est-app-button,
+.est-link-button,
+.est-primary-button,
+.est-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 999px !important;
+    font-weight: 850 !important;
+    letter-spacing: 0 !important;
+    padding-inline: 1.35rem;
+    text-decoration: none !important;
+    white-space: nowrap;
+}
+
+.btn-warning,
+.btn-rg-secondary,
+.est-app-button,
+.est-primary-button {
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    border-color: transparent !important;
+    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.3) !important;
+}
+
+.btn-warning:hover,
+.btn-rg-secondary:hover,
+.est-app-button:hover,
+.est-primary-button:hover {
+    color: #fff !important;
+    background: linear-gradient(135deg, #ff8e69, var(--toeic-ui-orange-2)) !important;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary,
+.btn-outline-light,
+.btn-outline-warning,
+.est-secondary-button,
+.est-link-button {
+    color: var(--toeic-ui-ink) !important;
+    background: rgba(255, 253, 248, 0.72) !important;
+    border: 1px solid var(--toeic-ui-line-strong) !important;
+    box-shadow: none !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-light:hover,
+.btn-outline-warning:hover,
+.est-secondary-button:hover {
+    color: #fff !important;
+    background: var(--toeic-ui-ink) !important;
+    border-color: var(--toeic-ui-ink) !important;
+}
+
+.form-control,
+.form-select,
+.toeic-form-control {
+    min-height: 52px;
+    border-radius: 18px !important;
+    border: 1px solid rgba(20, 33, 61, 0.15) !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    color: var(--toeic-ui-ink) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+.toeic-form-control:focus {
+    border-color: rgba(255, 122, 79, 0.62) !important;
+    box-shadow: 0 0 0 5px rgba(255, 122, 79, 0.13) !important;
+}
+
+.navbar,
+.rg-navbar,
+.est-home-header {
+    background: rgba(255, 253, 248, 0.88) !important;
+    border-bottom: 1px solid rgba(20, 33, 61, 0.08) !important;
+    box-shadow: 0 14px 42px rgba(20, 33, 61, 0.06) !important;
+    backdrop-filter: blur(18px);
+}
+
+.navbar-brand,
+.est-brand {
+    color: var(--toeic-ui-ink) !important;
+    font-weight: 900 !important;
+}
+
+.navbar-brand img,
+.est-brand-mark img {
+    display: none !important;
+}
+
+.navbar-brand i,
+.est-brand-mark i {
+    color: var(--toeic-ui-orange) !important;
+}
+
+.avatar-circle,
+.est-brand-mark,
+.toeic-feature-icon {
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    color: #fff !important;
+    box-shadow: 0 14px 28px rgba(255, 122, 79, 0.22) !important;
+}
+
+.dropdown-menu-dark-custom {
+    background: rgba(255, 253, 248, 0.98) !important;
+    border-color: var(--toeic-ui-line) !important;
+    box-shadow: var(--toeic-ui-shadow) !important;
+}
+
+.dropdown-menu-dark-custom .dropdown-item {
+    color: var(--toeic-ui-ink) !important;
+}
+
+.dropdown-menu-dark-custom .dropdown-item:hover,
+.dropdown-menu-dark-custom .dropdown-item.active {
+    background: rgba(255, 122, 79, 0.12) !important;
+}
+
+/* Public homepage */
+.est-home-nav {
+    width: min(1200px, calc(100% - 34px));
+}
+
+@media (max-width: 760px) and (min-width: 521px) {
+    .toeic-estudy-home .est-home-nav {
+        min-height: 74px !important;
+        flex-wrap: nowrap !important;
+        padding: 0 !important;
+    }
+
+    .toeic-estudy-home .est-brand {
+        width: auto !important;
+        justify-content: flex-start !important;
+    }
+
+    .toeic-estudy-home .est-nav-actions {
+        width: auto !important;
+        justify-content: flex-end !important;
+    }
+}
+
+.est-hero {
+    padding-top: clamp(50px, 6vw, 86px) !important;
+    background:
+        radial-gradient(circle at 78% 16%, rgba(255, 122, 79, 0.2), transparent 24rem),
+        linear-gradient(180deg, rgba(255, 247, 242, 0.82), rgba(255, 253, 248, 0) 70%) !important;
+}
+
+.est-hero h1 {
+    color: var(--toeic-ui-ink) !important;
+}
+
+.est-hero h1 span {
+    color: var(--toeic-ui-orange) !important;
+}
+
+.est-phone-frame,
+.est-orbit-card,
+.est-topic-card,
+.est-function-card,
+.est-ai-card,
+.est-review-wall article {
+    background: rgba(255, 253, 248, 0.94) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    box-shadow: var(--toeic-ui-shadow) !important;
+}
+
+.est-phone-frame {
+    transform: rotate(-2deg);
+}
+
+.est-topic-card,
+.est-function-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.est-topic-card:hover,
+.est-function-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 122, 79, 0.32) !important;
+    box-shadow: var(--toeic-ui-shadow-lg) !important;
+}
+
+.est-stats-strip article,
+.est-exam-section,
+.est-download-section,
+.est-ai-section,
+.est-review-section {
+    border: 1px solid var(--toeic-ui-line) !important;
+    box-shadow: var(--toeic-ui-shadow) !important;
+}
+
+.est-skill-tabs span.active,
+.est-exam-tabs a.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+}
+
+.est-footer {
+    background:
+        radial-gradient(circle at 80% 20%, rgba(255, 122, 79, 0.2), transparent 20rem),
+        linear-gradient(135deg, #101d35 0%, #1a3157 58%, #12213a 100%) !important;
+}
+
+/* Auth */
+.toeic-form-shell {
+    backdrop-filter: blur(14px);
+}
+
+.toeic-form-panel .toeic-list-check li {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.toeic-form-panel .toeic-list-check li::before {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}
+
+/* Payment and action states */
+.payment-method {
+    min-height: 118px;
+}
+
+.payment-method-active {
+    background:
+        radial-gradient(circle at 92% 10%, rgba(255, 122, 79, 0.16), transparent 8rem),
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 246, 238, 0.98)) !important;
+    border-color: rgba(255, 122, 79, 0.46) !important;
+}
+
+.status-card .text-white-50,
+.status-card .text-muted {
+    color: var(--toeic-ui-muted) !important;
+}
+
+code {
+    color: var(--toeic-ui-orange-2) !important;
+}
+
+/* Profile */
+.profile-hero {
+    margin: 1.4rem auto 0;
+    width: min(1140px, calc(100% - 34px));
+    overflow: hidden;
+    border-radius: var(--toeic-ui-radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background:
+        radial-gradient(circle at 72% 18%, rgba(255, 184, 75, 0.18), transparent 18rem),
+        linear-gradient(135deg, #101d35 0%, #1d3a66 62%, #ff7a4f 170%) !important;
+    box-shadow: var(--toeic-ui-shadow-lg);
+}
+
+.profile-avatar {
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    color: #fff !important;
+    box-shadow: 0 20px 44px rgba(255, 122, 79, 0.25) !important;
+}
+
+.profile-name,
+.profile-meta,
+.profile-meta * {
+    color: #fff !important;
+}
+
+.nav-tabs {
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--toeic-ui-line) !important;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 999px !important;
+    border: 1px solid transparent !important;
+    color: var(--toeic-ui-muted) !important;
+    font-weight: 800;
+}
+
+.nav-tabs .nav-link.active {
+    color: #fff !important;
+    background: var(--toeic-ui-ink) !important;
+    border-color: var(--toeic-ui-ink) !important;
+}
+
+/* Proctor setup */
+.setup-container {
+    width: min(1120px, calc(100% - 34px)) !important;
+    margin: clamp(1.2rem, 3vw, 2.2rem) auto !important;
+    overflow: hidden;
+    border-radius: var(--toeic-ui-radius-xl) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    box-shadow: var(--toeic-ui-shadow-lg) !important;
+    background: rgba(255, 253, 248, 0.96) !important;
+}
+
+.setup-body {
+    background: transparent !important;
+}
+
+.checklist-item,
+.permission-card,
+.step,
+.video-container,
+.status-badge {
+    border-radius: var(--toeic-ui-radius-md) !important;
+}
+
+.checklist-item,
+.permission-card,
+.video-container {
+    background: rgba(255, 253, 248, 0.86) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    box-shadow: 0 12px 30px rgba(20, 33, 61, 0.07) !important;
+}
+
+.step.active,
+.checklist-icon.success {
+    background: linear-gradient(135deg, var(--toeic-ui-teal), #21a094) !important;
+    color: #fff !important;
+}
+
+.btn-start {
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.26) !important;
+}
+
+/* Learning pathway */
+.lp-layout {
+    background:
+        radial-gradient(circle at 80% 8%, rgba(255, 122, 79, 0.16), transparent 30rem),
+        linear-gradient(180deg, #fffdf8, #f4efe4) !important;
+}
+
+.lp-sidebar {
+    background: rgba(255, 253, 248, 0.82) !important;
+    border-right: 1px solid var(--toeic-ui-line) !important;
+    backdrop-filter: blur(18px);
+}
+
+.lp-sidebar-header,
+.lp-progress-bar,
+.lp-module-list + div {
+    border-color: var(--toeic-ui-line) !important;
+}
+
+.lp-sidebar-header h3,
+.lp-main h1,
+.lp-main h2,
+.module-content h1,
+.module-content h2,
+.module-content h3 {
+    color: var(--toeic-ui-ink) !important;
+}
+
+.lp-main {
+    max-width: 1060px !important;
+}
+
+.lp-module-item {
+    border-radius: 18px !important;
+    color: var(--toeic-ui-ink) !important;
+}
+
+.lp-module-item:hover {
+    background: rgba(255, 122, 79, 0.1) !important;
+}
+
+.lp-module-item.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--toeic-ui-ink), #28507e) !important;
+    box-shadow: 0 16px 34px rgba(20, 33, 61, 0.18);
+}
+
+.lp-welcome,
+.module-content,
+.exercise-section,
+.exercise-card {
+    color: var(--toeic-ui-ink) !important;
+    background: rgba(255, 253, 248, 0.94) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    border-radius: var(--toeic-ui-radius-xl) !important;
+    box-shadow: var(--toeic-ui-shadow) !important;
+}
+
+.module-content p,
+.module-content li,
+.exercise-section p {
+    color: var(--toeic-ui-muted) !important;
+}
+
+.exercise-option {
+    background: rgba(255, 255, 255, 0.78) !important;
+    border: 1px solid var(--toeic-ui-line) !important;
+    border-radius: var(--toeic-ui-radius-md) !important;
+}
+
+.exercise-option.selected {
+    border-color: rgba(255, 122, 79, 0.48) !important;
+    background: rgba(255, 122, 79, 0.1) !important;
+}
+
+.btn-generate,
+.btn-check-answer,
+.btn-complete-module {
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    color: #fff !important;
+    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.24) !important;
+}
+
+/* Syllabus */
+.syllabus-header,
+.analysis-card,
+.week-card {
+    border-left: 0 !important;
+}
+
+.activity-item {
+    border-color: rgba(20, 33, 61, 0.08) !important;
+}
+
+.day-badge {
+    color: var(--toeic-ui-ink) !important;
+    background: rgba(255, 122, 79, 0.1) !important;
+    border: 1px solid rgba(255, 122, 79, 0.22) !important;
+}
+
+/* Disqualified */
+.disqualified-card {
+    border-color: rgba(180, 35, 24, 0.22) !important;
+}
+
+.disqualified-card .icon {
+    filter: drop-shadow(0 14px 26px rgba(180, 35, 24, 0.16));
+}
+
+.btn-danger {
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #e5483e, var(--toeic-ui-danger)) !important;
+    border: none !important;
+}
+
+.btn-success {
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #25a894, var(--toeic-ui-teal)) !important;
+    border: none !important;
+}
+
+/* TOEIC test runner */
+body.h-screen.flex.flex-col.overflow-hidden {
+    background:
+        radial-gradient(circle at 8% 0%, rgba(255, 122, 79, 0.12), transparent 26rem),
+        linear-gradient(180deg, #f8f4ed 0%, #eef3f8 100%) !important;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden > header {
+    background: rgba(255, 253, 248, 0.94) !important;
+    border-color: rgba(20, 33, 61, 0.1) !important;
+    box-shadow: 0 12px 34px rgba(20, 33, 61, 0.08) !important;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden main > aside,
+body.h-screen.flex.flex-col.overflow-hidden main > section {
+    background: rgba(255, 253, 248, 0.86) !important;
+    border-color: rgba(20, 33, 61, 0.1) !important;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden main > aside {
+    box-shadow: 18px 0 54px rgba(20, 33, 61, 0.07);
+}
+
+body.h-screen.flex.flex-col.overflow-hidden h1,
+body.h-screen.flex.flex-col.overflow-hidden h2,
+body.h-screen.flex.flex-col.overflow-hidden h3,
+body.h-screen.flex.flex-col.overflow-hidden h4 {
+    color: var(--toeic-ui-ink) !important;
+}
+
+#timerDisplay {
+    color: var(--toeic-ui-orange-2) !important;
+}
+
+#singleAnswerContainer label,
+#batchQuestionsContainer > div {
+    background: rgba(255, 253, 248, 0.94) !important;
+    border-color: rgba(20, 33, 61, 0.12) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 32px rgba(20, 33, 61, 0.06) !important;
+}
+
+#singleAnswerContainer label:hover,
+#batchQuestionsContainer > div:hover {
+    border-color: rgba(255, 122, 79, 0.38) !important;
+}
+
+#nextBtn {
+    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
+    color: #fff !important;
+    border-radius: 999px !important;
+}
+
+#prevBtn {
+    border-radius: 999px !important;
+}
+
+img[data-toeic-photo="true"] {
+    border-radius: 20px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .toeic-page-header {
+        align-items: stretch;
+    }
+
+    .toeic-page-header .btn,
+    .toeic-page-header > a {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .lp-layout {
+        display: block !important;
+    }
+
+    .lp-sidebar {
+        position: relative !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+    }
+
+    .lp-main {
+        padding: 1.2rem !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .toeic-page-shell,
+    .est-home-nav,
+    .est-hero-inner,
+    .est-stats-strip,
+    .est-practice-section,
+    .est-ai-section,
+    .est-exam-section,
+    .est-inside-section,
+    .est-review-section,
+    .est-download-section,
+    .profile-hero,
+    .setup-container {
+        width: min(calc(100% - 28px), 100%) !important;
+    }
+
+    .toeic-page-header,
+    .toeic-panel,
+    .toeic-surface,
+    .toeic-band,
+    .toeic-hero-card,
+    .toeic-form-panel,
+    .toeic-form-shell,
+    .status-card,
+    .profile-hero,
+    .setup-container {
+        border-radius: 22px !important;
+    }
+
+    .est-hero h1 {
+        font-size: clamp(2.1rem, 10vw, 3rem) !important;
+    }
+
+    body.h-screen.flex.flex-col.overflow-hidden {
+        min-height: 100vh;
+        height: auto !important;
+        overflow: auto !important;
+    }
+
+    body.h-screen.flex.flex-col.overflow-hidden main {
+        display: block !important;
+        overflow: visible !important;
+    }
+
+    body.h-screen.flex.flex-col.overflow-hidden main > aside,
+    body.h-screen.flex.flex-col.overflow-hidden main > section {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: auto !important;
+    }
+
+    body.h-screen.flex.flex-col.overflow-hidden > header > div {
+        flex-wrap: wrap;
+        gap: 0.7rem;
+    }
+}

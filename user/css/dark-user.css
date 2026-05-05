@@ -126,3 +126,7 @@
         transform: translateY(0);
     }
 }
+
+.text-white-50 {
+    color: var(--toeic-muted, #61718b) !important;
+}

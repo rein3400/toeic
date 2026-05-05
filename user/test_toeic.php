@@ -525,7 +525,6 @@ $is_last_question = $is_batch
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -553,8 +552,9 @@ $is_last_question = $is_batch
         .scroll-smooth::-webkit-scrollbar-track { background: #eef2f7; }
         .scroll-smooth::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-test-body bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen flex flex-col overflow-hidden">
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen flex flex-col overflow-hidden">
     <header class="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 shadow-sm z-10 shrink-0">
         <div class="px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">

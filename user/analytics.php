@@ -4,7 +4,6 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
-require_once '../includes/components/toeic_progress_bar.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -33,17 +32,6 @@ if (!empty($results)) {
     $latest_stats = getTOEICPartStatistics($user_id, $results[0]['test_session']);
 }
 
-$latest_progress_items = [];
-foreach ($latest_stats as $stat) {
-    $percentage = (float)($stat['percentage'] ?? 0);
-    $latest_progress_items[] = [
-        'label' => (string)($stat['name'] ?? ''),
-        'meta' => (int)($stat['correct'] ?? 0) . ' correct of ' . (int)($stat['total'] ?? 0),
-        'value' => $percentage,
-        'value_label' => (int)round($percentage) . '%',
-    ];
-}
-
 $total_attempts = count($results);
 $best_score = $total_attempts ? max(array_map(fn($row) => (int)$row['total_score'], $results)) : 0;
 $avg_score = $total_attempts ? (int)round(array_sum(array_map(fn($row) => (int)$row['total_score'], $results)) / $total_attempts) : 0;
@@ -62,8 +50,9 @@ $latest_score = $total_attempts ? (int)$results[0]['total_score'] : 0;
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css', '../assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <main class="toeic-page-shell">
         <div class="toeic-page-header">
             <div>
@@ -97,7 +86,15 @@ $latest_score = $total_attempts ? (int)$results[0]['total_score'] : 0;
                     <?php if (empty($latest_stats)): ?>
                         <p class="toeic-copy mb-0">No completed full simulation is available yet.</p>
                     <?php else: ?>
-                        <?php renderToeicProgressRows($latest_progress_items, ['aria_label' => 'Latest TOEIC part performance']); ?>
+                        <?php foreach ($latest_stats as $stat): ?>
+                            <div class="toeic-table-row">
+                                <div>
+                                    <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
+                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
+                                </div>
+                                <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
+                            </div>
+                        <?php endforeach; ?>
                     <?php endif; ?>
                 </section>
             </div>

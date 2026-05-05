@@ -75,8 +75,9 @@ unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toei
         .pulse { animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="card disqualified-card">
         <span class="icon">🚫</span>
         <h1>Ujian Dihentikan</h1>

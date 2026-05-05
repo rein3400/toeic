@@ -1,0 +1,70 @@
+{
+  "generated_for": "TOEIC Part 1 generated image quality replacement",
+  "created_at": "2026-05-05",
+  "url_layout": "R2_BASE_URL/toeic/photos/package_XX/<image_file>",
+  "replacements": [
+    {
+      "package": 2,
+      "item_id": "PKG02-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg02_p1_06.png",
+      "new_image_file": "toeic_pkg02_p1_06_v2.png",
+      "reason": "Visible watermark/fake logo artifact in the lower-right corner.",
+      "prompt_addendum": "Show a commercial print operator inspecting blank proof sheets under a desk lamp. Keep all documents blank or softly blurred. No black cinematic borders."
+    },
+    {
+      "package": 4,
+      "item_id": "PKG04-P1-05",
+      "title": "Hotel Event Desk",
+      "old_image_file": "toeic_pkg04_p1_05.png",
+      "new_image_file": "toeic_pkg04_p1_05_v2.png",
+      "reason": "Visible TOEIC text artifact in the lower-right corner.",
+      "prompt_addendum": "Show a calm hotel conference registration desk with one coordinator checking a guest list on a tablet and plain blank folded badges or brochures on the table. Do not include digital wall screens, posters, masks, stacked boxes, readable cards, or printed logos."
+    },
+    {
+      "package": 6,
+      "item_id": "PKG06-P1-05",
+      "title": "Hotel Event Desk",
+      "old_image_file": "toeic_pkg06_p1_05.png",
+      "new_image_file": "toeic_pkg06_p1_05_v2.png",
+      "reason": "Badge/name-card area contains repeated pseudo-logo artifacts.",
+      "prompt_addendum": "Show a hotel event registration desk with blank folded table cards and blank badges only. Avoid close-up logo-like badge faces, printed marks, digital screens, posters, masks, or readable paper text."
+    },
+    {
+      "package": 7,
+      "item_id": "PKG07-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg07_p1_06.png",
+      "new_image_file": "toeic_pkg07_p1_06_v2.png",
+      "reason": "Large generated caption/subtitle text is burned into the photo.",
+      "prompt_addendum": "Show a commercial print operator inspecting one large blank white proof sheet under a desk lamp. The sheet must have no printed words, no marks, no diagrams, and no visible writing. The image must fill the entire 16:9 frame edge to edge with no letterbox bars, no black borders, no cinematic crop, no subtitles, no captions, and no lower-third text."
+    },
+    {
+      "package": 8,
+      "item_id": "PKG08-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg08_p1_06.png",
+      "new_image_file": "toeic_pkg08_p1_06_v2.png",
+      "reason": "Paper/poster area contains too many readable-text-like artifacts.",
+      "prompt_addendum": "Show a commercial print operator inspecting one large blank white proof sheet under a desk lamp in a print room. The sheet must have no printed words, no marks, no diagrams, and no visible writing. The image must fill the entire 16:9 frame edge to edge with no letterbox bars, no black borders, no cinematic crop, and no text anywhere in the photo."
+    },
+    {
+      "package": 9,
+      "item_id": "PKG09-P1-02",
+      "title": "Warehouse Quality Inspection",
+      "old_image_file": "toeic_pkg09_p1_02.png",
+      "new_image_file": "toeic_pkg09_p1_02_v2.png",
+      "reason": "Carton labels are too close to readable pseudo-brand text.",
+      "prompt_addendum": "Use plain warehouse cartons with blank or blurred labels. The supervisor may scan a barcode-like blank label, but no readable words, product names, or brand-like marks."
+    },
+    {
+      "package": 10,
+      "item_id": "PKG10-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg10_p1_06.png",
+      "new_image_file": "toeic_pkg10_p1_06_v2.png",
+      "reason": "Visible stock-style watermark/logo artifact in the lower-right corner.",
+      "prompt_addendum": "Show a commercial print operator inspecting blank proof sheets under a desk lamp. No watermark, no logo, no signature, no black cinematic borders."
+    }
+  ]
+}

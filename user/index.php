@@ -4,7 +4,6 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
-require_once '../includes/components/toeic_progress_bar.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -87,17 +86,6 @@ if (!empty($recent_results)) {
     $part_stats = getTOEICPartStatistics($user_id, $latest_session);
 }
 
-$part_progress_items = [];
-foreach ($part_stats as $stat) {
-    $percentage = (float)($stat['percentage'] ?? 0);
-    $part_progress_items[] = [
-        'label' => (string)($stat['name'] ?? ''),
-        'meta' => (int)($stat['correct'] ?? 0) . ' correct of ' . (int)($stat['total'] ?? 0),
-        'value' => $percentage,
-        'value_label' => (int)round($percentage) . '%',
-    ];
-}
-
 $initials = strtoupper(substr($user_name, 0, 1));
 if (strpos($user_name, ' ') !== false) {
     $parts = explode(' ', $user_name, 2);
@@ -118,8 +106,9 @@ if (strpos($user_name, ' ') !== false) {
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/dark-user.css', 'css/dark-user.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="bg-orbs"></div>
 
     <nav class="navbar navbar-expand-lg">
@@ -269,7 +258,15 @@ if (strpos($user_name, ' ') !== false) {
                     <?php if (empty($part_stats)): ?>
                         <p class="toeic-copy mb-0">Part-level performance will appear after you complete a full TOEIC simulation.</p>
                     <?php else: ?>
-                        <?php renderToeicProgressRows($part_progress_items, ['aria_label' => 'Latest TOEIC part accuracy']); ?>
+                        <?php foreach ($part_stats as $stat): ?>
+                            <div class="toeic-table-row">
+                                <div>
+                                    <div class="fw-semibold"><?php echo htmlspecialchars($stat['name']); ?></div>
+                                    <div class="small text-muted"><?php echo (int)$stat['correct']; ?> correct of <?php echo (int)$stat['total']; ?></div>
+                                </div>
+                                <div class="fw-bold"><?php echo (int)$stat['percentage']; ?>%</div>
+                            </div>
+                        <?php endforeach; ?>
                     <?php endif; ?>
                 </section>
             </div>

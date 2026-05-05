@@ -287,8 +287,9 @@ if (strpos($user_name, ' ') !== false) {
             .profile-name { font-size: 1.35rem; }
         }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="bg-orbs"></div>
 
     <!-- Navbar -->

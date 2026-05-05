@@ -1,5 +1,30 @@
 # HALLUCINATION.md
 
+## 2026-05-05 - Global agent instruction filename fallback
+
+### Unknowns
+- The user asked to read `C:\Users\stefa\.codex\agent.md`, but that exact lowercase file does not exist in the current filesystem.
+- It is unknown whether the missing file was meant to be created elsewhere or whether the existing `C:\Users\stefa\.codex\AGENTS.md` is the intended global instruction file.
+
+### Reason for proceeding
+- The user explicitly requested a rebuild of the static visual preview, and the available global `AGENTS.md` contains the relevant frontend, Superpowers, verification, and output contract instructions.
+
+### Assumptions used
+- `C:\Users\stefa\.codex\AGENTS.md` is the intended global agent instruction file for this task.
+- The rebuild should prioritize the new global frontend rules, especially avoiding card-heavy poster layouts and making operational TOEIC pages dense and scannable.
+
+### Project impact
+- Rebuilt `docs/previews/public-visual-pages.html` according to the available global `AGENTS.md` plus the requested high-end visual design skill.
+
+### Verification attempted
+- Checked `C:\Users\stefa\.codex\agent.md` directly and confirmed it was missing.
+- Listed `C:\Users\stefa\.codex` and found `C:\Users\stefa\.codex\AGENTS.md`.
+- Read `C:\Users\stefa\.codex\AGENTS.md` before editing the preview file.
+
+### Risks and rollback
+- Risk: if a different lowercase `agent.md` was intended, the rebuild may miss instructions that were not available in this workspace.
+- Rollback: provide the intended `agent.md`, then revise or revert `docs/previews/public-visual-pages.html` against those instructions.
+
 ## 2026-05-03 — Remove Kampung Inggris settings assets
 
 ### Unknowns
@@ -163,3 +188,87 @@
 - Risk: audio files may still contain pre-import generated phrasing/date defects because text repair occurs at DB import time only.
 - Risk: production may already contain rows whose `part`/`nomor_soal` values collide with the package-aware numbering blocks.
 - Rollback: delete rows imported by the browser script using the package-specific media URL prefixes and question number ranges, then rerun the importer after regenerating or manually editing the package content/audio.
+
+## 2026-05-04 - TOEIC frontend visual upgrade without local DB session
+
+### Unknowns
+- The exact authenticated dashboard/payment/proctoring visual result could not be rendered locally because the local database connection was refused.
+- The user requested a better frontend without a single approved mockup for the full student app surface.
+
+### Reason for proceeding
+- The requested edits are local, reversible frontend changes and the user explicitly asked for autonomous completion without more questions.
+- Public pages could be verified in Browser, and auth-gated PHP files could still be syntax-checked and statically verified.
+
+### Assumptions used
+- A shared `assets/css/toeic-redesign.css` layer is acceptable for public and student pages as long as it is not loaded in `admin/`.
+- `checkout-va.php` and `logout.php` should remain action/redirect surfaces rather than new visual pages.
+
+### Project impact
+- Added the shared visual layer to public/student TOEIC pages.
+- Reordered login/register columns so the form appears before the promotional panel on narrow screens.
+
+### Verification attempted
+- Ran PHP lint on every PHP page that received the redesign stylesheet link.
+- Verified each requested visual page links `toeic-redesign.css` exactly once and no admin PHP page links it.
+- Browser-smoked homepage, login, and register locally at `http://127.0.0.1:8000/`.
+- Attempted `scripts/verify_tables.php`, but local DB connection was unavailable.
+
+### Risks and rollback
+- Risk: authenticated pages may need additional visual tuning once a real local session and DB are available.
+- Rollback: remove the `toeic-redesign.css` link from the target pages and delete or revise `assets/css/toeic-redesign.css`.
+
+## 2026-05-04 - TOEIC full static visual review board
+
+### Unknowns
+- The authenticated student, payment, proctoring, and test-runner pages still cannot be rendered from live local data because the local database/session context is unavailable.
+
+### Reason for proceeding
+- The user asked for a DB-free HTML review surface after being unable to access the PHP pages locally.
+- A static visual board lets the user review every requested page family without calling production-like endpoints.
+
+### Assumptions used
+- Static mock TOEIC data is acceptable for visual review as long as the HTML does not execute PHP, session, database, Tripay, camera, audio, or proctoring behavior.
+- `docs/previews/public-visual-pages.html` can remain the review URL even though it now includes public, student, payment, test, learning, and action-state previews.
+
+### Project impact
+- Expanded `docs/previews/public-visual-pages.html` into a full no-DB visual review board for all requested frontend pages and action states.
+- Linked `assets/css/toeic-redesign.css` into `docs/previews/toeic-estudyme-home-static.html` so the embedded homepage preview uses the same visual layer.
+
+### Verification attempted
+- Served `docs/previews/public-visual-pages.html` locally with HTTP 200.
+- Verified all 18 expected preview anchors exist exactly once in Browser.
+- Verified Browser console errors were 0 for the static review page.
+- Checked the static board for PHP/session/database/AJAX/camera/proctoring code patterns.
+
+### Risks and rollback
+- Risk: static mock content may differ from live PHP data density once authenticated pages are accessible.
+- Rollback: remove the full-board sections from `docs/previews/public-visual-pages.html` or replace individual sections with screenshots/live-rendered snippets after DB access is restored.
+
+## 2026-05-04 - TOEIC non-landing imagegen-style static revision
+
+### Unknowns
+- The user explicitly required `$imagegen-frontend-web`; no separate raster reference files were persisted in the repository for each non-landing page.
+- The authenticated production PHP pages still cannot be rendered locally from live DB data in this session.
+
+### Reason for proceeding
+- The user requested immediate revision without more questions.
+- The available deliverable that the user can review despite DB issues is the static no-DB preview board.
+
+### Assumptions used
+- Applying the `$imagegen-frontend-web` design rules directly as an art-direction system for the static HTML review board is acceptable for this revision.
+- Legacy static mock sections can remain in the file as hidden `legacy-*` anchors while the visible canonical anchors point to the revised imagegen-style sections.
+
+### Project impact
+- Revised `docs/previews/public-visual-pages.html` with a new `.imagegen-comp` visual system for all non-landing pages.
+- Added a hash-scroll stabilizer so direct anchors such as `#dashboard`, `#payment`, and `#actions` land on visible revised sections after fonts/layout settle.
+
+### Verification attempted
+- Served `docs/previews/public-visual-pages.html` locally with HTTP 200.
+- Verified all 18 canonical preview anchors exist exactly once.
+- Verified Browser console errors were 0 after opening revised anchors.
+- Browser-smoked `#dashboard`, `#payment`, `#test-toeic`, `#pathway`, and `#actions` and confirmed the revised sections render.
+- Checked the static board for PHP/session/database/AJAX/camera code patterns.
+
+### Risks and rollback
+- Risk: if the required interpretation was separate persisted raster image references per page, this revision still needs an additional reference-image artifact step.
+- Rollback: remove the inserted `.imagegen-comp` sections and restore the visible anchors to the previous static mock sections.

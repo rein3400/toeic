@@ -285,8 +285,9 @@ $stmt->close();
             display: block;
         }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="setup-container">
         <div class="setup-header">
             <h1><i class="fas fa-camera"></i> <?php echo htmlspecialchars($setup_title); ?></h1>

@@ -75,11 +75,12 @@ $redirect = $_GET['redirect'] ?? '';
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-auth-page">
+<body>
     <main class="toeic-page-shell">
         <div class="row g-4 align-items-stretch">
-            <div class="col-lg-5">
+            <div class="col-lg-5 order-2 order-lg-1">
                 <section class="toeic-form-panel h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="toeic-kicker mb-3">Powering global communication</div>
@@ -98,7 +99,7 @@ $redirect = $_GET['redirect'] ?? '';
                     </div>
                 </section>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-7 order-1 order-lg-2">
                 <section class="toeic-form-shell h-100">
                     <div class="d-flex justify-content-between align-items-start gap-3 mb-4 flex-wrap">
                         <div>

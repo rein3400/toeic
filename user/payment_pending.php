@@ -84,8 +84,9 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
         #status-area { min-height: 120px; color: var(--toeic-ink); }
         code { color: var(--toeic-amber-deep); }
     </style>
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body>
     <div class="bg-orbs"></div>
 
     <!-- NAVBAR -->
@@ -119,13 +120,13 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                     </div>
                     <div class="toeic-kicker justify-content-center mb-3">Payment status</div>
                     <h4 class="fw-bold mb-2">Menunggu Pembayaran</h4>
-                    <p class="text-muted mb-1">Order: <code><?php echo htmlspecialchars($order_id); ?></code></p>
-                    <p class="text-muted mb-3">Total: <strong><?php echo $amount_fmt; ?></strong></p>
+                    <p class="text-white-50 mb-1">Order: <code><?php echo htmlspecialchars($order_id); ?></code></p>
+                    <p class="text-white-50 mb-3">Total: <strong><?php echo $amount_fmt; ?></strong></p>
 
                     <!-- Dynamic payment info: VA number, QR code, or e-wallet redirect -->
                     <div id="payment-info" class="mb-3"></div>
 
-                    <p class="text-muted mb-3" id="pending-desc" style="font-size:0.85rem;">
+                    <p class="text-white-50 mb-3" id="pending-desc" style="font-size:0.85rem;">
                         Selesaikan pembayaran di aplikasi Anda.<br>
                         Halaman ini otomatis memperbarui status.
                     </p>
@@ -137,7 +138,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                     <div class="spinner-border text-warning mt-2" role="status">
                         <span class="visually-hidden">Checking...</span>
                     </div>
-                    <p class="text-muted mt-2" style="font-size:0.8rem;">
+                    <p class="text-white-50 mt-2" style="font-size:0.8rem;">
                         Mengecek status... (<span id="attempt-counter">0</span>/36)
                     </p>
                 </div>
@@ -148,7 +149,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         <i class="fas fa-check-circle fa-4x" style="color:#34d399;"></i>
                     </div>
                     <h4 class="fw-bold mb-2" style="color:#34d399;">Pembayaran Berhasil!</h4>
-                    <p class="text-muted mb-4">Akses ujian Anda telah aktif. Mengalihkan ke dashboard...</p>
+                    <p class="text-white-50 mb-4">Akses ujian Anda telah aktif. Mengalihkan ke dashboard...</p>
                 </div>
 
                 <!-- Failed state -->
@@ -157,8 +158,8 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         <i class="fas fa-times-circle fa-4x" style="color:#f87171;"></i>
                     </div>
                     <h4 class="fw-bold mb-2" style="color:#f87171;">Pembayaran Gagal / Kadaluarsa</h4>
-                    <p class="text-muted mb-4">Transaksi tidak berhasil. Silakan coba lagi.</p>
-                    <a href="buy_exam.php" class="btn btn-outline-secondary">
+                    <p class="text-white-50 mb-4">Transaksi tidak berhasil. Silakan coba lagi.</p>
+                    <a href="buy_exam.php" class="btn btn-outline-light">
                         <i class="fas fa-redo me-2"></i>Coba Lagi
                     </a>
                 </div>
@@ -169,12 +170,12 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         <i class="fas fa-hourglass-end fa-4x" style="color:#94a3b8;"></i>
                     </div>
                     <h4 class="fw-bold mb-2">Pembayaran Belum Terkonfirmasi</h4>
-                    <p class="text-muted mb-4">
+                    <p class="text-white-50 mb-4">
                         Pembayaran Anda belum terkonfirmasi setelah 3 menit.<br>
                         Jika sudah membayar, hubungi administrator dengan menyebutkan order ID berikut:
                     </p>
                     <p class="mb-4"><code><?php echo htmlspecialchars($order_id); ?></code></p>
-                    <a href="buy_exam.php" class="btn btn-outline-secondary">
+                    <a href="buy_exam.php" class="btn btn-outline-light">
                         <i class="fas fa-arrow-left me-2"></i>Kembali
                     </a>
                 </div>
@@ -205,7 +206,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
         if (isVA && payCode) {
             const safeCode = payCode.replace(/[^0-9]/g, '');
             infoEl.innerHTML =
-                '<p class="text-muted mb-1" style="font-size:0.85rem;">Transfer ke nomor VA berikut:</p>' +
+                '<p class="text-white-50 mb-1" style="font-size:0.85rem;">Transfer ke nomor VA berikut:</p>' +
                 '<div class="d-flex align-items-center justify-content-center gap-2 mb-2">' +
                     '<code style="font-size:1.4rem;letter-spacing:3px;color:#f59e0b;">' + safeCode + '</code>' +
                     '<button onclick="navigator.clipboard.writeText(\'' + safeCode + '\').then(function(){this.innerHTML=\'<i class=\\\"fas fa-check\\\"></i>\';}.bind(this))" ' +
@@ -213,11 +214,11 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         '<i class="fas fa-copy"></i>' +
                     '</button>' +
                 '</div>' +
-                '<p class="text-muted" style="font-size:0.8rem;">Bank: ' + bankName + '</p>';
+                '<p class="text-white-50" style="font-size:0.8rem;">Bank: ' + bankName + '</p>';
             if (descEl) descEl.innerHTML = 'Lakukan transfer bank via ATM atau mobile banking.<br>Halaman ini otomatis memperbarui status.';
         } else if (method === 'QRIS' && qrUrl) {
             infoEl.innerHTML =
-                '<p class="text-muted mb-2" style="font-size:0.85rem;">Scan QR code ini dengan aplikasi apapun:</p>' +
+                '<p class="text-white-50 mb-2" style="font-size:0.85rem;">Scan QR code ini dengan aplikasi apapun:</p>' +
                 '<img src="' + qrUrl + '" alt="QRIS" style="width:200px;height:200px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);" class="mb-2">';
             if (descEl) descEl.innerHTML = 'Scan QR di aplikasi apapun yang mendukung QRIS.<br>Halaman ini otomatis memperbarui status.';
         } else if (['OVO','SHOPEEPAY','DANA'].includes(method) && storedUrl) {

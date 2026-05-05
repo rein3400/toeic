@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC Playground - TOEIC Test Static Preview</title>
+    <link rel="icon" type="image/jpeg" href="../../uploads/settings/favicon.jpeg">
+    <meta name="description" content="Static preview homepage TOEIC Listening dan Reading dengan practice by part, full simulation, analytics, AI analysis, secure audio, dan proctoring-ready test flow.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@500;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../user/css/mobile-responsive.css" rel="stylesheet">
+    <link href="../../assets/css/toeic-estudyme-home.css" rel="stylesheet">
+    <link href="../../assets/css/toeic-redesign.css" rel="stylesheet">
+    <style>
+        :root {
+            --home-blue: #487fb5;
+            --home-focus: #436cac;
+            --home-yellow: #ffe77f;
+            --home-cream: #ffedcb;
+            --home-yellow-shadow: #d7bd58;
+            --home-paper: #ffffff;
+            --home-line: #d9e4ee;
+            --home-muted: #64748b;
+            --home-ink: #263f78;
+            --home-radius: 12px;
+            --home-display: "Fredoka", "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+            --home-body: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+            --home-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body.toeic-estudy-home {
+            margin: 0;
+            color: var(--home-ink);
+            font-family: var(--home-body);
+            background:
+                repeating-linear-gradient(90deg, rgba(72, 127, 181, 0.06) 0 1px, transparent 1px 38px),
+                linear-gradient(180deg, #ffffff 0%, var(--home-cream) 58%, #ffffff 100%);
+            letter-spacing: 0.012em;
+        }
+
+        body.toeic-estudy-home h1,
+        body.toeic-estudy-home h2,
+        body.toeic-estudy-home h3,
+        body.toeic-estudy-home strong {
+            font-family: var(--home-display);
+            letter-spacing: -0.018em;
+        }
+
+        body.toeic-estudy-home p {
+            color: var(--home-muted);
+            line-height: 1.62;
+        }
+
+        .est-home-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 14px clamp(12px, 3vw, 28px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72));
+            backdrop-filter: blur(14px);
+        }
+
+        .est-home-nav {
+            width: min(1140px, 100%);
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 2px solid rgba(67, 108, 172, 0.16);
+            border-bottom-width: 6px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: none;
+        }
+
+        .est-brand,
+        .est-nav-links,
+        .est-nav-actions,
+        .est-hero-actions,
+        .est-exam-tabs,
+        .est-footer nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .est-brand {
+            color: var(--home-focus);
+            text-decoration: none;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .est-brand-mark,
+        .est-icon-pill,
+        .est-topic-icon,
+        .est-function-card span {
+            width: 42px;
+            height: 42px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: var(--home-radius);
+            color: var(--home-focus);
+            background: var(--home-yellow);
+            box-shadow: 0 4px 0 var(--home-yellow-shadow);
+        }
+
+        .est-brand-text {
+            font-family: var(--home-display);
+            font-size: 1.08rem;
+            letter-spacing: -0.01em;
+        }
+
+        .est-nav-links {
+            flex: 1 1 auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .est-nav-links a,
+        .est-link-button,
+        .est-footer a {
+            color: var(--home-focus);
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .est-nav-links a {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 12px;
+            border-radius: var(--home-radius);
+        }
+
+        .est-nav-links a:hover {
+            background: rgba(72, 127, 181, 0.1);
+        }
+
+        .est-app-button,
+        .est-primary-button,
+        .est-secondary-button,
+        .est-link-button,
+        .est-exam-tabs a {
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: var(--home-radius);
+            font-weight: 900;
+            line-height: 1.1;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .est-app-button,
+        .est-primary-button,
+        .est-exam-tabs a.active {
+            color: var(--home-focus) !important;
+            background: var(--home-yellow) !important;
+            box-shadow: 0 4px 0 var(--home-yellow-shadow);
+        }
+
+        .est-secondary-button,
+        .est-link-button,
+        .est-exam-tabs a {
+            color: var(--home-focus) !important;
+            border: 2px solid rgba(67, 108, 172, 0.16);
+            border-bottom-width: 4px;
+            background: var(--home-paper);
+        }
+
+        .est-app-button:hover,
+        .est-primary-button:hover,
+        .est-secondary-button:hover,
+        .est-link-button:hover,
+        .est-exam-tabs a:hover {
+            transform: translateY(-2px);
+        }
+
+        .est-hero {
+            min-height: auto;
+            padding: clamp(42px, 6vw, 72px) clamp(14px, 3vw, 28px) 36px;
+        }
+
+        .est-hero-inner,
+        .est-practice-section,
+        .est-ai-section,
+        .est-exam-section,
+        .est-inside-section,
+        .est-review-section,
+        .est-download-section,
+        .est-stats-strip,
+        .est-footer {
+            width: min(1140px, calc(100% - 28px));
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .est-hero-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.02fr) minmax(330px, 0.78fr);
+            gap: clamp(28px, 5vw, 64px);
+            align-items: center;
+        }
+
+        .est-kicker {
+            width: fit-content;
+            margin: 0 0 14px;
+            padding: 7px 11px;
+            border: 2px solid rgba(67, 108, 172, 0.14);
+            border-radius: var(--home-radius);
+            color: var(--home-focus) !important;
+            background: rgba(255, 231, 127, 0.7);
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .est-hero-copy h1 {
+            max-width: 9ch;
+            margin: 0;
+            color: var(--home-focus);
+            font-size: clamp(3.1rem, 8vw, 6.6rem);
+            line-height: 0.92;
+            text-wrap: balance;
+        }
+
+        .est-hero-copy h1 span {
+            display: block;
+            color: var(--home-blue);
+        }
+
+        .est-hero-text {
+            max-width: 640px;
+            margin: 22px 0 0;
+            font-size: clamp(1rem, 1.2vw, 1.12rem);
+        }
+
+        .est-hero-actions {
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .est-hero-visual {
+            position: relative;
+            min-height: 470px;
+            padding: 22px;
+            border: 2px solid rgba(67, 108, 172, 0.16);
+            border-bottom-width: 7px;
+            border-radius: 24px;
+            background:
+                linear-gradient(135deg, rgba(255, 231, 127, 0.58) 0 30%, transparent 30% 100%),
+                var(--home-paper);
+        }
+
+        .est-hero-orbit {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+        }
+
+        .est-phone-frame {
+            width: min(310px, 88%);
+            min-height: 410px;
+            padding: 18px;
+            border: 2px solid rgba(255, 231, 127, 0.42);
+            border-bottom-width: 7px;
+            border-radius: 28px;
+            color: var(--home-paper);
+            background:
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 26px),
+                var(--home-focus);
+        }
+
+        .est-phone-top,
+        .est-topic-meta,
+        .est-ai-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .est-phone-top strong {
+            color: var(--home-paper);
+            font-size: 0.86rem;
+        }
+
+        .est-phone-top span {
+            width: 44px;
+            height: 10px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.28);
+        }
+
+        .est-phone-score {
+            margin-top: 28px;
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .est-phone-score small,
+        .est-phone-score span,
+        .est-progress-stack span {
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        .est-phone-score strong {
+            display: block;
+            color: var(--home-yellow);
+            font-size: 5rem;
+            line-height: 0.95;
+        }
+
+        .est-progress-stack {
+            display: grid;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .est-progress-stack div {
+            display: grid;
+            gap: 7px;
+        }
+
+        .est-progress-stack b {
+            height: 12px;
+            overflow: hidden;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .est-progress-stack b::before {
+            content: "";
+            display: block;
+            width: var(--value);
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--home-yellow), #ffffff);
+        }
+
+        .est-orbit-card {
+            position: absolute;
+            z-index: 2;
+            min-width: 138px;
+            display: grid;
+            gap: 4px;
+            padding: 13px;
+            border: 2px solid rgba(67, 108, 172, 0.16);
+            border-bottom-width: 6px;
+            border-radius: 18px;
+            background: var(--home-paper);
+        }
+
+        .est-orbit-card strong {
+            color: var(--home-focus);
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .est-orbit-card small {
+            color: var(--home-muted);
+            font-weight: 800;
+        }
+
+        .est-orbit-rating {
+            top: 22px;
+            left: 22px;
+        }
+
+        .est-orbit-download {
+            right: 22px;
+            bottom: 22px;
+        }
+
+        .est-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            padding: 0 0 clamp(42px, 6vw, 76px);
+        }
+
+        .est-stats-strip article,
+        .est-topic-card,
+        .est-function-card,
+        .est-ai-card,
+        .est-review-wall article,
+        .est-download-section,
+        .est-ai-visual,
+        .est-exam-section {
+            border: 2px solid rgba(67, 108, 172, 0.14);
+            border-bottom-width: 6px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.82);
+            box-shadow: none;
+        }
+
+        .est-stats-strip article {
+            padding: 18px;
+        }
+
+        .est-stats-strip strong {
+            display: block;
+            color: var(--home-focus);
+            font-size: clamp(2rem, 4vw, 4rem);
+            line-height: 1;
+        }
+
+        .est-stats-strip span {
+            color: var(--home-muted);
+            font-weight: 900;
+        }
+
+        .est-practice-section,
+        .est-ai-section,
+        .est-exam-section,
+        .est-inside-section,
+        .est-review-section,
+        .est-download-section {
+            padding-top: clamp(40px, 6vw, 72px);
+            padding-bottom: clamp(40px, 6vw, 72px);
+        }
+
+        .est-section-heading {
+            max-width: 740px;
+            margin-bottom: 22px;
+        }
+
+        .est-section-heading h2,
+        .est-ai-copy h2,
+        .est-exam-copy h2,
+        .est-review-copy h2,
+        .est-download-section h2 {
+            color: var(--home-focus);
+            font-size: clamp(2.2rem, 5vw, 4.9rem);
+            line-height: 0.98;
+            text-wrap: balance;
+        }
+
+        .est-skill-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .est-skill-tabs span {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border: 2px solid rgba(67, 108, 172, 0.14);
+            border-bottom-width: 4px;
+            border-radius: var(--home-radius);
+            color: var(--home-focus);
+            background: var(--home-paper);
+            font-weight: 900;
+        }
+
+        .est-skill-tabs .active {
+            background: var(--home-yellow);
+        }
+
+        .est-topic-grid,
+        .est-inside-grid,
+        .est-review-wall {
+            display: grid;
+            gap: 14px;
+        }
+
+        .est-topic-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .est-topic-card {
+            min-height: 188px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px;
+            color: var(--home-ink);
+            text-decoration: none;
+        }
+
+        .est-topic-card.wide {
+            grid-column: span 2;
+        }
+
+        .est-topic-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(67, 108, 172, 0.28);
+        }
+
+        .est-topic-card strong {
+            color: var(--home-focus);
+            font-size: 1.28rem;
+            line-height: 1.05;
+        }
+
+        .est-topic-card small,
+        .est-topic-meta {
+            color: var(--home-muted);
+            font-weight: 900;
+        }
+
+        .est-topic-icon.coral,
+        .est-topic-icon.blue,
+        .est-topic-icon.gold,
+        .est-topic-icon.navy,
+        .est-topic-icon.green {
+            color: var(--home-focus);
+            background: var(--home-yellow);
+        }
+
+        .est-ai-section,
+        .est-review-section,
+        .est-download-section {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+            gap: clamp(20px, 4vw, 52px);
+            align-items: center;
+        }
+
+        .est-ai-visual {
+            min-height: 420px;
+            display: grid;
+            gap: 14px;
+            padding: 22px;
+            background:
+                linear-gradient(135deg, rgba(255, 231, 127, 0.5) 0 32%, transparent 32% 100%),
+                var(--home-paper);
+        }
+
+        .est-ai-badge {
+            width: fit-content;
+            padding: 8px 12px;
+            border-radius: var(--home-radius);
+            color: var(--home-focus);
+            background: var(--home-yellow);
+            font-weight: 900;
+        }
+
+        .est-ai-card,
+        .est-function-card,
+        .est-review-wall article {
+            padding: 18px;
+        }
+
+        .est-ai-card span,
+        .est-function-card p,
+        .est-review-wall span {
+            color: var(--home-muted);
+            font-weight: 800;
+        }
+
+        .est-ai-card strong,
+        .est-function-card strong,
+        .est-review-wall strong {
+            display: block;
+            color: var(--home-focus);
+            font-size: 1.3rem;
+            line-height: 1.08;
+        }
+
+        .est-exam-section {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 24px;
+            padding-left: clamp(20px, 4vw, 44px);
+            padding-right: clamp(20px, 4vw, 44px);
+            background:
+                linear-gradient(135deg, rgba(255, 231, 127, 0.46) 0 28%, transparent 28% 100%),
+                var(--home-paper);
+        }
+
+        .est-exam-tabs {
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .est-inside-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .est-function-card {
+            display: grid;
+            gap: 13px;
+            align-content: start;
+        }
+
+        .est-download-section {
+            grid-template-columns: minmax(0, 1fr) auto;
+            border-color: rgba(67, 108, 172, 0.18);
+            background:
+                linear-gradient(135deg, rgba(255, 231, 127, 0.58) 0 30%, transparent 30% 100%),
+                var(--home-paper);
+            padding-left: clamp(22px, 4vw, 44px);
+            padding-right: clamp(22px, 4vw, 44px);
+        }
+
+        .est-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 28px 0 40px;
+            border-top: 2px solid rgba(67, 108, 172, 0.12);
+        }
+
+        .est-footer strong {
+            display: block;
+            color: var(--home-focus);
+            font-size: 1.2rem;
+        }
+
+        .est-footer-disclaimer {
+            max-width: 700px;
+            margin: 8px 0 0;
+            font-size: 0.84rem;
+        }
+
+        @media (max-width: 991px) {
+            .est-home-nav {
+                flex-wrap: wrap;
+            }
+
+            .est-nav-links {
+                order: 3;
+                flex-basis: 100%;
+                justify-content: flex-start;
+            }
+
+            .est-hero-inner,
+            .est-ai-section,
+            .est-review-section,
+            .est-download-section,
+            .est-exam-section {
+                grid-template-columns: 1fr;
+            }
+
+            .est-topic-grid,
+            .est-inside-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .est-exam-tabs {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .est-home-header {
+                padding: 8px;
+            }
+
+            .est-home-nav {
+                border-radius: 14px;
+            }
+
+            .est-brand,
+            .est-nav-actions,
+            .est-hero-actions,
+            .est-primary-button,
+            .est-secondary-button,
+            .est-app-button,
+            .est-link-button,
+            .est-exam-tabs a {
+                width: 100%;
+            }
+
+            .est-nav-actions,
+            .est-hero-actions,
+            .est-exam-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .est-hero {
+                padding-top: 24px;
+            }
+
+            .est-hero-copy h1 {
+                max-width: none;
+                font-size: clamp(2.8rem, 15vw, 4.8rem);
+            }
+
+            .est-hero-visual {
+                min-height: 390px;
+                padding: 14px;
+                border-radius: 18px;
+            }
+
+            .est-orbit-card {
+                position: relative;
+                inset: auto;
+                min-width: 0;
+            }
+
+            .est-hero-orbit {
+                margin-top: 12px;
+            }
+
+            .est-stats-strip,
+            .est-topic-grid,
+            .est-inside-grid,
+            .est-review-wall {
+                grid-template-columns: 1fr;
+            }
+
+            .est-topic-card.wide {
+                grid-column: auto;
+            }
+
+            .est-footer {
+                flex-direction: column;
+            }
+        }
+
+        /* Screenshot cleanup: keep legacy orange accents from bleeding through. */
+        body.toeic-estudy-home::before,
+        body.toeic-estudy-home::after,
+        .est-hero::before,
+        .est-hero::after,
+        .est-hero-visual::before,
+        .est-hero-visual::after,
+        .est-hero-orbit::before,
+        .est-hero-orbit::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        .est-brand-mark,
+        .est-icon-pill,
+        .est-topic-icon,
+        .est-function-card span {
+            color: var(--home-focus) !important;
+            background: var(--home-yellow) !important;
+            box-shadow: 0 4px 0 var(--home-yellow-shadow) !important;
+        }
+
+        .est-hero-copy h1 {
+            color: var(--home-focus) !important;
+        }
+
+        .est-hero-copy h1 span {
+            color: var(--home-blue) !important;
+        }
+
+        .est-phone-frame {
+            color: var(--home-paper) !important;
+            opacity: 1 !important;
+            background:
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 26px),
+                var(--home-focus) !important;
+            box-shadow: none !important;
+        }
+
+        .est-phone-score {
+            color: var(--home-paper) !important;
+            background: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        .est-phone-score strong {
+            color: var(--home-yellow) !important;
+        }
+
+        .est-phone-score small,
+        .est-phone-score span,
+        .est-progress-stack span {
+            color: rgba(255, 255, 255, 0.82) !important;
+        }
+
+        .est-progress-stack b {
+            background: rgba(255, 255, 255, 0.16) !important;
+        }
+
+        .est-orbit-card {
+            color: var(--home-ink) !important;
+            opacity: 1 !important;
+            background: var(--home-paper) !important;
+        }
+    </style>
+</head>
+<body class="toeic-estudy-home">
+    <header class="est-home-header">
+        <nav class="est-home-nav" aria-label="Primary navigation">
+            <a class="est-brand" href="../../index.php" aria-label="TOEIC Playground home">
+                <span class="est-brand-mark">
+                    <i class="fas fa-briefcase"></i>
+                </span>
+                <span class="est-brand-text">TOEIC Playground</span>
+            </a>
+
+            <div class="est-nav-links" aria-label="Homepage sections">
+                <a href="#practice">Practice</a>
+                <a href="#ai-analysis">AI Analysis</a>
+                <a href="#exam-modes">Exam Modes</a>
+                <a href="#inside">Features</a>
+                <a href="#faq">FAQ</a>
+            </div>
+
+            <div class="est-nav-actions">
+                <a class="est-link-button" href="../../login.php">Sign In</a>
+                <a class="est-app-button" href="../../register.php">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="est-hero" id="overview">
+            <div class="est-hero-inner">
+                <div class="est-hero-copy">
+                    <p class="est-kicker">TOEIC Listening & Reading simulator</p>
+                    <h1>Free Online <span>TOEIC Test 2026</span></h1>
+                    <p class="est-hero-text">
+                        Latihan TOEIC yang fokus ke format asli: practice per part, full simulation 200 soal, score report, secure audio, analytics, dan AI study analysis dalam satu flow yang rapi.
+                    </p>
+                    <div class="est-hero-actions">
+                        <a class="est-primary-button" href="../../register.php">Start Practice Now</a>
+                        <a class="est-secondary-button" href="../../login.php">Already have account</a>
+                    </div>
+                </div>
+
+                <div class="est-hero-visual" aria-label="TOEIC app preview">
+                    <div class="est-orbit-card est-orbit-rating">
+                        <span class="est-icon-pill"><i class="fas fa-star"></i></span>
+                        <strong>990</strong>
+                        <small>Score target</small>
+                    </div>
+                    <div class="est-orbit-card est-orbit-download">
+                        <span class="est-icon-pill"><i class="fas fa-headphones"></i></span>
+                        <strong>200</strong>
+                        <small>Questions</small>
+                    </div>
+                    <div class="est-hero-orbit">
+                        <div class="est-phone-frame">
+                            <div class="est-phone-top">
+                                <span></span>
+                                <strong>TOEIC Lab</strong>
+                            </div>
+                            <div class="est-phone-score">
+                                <small>Latest simulation</small>
+                                <strong>785</strong>
+                                <span>Working Proficiency Plus</span>
+                            </div>
+                            <div class="est-progress-stack">
+                                <div><span>Listening</span><b style="--value: 84%"></b></div>
+                                <div><span>Reading</span><b style="--value: 76%"></b></div>
+                                <div><span>Part 7 Focus</span><b style="--value: 62%"></b></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="est-stats-strip" aria-label="Platform highlights">
+            <article>
+                <strong>7</strong>
+                <span>TOEIC parts</span>
+            </article>
+            <article>
+                <strong>120</strong>
+                <span>minutes full test</span>
+            </article>
+            <article>
+                <strong>10-990</strong>
+                <span>scaled score range</span>
+            </article>
+        </section>
+
+        <section class="est-practice-section" id="practice">
+            <div class="est-section-heading">
+                <p class="est-kicker">Practice test library</p>
+                <h2>Choose your TOEIC learning part</h2>
+                <p>Strukturnya mengikuti TOEIC Listening dan Reading. Tidak ada Speaking/Writing agar produk tetap TOEIC-only sesuai scope.</p>
+            </div>
+
+            <div class="est-skill-tabs" aria-label="TOEIC sections">
+                <span class="active"><i class="fas fa-volume-up"></i> Listening</span>
+                <span><i class="fas fa-book-open"></i> Reading</span>
+            </div>
+
+            <div class="est-topic-grid">
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon coral"><i class="fas fa-image"></i></span>
+                    <strong>Photos</strong>
+                    <small>Part 1</small>
+                    <div class="est-topic-meta"><span>6 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon blue"><i class="fas fa-comment-dots"></i></span>
+                    <strong>Question - Response</strong>
+                    <small>Part 2</small>
+                    <div class="est-topic-meta"><span>25 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon gold"><i class="fas fa-comments"></i></span>
+                    <strong>Short Conversations</strong>
+                    <small>Part 3</small>
+                    <div class="est-topic-meta"><span>39 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon navy"><i class="fas fa-bullhorn"></i></span>
+                    <strong>Short Talks</strong>
+                    <small>Part 4</small>
+                    <div class="est-topic-meta"><span>30 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon green"><i class="fas fa-pen-nib"></i></span>
+                    <strong>Incomplete Sentences</strong>
+                    <small>Part 5</small>
+                    <div class="est-topic-meta"><span>30 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card" href="../../register.php">
+                    <span class="est-topic-icon coral"><i class="fas fa-align-left"></i></span>
+                    <strong>Text Completion</strong>
+                    <small>Part 6</small>
+                    <div class="est-topic-meta"><span>16 questions</span><span>Practice</span></div>
+                </a>
+                <a class="est-topic-card wide" href="../../register.php">
+                    <span class="est-topic-icon blue"><i class="fas fa-newspaper"></i></span>
+                    <strong>Reading Comprehension</strong>
+                    <small>Part 7</small>
+                    <div class="est-topic-meta"><span>54 questions</span><span>Practice</span></div>
+                </a>
+            </div>
+        </section>
+
+        <section class="est-ai-section" id="ai-analysis">
+            <div class="est-ai-visual">
+                <div class="est-ai-badge">AI Study Report</div>
+                <div class="est-ai-card writing">
+                    <span>Part accuracy</span>
+                    <strong>Listening + Reading breakdown</strong>
+                    <p>Temukan part yang paling banyak kehilangan poin.</p>
+                </div>
+                <div class="est-ai-card speaking">
+                    <span>Next focus</span>
+                    <strong>Personalized study priority</strong>
+                    <p>Ubah hasil simulation menjadi pathway belajar berikutnya.</p>
+                </div>
+            </div>
+            <div class="est-ai-copy">
+                <p class="est-kicker">AI Analysis</p>
+                <h2>Explore your TOEIC score report instantly</h2>
+                <p>
+                    Setelah test selesai, learner bisa membaca skor Listening, Reading, total scaled score, part breakdown, dan rekomendasi belajar tanpa menebak-nebak.
+                </p>
+                <a class="est-primary-button" href="../../register.php">Check My TOEIC Progress</a>
+            </div>
+        </section>
+
+        <section class="est-exam-section" id="exam-modes">
+            <div class="est-exam-copy">
+                <p class="est-kicker">Get ready for TOEIC exams</p>
+                <h2>Take computer-based exams and measure your TOEIC score.</h2>
+                <p>Mode dibuat ringkas seperti landing app modern: learner langsung memilih latihan cepat, full simulation, atau test proctored.</p>
+            </div>
+            <div class="est-exam-tabs">
+                <a href="../../register.php">Practice Mode</a>
+                <a class="active" href="../../register.php">Full Test</a>
+                <a href="../../register.php">Exam Simulation</a>
+            </div>
+        </section>
+
+        <section class="est-inside-section" id="inside">
+            <div class="est-section-heading">
+                <p class="est-kicker">What's inside?</p>
+                <h2>Everything learners need after every answer</h2>
+            </div>
+            <div class="est-inside-grid">
+                <article class="est-function-card">
+                    <span><i class="fas fa-layer-group"></i></span>
+                    <strong>All-in-one TOEIC platform</strong>
+                    <p>Practice questions, test session, score report, analytics, and study pathway live in one product flow.</p>
+                </article>
+                <article class="est-function-card">
+                    <span><i class="fas fa-chart-pie"></i></span>
+                    <strong>Result statistics</strong>
+                    <p>See correct, incorrect, unanswered, section score, and part-level accuracy after completion.</p>
+                </article>
+                <article class="est-function-card">
+                    <span><i class="fas fa-headphones-alt"></i></span>
+                    <strong>Secure audio</strong>
+                    <p>Listening playback is controlled so the simulation experience stays close to a serious test environment.</p>
+                </article>
+                <article class="est-function-card">
+                    <span><i class="fas fa-route"></i></span>
+                    <strong>Learning path</strong>
+                    <p>AI analysis can turn weak parts into recommended learning modules and focused practice cycles.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="est-review-section">
+            <div class="est-review-copy">
+                <p class="est-kicker">Learner confidence</p>
+                <h2>Practice feels simpler when the product shows the next step clearly.</h2>
+                <p>Bangun ritme latihan TOEIC yang lebih terarah, dari practice singkat sampai simulasi penuh dengan hasil yang mudah dipahami.</p>
+            </div>
+            <div class="est-review-wall">
+                <article>
+                    <strong>"Part-by-part practice makes the target easier to see."</strong>
+                    <span>TOEIC learner</span>
+                </article>
+                <article>
+                    <strong>"The report tells me what to fix before the next simulation."</strong>
+                    <span>Student dashboard user</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="est-download-section" id="faq">
+            <div>
+                <p class="est-kicker">Start from one clean flow</p>
+                <h2>Ready to practice TOEIC Listening and Reading?</h2>
+                <p>Mulai dari akun learner, masuk dashboard, lalu pilih practice atau full simulation sesuai kebutuhan.</p>
+            </div>
+            <a class="est-primary-button" href="../../register.php">Create Free Account</a>
+        </section>
+    </main>
+
+    <footer class="est-footer">
+        <div>
+            <strong>TOEIC Playground</strong>
+            <span>TOEIC Listening & Reading simulation platform.</span>
+            <p class="est-footer-disclaimer">TOEIC is a registered trademark of Educational Testing Service (ETS). This web is not affiliated with or endorsed by Educational Testing Service.</p>
+        </div>
+        <nav aria-label="Footer navigation">
+            <a href="#practice">Practice</a>
+            <a href="#exam-modes">Exam</a>
+            <a href="../../login.php">Sign In</a>
+        </nav>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>
