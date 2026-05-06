@@ -94,7 +94,7 @@ $user_data = $stmt->get_result()->fetch_assoc();
 
 // Get TOEIC-only statistics
 $stats_stmt = $conn->prepare("
-    SELECT 
+    SELECT
         COUNT(*) as total_tests,
         MAX(total_score) as best_score,
         AVG(total_score) as avg_score,
@@ -119,407 +119,186 @@ if (strpos($user_name, ' ') !== false) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($website_title); ?> - Profile Settings</title>
+    <title>Profile Settings - <?php echo htmlspecialchars($website_title); ?></title>
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css', '../assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/dark-user.css', 'css/dark-user.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
-
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
     <style>
-        body { background: var(--rg-bg); color: var(--rg-text); }
-
         .profile-hero {
-            background: linear-gradient(135deg, var(--rg-primary) 0%, var(--rg-accent-blue) 100%);
+            background: linear-gradient(135deg, var(--academy-blue) 0%, var(--focus-blue) 100%);
+            padding: 3rem 0;
             color: white;
-            padding: 2.5rem 0;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-hero::before {
-            content: '';
-            position: absolute;
-            top: -40%; right: -20%;
-            width: 300px; height: 300px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .profile-avatar {
-            width: 90px; height: 90px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: 800;
-            color: white;
-            margin: 0 auto 1rem;
-            border: 3px solid rgba(255,255,255,0.3);
-        }
-
-        .profile-name { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem; }
-        .profile-meta { opacity: 0.8; font-size: 0.9rem; }
-        .profile-meta i { opacity: 0.7; }
-
-        /* Stats cards */
-        .stats-card {
-            background: var(--rg-bg-white);
-            border: 1px solid var(--rg-border);
-            border-radius: 16px;
-            padding: 1.25rem;
             text-align: center;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-
-        .stats-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
-        .stats-card h3 { font-size: 1.75rem; font-weight: 800; color: var(--rg-primary); margin-bottom: 0.25rem; }
-        .stats-card p { color: var(--rg-text-muted); font-size: 0.85rem; margin: 0; }
-
-        /* Cards */
-        .card {
-            background: var(--rg-bg-white);
-            border: 1px solid var(--rg-border);
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: all 0.2s;
-            color: var(--rg-text);
+        .profile-avatar-lg {
+            width: 100px;
+            height: 100px;
+            background: var(--sunbeam-yellow) !important;
+            color: var(--focus-blue) !important;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
-
-        .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-        .card h4, .card h6 { color: var(--rg-text) !important; }
-
-        .form-control {
-            border: 2px solid var(--rg-border);
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            transition: all 0.3s ease;
-            color: var(--rg-text);
-        }
-
-        .form-control:focus {
-            border-color: var(--rg-primary);
-            box-shadow: 0 0 0 3px var(--rg-primary-light);
-            color: var(--rg-text);
-        }
-
-        .form-label { color: var(--rg-text-secondary); font-weight: 600; margin-bottom: 0.5rem; }
-        .form-label i { color: var(--rg-primary) !important; }
-
-        .btn-primary {
-            background: var(--rg-primary);
-            border: none;
-            color: white;
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--rg-primary-dark);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,166,140,0.3);
-        }
-
-        .btn-success {
-            background: var(--rg-primary);
-            border: none;
-            color: white;
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-success:hover {
-            background: var(--rg-primary-dark);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,166,140,0.3);
-        }
-
-        .nav-tabs { border-bottom: 2px solid var(--rg-border); }
-
         .nav-tabs .nav-link {
-            border: none;
-            border-radius: 10px 10px 0 0;
-            color: var(--rg-text-secondary);
-            font-weight: 600;
-            margin-right: 0.25rem;
-            padding: 0.65rem 1.25rem;
-            transition: all 0.2s;
+            border: none !important;
+            color: var(--muted-slate);
+            font-weight: 800;
+            padding: 1rem 1.5rem;
+            border-radius: 12px 12px 0 0 !important;
         }
-
-        .nav-tabs .nav-link:hover { background: var(--rg-primary-light); color: var(--rg-primary); }
-
         .nav-tabs .nav-link.active {
-            background: var(--rg-primary);
-            color: white!important;
-            border-color: var(--rg-primary);
-        }
-
-        .nav-tabs .nav-link i { color: inherit !important; }
-
-        .alert-danger { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px; color: #B91C1C; }
-        .alert-success { background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; color: #065F46; }
-        .alert-info { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; color: #1E40AF; }
-
-        h4 i, h6 i { color: var(--rg-primary) !important; }
-        .fas { color: white; }
-
-        .input-group-text {
-            background: var(--rg-primary-light);
-            color: var(--rg-primary);
-            border: 2px solid var(--rg-border);
-            border-radius: 12px 0 0 12px;
-        }
-
-        @media (max-width: 768px) {
-            .profile-hero { padding: 2rem 0; }
-            .profile-avatar { width: 70px; height: 70px; font-size: 1.5rem; }
-            .profile-name { font-size: 1.35rem; }
+            background: white !important;
+            color: var(--focus-blue) !important;
+            border: 2px solid var(--cloud-line) !important;
+            border-bottom: none !important;
         }
     </style>
 </head>
-<body class="toeic-redesign-body toeic-student-page">
-    <div class="bg-orbs"></div>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container py-1">
-            <a class="navbar-brand" href="index.php">
-                <?php if (!empty($website_logo) && file_exists('../' . $website_logo)): ?>
-                    <img src="../<?php echo htmlspecialchars($website_logo); ?>" alt="Logo">
-                <?php else: ?>
-                    <i class="fas fa-graduation-cap" style="color:var(--rg-primary) !important;"></i>
-                <?php endif; ?>
+<body class="tc-user-page tc-profile-page">
+    <header class="navbar py-2 border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand study-headline mb-0" href="index.php">
+                <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
                 <?php echo htmlspecialchars($website_title); ?>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav me-auto ms-3 gap-1">
-                    <li class="nav-item"><a class="nav-link" href="index.php"><i class="fas fa-home me-1"></i> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="analytics.php"><i class="fas fa-chart-line me-1"></i> Analytics</a></li>
-                    <li class="nav-item"><a class="nav-link" href="buy_exam.php"><i class="fas fa-shopping-cart me-1"></i> Beli Paket</a></li>
-                </ul>
-                <div class="dropdown ms-2">
-                    <div class="avatar-circle" data-bs-toggle="dropdown" role="button">
-                        <?php echo htmlspecialchars($initials); ?>
-                    </div>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-custom mt-2">
-                        <li><span class="dropdown-item-text px-3 py-2" style="font-size:0.8rem; color:var(--rg-text-muted); font-weight:500;"><?php echo htmlspecialchars($user_name); ?></span></li>
+            <div class="d-flex align-items-center gap-3">
+                <div class="dropdown">
+                    <div class="avatar-circle" data-bs-toggle="dropdown" role="button"><?php echo htmlspecialchars($initials); ?></div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2 rounded-3">
+                        <li><a class="dropdown-item rounded-2 py-2" href="index.php"><i class="fas fa-home me-2"></i> Dashboard</a></li>
+                        <li><a class="dropdown-item rounded-2 py-2" href="analytics.php"><i class="fas fa-chart-pie me-2"></i> Analytics</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item active" href="profile.php"><i class="fas fa-user-cog me-2" style="width:16px;"></i> Profil Saya</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger-custom" href="../logout.php"><i class="fas fa-sign-out-alt me-2" style="width:16px;"></i> Logout</a></li>
+                        <li><a class="dropdown-item rounded-2 py-2 text-danger" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="profile-hero">
-        <div class="container text-center" style="position:relative; z-index:1;">
-            <div class="profile-avatar">
-                <?php echo strtoupper(substr($_SESSION['full_name'], 0, 2)); ?>
+    <main>
+        <section class="profile-hero mb-4">
+            <div class="container">
+                <div class="profile-avatar-lg"><?php echo htmlspecialchars($initials); ?></div>
+                <h1 class="text-white mb-2"><?php echo htmlspecialchars($user_data['full_name']); ?></h1>
+                <p class="opacity-75 mb-0">@<?php echo htmlspecialchars($user_data['username']); ?> · Member since <?php echo date('M Y', strtotime($user_data['created_at'])); ?></p>
             </div>
-            <h1 class="profile-name"><?php echo htmlspecialchars($_SESSION['full_name']); ?></h1>
-            <p class="profile-meta">
-                <i class="fas fa-user me-1"></i> <?php echo htmlspecialchars($_SESSION['username']); ?>
-                <span class="mx-2">·</span>
-                <i class="fas fa-calendar me-1"></i> Member since <?php echo date('M Y', strtotime($user_data['created_at'])); ?>
-            </p>
-        </div>
-    </section>
+        </section>
 
-    <div class="main-content">
-    <div class="container pb-5">
-        <div class="row g-4">
-            <!-- User Statistics -->
-            <div class="col-lg-4">
-                <h4 class="mb-3" style="font-weight:700; font-size:1.1rem;">
-                    <i class="fas fa-chart-line me-2"></i>Your Statistics
-                </h4>
+        <div class="toeic-page-shell">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="study-card mb-4">
+                        <span class="study-kicker">Performance</span>
+                        <h2 class="h4 mb-4">Stats Summary</h2>
 
-                <div class="stats-card mb-3 fade-in-up">
-                    <h3><?php echo $user_stats['total_tests'] ?: '0'; ?></h3>
-                    <p>TOEIC Tests Completed</p>
+                        <div class="p-3 rounded-3 bg-light mb-3 text-center">
+                            <div class="h2 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo $user_stats['total_tests'] ?: '0'; ?></div>
+                            <div class="small text-muted fw-bold">Tests Completed</div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-light text-center">
+                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo $user_stats['best_score'] ?: '-'; ?></div>
+                                    <div class="small text-muted fw-bold">Best</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-light text-center">
+                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo round($user_stats['avg_score']) ?: '-'; ?></div>
+                                    <div class="small text-muted fw-bold">Avg</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php if ($user_stats['total_tests'] > 0): ?>
+                        <div class="study-card">
+                            <span class="study-kicker">Timeline</span>
+                            <div class="mb-3">
+                                <div class="small text-muted fw-bold uppercase mb-1">First Attempt</div>
+                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($user_stats['first_test'])); ?></div>
+                            </div>
+                            <div>
+                                <div class="small text-muted fw-bold uppercase mb-1">Latest Attempt</div>
+                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($user_stats['last_test'])); ?></div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <?php if ($user_stats['total_tests'] > 0): ?>
-                    <div class="stats-card mb-3 fade-in-up delay-1">
-                        <h3><?php echo $user_stats['best_score']; ?></h3>
-                        <p>Best Score</p>
-                    </div>
-
-                    <div class="stats-card mb-3 fade-in-up delay-2">
-                        <h3><?php echo round($user_stats['avg_score']); ?></h3>
-                        <p>Average Score</p>
-                    </div>
-
-                    <div class="card fade-in-up delay-3">
-                        <div class="card-body">
-                            <h6 class="mb-3" style="font-weight:700;">
-                                <i class="fas fa-info-circle me-2"></i>TOEIC History
-                            </h6>
-                            <p class="mb-2">
-                                <strong>First Test:</strong><br>
-                                <small class="text-muted"><?php echo date('M j, Y', strtotime($user_stats['first_test'])); ?></small>
-                            </p>
-                            <p class="mb-0">
-                                <strong>Latest Test:</strong><br>
-                                <small class="text-muted"><?php echo date('M j, Y', strtotime($user_stats['last_test'])); ?></small>
-                            </p>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <div class="card text-center fade-in-up delay-1">
-                        <div class="card-body py-4">
-                            <i class="fas fa-clipboard-list fa-3x mb-3" style="color:var(--rg-primary) !important; opacity:0.5;"></i>
-                            <p class="text-muted">Belum ada full simulation TOEIC yang selesai.<br>Mulai tes pertama Anda untuk melihat statistik!</p>
-                            <a href="index.php" class="btn btn-primary">
-                                <i class="fas fa-play me-2"></i>Start TOEIC
-                            </a>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Profile Settings -->
-            <div class="col-lg-8">
-                <div class="card fade-in-up">
-                    <div class="card-body p-4">
-                        <h4 class="mb-4" style="font-weight:700;">
-                            <i class="fas fa-cog me-2"></i>Profile Settings
-                        </h4>
-
-                        <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                <i class="fas fa-exclamation-triangle me-2"></i><?php echo $error; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($success)): ?>
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <i class="fas fa-check-circle me-2"></i><?php echo $success; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+                <div class="col-lg-8">
+                    <div class="study-card p-0 overflow-visible" style="border-bottom:none !important; background:transparent !important;">
+                        <ul class="nav nav-tabs border-0" id="profileTabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">
-                                    <i class="fas fa-user me-2"></i>Profile Information
-                                </button>
+                                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">Account Info</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab">
-                                    <i class="fas fa-lock me-2"></i>Change Password
-                                </button>
+                                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">Security</button>
                             </li>
                         </ul>
+                    </div>
 
+                    <div class="study-card" style="border-top-left-radius: 0;">
                         <div class="tab-content" id="profileTabsContent">
-                            <!-- Profile Information Tab -->
-                            <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                            <div class="tab-pane fade show active" id="info" role="tabpanel">
+                                <?php if ($success && strpos($success, 'Profile') !== false): ?>
+                                    <div class="alert alert-success border-0 rounded-3 mb-4"><i class="fas fa-check-circle me-2"></i> <?php echo $success; ?></div>
+                                <?php endif; ?>
+                                <?php if ($error && strpos($error, 'Profile') !== false): ?>
+                                    <div class="alert alert-danger border-0 rounded-3 mb-4"><i class="fas fa-exclamation-circle me-2"></i> <?php echo $error; ?></div>
+                                <?php endif; ?>
+
                                 <form method="POST">
                                     <input type="hidden" name="action" value="update_profile">
-                                    <div class="row">
+                                    <div class="row g-3">
                                         <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="full_name" class="form-label"><i class="fas fa-user me-2"></i>Full Name</label>
-                                                <input type="text" class="form-control" id="full_name" name="full_name"
-                                                    value="<?php echo htmlspecialchars($user_data['full_name']); ?>" required>
-                                            </div>
+                                            <label class="toeic-field-label" for="full_name">Full Name</label>
+                                            <input type="text" id="full_name" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user_data['full_name']); ?>" required>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label"><i class="fas fa-at me-2"></i>Username</label>
-                                                <input type="text" class="form-control" id="username" name="username"
-                                                    value="<?php echo htmlspecialchars($user_data['username']); ?>" required>
-                                            </div>
+                                            <label class="toeic-field-label" for="username">Username</label>
+                                            <input type="text" id="username" name="username" class="form-control" value="<?php echo htmlspecialchars($user_data['username']); ?>" required>
+                                        </div>
+                                        <div class="col-12 pt-3">
+                                            <button type="submit" class="study-button">Save Changes</button>
                                         </div>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label"><i class="fas fa-shield-alt me-2"></i>Account Type</label>
-                                        <input type="text" class="form-control" value="Student" readonly style="background:var(--rg-bg);">
-                                        <small class="text-muted">Account type cannot be changed</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label"><i class="fas fa-calendar me-2"></i>Member Since</label>
-                                        <input type="text" class="form-control"
-                                            value="<?php echo date('F j, Y g:i A', strtotime($user_data['created_at'])); ?>" readonly style="background:var(--rg-bg);">
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save me-2"></i>Update Profile
-                                    </button>
                                 </form>
                             </div>
 
-                            <!-- Change Password Tab -->
-                            <div class="tab-pane fade" id="password" role="tabpanel">
-                                <form method="POST" id="passwordForm">
+                            <div class="tab-pane fade" id="security" role="tabpanel">
+                                <?php if ($success && strpos($success, 'Password') !== false): ?>
+                                    <div class="alert alert-success border-0 rounded-3 mb-4"><i class="fas fa-check-circle me-2"></i> <?php echo $success; ?></div>
+                                <?php endif; ?>
+                                <?php if ($error && strpos($error, 'Password') !== false): ?>
+                                    <div class="alert alert-danger border-0 rounded-3 mb-4"><i class="fas fa-exclamation-circle me-2"></i> <?php echo $error; ?></div>
+                                <?php endif; ?>
+
+                                <form method="POST">
                                     <input type="hidden" name="action" value="change_password">
-
-                                    <div class="mb-3">
-                                        <label for="current_password" class="form-label"><i class="fas fa-lock me-2"></i>Current Password</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="current_password" name="current_password" required>
-                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('current_password')" style="border-radius: 0 12px 12px 0;">
-                                                <i class="fas fa-eye" style="color:var(--rg-text-muted) !important;"></i>
-                                            </button>
+                                    <div class="mb-4">
+                                        <label class="toeic-field-label" for="current_password">Current Password</label>
+                                        <input type="password" id="current_password" name="current_password" class="form-control" required>
+                                    </div>
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-6">
+                                            <label class="toeic-field-label" for="new_password">New Password</label>
+                                            <input type="password" id="new_password" name="new_password" class="form-control" minlength="6" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="toeic-field-label" for="confirm_password">Confirm New Password</label>
+                                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" minlength="6" required>
                                         </div>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="new_password" class="form-label"><i class="fas fa-key me-2"></i>New Password</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="new_password" name="new_password" minlength="6" required>
-                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('new_password')" style="border-radius: 0 12px 12px 0;">
-                                                <i class="fas fa-eye" style="color:var(--rg-text-muted) !important;"></i>
-                                            </button>
-                                        </div>
-                                        <small class="text-muted">Password must be at least 6 characters long</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="confirm_password" class="form-label"><i class="fas fa-check me-2"></i>Confirm New Password</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" minlength="6" required>
-                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password')" style="border-radius: 0 12px 12px 0;">
-                                                <i class="fas fa-eye" style="color:var(--rg-text-muted) !important;"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-info-circle me-2" style="color:#1E40AF !important;"></i>
-                                        <strong>Password Requirements:</strong>
-                                        <ul class="mb-0 mt-2">
-                                            <li>At least 6 characters long</li>
-                                            <li>Use a combination of letters and numbers for better security</li>
-                                            <li>Avoid using personal information</li>
-                                        </ul>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-key me-2"></i>Change Password
-                                    </button>
+                                    <button type="submit" class="study-button">Update Password</button>
                                 </form>
                             </div>
                         </div>
@@ -527,41 +306,8 @@ if (strpos($user_name, ' ') !== false) {
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script>
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const button = field.nextElementSibling;
-            const icon = button.querySelector('i');
-            if (field.type === 'password') {
-                field.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash');
-            } else {
-                field.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye');
-            }
-        }
-
-        document.getElementById('passwordForm').addEventListener('submit', function(e) {
-            if (document.getElementById('new_password').value !== document.getElementById('confirm_password').value) {
-                e.preventDefault(); alert('New passwords do not match!'); return false;
-            }
-        });
-
-        document.getElementById('confirm_password').addEventListener('input', function() {
-            if (this.value && document.getElementById('new_password').value !== this.value) {
-                this.setCustomValidity('Passwords do not match'); this.classList.add('is-invalid');
-            } else {
-                this.setCustomValidity(''); this.classList.remove('is-invalid');
-            }
-        });
-
-        setTimeout(() => {
-            document.querySelectorAll('.alert').forEach(a => {
-                const btn = a.querySelector('.btn-close'); if (btn) btn.click();
-            });
-        }, 5000);
-    </script>
 </body>
 </html>

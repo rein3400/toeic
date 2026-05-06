@@ -71,83 +71,64 @@ $redirect = $_GET['redirect'] ?? '';
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-auth-page">
-    <main class="toeic-page-shell">
-        <div class="row g-4 align-items-stretch">
-            <div class="col-lg-5">
-                <section class="toeic-form-panel h-100 d-flex flex-column justify-content-between">
+<body class="tc-auth-page tc-public-page">
+    <main class="tc-auth-shell">
+        <div class="auth-container tc-auth-card">
+            <section class="tc-auth-aside" aria-label="TOEIC login overview">
+                <div class="tc-auth-mark">TOEIC</div>
+                <span class="tc-eyebrow">Score Cockpit</span>
+                <h2>Masuk ke ruang latihan TOEIC.</h2>
+                <p>Lanjutkan target skor, part lemah, dan simulasi terakhir tanpa banyak langkah.</p>
+                <div class="tc-auth-score">
+                    <span>Total score</span>
+                    <strong>745</strong>
+                    <small>Target kerja: 800+</small>
+                </div>
+                <div class="tc-auth-mini-grid" aria-label="TOEIC progress preview">
+                    <span><strong>390</strong>Listening</span>
+                    <span><strong>355</strong>Reading</span>
+                    <span><strong>P5</strong>Next focus</span>
+                </div>
+            </section>
+            <section class="tc-auth-form-panel">
+                <div class="tc-auth-top">
                     <div>
-                        <div class="toeic-kicker mb-3">Powering global communication</div>
-                        <h1 class="display-5 text-white mb-3">Sign in to your TOEIC global English skills workspace.</h1>
-                        <p class="text-white-50 mb-4">
-                            Return to a TOEIC-only environment built for full simulation, practice simulation, score reporting, analytics, and review-led improvement.
-                        </p>
-                        <ul class="toeic-list-check">
-                            <li>Access the TOEIC Listening and Reading simulator.</li>
-                            <li>Review full score reports and recent attempts.</li>
-                            <li>Continue practice without leaving the TOEIC flow.</li>
-                        </ul>
+                        <span class="tc-panel-label">STUDENT ACCESS</span>
+                        <h1>Sign In</h1>
                     </div>
-                    <div class="small text-white-50 mt-4">
-                        TOEIC Listening and Reading Test
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-7">
-                <section class="toeic-form-shell h-100">
-                    <div class="d-flex justify-content-between align-items-start gap-3 mb-4 flex-wrap">
-                        <div>
-                            <div class="toeic-kicker mb-3">The TOEIC Tests</div>
-                            <h2 class="display-6 mb-2">Welcome back.</h2>
-                            <p class="toeic-copy mb-0">Enter your account details to continue building your TOEIC score with the same simulator, timing, and reporting structure.</p>
-                        </div>
-                        <a href="index.php" class="btn btn-outline-secondary">Back to Home</a>
-                    </div>
+                    <a href="index.php" class="tc-icon-link" aria-label="Back to homepage">
+                        <i class="fas fa-house"></i><span>Home</span>
+                    </a>
+                </div>
 
-                    <div class="d-flex align-items-center gap-3 mb-4">
-                        <?php if (!empty($website_logo) && file_exists($website_logo)): ?>
-                            <img src="<?php echo htmlspecialchars($website_logo); ?>" alt="Logo" style="height: 40px; width: auto;">
-                        <?php else: ?>
-                            <div class="toeic-feature-icon"><i class="fas fa-briefcase"></i></div>
-                        <?php endif; ?>
-                        <div>
-                            <div class="fw-bold"><?php echo htmlspecialchars($website_title); ?></div>
-                            <div class="small text-muted">TOEIC-only simulation platform</div>
-                        </div>
+                <?php if ($error): ?>
+                    <div class="alert alert-danger rounded-3 mb-4 border-0" style="background: #fff1f2; color: #be123c; font-weight: 600;">
+                        <i class="fas fa-exclamation-circle me-2"></i> <?php echo htmlspecialchars($error); ?>
                     </div>
+                <?php endif; ?>
 
-                    <?php if ($error): ?>
-                        <div class="alert alert-danger rounded-4 border-0 mb-4"><?php echo htmlspecialchars($error); ?></div>
-                    <?php endif; ?>
-
-                    <form method="POST" class="row g-3">
-                        <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect); ?>">
-                        <div class="col-12">
-                            <label class="toeic-field-label" for="username">Username</label>
-                            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autocomplete="username">
-                        </div>
-                        <div class="col-12">
-                            <label class="toeic-field-label" for="password">Password</label>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
-                        </div>
-                        <div class="col-12 pt-2">
-                            <button type="submit" class="btn btn-warning w-100">Sign In</button>
-                        </div>
-                    </form>
-
-                    <div class="toeic-band mt-4">
-                        <div class="toeic-eyebrow mb-3">Need access?</div>
-                        <h3 class="h3 mb-2">Create your TOEIC account.</h3>
-                        <p class="toeic-copy mb-3">Open an account to access full simulation, practice simulation, and TOEIC score reporting.</p>
-                        <a href="register.php<?php echo $redirect !== '' ? '?redirect=' . urlencode($redirect) : ''; ?>" class="btn btn-outline-warning">Create Account</a>
+                <form method="POST">
+                    <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect); ?>">
+                    <div class="mb-4">
+                        <label class="toeic-field-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="your_username" required autocomplete="username">
                     </div>
-                </section>
-            </div>
+                    <div class="mb-4">
+                        <label class="toeic-field-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="tc-button w-100 mb-4">
+                        <i class="fas fa-arrow-right-to-bracket me-2"></i>Login to My Account
+                    </button>
+                </form>
+
+                <div class="tc-auth-foot">
+                    <p class="text-muted mb-0">Don't have an account?</p>
+                    <a href="register.php<?php echo $redirect !== '' ? '?redirect=' . urlencode($redirect) : ''; ?>" class="fw-bold text-decoration-none" style="color: var(--focus-blue);">Create free account <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </section>
         </div>
     </main>
 </body>

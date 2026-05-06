@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEIC Overall Frontend Preview</title>
+    <meta name="description" content="Overall static preview untuk seluruh public dan student TOEIC score cockpit pages.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #152033;
+            --ink-soft: #334155;
+            --muted: #64748b;
+            --line: #d8e0ea;
+            --paper: #ffffff;
+            --canvas: #f4f7f5;
+            --navy: #1c3557;
+            --teal: #0a7c71;
+            --teal-soft: #d9f1ec;
+            --amber: #f2a51f;
+            --amber-soft: #fff1cd;
+            --blue: #2f67d8;
+            --danger: #c94b4b;
+            --radius: 14px;
+            --radius-lg: 24px;
+            --shadow: 0 24px 64px rgba(21, 32, 51, 0.12);
+            --soft-shadow: 0 14px 34px rgba(21, 32, 51, 0.08);
+            --body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+            --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: var(--body);
+            overflow-x: hidden;
+            background:
+                linear-gradient(90deg, rgba(21, 32, 51, 0.045) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(21, 32, 51, 0.035) 1px, transparent 1px),
+                radial-gradient(circle at 8% 0%, rgba(10, 124, 113, 0.14), transparent 34rem),
+                radial-gradient(circle at 92% 0%, rgba(242, 165, 31, 0.15), transparent 31rem),
+                var(--canvas);
+            background-size: 40px 40px, 40px 40px, auto, auto, auto;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .shell {
+            width: min(1180px, calc(100vw - 32px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid rgba(216, 224, 234, 0.86);
+            background: rgba(244, 247, 245, 0.92);
+            backdrop-filter: blur(18px);
+        }
+
+        .topbar-inner {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: var(--navy);
+            border-radius: 11px;
+            background: var(--amber-soft);
+            font-family: var(--mono);
+            font-size: 12px;
+            box-shadow: 0 12px 24px rgba(242, 165, 31, 0.18);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px;
+            border: 1px solid rgba(216, 224, 234, 0.9);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.74);
+        }
+
+        .nav a {
+            padding: 8px 12px;
+            color: var(--ink-soft);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .nav a:hover {
+            color: var(--teal);
+            background: var(--teal-soft);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+            align-items: center;
+            gap: clamp(28px, 5vw, 72px);
+            padding: clamp(48px, 7vw, 84px) 0 44px;
+        }
+
+        .hero > *,
+        .screen-grid > *,
+        .dashboard-grid > *,
+        .overview-grid > *,
+        .content-grid > *,
+        .package-row > *,
+        .step-row > *,
+        .exam-room > *,
+        .result-layout > * {
+            min-width: 0;
+        }
+
+        .eyebrow {
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding: 8px 12px;
+            color: var(--teal);
+            border: 1px solid rgba(10, 124, 113, 0.2);
+            border-radius: 999px;
+            background: rgba(217, 241, 236, 0.78);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--amber);
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            max-width: 680px;
+            font-size: clamp(44px, 7vw, 80px);
+            line-height: 0.96;
+            letter-spacing: 0;
+        }
+
+        h1 span,
+        h2 span {
+            color: var(--teal);
+        }
+
+        .lead {
+            max-width: 560px;
+            margin-top: 20px;
+            color: var(--ink-soft);
+            font-size: clamp(17px, 2vw, 20px);
+            line-height: 1.6;
+            font-weight: 650;
+        }
+
+        .actions,
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 11px;
+        }
+
+        .actions {
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 17px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .button.primary {
+            color: #ffffff;
+            background: var(--teal);
+            box-shadow: 0 16px 34px rgba(10, 124, 113, 0.24);
+        }
+
+        .button.secondary {
+            color: var(--navy);
+            border: 1px solid var(--line);
+            background: #ffffff;
+        }
+
+        .chip-row {
+            margin-top: 22px;
+        }
+
+        .chip {
+            padding: 8px 12px;
+            color: var(--ink-soft);
+            border: 1px solid rgba(216, 224, 234, 0.9);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.78);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .score-panel,
+        .surface,
+        .mini-screen,
+        .auth-preview,
+        .exam-room,
+        .status-preview {
+            max-width: 100%;
+            border: 1px solid rgba(216, 224, 234, 0.9);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.84);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .panel-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 20px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--navy), #244d78);
+        }
+
+        .label {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .panel-title {
+            margin-top: 4px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 0 10px;
+            color: var(--teal);
+            border-radius: 999px;
+            background: var(--teal-soft);
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .tag.amber {
+            color: #865700;
+            background: var(--amber-soft);
+        }
+
+        .score-body {
+            display: grid;
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 18px;
+            padding: 22px;
+        }
+
+        .dial {
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at center, #ffffff 0 54%, transparent 55%),
+                conic-gradient(var(--teal) 0 74%, var(--amber) 74% 86%, #dce5ee 86% 100%);
+        }
+
+        .dial strong {
+            display: block;
+            font-family: var(--mono);
+            font-size: 34px;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .dial span {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .metric-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 13px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+        }
+
+        .metric strong,
+        .split strong {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-weight: 800;
+        }
+
+        .bar {
+            height: 10px;
+            margin-top: 10px;
+            border-radius: 999px;
+            background: #edf2f7;
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--teal);
+        }
+
+        .bar.amber span {
+            background: var(--amber);
+        }
+
+        .part-strip {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            padding: 0 22px 22px;
+        }
+
+        .part {
+            min-height: 58px;
+            display: grid;
+            place-items: center;
+            gap: 2px;
+            padding: 8px 6px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .part strong,
+        .score-number,
+        .mono {
+            font-family: var(--mono);
+        }
+
+        .part span {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .part.active {
+            border-color: rgba(10, 124, 113, 0.35);
+            background: var(--teal-soft);
+        }
+
+        .section {
+            padding: 48px 0;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 22px;
+        }
+
+        .section-head h2 {
+            max-width: 680px;
+            font-size: clamp(30px, 4.5vw, 48px);
+            line-height: 1.04;
+        }
+
+        .section-head p {
+            max-width: 460px;
+            color: var(--muted);
+            line-height: 1.6;
+            font-weight: 650;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .surface {
+            min-height: 240px;
+            padding: 18px;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .surface header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .surface h3 {
+            font-size: 19px;
+            line-height: 1.1;
+        }
+
+        .surface p {
+            margin-top: 8px;
+            color: var(--muted);
+            line-height: 1.45;
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .mini-nav {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .mini-nav span {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            color: var(--navy);
+            border-radius: 10px;
+            background: var(--teal-soft);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .screen-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 18px;
+        }
+
+        .dark-rail {
+            padding: 20px;
+            color: #ffffff;
+            border-radius: 20px;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(135deg, var(--navy), var(--teal));
+            background-size: 32px 32px, 32px 32px, auto;
+        }
+
+        .dark-rail h3 {
+            margin-top: 18px;
+            color: #ffffff;
+            font-size: 34px;
+            line-height: 1;
+        }
+
+        .dark-rail p {
+            margin-top: 12px;
+            color: rgba(255, 255, 255, 0.76);
+            line-height: 1.55;
+        }
+
+        .login-form,
+        .form-stack {
+            display: grid;
+            gap: 14px;
+        }
+
+        .field {
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: var(--ink-soft);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #ffffff;
+            font-weight: 800;
+        }
+
+        .split {
+            padding: 14px;
+            border-radius: var(--radius);
+            background: #f6f8fb;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 245px minmax(0, 1fr);
+            gap: 18px;
+        }
+
+        .rail-link {
+            display: block;
+            padding: 12px;
+            color: rgba(255, 255, 255, 0.82);
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        .rail-link.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .wide {
+            grid-column: 1 / -1;
+        }
+
+        .status-line {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: #f6f8fb;
+            font-weight: 800;
+        }
+
+        .package-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .package {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+        }
+
+        .package strong {
+            display: block;
+            font-size: 22px;
+        }
+
+        .step-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .step {
+            min-height: 116px;
+            display: grid;
+            align-content: start;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+        }
+
+        .step b {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            border-radius: 999px;
+            background: var(--teal);
+            font-family: var(--mono);
+        }
+
+        .exam-room {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            box-shadow: var(--shadow);
+        }
+
+        .exam-left,
+        .exam-right {
+            padding: 20px;
+        }
+
+        .exam-left {
+            border-right: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.62);
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px;
+            border-radius: var(--radius);
+            background: var(--navy);
+            color: #ffffff;
+        }
+
+        .q-map {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 7px;
+            margin-top: 16px;
+        }
+
+        .q {
+            min-height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #ffffff;
+            font-family: var(--mono);
+            font-size: 12px;
+        }
+
+        .q.done {
+            color: #ffffff;
+            background: var(--teal);
+        }
+
+        .q.current {
+            border-color: rgba(242, 165, 31, 0.7);
+            background: var(--amber-soft);
+        }
+
+        .choice {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            font-weight: 800;
+        }
+
+        .choice.selected {
+            border-color: rgba(10, 124, 113, 0.45);
+            background: var(--teal-soft);
+        }
+
+        .choice b {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: #ffffff;
+            font-family: var(--mono);
+        }
+
+        .result-layout {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 18px;
+        }
+
+        .big-score {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .big-score strong {
+            font-family: var(--mono);
+            font-size: clamp(58px, 8vw, 92px);
+            line-height: 0.86;
+        }
+
+        .big-score span {
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .module-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .module-item {
+            display: grid;
+            grid-template-columns: 36px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+        }
+
+        .module-item b {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            border-radius: 12px;
+            background: var(--teal);
+            font-family: var(--mono);
+        }
+
+        .module-item.active {
+            color: #ffffff;
+            border: 0;
+            background: linear-gradient(135deg, var(--navy), var(--teal));
+        }
+
+        .module-item.active span,
+        .module-item.active small {
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        .module-item span {
+            display: block;
+            font-weight: 800;
+        }
+
+        .module-item small {
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .status-preview {
+            display: grid;
+            place-items: center;
+            min-height: 310px;
+            padding: 26px;
+            text-align: center;
+        }
+
+        .status-mark {
+            width: 76px;
+            height: 76px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 18px;
+            border-radius: 24px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-family: var(--mono);
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .footer {
+            padding: 40px 0 56px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 650;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .screen-grid,
+            .dashboard-grid,
+            .exam-room,
+            .result-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .exam-left {
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .shell {
+                width: calc(100vw - 32px);
+                max-width: calc(100vw - 32px);
+            }
+
+            .topbar-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 14px 0;
+            }
+
+            .brand {
+                white-space: normal;
+            }
+
+            .nav {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                width: 100%;
+                border-radius: 18px;
+            }
+
+            .nav a {
+                min-width: 0;
+                padding: 8px;
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .hero {
+                padding-top: 42px;
+            }
+
+            h1 {
+                max-width: 100%;
+                font-size: 38px;
+                line-height: 1.02;
+                text-wrap: balance;
+                overflow-wrap: break-word;
+            }
+
+            .lead {
+                max-width: 100%;
+                font-size: 16px;
+                line-height: 1.55;
+            }
+
+            .actions .button {
+                flex: 1 1 100%;
+            }
+
+            .chip-row .chip {
+                flex: 1 1 calc(50% - 8px);
+                text-align: center;
+            }
+
+            .panel-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .score-body {
+                padding: 18px;
+            }
+
+            .dial {
+                width: min(170px, 100%);
+                justify-self: center;
+            }
+
+            .score-body,
+            .overview-grid,
+            .content-grid,
+            .package-row,
+            .step-row {
+                grid-template-columns: 1fr;
+            }
+
+            .part-strip {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 0 18px 18px;
+            }
+
+            .mini-nav {
+                flex-wrap: wrap;
+            }
+
+            .q-map {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .section-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .dark-rail h3 {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .shell {
+                margin-left: 16px;
+                margin-right: 16px;
+                max-width: 358px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="shell topbar-inner">
+            <a class="brand" href="#top">
+                <span class="brand-mark">TOEIC</span>
+                <span>Score Cockpit Preview</span>
+            </a>
+            <nav class="nav" aria-label="Preview sections">
+                <a href="#public">Public</a>
+                <a href="#student">Student</a>
+                <a href="#commerce">Payment</a>
+                <a href="#exam">Exam</a>
+                <a href="#learning">Learning</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="shell hero" id="public">
+            <div>
+                <div class="eyebrow">Overall preview</div>
+                <h1>Semua page TOEIC dalam satu <span>visual system.</span></h1>
+                <p class="lead">Score besar, part lemah, next action, dan panel kerja yang sederhana. Public sampai student area memakai bahasa visual yang sama.</p>
+                <div class="actions">
+                    <a class="button primary" href="#student">Lihat student pages</a>
+                    <a class="button secondary" href="#exam">Lihat test room</a>
+                </div>
+                <div class="chip-row" aria-label="Preview scope">
+                    <span class="chip">17 visual pages</span>
+                    <span class="chip">Public + student</span>
+                    <span class="chip">Static preview</span>
+                </div>
+            </div>
+
+            <article class="score-panel" aria-label="Landing page preview">
+                <div class="panel-top">
+                    <div>
+                        <div class="label">SCORE PREVIEW</div>
+                        <div class="panel-title">Target skor kerja: 800+</div>
+                    </div>
+                    <span class="tag amber">Listening + Reading</span>
+                </div>
+                <div class="score-body">
+                    <div class="dial">
+                        <div>
+                            <strong>745</strong>
+                            <span>Total score</span>
+                        </div>
+                    </div>
+                    <div class="metric-list">
+                        <div class="metric">
+                            <strong>Listening <span>390</span></strong>
+                            <div class="bar"><span style="width: 78%;"></span></div>
+                        </div>
+                        <div class="metric">
+                            <strong>Reading <span>355</span></strong>
+                            <div class="bar amber"><span style="width: 71%;"></span></div>
+                        </div>
+                        <div class="metric">
+                            <strong>Next focus <span>Part 5</span></strong>
+                            <div class="bar amber"><span style="width: 58%;"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="part-strip">
+                    <div class="part active"><strong>1</strong><span>Photos</span></div>
+                    <div class="part active"><strong>2</strong><span>QA</span></div>
+                    <div class="part"><strong>3</strong><span>Talks</span></div>
+                    <div class="part"><strong>4</strong><span>Talks</span></div>
+                    <div class="part"><strong>5</strong><span>Grammar</span></div>
+                    <div class="part"><strong>6</strong><span>Text</span></div>
+                    <div class="part"><strong>7</strong><span>Reading</span></div>
+                </div>
+            </article>
+        </section>
+
+        <section class="shell section" aria-labelledby="auth-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">Login + register</div>
+                    <h2 id="auth-title">Auth page tetap fokus ke form.</h2>
+                </div>
+                <p>Desktop punya sisi score cockpit. Mobile langsung menampilkan form agar tidak berat.</p>
+            </div>
+            <div class="screen-grid">
+                <article class="auth-preview">
+                    <div class="screen-grid" style="gap: 0;">
+                        <aside class="dark-rail">
+                            <span class="brand-mark">TOEIC</span>
+                            <h3>Masuk ke ruang latihan TOEIC.</h3>
+                            <p>Lanjutkan target skor, part lemah, dan simulasi terakhir.</p>
+                        </aside>
+                        <div style="padding: 28px;">
+                            <span class="tag">STUDENT ACCESS</span>
+                            <h2 style="margin: 12px 0 24px; font-size: 42px;">Sign In</h2>
+                            <div class="login-form">
+                                <div class="field">your_username</div>
+                                <div class="field">********</div>
+                                <div class="button primary">Login to My Account</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="auth-preview" style="padding: 28px;">
+                    <span class="tag">NEW STUDENT</span>
+                    <h2 style="margin: 12px 0 24px; font-size: 42px;">Create Account</h2>
+                    <div class="form-stack">
+                        <div class="field">Raka Pratama</div>
+                        <div class="field">choose_username</div>
+                        <div class="field">********</div>
+                        <div class="button primary">Create My Free Account</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="shell section" id="student" aria-labelledby="student-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">Student area</div>
+                    <h2 id="student-title">Dashboard, profile, analytics, result.</h2>
+                </div>
+                <p>Halaman student memakai topbar, card rhythm, dan numeric treatment yang sama.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <aside class="dark-rail">
+                    <span class="tag amber">Student hub</span>
+                    <h3>Hi, Raka.</h3>
+                    <p>Target hari ini: naikkan Reading Part 5 sebelum full simulation berikutnya.</p>
+                    <a class="rail-link active">Dashboard</a>
+                    <a class="rail-link">Profile</a>
+                    <a class="rail-link">Analytics</a>
+                    <a class="rail-link">Result</a>
+                </aside>
+
+                <div class="content-grid">
+                    <article class="surface">
+                        <header>
+                            <h3>Dashboard</h3>
+                            <span class="tag">Ready</span>
+                        </header>
+                        <div class="status-line">
+                            <div class="status-item">Best score <span class="mono">745</span></div>
+                            <div class="status-item">Full credit <span>2 active</span></div>
+                            <div class="status-item">Next focus <span>Part 5</span></div>
+                        </div>
+                    </article>
+
+                    <article class="surface">
+                        <header>
+                            <h3>Analytics</h3>
+                            <span class="tag amber">Gap +55</span>
+                        </header>
+                        <div class="metric-list">
+                            <div class="metric"><strong>Listening trend <span>+24</span></strong><div class="bar"><span style="width: 82%;"></span></div></div>
+                            <div class="metric"><strong>Reading trend <span>+11</span></strong><div class="bar amber"><span style="width: 62%;"></span></div></div>
+                        </div>
+                    </article>
+
+                    <article class="surface">
+                        <header>
+                            <h3>Profile</h3>
+                            <span class="tag">Account</span>
+                        </header>
+                        <div class="form-stack">
+                            <div class="field">Full name</div>
+                            <div class="field">Username</div>
+                            <div class="field">Password settings</div>
+                        </div>
+                    </article>
+
+                    <article class="surface">
+                        <header>
+                            <h3>Result</h3>
+                            <span class="tag amber">Completed</span>
+                        </header>
+                        <div class="big-score" style="margin: 8px 0 16px;">
+                            <strong>745</strong><span>/990</span>
+                        </div>
+                        <div class="status-line">
+                            <div class="status-item">Listening <span class="mono">390</span></div>
+                            <div class="status-item">Reading <span class="mono">355</span></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="shell section" id="commerce" aria-labelledby="commerce-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">Packages + payment</div>
+                    <h2 id="commerce-title">Activation flow dibuat satu nada.</h2>
+                </div>
+                <p>Paket, pembayaran, dan pending state memakai panel yang sama agar terasa seperti satu produk.</p>
+            </div>
+            <div class="overview-grid">
+                <article class="surface">
+                    <header>
+                        <h3>Buy exam</h3>
+                        <span class="tag">Package</span>
+                    </header>
+                    <p>Pilih paket full simulation atau practice activation.</p>
+                    <div class="package-row">
+                        <div class="package"><strong>1x</strong><span>Full test</span></div>
+                        <div class="package"><strong>3x</strong><span>Bundle</span></div>
+                        <div class="package"><strong>10x</strong><span>Class</span></div>
+                    </div>
+                </article>
+                <article class="surface">
+                    <header>
+                        <h3>Payment</h3>
+                        <span class="tag amber">VA</span>
+                    </header>
+                    <div class="status-line">
+                        <div class="status-item">BCA Virtual Account <span>Selected</span></div>
+                        <div class="status-item">Amount <span class="mono">99.000</span></div>
+                        <div class="status-item">Status <span>Waiting</span></div>
+                    </div>
+                </article>
+                <article class="surface">
+                    <header>
+                        <h3>Payment pending</h3>
+                        <span class="tag amber">Check</span>
+                    </header>
+                    <p>State pending dibuat jelas tanpa mengganggu user.</p>
+                    <div class="mini-nav">
+                        <span>QR</span><span>VA</span><span>LOG</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="shell section" aria-labelledby="setup-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">Instructions + proctoring</div>
+                    <h2 id="setup-title">Sebelum test, arahnya ringkas.</h2>
+                </div>
+                <p>Instruction, camera setup, dan disqualified page memakai step state yang jelas.</p>
+            </div>
+            <div class="step-row">
+                <div class="step"><b>1</b><strong>Instructions</strong><span>Rules, time, and credit check.</span></div>
+                <div class="step"><b>2</b><strong>Camera</strong><span>Permission and live preview.</span></div>
+                <div class="step"><b>3</b><strong>Microphone</strong><span>Audio readiness check.</span></div>
+                <div class="step"><b>4</b><strong>Presence</strong><span>Final proctoring state.</span></div>
+            </div>
+        </section>
+
+        <section class="shell section" id="exam" aria-labelledby="exam-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">Test room</div>
+                    <h2 id="exam-title">Halaman pengerjaan tetap tenang.</h2>
+                </div>
+                <p>Test TOEIC memakai layout fungsional: timer dan map soal tetap terlihat, jawaban mudah dipindai.</p>
+            </div>
+            <div class="exam-room">
+                <aside class="exam-left">
+                    <div class="timer"><span>Time left</span><strong class="mono">01:16:24</strong></div>
+                    <div class="q-map">
+                        <div class="q done">31</div><div class="q done">32</div><div class="q current">33</div><div class="q">34</div>
+                        <div class="q">35</div><div class="q">36</div><div class="q">37</div><div class="q">38</div>
+                    </div>
+                    <div class="surface" style="margin-top: 16px; min-height: auto; box-shadow: none;">
+                        <span class="tag amber">Part 3</span>
+                        <p style="margin-top: 12px;">Audio context and instruction area.</p>
+                    </div>
+                </aside>
+                <article class="exam-right">
+                    <span class="tag">Question 33 of 200</span>
+                    <h3 style="margin: 14px 0 18px; font-size: 28px;">What does the woman suggest the man do?</h3>
+                    <div class="metric" style="margin-bottom: 14px;"><strong>Audio playback <span class="mono">0:18</span></strong><div class="bar"><span style="width: 42%;"></span></div></div>
+                    <div class="metric-list">
+                        <div class="choice"><b>A</b>Review the invoice tomorrow</div>
+                        <div class="choice selected"><b>B</b>Contact the client today</div>
+                        <div class="choice"><b>C</b>Print the meeting agenda</div>
+                        <div class="choice"><b>D</b>Reschedule the training session</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="shell section" id="learning" aria-labelledby="learning-title">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">AI + learning</div>
+                    <h2 id="learning-title">Analysis, pathway, syllabus satu alur.</h2>
+                </div>
+                <p>AI analysis memberi alasan, pathway memberi module, syllabus memberi rencana mingguannya.</p>
+            </div>
+            <div class="result-layout">
+                <article class="surface">
+                    <header>
+                        <h3>AI analysis</h3>
+                        <span class="tag">Weakness map</span>
+                    </header>
+                    <div class="metric-list">
+                        <div class="metric"><strong>Part 5 grammar <span>Needs work</span></strong><div class="bar amber"><span style="width: 48%;"></span></div></div>
+                        <div class="metric"><strong>Part 7 scanning <span>Stable</span></strong><div class="bar"><span style="width: 72%;"></span></div></div>
+                    </div>
+                </article>
+                <article class="surface">
+                    <header>
+                        <h3>Learning pathway</h3>
+                        <span class="tag amber">Week 1</span>
+                    </header>
+                    <div class="module-list">
+                        <div class="module-item active"><b>1</b><div><span>Grammar repair</span><small>Part 5 - 25 min</small></div><strong>Now</strong></div>
+                        <div class="module-item"><b>2</b><div><span>Text completion</span><small>Part 6 - 30 min</small></div><strong>Next</strong></div>
+                        <div class="module-item"><b>3</b><div><span>Reading scan</span><small>Part 7 - 35 min</small></div><strong>Open</strong></div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="overview-grid" style="margin-top: 18px;">
+                <article class="surface">
+                    <header>
+                        <h3>Syllabus</h3>
+                        <span class="tag">Study plan</span>
+                    </header>
+                    <p>Week cards, daily activities, and completion state.</p>
+                    <div class="status-line">
+                        <div class="status-item">Monday <span>Part 5</span></div>
+                        <div class="status-item">Wednesday <span>Part 6</span></div>
+                        <div class="status-item">Friday <span>Mini test</span></div>
+                    </div>
+                </article>
+                <article class="status-preview">
+                    <div>
+                        <div class="status-mark">!</div>
+                        <h3>Disqualified</h3>
+                        <p style="max-width: 360px; margin: 10px auto 0; color: var(--muted); line-height: 1.55;">Session stopped, reason visible, and next route clear.</p>
+                    </div>
+                </article>
+                <article class="surface">
+                    <header>
+                        <h3>Consistent pages</h3>
+                        <span class="tag amber">Public + student</span>
+                    </header>
+                    <p>Landing, auth, dashboard, profile, analytics, package, payment, proctoring, test, result, AI, pathway, syllabus, and status pages.</p>
+                    <div class="mini-nav">
+                        <span>UI</span><span>UX</span><span>TOEIC</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="shell footer">
+        Static visual preview only. TOEIC is a registered trademark of Educational Testing Service (ETS). This preview is not affiliated with or endorsed by ETS.
+    </footer>
+</body>
+</html>

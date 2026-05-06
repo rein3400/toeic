@@ -515,6 +515,12 @@ $prev_link = $prev_q > 0 ? "test_toeic.php?section=" . urlencode($section) . "&t
 $is_last_question = $is_batch
     ? (($batch_questions ? end($batch_questions)['question_order'] : $question_num) >= $total_questions)
     : ($question_num >= $total_questions);
+$active_question_orders = [$question_num => true];
+if ($is_batch) {
+    foreach ($batch_questions as $batch_row) {
+        $active_question_orders[(int)($batch_row['question_order'] ?? $question_num)] = true;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html class="light" lang="en">
@@ -522,566 +528,297 @@ $is_last_question = $is_batch
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title><?php echo htmlspecialchars($page_title); ?> - <?php echo ucfirst($section); ?> - <?php echo htmlspecialchars($website_title); ?></title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#f59e0b",
-                        "primary-hover": "#d97706",
-                        "background-light": "#f5f7fb",
+                        primary: "#00A68C",
+                        "primary-hover": "#008F78",
+                        "sunbeam": "#F26722",
+                        "background-light": "#F8FAFC",
                         "background-dark": "#101622",
                         "surface-light": "#ffffff",
                         "surface-dark": "#1e293b",
                     },
                     fontFamily: {
-                        display: ["Lexend", "sans-serif"],
-                        serif: ["Noto Serif", "serif"],
+                        display: ["Instrument Sans", "sans-serif"],
+                        serif: ["Instrument Sans", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
                     },
                 }
             }
         };
     </script>
     <style>
-        .scroll-smooth::-webkit-scrollbar { width: 8px; }
-        .scroll-smooth::-webkit-scrollbar-track { background: #eef2f7; }
-        .scroll-smooth::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+        .toeic-test-statusbar {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            border-bottom: 2px solid var(--cloud-line);
+        }
+        .toeic-test-map {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .toeic-test-map a {
+            flex: 0 0 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid var(--cloud-line);
+            font-size: 11px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--muted-slate);
+        }
+        .toeic-test-map a.answered { background: var(--academy-blue); color: white; border-color: var(--academy-blue); }
+        .toeic-test-map a.active { border: 2px solid var(--focus-blue); color: var(--focus-blue); background: var(--sunbeam-yellow); }
+
+        .answer-choice {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--cloud-line);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .answer-choice:hover { border-color: var(--focus-blue); background: rgba(72, 127, 181, 0.05); }
+        .answer-choice.selected { border-color: var(--focus-blue); background: rgba(72, 127, 181, 0.05); }
+        .answer-choice input:checked + .choice-label { color: var(--focus-blue); font-weight: 800; }
+
+        aside { background: white !important; }
+        main { background: var(--study-cream) !important; }
     </style>
 </head>
-<body class="toeic-redesign-body toeic-test-body bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen flex flex-col overflow-hidden">
-    <header class="bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 shadow-sm z-10 shrink-0">
+<body class="font-display h-screen flex flex-col overflow-hidden tc-test-page">
+    <header class="bg-white border-b-4 border-slate-200 z-10 shrink-0">
         <div class="px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
-                    <span class="material-symbols-outlined">assignment</span>
-                </div>
+            <span class="avatar-circle" style="width:40px; height:40px;">T</span>
                 <div>
-                    <h1 class="text-base font-bold leading-tight"><?php echo htmlspecialchars($page_title); ?></h1>
-                    <span class="text-xs text-slate-500 dark:text-slate-400">
-                        Section: <?php echo ucfirst($section); ?> | Part <?php echo htmlspecialchars($part); ?><?php echo $practice_mode ? ($practice_part !== '' ? ' | Legacy Practice' : ' | Practice Simulation') : ' | Official Order'; ?>
+                    <h1 class="text-base font-extrabold text-primary leading-tight"><?php echo htmlspecialchars($page_title); ?></h1>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        Part <?php echo htmlspecialchars($part); ?> · <?php echo ucfirst($section); ?>
                     </span>
                 </div>
             </div>
-            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-lg border border-slate-100 dark:border-slate-700">
+            <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-xl border-2 border-slate-100">
                 <span class="material-symbols-outlined text-slate-400">timer</span>
-                <div class="flex gap-1 items-center font-mono font-medium text-lg text-primary" id="timerDisplay"><?php echo gmdate('i:s', $remaining_time); ?></div>
+                <div class="font-mono font-bold text-xl text-primary" id="timerDisplay"><?php echo gmdate('i:s', $remaining_time); ?></div>
             </div>
-            <a href="index.php" onclick="return confirm('Keluar dari sesi TOEIC ini?');" class="flex items-center gap-2 px-4 h-10 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-sm font-bold transition-colors">
-                <span class="material-symbols-outlined text-[20px]">logout</span>
-                <span>Quit Test</span>
+            <a href="index.php" onclick="return confirm('Exit exam? Progress is saved.');" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
+                Quit
             </a>
         </div>
-        <div class="px-6 py-3 bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-slate-800 flex items-center gap-6">
-            <span class="text-sm font-semibold whitespace-nowrap">
-                <?php echo $practice_mode ? 'Practice' : 'Question'; ?> <?php echo $question_num; ?> of <?php echo $total_questions; ?>
-            </span>
-            <div class="h-2 w-full max-w-md rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                <div class="h-full bg-primary rounded-full" style="width: <?php echo $progress_percent; ?>%;"></div>
+        <div class="toeic-test-statusbar">
+            <div class="shrink-0">
+                <div class="text-xs font-black text-slate-400 uppercase mb-1">Progress</div>
+                <div class="text-sm font-bold text-primary"><?php echo $answered_count; ?> / <?php echo $total_questions; ?></div>
             </div>
-            <div class="text-sm text-slate-500 dark:text-slate-400"><?php echo $answered_count; ?> answered</div>
+            <div class="toeic-test-map">
+                <?php for ($map_i = 1; $map_i <= $total_questions; $map_i++): ?>
+                    <?php
+                        $map_classes = [];
+                        if (!empty($progress_map[$map_i])) $map_classes[] = 'answered';
+                        if (!empty($active_question_orders[$map_i])) $map_classes[] = 'active';
+                        $map_href = "test_toeic.php?section=" . urlencode($section) . "&test_session=" . urlencode($test_session) . "&q={$map_i}&setup_complete=1{$mode_query}";
+                    ?>
+                    <a class="<?php echo htmlspecialchars(implode(' ', $map_classes)); ?>" data-question-map-link="true" href="<?php echo htmlspecialchars($map_href); ?>"><?php echo $map_i; ?></a>
+                <?php endfor; ?>
+            </div>
         </div>
     </header>
 
     <main class="flex-1 flex overflow-hidden">
-        <aside class="w-1/2 min-w-[500px] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
-            <div class="flex items-center justify-between px-6 py-3 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
-                <h3 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide"><?php echo $context_title; ?></h3>
-                <?php if ($practice_mode): ?>
-                    <span class="text-xs font-semibold rounded-full bg-primary/10 text-primary px-3 py-1">Practice</span>
-                <?php endif; ?>
+        <aside class="w-1/2 min-w-[500px] border-r-4 border-slate-200 flex flex-col">
+            <div class="flex items-center justify-between px-6 py-4 border-b-2 border-slate-100 bg-white shrink-0">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest"><?php echo $context_title; ?></h3>
+                <span class="study-pill" style="font-size:10px; background:var(--sunbeam-yellow); border-radius:8px; padding: 4px 8px;"><?php echo htmlspecialchars($part_info['name'] ?? 'Part'); ?></span>
             </div>
 
-            <div class="flex-1 overflow-y-auto scroll-smooth p-8 pb-20">
-                <?php if ($part === '1'): ?>
-                    <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm mb-6">
-                        <?php if ($primary_photo_url !== ''): ?>
-                            <img
-                                src="<?php echo htmlspecialchars($primary_photo_url); ?>"
-                                alt="TOEIC Photograph"
-                                class="w-full h-auto object-contain bg-slate-100 dark:bg-slate-800"
-                                style="max-height: 460px;"
-                                data-toeic-photo="true"
-                                data-fallbacks="<?php echo $photo_fallback_json; ?>"
-                                onerror="handleToeicPhotoFallback(this);"
-                            >
-                            <div class="hidden px-6 py-10 text-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300" data-photo-placeholder>
-                                <div class="font-semibold text-slate-700 dark:text-slate-100 mb-2">Photograph unavailable</div>
-                                <p class="mb-0 text-sm">The Part 1 image could not be loaded. Continue with the audio prompt and answer choices.</p>
-                            </div>
-                        <?php else: ?>
-                            <div class="px-6 py-10 text-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300" data-photo-placeholder>
-                                <div class="font-semibold text-slate-700 dark:text-slate-100 mb-2">Photograph unavailable</div>
-                                <p class="mb-0 text-sm">The Part 1 image source is missing. Continue with the audio prompt and answer choices.</p>
-                            </div>
-                        <?php endif; ?>
+            <div class="flex-1 overflow-y-auto p-8 pb-20">
+                <?php if ($part === '1' && $primary_photo_url !== ''): ?>
+                    <div class="rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white">
+                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="Photo" class="w-full h-auto object-contain" style="max-height: 460px;">
                     </div>
                 <?php endif; ?>
 
-                <?php if ($section === 'listening'): ?>
-                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm mb-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Audio Playback</span>
-                            <span class="flex items-center gap-1 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded">
-                                <span class="material-symbols-outlined text-[14px]">graphic_eq</span> Ready
-                            </span>
+                <?php if ($section === 'listening' && $audio): ?>
+                    <div class="study-card mb-6" style="background:var(--academy-blue); color:white; border:none;">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-black uppercase opacity-75">Audio Playback</span>
+                            <i class="fas fa-volume-up"></i>
                         </div>
-                        <?php if ($audio && !empty($audio['file_path']) && FEATURE_SECURE_AUDIO): ?>
+                        <?php if (FEATURE_SECURE_AUDIO): ?>
                             <div id="secure-player-container-<?php echo (int)$audio['id_audio']; ?>" class="w-full"></div>
                             <script src="<?php echo htmlspecialchars(getVersionedAssetUrl('user/js/SecureAudioPlayer.js', 'js/SecureAudioPlayer.js')); ?>"></script>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    new SecureAudioPlayer('secure-player-container-<?php echo (int)$audio['id_audio']; ?>', '<?php echo (int)$audio['id_audio']; ?>', 'toeic');
-                                });
-                            </script>
-                        <?php elseif ($audio && !empty($audio['file_path'])): ?>
-                            <audio id="mainAudio" controls class="w-full">
-                                <source src="<?php echo htmlspecialchars(toeicAudioUrl($audio['file_path'])); ?>" type="audio/mpeg">
-                            </audio>
+                            <script>document.addEventListener('DOMContentLoaded', () => { new SecureAudioPlayer('secure-player-container-<?php echo (int)$audio['id_audio']; ?>', '<?php echo (int)$audio['id_audio']; ?>', 'toeic'); });</script>
                         <?php else: ?>
-                            <p class="text-slate-500 text-sm mb-0">Audio TOEIC untuk stimulus ini belum tersedia.</p>
+                            <audio id="mainAudio" controls class="w-full"><source src="<?php echo htmlspecialchars(toeicAudioUrl($audio['file_path'])); ?>" type="audio/mpeg"></audio>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($section === 'reading' && $text): ?>
-                    <div class="font-serif text-lg leading-relaxed text-slate-800 dark:text-slate-200 space-y-6">
-                        <?php
-                        $content = $text['isi_teks'];
-                        if ($part === '6') {
-                            $content = preg_replace('/___(\d+)___/', '<span class="border-b-2 border-primary font-bold text-primary mx-1">[$1]</span>', $content);
-                        }
-                        echo nl2br((string)$content);
-                        ?>
+                    <div class="study-card font-serif text-lg leading-relaxed text-slate-800 space-y-6">
+                        <?php echo nl2br(preg_replace('/___(\d+)___/', '<strong class="text-primary underline">[$1]</strong>', (string)$text['isi_teks'])); ?>
                     </div>
                 <?php endif; ?>
 
-                <div class="mt-6 p-4 bg-amber-50 text-amber-800 rounded-lg flex gap-3 text-sm border border-amber-100">
-                    <span class="material-symbols-outlined shrink-0">info</span>
+                <div class="mt-6 p-4 bg-blue-50 text-blue-800 rounded-xl flex gap-3 text-sm border-2 border-blue-100">
+                    <i class="fas fa-info-circle mt-1"></i>
                     <div>
-                        <div class="font-semibold mb-1"><?php echo htmlspecialchars($part_info['name'] ?? 'TOEIC'); ?></div>
-                        <p class="mb-0"><?php echo htmlspecialchars($part_info['description'] ?? ''); ?></p>
+                        <div class="fw-bold mb-1">Instructions</div>
+                        <p class="mb-0 opacity-75"><?php echo htmlspecialchars($part_info['description'] ?? ''); ?></p>
                     </div>
                 </div>
             </div>
         </aside>
-        <section class="w-1/2 min-w-[400px] bg-slate-50 dark:bg-[#101622] flex flex-col relative">
-            <div class="flex-1 flex flex-col h-full overflow-hidden">
-                <input type="hidden" id="csrfToken" value="<?php echo htmlspecialchars($csrf_token); ?>">
-                <input type="hidden" id="testSession" value="<?php echo htmlspecialchars($test_session); ?>">
-                <input type="hidden" id="currentSection" value="<?php echo htmlspecialchars($section); ?>">
-                <input type="hidden" id="currentOrder" value="<?php echo (int)$question_num; ?>">
-                <input type="hidden" id="totalQuestions" value="<?php echo (int)$total_questions; ?>">
-                <input type="hidden" id="mode" value="<?php echo $practice_mode ? 'prep' : 'full'; ?>">
-                <input type="hidden" id="targetPart" value="<?php echo htmlspecialchars($practice_part); ?>">
 
+        <section class="flex-1 flex flex-col relative overflow-hidden">
+            <input type="hidden" id="csrfToken" value="<?php echo htmlspecialchars($csrf_token); ?>">
+            <input type="hidden" id="testSession" value="<?php echo htmlspecialchars($test_session); ?>">
+            <input type="hidden" id="currentSection" value="<?php echo htmlspecialchars($section); ?>">
+            <input type="hidden" id="currentOrder" value="<?php echo (int)$question_num; ?>">
+            <input type="hidden" id="totalQuestions" value="<?php echo (int)$total_questions; ?>">
+            <input type="hidden" id="mode" value="<?php echo $practice_mode ? 'prep' : 'full'; ?>">
+            <input type="hidden" id="targetPart" value="<?php echo htmlspecialchars($practice_part); ?>">
+
+            <div class="flex-1 overflow-y-auto p-8 space-y-6">
                 <?php if ($is_batch): ?>
-                    <?php $last_batch_order = $batch_questions ? end($batch_questions)['question_order'] : $question_num; ?>
                     <input type="hidden" id="isBatch" value="1">
-                    <input type="hidden" id="lastOrder" value="<?php echo (int)$last_batch_order; ?>">
-                    <div class="flex-1 overflow-y-auto p-8 space-y-8" id="batchQuestionsContainer">
-                        <?php foreach ($batch_questions as $row): ?>
-                            <?php $selected = $batch_answers[(int)$row['question_id']] ?? ''; ?>
-                            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-700" data-question-id="<?php echo (int)$row['question_id']; ?>">
-                                <span class="text-sm font-bold text-slate-400 uppercase tracking-wide mb-2 block">Question <?php echo (int)$row['question_order']; ?></span>
-                                <h4 class="text-lg font-medium text-slate-900 dark:text-white leading-snug mb-4"><?php echo html_entity_decode((string)$row['pertanyaan']); ?></h4>
-                                <div class="space-y-3 batch-answer-group" data-question-id="<?php echo (int)$row['question_id']; ?>">
-                                    <?php foreach (['A', 'B', 'C', 'D'] as $opt): ?>
-                                        <?php $opt_value = $row['opsi_' . strtolower($opt)] ?? ''; ?>
-                                        <?php if ($opt_value === '') continue; ?>
-                                        <?php $is_selected = $selected === $opt; ?>
-                                        <label class="group flex items-start gap-4 p-3 rounded-lg border <?php echo $is_selected ? 'border-primary bg-primary/5' : 'border-slate-200 dark:border-slate-700 hover:border-primary/50'; ?> cursor-pointer transition-all">
-                                            <input type="radio" name="batch_<?php echo (int)$row['question_id']; ?>" value="<?php echo $opt; ?>" class="mt-1 size-4 text-primary focus:ring-primary bg-transparent batch-answer" data-question-id="<?php echo (int)$row['question_id']; ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
-                                            <span class="flex items-center justify-center font-bold text-xs size-6 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:bg-primary group-hover:text-white transition-colors"><?php echo $opt; ?></span>
-                                            <span class="text-sm text-slate-700 dark:text-slate-200 flex-1"><?php echo htmlspecialchars((string)$opt_value); ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <input type="hidden" id="isBatch" value="0">
-                    <input type="hidden" id="questionId" value="<?php echo (int)$question['question_id']; ?>">
-                    <div class="flex-1 overflow-y-auto p-8 flex flex-col justify-start">
-                        <div class="w-full max-w-2xl mx-auto space-y-8">
-                            <div>
-                                <span class="text-sm font-bold text-slate-400 uppercase tracking-wide">Question <?php echo (int)$question_num; ?></span>
-                                <h3 class="text-xl md:text-2xl font-medium text-slate-900 dark:text-white leading-snug mt-2">
-                                    <?php echo $part === '2' ? '<em>(Question is delivered in the audio)</em>' : html_entity_decode((string)$question['pertanyaan']); ?>
-                                </h3>
-                            </div>
-                            <div class="space-y-4" id="singleAnswerContainer">
-                                <?php $options = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D']; ?>
-                                <?php $audio_only_choices = in_array($part, ['1', '2'], true); ?>
-                                <?php foreach ($options as $opt): ?>
-                                    <?php $option_value = trim((string)($question['opsi_' . strtolower($opt)] ?? '')); ?>
-                                    <?php if ($option_value === '' && !$audio_only_choices) continue; ?>
-                                    <?php $is_selected = $user_answer === $opt; ?>
-                                    <label class="group relative flex <?php echo $audio_only_choices ? 'items-center' : 'items-start'; ?> gap-4 p-5 rounded-xl border <?php echo $is_selected ? 'border-2 border-primary bg-primary/5 shadow-sm' : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-surface-dark hover:border-primary/50 hover:shadow-md'; ?> cursor-pointer transition-all">
-                                        <input class="mt-1 size-5 border-slate-300 text-primary focus:ring-primary focus:ring-offset-0 bg-transparent single-answer" name="answer" value="<?php echo $opt; ?>" type="radio" data-question-id="<?php echo (int)$question['question_id']; ?>" <?php echo $is_selected ? 'checked' : ''; ?>>
-                                        <div class="flex-1">
-                                            <?php if ($audio_only_choices): ?>
-                                                <span class="block text-lg <?php echo $is_selected ? 'font-bold text-slate-900 dark:text-white' : 'font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary'; ?> transition-colors">Choice <?php echo $opt; ?></span>
-                                            <?php else: ?>
-                                                <span class="block text-base <?php echo $is_selected ? 'font-bold text-slate-900 dark:text-white' : 'font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary'; ?> transition-colors"><?php echo htmlspecialchars($option_value); ?></span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <?php if (!$audio_only_choices): ?>
-                                            <span class="absolute right-4 top-4 text-xs font-bold <?php echo $is_selected ? 'text-primary' : 'text-slate-300 dark:text-slate-600'; ?>"><?php echo $opt; ?></span>
-                                        <?php endif; ?>
+                    <input type="hidden" id="lastOrder" value="<?php echo (int)(end($batch_questions)['question_order'] ?? $question_num); ?>">
+                    <?php foreach ($batch_questions as $row): ?>
+                        <?php $selected = $batch_answers[(int)$row['question_id']] ?? ''; ?>
+                        <div class="study-card mb-4" data-question-id="<?php echo (int)$row['question_id']; ?>">
+                            <span class="study-kicker">Question <?php echo (int)$row['question_order']; ?></span>
+                            <h4 class="h5 fw-bold mb-4"><?php echo html_entity_decode((string)$row['pertanyaan']); ?></h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 batch-answer-group" data-question-id="<?php echo (int)$row['question_id']; ?>">
+                                <?php foreach (['A', 'B', 'C', 'D'] as $opt): ?>
+                                    <?php $val = $row['opsi_' . strtolower($opt)] ?? ''; if ($val === '') continue; ?>
+                                    <label class="answer-choice <?php echo $selected === $opt ? 'selected' : ''; ?>">
+                                        <input type="radio" name="batch_<?php echo (int)$row['question_id']; ?>" value="<?php echo $opt; ?>" class="mt-1 batch-answer" <?php echo $selected === $opt ? 'checked' : ''; ?> hidden>
+                                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-black text-xs"><?php echo $opt; ?></span>
+                                        <span class="choice-label text-sm"><?php echo htmlspecialchars((string)$val); ?></span>
                                     </label>
                                 <?php endforeach; ?>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <input type="hidden" id="isBatch" value="0">
+                    <input type="hidden" id="questionId" value="<?php echo (int)$question['question_id']; ?>">
+                    <div class="max-w-2xl mx-auto pt-10">
+                        <span class="study-kicker">Question <?php echo (int)$question_num; ?></span>
+                        <h3 class="h3 fw-bold mb-8"><?php echo $part === '2' ? '<em>(Question in audio)</em>' : html_entity_decode((string)$question['pertanyaan']); ?></h3>
+                        <div class="space-y-4" id="singleAnswerContainer">
+                            <?php $options = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D']; ?>
+                            <?php foreach ($options as $opt): ?>
+                                <?php $val = trim((string)($question['opsi_' . strtolower($opt)] ?? '')); ?>
+                                <label class="answer-choice p-5 <?php echo $user_answer === $opt ? 'selected' : ''; ?>">
+                                    <input type="radio" name="answer" value="<?php echo $opt; ?>" class="single-answer" data-question-id="<?php echo (int)$question['question_id']; ?>" <?php echo $user_answer === $opt ? 'checked' : ''; ?> hidden>
+                                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-sm"><?php echo $opt; ?></span>
+                                    <span class="choice-label text-lg"><?php echo $val ? htmlspecialchars($val) : "Choice $opt"; ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php endif; ?>
+            </div>
 
-                <div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0 flex justify-between items-center">
-                    <a href="<?php echo $prev_link; ?>" id="prevBtn" class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
-                        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
-                        Previous
-                    </a>
-
-                    <?php if ($is_dev_bypass): ?>
-                        <button type="button" id="skipSectionBtn" class="hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-lg border border-amber-200 text-amber-700 font-bold hover:bg-amber-50 transition-colors" onclick="skipSection()">
-                            Dev: Skip Section
-                        </button>
-                    <?php endif; ?>
-
-                    <button type="button" id="nextBtn" class="flex items-center gap-2 px-8 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold shadow-md transition-all transform active:scale-95" onclick="handleNext()">
-                        <?php echo $is_last_question ? 'Finish Section' : 'Next'; ?>
-                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-                    </button>
-                </div>
+            <div class="p-6 border-t-4 border-slate-200 bg-white shrink-0 flex justify-between">
+                <a href="<?php echo $prev_link; ?>" id="prevBtn" class="study-button study-button-secondary <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
+                    <i class="fas fa-arrow-left me-2"></i> Previous
+                </a>
+                <button type="button" id="nextBtn" class="study-button" onclick="handleNext()">
+                    <?php echo $is_last_question ? 'Finish Section' : 'Next'; ?> <i class="fas fa-arrow-right ms-2"></i>
+                </button>
             </div>
         </section>
     </main>
 
     <script>
-        const testSession = document.getElementById('testSession').value;
-        const currentSection = document.getElementById('currentSection').value;
-        const csrfToken = document.getElementById('csrfToken').value;
-        const mode = document.getElementById('mode').value;
-        const targetPart = document.getElementById('targetPart').value;
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtnDefaultHtml = nextBtn ? nextBtn.innerHTML : '';
-        let isNavigating = false;
-        let isSubmitting = false;
+        const testSession = document.getElementById('testSession').value, currentSection = document.getElementById('currentSection').value;
+        const csrfToken = document.getElementById('csrfToken').value, mode = document.getElementById('mode').value, targetPart = document.getElementById('targetPart').value;
+        const nextBtn = document.getElementById('nextBtn'), prevBtn = document.getElementById('prevBtn');
+        let isNavigating = false, isSubmitting = false;
 
-        function pauseProctorForNavigation() {
-            if (window.proctorSDK) {
-                window.proctorSDK.pause(5000);
-            }
-        }
-
-        function setNextButtonBusy(isBusy, label) {
-            if (!nextBtn) {
-                return;
-            }
-            nextBtn.disabled = isBusy;
-            nextBtn.classList.toggle('opacity-70', isBusy);
-            nextBtn.classList.toggle('cursor-not-allowed', isBusy);
-            nextBtn.innerHTML = isBusy
-                ? `${label || 'Saving'} <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>`
-                : nextBtnDefaultHtml;
-        }
-
-        function handleToeicPhotoFallback(image) {
-            if (!image) {
-                return;
-            }
-
-            let fallbackUrls = [];
-            try {
-                fallbackUrls = JSON.parse(image.dataset.fallbacks || '[]');
-            } catch (error) {
-                console.error('[TOEIC] Invalid photo fallback payload', error);
-            }
-
-            const nextUrl = fallbackUrls.shift();
-            if (nextUrl) {
-                image.dataset.fallbacks = JSON.stringify(fallbackUrls);
-                image.src = nextUrl;
-                return;
-            }
-
-            image.classList.add('hidden');
-            const placeholder = image.parentElement ? image.parentElement.querySelector('[data-photo-placeholder]') : null;
-            if (placeholder) {
-                placeholder.classList.remove('hidden');
-            }
-        }
-
-        function saveAnswer(questionId, answer) {
+        function saveAnswer(id, ans) {
             return fetch('ajax_save_toeic_answer.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
-                body: JSON.stringify({
-                    test_session: testSession,
-                    section: currentSection,
-                    question_id: parseInt(questionId, 10),
-                    answer: answer
-                })
-            }).then(async (response) => {
-                let data = null;
-                try {
-                    data = await response.json();
-                } catch (error) {
-                    throw new Error('Server returned an invalid save response.');
-                }
-
-                if (!data.success) {
-                    throw new Error(data.error || 'Failed to save answer.');
-                }
-
-                return data;
-            });
+                method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
+                body: JSON.stringify({ test_session: testSession, section: currentSection, question_id: parseInt(id), answer: ans })
+            }).then(r => r.json());
         }
 
-        function collectSelectedAnswerSaves() {
-            const pendingSaves = [];
-            const isBatch = document.getElementById('isBatch').value === '1';
-
-            if (isBatch) {
-                document.querySelectorAll('.batch-answer-group').forEach((group) => {
-                    const checked = group.querySelector('input[type="radio"]:checked');
-                    if (checked) {
-                        pendingSaves.push(saveAnswer(group.dataset.questionId, checked.value));
-                    }
+        function collectAnswers() {
+            const list = [];
+            if (document.getElementById('isBatch').value === '1') {
+                document.querySelectorAll('.batch-answer-group').forEach(g => {
+                    const chk = g.querySelector('input:checked');
+                    if (chk) list.push(saveAnswer(g.dataset.questionId, chk.value));
                 });
             } else {
-                const checked = document.querySelector('.single-answer:checked');
-                if (checked) {
-                    pendingSaves.push(saveAnswer(checked.dataset.questionId, checked.value));
-                }
+                const chk = document.querySelector('.single-answer:checked');
+                if (chk) list.push(saveAnswer(chk.dataset.questionId, chk.value));
             }
-
-            return pendingSaves;
-        }
-
-        async function flushSelectedAnswers() {
-            const pendingSaves = collectSelectedAnswerSaves();
-            if (pendingSaves.length === 0) {
-                return;
-            }
-
-            const results = await Promise.allSettled(pendingSaves);
-            const failed = results.filter((result) => result.status === 'rejected');
-            if (failed.length > 0) {
-                const firstError = failed[0].reason instanceof Error
-                    ? failed[0].reason.message
-                    : 'Failed to save answer.';
-                throw new Error(firstError);
-            }
-        }
-
-        document.querySelectorAll('.single-answer').forEach((radio) => {
-            radio.addEventListener('change', function () {
-                saveAnswer(this.dataset.questionId, this.value)
-                    .catch((error) => console.error('Save error:', error));
-            });
-        });
-
-        document.querySelectorAll('.batch-answer').forEach((radio) => {
-            radio.addEventListener('change', function () {
-                saveAnswer(this.dataset.questionId, this.value)
-                    .catch((error) => console.error('Save error:', error));
-            });
-        });
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', async function (event) {
-                if (this.getAttribute('href') === '#' || this.classList.contains('pointer-events-none')) {
-                    return;
-                }
-                event.preventDefault();
-                if (isNavigating || isSubmitting) {
-                    return;
-                }
-
-                isNavigating = true;
-                setNextButtonBusy(true, 'Saving');
-                pauseProctorForNavigation();
-
-                try {
-                    await flushSelectedAnswers();
-                    window.location.href = this.href;
-                } catch (error) {
-                    isNavigating = false;
-                    setNextButtonBusy(false);
-                    if (window.proctorSDK) {
-                        window.proctorSDK.resume();
-                    }
-                    alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
-                }
-            });
+            return list;
         }
 
         async function handleNext() {
-            if (isNavigating || isSubmitting) {
-                return;
-            }
-
-            isNavigating = true;
-            setNextButtonBusy(true, 'Saving');
-            pauseProctorForNavigation();
-
-            const isBatch = document.getElementById('isBatch').value === '1';
-            const currentOrder = parseInt(document.getElementById('currentOrder').value, 10);
-            const totalQuestions = parseInt(document.getElementById('totalQuestions').value, 10);
-            const lastOrder = isBatch ? parseInt(document.getElementById('lastOrder').value, 10) : currentOrder;
-
+            if (isNavigating || isSubmitting) return;
+            isNavigating = true; nextBtn.disabled = true; nextBtn.innerHTML = 'Saving...';
             try {
-                await flushSelectedAnswers();
-            } catch (error) {
-                isNavigating = false;
-                setNextButtonBusy(false);
-                if (window.proctorSDK) {
-                    window.proctorSDK.resume();
-                }
-                alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
-                return;
-            }
-
-            const nextOrder = lastOrder + 1;
-            if (nextOrder <= totalQuestions) {
-                window.location.href = `test_toeic.php?section=${encodeURIComponent(currentSection)}&test_session=${encodeURIComponent(testSession)}&q=${nextOrder}&setup_complete=1&mode=${mode}${targetPart ? `&part=${encodeURIComponent(targetPart)}` : ''}`;
-                return;
-            }
-
-            isNavigating = false;
-            submitSection();
+                await Promise.all(collectAnswers());
+                const nextQ = parseInt(document.getElementById('isBatch').value === '1' ? document.getElementById('lastOrder').value : document.getElementById('currentOrder').value) + 1;
+                if (nextQ <= parseInt(document.getElementById('totalQuestions').value)) {
+                    window.location.href = `test_toeic.php?section=${currentSection}&test_session=${testSession}&q=${nextQ}&setup_complete=1&mode=${mode}${targetPart ? '&part='+targetPart : ''}`;
+                } else { submitSection(); }
+            } catch (e) { alert('Save failed: ' + e.message); isNavigating = false; nextBtn.disabled = false; nextBtn.innerHTML = 'Next'; }
         }
 
         function submitSection() {
-            if (isSubmitting) {
-                return;
-            }
+            isSubmitting = true; nextBtn.innerHTML = 'Submitting...';
+            fetch('ajax_submit_section_toeic.php', {
+                method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
+                body: JSON.stringify({ test_session: testSession, section: currentSection, mode: mode, target_part: targetPart })
+            }).then(r => r.json()).then(d => { if (d.redirect) window.location.href = d.redirect; else throw new Error(d.error); })
+            .catch(e => { alert('Submit failed: '+e.message); isSubmitting = false; nextBtn.disabled = false; });
+        }
 
-            isSubmitting = true;
-            setNextButtonBusy(true, 'Submitting');
-
-            if (window.proctorSDK) {
-                window.proctorSDK.pause();
-            }
-
-            flushSelectedAnswers().then(() => fetch('ajax_submit_section_toeic.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
-                body: JSON.stringify({
-                    test_session: testSession,
-                    section: currentSection,
-                    mode: mode,
-                    target_part: targetPart
-                })
-            })).then((response) => response.json()).then((data) => {
-                if (data.success && data.redirect) {
-                    window.location.href = data.redirect;
-                    return;
-                }
-                throw new Error(data.error || 'Unknown error');
-            }).catch((error) => {
-                alert('Submit failed: ' + error.message);
-                isSubmitting = false;
-                isNavigating = false;
-                setNextButtonBusy(false);
-                if (window.proctorSDK) {
-                    window.proctorSDK.resume();
-                }
+        document.querySelectorAll('input[type="radio"]').forEach(i => {
+            i.addEventListener('change', () => {
+                i.closest('.study-card, #singleAnswerContainer').querySelectorAll('.answer-choice').forEach(l => l.classList.remove('selected'));
+                i.closest('.answer-choice').classList.add('selected');
+                saveAnswer(i.dataset.questionId, i.value);
             });
-        }
+        });
 
-        function skipSection() {
-            if (confirm('Dev bypass only: skip this TOEIC section and continue?')) {
-                submitSection();
-            }
-        }
-
-        let remainingTime = <?php echo (int)$remaining_time; ?>;
-        const timerDisplay = document.getElementById('timerDisplay');
-        function updateTimer() {
-            if (remainingTime <= 0) {
-                clearInterval(timerInterval);
-                timerDisplay.textContent = '00:00';
-                if (!window.isTimeoutSubmission) {
-                    window.isTimeoutSubmission = true;
-                    alert('Time is up. The section will be submitted automatically.');
-                    submitSection();
-                }
-                return;
-            }
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = remainingTime % 60;
-            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            remainingTime--;
-        }
-        const timerInterval = setInterval(updateTimer, 1000);
-        updateTimer();
-
-        const mainAudio = document.getElementById('mainAudio');
-        if (mainAudio) {
-            mainAudio.controls = false;
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'w-full py-3 bg-primary hover:bg-primary-hover text-white rounded-lg font-bold transition-colors shadow-sm flex items-center justify-center mb-2';
-            button.innerHTML = '<span class="material-symbols-outlined align-middle mr-1">play_circle</span> Play Audio';
-            mainAudio.parentNode.insertBefore(button, mainAudio);
-
-            const progressContainer = document.createElement('div');
-            progressContainer.className = 'w-full h-2 bg-slate-200 rounded-full overflow-hidden mt-2';
-            const progressBar = document.createElement('div');
-            progressBar.className = 'h-full bg-primary w-0 transition-all duration-200';
-            progressContainer.appendChild(progressBar);
-            mainAudio.parentNode.appendChild(progressContainer);
-
-            button.onclick = function () {
-                mainAudio.play().then(() => {
-                    button.style.display = 'none';
-                }).catch((error) => console.error('Audio play failed', error));
-            };
-
-            mainAudio.addEventListener('timeupdate', function () {
-                if (mainAudio.duration) {
-                    progressBar.style.width = `${(mainAudio.currentTime / mainAudio.duration) * 100}%`;
-                }
-            });
-
-            mainAudio.addEventListener('pause', function () {
-                if (!mainAudio.ended) {
-                    mainAudio.play();
-                }
-            });
-        }
+        let timeLeft = <?php echo (int)$remaining_time; ?>;
+        setInterval(() => {
+            if (timeLeft <= 0) { if (!isSubmitting) submitSection(); return; }
+            timeLeft--;
+            document.getElementById('timerDisplay').textContent = `${Math.floor(timeLeft/60).toString().padStart(2,'0')}:${(timeLeft%60).toString().padStart(2,'0')}`;
+        }, 1000);
     </script>
 
     <?php if ($requires_proctoring): ?>
-        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
         <script src="<?php echo htmlspecialchars(getVersionedAssetUrl('user/js/proctor.js', 'js/proctor.js')); ?>"></script>
-        <script>
-            (function () {
-                document.addEventListener('DOMContentLoaded', function () {
-                    if (typeof ProctorSDK !== 'undefined') {
-                        window.proctorSDK = new ProctorSDK({
-                            testSession: testSession,
-                            ajaxUrl: '../api/ajax_proctor.php',
-                            strictness: '<?php echo PROCTORING_MODE ?? 'flexible'; ?>',
-                            microphoneGranted: true
-                        });
-                        window.proctorSDK.start().catch(function (error) {
-                            console.error('[Proctor] Failed to start live monitoring', error);
-                        });
-                    }
-                });
-            })();
-        </script>
+        <script>document.addEventListener('DOMContentLoaded', () => { if (typeof ProctorSDK !== 'undefined') { window.proctorSDK = new ProctorSDK({ testSession: '<?php echo $test_session; ?>', ajaxUrl: '../api/ajax_proctor.php', microphoneGranted: true }).start(); } });</script>
     <?php endif; ?>
 </body>
 </html>

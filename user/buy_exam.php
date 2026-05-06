@@ -57,83 +57,94 @@ $features = json_decode(getSiteSetting('features_toeic', ''), true) ?: [
 $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(TRIPAY_MERCHANT_CODE);
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= csrfMeta() ?>
-    <title>Paket TOEIC - <?php echo htmlspecialchars($website_title); ?></title>
+    <title>Buy Package - <?php echo htmlspecialchars($website_title); ?></title>
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css', '../assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body class="tc-user-page tc-package-page">
+    <header class="navbar py-2 border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand study-headline mb-0" href="index.php">
+                <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
+                <?php echo htmlspecialchars($website_title); ?>
+            </a>
+            <a href="index.php" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Dashboard</a>
+        </div>
+    </header>
+
     <main class="toeic-page-shell">
-        <div class="toeic-page-header">
-            <div>
-                <div class="toeic-kicker mb-3">The TOEIC tests</div>
-                <h1 class="display-6 mb-3">Activate your TOEIC listening and reading simulator.</h1>
-                <p class="toeic-subcopy">One package opens the full simulation route, while practice simulation, analytics, and reporting stay connected to the same TOEIC-only experience.</p>
-            </div>
-            <a href="index.php" class="btn btn-outline-secondary">Back to Dashboard</a>
+        <div class="mb-5">
+            <span class="study-kicker">TOEIC Packages</span>
+            <h1 class="display-5 mb-2">Activate Full Simulation</h1>
+            <p class="lead text-muted">Choose a package to unlock the full monitored exam experience.</p>
         </div>
 
-        <section class="toeic-hero-card p-4 p-lg-5 mb-4">
+        <section class="study-card p-4 p-lg-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
-                    <div class="toeic-kicker mb-3">TOEIC package</div>
-                    <h2 class="display-6 text-white mb-3"><?php echo $toeic_name; ?></h2>
-                    <p class="text-white-50 mb-4">
-                        Aligned to the TOEIC Listening and Reading structure, this package unlocks the full monitored simulation, result reporting, and TOEIC analytics workflow.
+                    <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Special Offer</span>
+                    <h2 class="display-4 text-white mb-3"><?php echo $toeic_name; ?></h2>
+                    <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
+                        Get access to 200 original questions, real-time proctoring, and official score conversion table.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <span class="toeic-pill text-bg-warning">200 Questions</span>
-                        <span class="toeic-pill toeic-pill-soft">120 Minutes</span>
-                        <span class="toeic-pill toeic-pill-soft">Score 10-990</span>
+                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">200 Questions</span>
+                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">120 Minutes</span>
+                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">Score 10-990</span>
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="toeic-band h-100">
-                        <div class="toeic-eyebrow mb-3">Price</div>
-                        <div class="display-4 mb-3">Rp <?php echo $toeic_price; ?></div>
+                    <div class="study-card text-center bg-white border-0 shadow-lg p-4">
+                        <div class="study-kicker">Total Price</div>
+                        <div class="display-3 fw-bold mb-4" style="color:var(--focus-blue);">Rp <?php echo $toeic_price; ?></div>
+
                         <?php if ($hasAvailableToeicFullAccess): ?>
-                            <div class="alert alert-success rounded-4 border-0 mb-3">
-                                Your account already has active TOEIC full-access credit. Start the full simulation now without buying an additional package first.
+                            <div class="alert alert-success border-0 small mb-3">
+                                <i class="fas fa-check-circle me-1"></i> You have active credits.
                             </div>
-                            <a href="test_instructions.php?mode=full" class="btn btn-warning w-100 mb-2">Start Full Simulation Now</a>
+                            <a href="test_instructions.php?mode=full" class="study-button w-100 mb-3">Launch Simulation</a>
                             <?php if ($tripay_ready): ?>
-                                <a href="payment.php?exam_type=toeic" class="btn btn-outline-secondary w-100">Buy Additional Package</a>
+                                <a href="payment.php?exam_type=toeic" class="study-button study-button-secondary w-100">Buy Another</a>
                             <?php endif; ?>
                         <?php elseif ($tripay_ready): ?>
-                            <a href="payment.php?exam_type=toeic" class="btn btn-warning w-100">Proceed to Payment</a>
+                            <a href="payment.php?exam_type=toeic" class="study-button w-100">Checkout Now</a>
                         <?php else: ?>
-                            <div class="alert alert-warning rounded-4 border-0 mb-0">Payment gateway belum siap. Anda tetap bisa redeem voucher TOEIC di bawah.</div>
+                            <div class="alert alert-warning border-0 small mb-0">Payment gateway offline.</div>
                         <?php endif; ?>
 
-                        <div class="mt-4 pt-4 border-top" style="border-color: rgba(23, 38, 63, 0.08) !important;">
-                            <div class="toeic-eyebrow mb-3">Redeem voucher</div>
-                            <div class="input-group">
-                                <input type="text" id="voucherCode" class="form-control" placeholder="Masukkan kode voucher">
-                                <button class="btn btn-outline-warning" type="button" onclick="redeemVoucher()">Redeem</button>
+                        <div class="mt-4 pt-4 border-top">
+                            <div class="study-kicker mb-3">Or Redeem Voucher</div>
+                            <div class="d-flex gap-2">
+                                <input type="text" id="voucherCode" class="form-control" placeholder="CODE123" style="min-height: 48px;">
+                                <button class="study-button py-2 px-3" onclick="redeemVoucher()" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
                             </div>
-                            <div id="voucherMessage" class="small mt-3"></div>
+                            <div id="voucherMessage" class="small mt-2"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="toeic-card-grid">
+        <h3 class="h4 mb-4 fw-bold">What's Included?</h3>
+        <div class="row g-4">
             <?php foreach ($features as $feature): ?>
-                <div class="toeic-display-panel toeic-surface h-100">
-                    <div class="toeic-eyebrow mb-3">Included</div>
-                    <h3 class="h4 mb-0"><?php echo htmlspecialchars($feature); ?></h3>
+                <div class="col-md-4">
+                    <div class="study-card h-100 py-3 d-flex align-items-center gap-3">
+                        <div class="avatar-circle flex-shrink-0" style="width:40px; height:40px; background:rgba(72,127,181,0.1) !important; border:none;">
+                            <i class="fas fa-check text-primary"></i>
+                        </div>
+                        <div class="fw-bold"><?php echo htmlspecialchars($feature); ?></div>
+                    </div>
                 </div>
             <?php endforeach; ?>
-        </section>
+        </div>
     </main>
 
     <script>
@@ -144,13 +155,13 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             const message = document.getElementById('voucherMessage');
 
             if (!code) {
-                message.className = 'small mt-3 text-danger';
-                message.textContent = 'Kode voucher tidak boleh kosong.';
+                message.className = 'small mt-2 text-danger fw-bold';
+                message.textContent = 'Enter code first.';
                 return;
             }
 
-            message.className = 'small mt-3 text-muted';
-            message.textContent = 'Memeriksa voucher...';
+            message.className = 'small mt-2 text-muted';
+            message.textContent = 'Processing...';
 
             try {
                 const response = await fetch('ajax_redeem_voucher.php', {
@@ -164,15 +175,15 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 const data = await response.json();
                 const isSuccess = Boolean(data.success);
 
-                message.className = 'small mt-3 ' + (isSuccess ? 'text-success' : 'text-danger');
-                message.textContent = data.message || data.error || 'Voucher tidak dapat diproses.';
+                message.className = 'small mt-2 fw-bold ' + (isSuccess ? 'text-success' : 'text-danger');
+                message.textContent = data.message || data.error || 'Failed to process.';
 
                 if (isSuccess) {
                     setTimeout(() => window.location.href = 'index.php', 1200);
                 }
             } catch (error) {
-                message.className = 'small mt-3 text-danger';
-                message.textContent = error.message || 'Terjadi kesalahan saat redeem voucher.';
+                message.className = 'small mt-2 text-danger fw-bold';
+                message.textContent = 'Error processing voucher.';
             }
         }
     </script>

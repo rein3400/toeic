@@ -4,7 +4,6 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/ai_helper.php';
 require_once '../includes/toeic_helper.php';
-require_once '../includes/components/toeic_progress_bar.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -53,17 +52,6 @@ $conn->query("
 ");
 
 $part_stats = getTOEICPartStatistics((int)$test_data['user_id'], $test_session);
-$part_progress_items = [];
-foreach ($part_stats as $stat) {
-    $percentage = (float)($stat['percentage'] ?? 0);
-    $part_progress_items[] = [
-        'label' => (string)($stat['name'] ?? ''),
-        'meta' => (int)($stat['correct'] ?? 0) . ' / ' . (int)($stat['total'] ?? 0) . ' correct',
-        'value' => $percentage,
-        'value_label' => (int)round($percentage) . '%',
-    ];
-}
-
 $analysis = null;
 $analysis_error = null;
 $ai_not_configured = false;
@@ -164,82 +152,126 @@ function parseToeicAnalysisResponse(string $response): ?array {
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOEIC AI Analysis - <?php echo htmlspecialchars($website_title); ?></title>
+    <title>AI Analysis - <?php echo htmlspecialchars($website_title); ?></title>
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css', '../assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
-    <main class="toeic-page-shell">
-        <div class="toeic-page-header">
-            <div>
-                <div class="toeic-kicker mb-3">TOEIC AI analysis</div>
-                <h1 class="display-6 mb-3">Turn score data into a study decision.</h1>
-                <p class="toeic-subcopy">Use AI-generated feedback to translate Listening and Reading results into strengths, weaknesses, and the next best TOEIC focus.</p>
-            </div>
-            <div class="d-flex gap-2 flex-wrap">
-                <a href="result_toeic.php?session=<?php echo urlencode($test_session); ?>" class="btn btn-outline-secondary">Back to Result</a>
+<body class="tc-user-page tc-ai-page">
+    <header class="navbar py-2 border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand study-headline mb-0" href="index.php">
+                <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
+                <?php echo htmlspecialchars($website_title); ?>
+            </a>
+            <div class="d-flex gap-2">
+                <a href="result_toeic.php?session=<?php echo urlencode($test_session); ?>" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Result</a>
                 <?php if (!$analysis): ?>
-                    <a href="ai_analysis.php?format=toeic&session=<?php echo urlencode($test_session); ?>&generate=1" class="btn btn-warning">Generate Analysis</a>
+                    <a href="ai_analysis.php?format=toeic&session=<?php echo urlencode($test_session); ?>&generate=1" class="study-button py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Generate</a>
                 <?php endif; ?>
             </div>
         </div>
+    </header>
 
-        <div class="row g-4">
-            <div class="col-lg-5">
-                <section class="toeic-panel p-4 h-100">
-                    <div class="toeic-eyebrow mb-3">Score snapshot</div>
-                    <h2 class="h4 mb-3">Current TOEIC result</h2>
-                    <div class="toeic-table-row"><span>Listening</span><strong><?php echo (int)$test_data['listening_scaled']; ?></strong></div>
-                    <div class="toeic-table-row"><span>Reading</span><strong><?php echo (int)$test_data['reading_scaled']; ?></strong></div>
-                    <div class="toeic-table-row"><span>Total</span><strong><?php echo (int)$test_data['total_score']; ?></strong></div>
-                    <div class="toeic-table-row"><span>CEFR</span><strong><?php echo htmlspecialchars($test_data['cefr_level']); ?></strong></div>
+    <main class="toeic-page-shell">
+        <div class="mb-5">
+            <span class="study-kicker">Personalized Feedback</span>
+            <h1 class="display-5 mb-2">AI Performance Analysis</h1>
+            <p class="lead text-muted">Deep dive into your TOEIC performance using advanced AI reasoning.</p>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-lg-4">
+                <section class="study-card h-100">
+                    <span class="study-kicker">Summary</span>
+                    <h2 class="h4 mb-4">Core Scores</h2>
+                    <div class="d-flex justify-content-between p-3 mb-2 rounded-3 bg-light">
+                        <span class="fw-bold">Listening</span>
+                        <span class="fw-bold" style="color:var(--focus-blue);"><?php echo (int)$test_data['listening_scaled']; ?></span>
+                    </div>
+                    <div class="d-flex justify-content-between p-3 mb-2 rounded-3 bg-light">
+                        <span class="fw-bold">Reading</span>
+                        <span class="fw-bold" style="color:var(--focus-blue);"><?php echo (int)$test_data['reading_scaled']; ?></span>
+                    </div>
+                    <div class="d-flex justify-content-between p-3 mb-2 rounded-3 bg-light">
+                        <span class="fw-bold">Total</span>
+                        <span class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo (int)$test_data['total_score']; ?></span>
+                    </div>
+                    <div class="d-flex justify-content-between p-3 rounded-3 bg-light">
+                        <span class="fw-bold">CEFR</span>
+                        <span class="badge bg-dark rounded-pill px-3"><?php echo htmlspecialchars($test_data['cefr_level']); ?></span>
+                    </div>
                 </section>
             </div>
-            <div class="col-lg-7">
-                <section class="toeic-panel p-4 h-100">
-                    <div class="toeic-eyebrow mb-3">Part breakdown</div>
-                    <h2 class="h4 mb-3">Listening and Reading accuracy</h2>
-                    <?php renderToeicProgressRows($part_progress_items, ['aria_label' => 'AI analysis TOEIC part accuracy']); ?>
+            <div class="col-lg-8">
+                <section class="study-card h-100">
+                    <span class="study-kicker">Breakdown</span>
+                    <h2 class="h4 mb-4">Accuracy per Part</h2>
+                    <div class="row g-3">
+                        <?php foreach ($part_stats as $stat): ?>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded-3 h-100">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="small fw-bold"><?php echo htmlspecialchars($stat['name']); ?></span>
+                                        <span class="small fw-bold"><?php echo (int)$stat['percentage']; ?>%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar rounded-pill" style="width: <?php echo (int)$stat['percentage']; ?>%; background: var(--academy-blue);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </section>
             </div>
         </div>
 
-        <section class="toeic-panel p-4 mt-4">
-            <div class="toeic-eyebrow mb-3">AI feedback</div>
-            <h2 class="h4 mb-3">Recommended interpretation</h2>
+        <section class="study-card">
+            <span class="study-kicker">AI Recommendation</span>
+            <h2 class="h3 mb-4">Coach Insights</h2>
+
             <?php if ($ai_not_configured): ?>
-                <div class="alert alert-warning rounded-4 border-0 mb-0">AI provider belum dikonfigurasi.</div>
+                <div class="alert alert-warning border-0 rounded-4">AI provider not configured. Please contact administrator.</div>
             <?php elseif ($analysis_error): ?>
-                <div class="alert alert-danger rounded-4 border-0 mb-0"><?php echo htmlspecialchars($analysis_error); ?></div>
+                <div class="alert alert-danger border-0 rounded-4"><?php echo htmlspecialchars($analysis_error); ?></div>
             <?php elseif (!$analysis): ?>
-                <p class="toeic-copy mb-0">Analisis belum dibuat. Jalankan generate untuk membuat feedback TOEIC dari hasil ini.</p>
+                <div class="text-center py-5">
+                    <i class="fas fa-robot fa-3x mb-3 opacity-25"></i>
+                    <p class="text-muted">No analysis generated yet. Click 'Generate' above to start.</p>
+                </div>
             <?php else: ?>
-                <p class="toeic-copy mb-4"><?php echo htmlspecialchars($analysis['summary'] ?? ''); ?></p>
-                <div class="row g-4">
+                <div class="p-4 rounded-4 mb-5" style="background: rgba(72, 127, 181, 0.05);">
+                    <p class="lead mb-0 fw-bold" style="color:var(--focus-blue);"><?php echo htmlspecialchars($analysis['summary'] ?? ''); ?></p>
+                </div>
+
+                <div class="row g-4 mb-5">
                     <div class="col-md-6">
-                        <div class="toeic-band h-100">
-                            <div class="toeic-eyebrow mb-3">Strengths</div>
-                            <ul class="toeic-list-check mb-0">
+                        <div class="h-100 p-4 border rounded-4">
+                            <h3 class="h5 fw-bold mb-4"><i class="fas fa-star me-2 text-warning"></i> Key Strengths</h3>
+                            <ul class="list-unstyled">
                                 <?php foreach (($analysis['strengths'] ?? []) as $item): ?>
-                                    <li><?php echo htmlspecialchars($item); ?></li>
+                                    <li class="mb-3 d-flex gap-3">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span class="fw-medium"><?php echo htmlspecialchars($item); ?></span>
+                                    </li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="toeic-band h-100">
-                            <div class="toeic-eyebrow mb-3">Weaknesses</div>
-                            <ul class="toeic-list-check mb-0">
+                        <div class="h-100 p-4 border rounded-4">
+                            <h3 class="h5 fw-bold mb-4"><i class="fas fa-bullseye me-2 text-danger"></i> Areas to Improve</h3>
+                            <ul class="list-unstyled">
                                 <?php foreach (($analysis['weaknesses'] ?? []) as $item): ?>
-                                    <li><?php echo htmlspecialchars($item); ?></li>
+                                    <li class="mb-3 d-flex gap-3">
+                                        <i class="fas fa-arrow-right text-danger mt-1"></i>
+                                        <span class="fw-medium"><?php echo htmlspecialchars($item); ?></span>
+                                    </li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
@@ -247,32 +279,40 @@ function parseToeicAnalysisResponse(string $response): ?array {
                 </div>
 
                 <?php if (!empty($analysis['recommended_focus'])): ?>
-                    <div class="mt-4">
-                        <div class="toeic-eyebrow mb-3">Recommended focus</div>
+                    <div class="mb-5">
+                        <h3 class="h5 fw-bold mb-4">Recommended Training Focus</h3>
                         <?php foreach ($analysis['recommended_focus'] as $focus): ?>
-                            <div class="toeic-table-row">
-                                <div>
-                                    <div class="fw-semibold"><?php echo htmlspecialchars($focus['part'] ?? 'Part'); ?></div>
-                                    <div class="small text-muted"><?php echo htmlspecialchars($focus['reason'] ?? ''); ?></div>
+                            <div class="study-card mb-3 border-0 bg-light p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <span class="badge bg-primary px-3 py-2 rounded-pill uppercase fw-bold"><?php echo htmlspecialchars($focus['part'] ?? 'Part'); ?></span>
+                                    </div>
+                                    <div class="col-md-9 mt-3 mt-md-0">
+                                        <div class="fw-bold mb-1"><?php echo htmlspecialchars($focus['reason'] ?? ''); ?></div>
+                                        <div class="text-muted small"><?php echo htmlspecialchars($focus['action'] ?? ''); ?></div>
+                                    </div>
                                 </div>
-                                <div><?php echo htmlspecialchars($focus['action'] ?? ''); ?></div>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (!empty($analysis['study_plan'])): ?>
-                    <div class="mt-4">
-                        <div class="toeic-eyebrow mb-3">Study plan</div>
-                        <ol class="toeic-copy mb-0">
-                            <?php foreach (($analysis['study_plan'] ?? []) as $item): ?>
-                                <li class="mb-2"><?php echo htmlspecialchars($item); ?></li>
-                            <?php endforeach; ?>
-                        </ol>
+                    <div>
+                        <h3 class="h5 fw-bold mb-4">Step-by-Step Study Plan</h3>
+                        <div class="p-4 border rounded-4 bg-white">
+                            <ol class="mb-0">
+                                <?php foreach (($analysis['study_plan'] ?? []) as $item): ?>
+                                    <li class="mb-3 ps-2 fw-medium"><?php echo htmlspecialchars($item); ?></li>
+                                <?php endforeach; ?>
+                            </ol>
+                        </div>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
         </section>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

@@ -20,8 +20,8 @@ $mode = (($_GET['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
 $has_full_credit = hasStrictTestCredit($conn, (int)$_SESSION['user_id'], 'toeic');
 $full_credit_count = countStrictTestCredits($conn, (int)$_SESSION['user_id'], 'toeic');
 $full_test_parts = [
-    ['label' => 'Listening', 'detail' => 'Part 1-4 - 100 questions - 45 minutes'],
-    ['label' => 'Reading', 'detail' => 'Part 5-7 - 100 questions - 75 minutes'],
+    ['label' => 'Listening', 'detail' => 'Part 1-4 · 100 Qs · 45m'],
+    ['label' => 'Reading', 'detail' => 'Part 5-7 · 100 Qs · 75m'],
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'])) {
@@ -36,63 +36,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instruksi TOEIC - <?php echo htmlspecialchars($website_title); ?></title>
+    <title>Instructions - <?php echo htmlspecialchars($website_title); ?></title>
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/ruangguru-theme.css', '../assets/css/ruangguru-theme.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
-    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
+    <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
 </head>
-<body class="toeic-redesign-body toeic-student-page">
+<body class="tc-user-page tc-instructions-page">
+    <header class="navbar py-2 border-bottom shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand study-headline mb-0" href="index.php">
+                <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
+                <?php echo htmlspecialchars($website_title); ?>
+            </a>
+            <a href="index.php" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Dashboard</a>
+        </div>
+    </header>
+
     <main class="toeic-page-shell">
-        <div class="toeic-page-header">
-            <div>
-                <div class="toeic-kicker mb-3">TOEIC instructions</div>
-                <h1 class="display-6 mb-3"><?php echo $mode === 'prep' ? 'Practice simulation instructions' : 'Full simulation instructions'; ?></h1>
-                <p class="toeic-subcopy">
-                    <?php if ($mode === 'prep'): ?>
-                        Practice simulation runs the complete TOEIC structure without proctoring and uses one active TOEIC package.
-                    <?php else: ?>
-                        Full simulation runs the complete TOEIC structure with proctoring enabled and uses one active TOEIC package.
-                    <?php endif; ?>
-                </p>
-            </div>
-            <a href="index.php" class="btn btn-outline-secondary">Back to Dashboard</a>
+        <div class="mb-5">
+            <span class="study-kicker">Test Readiness</span>
+            <h1 class="display-5 mb-2"><?php echo $mode === 'prep' ? 'Practice Simulation' : 'Full Simulation'; ?></h1>
+            <p class="lead text-muted">Review the exam structure and rules before starting your session.</p>
         </div>
 
-        <section class="toeic-hero-card p-4 p-lg-5 mb-4">
+        <section class="study-card p-4 p-lg-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-8">
-                    <div class="toeic-kicker mb-3">TOEIC Listening and Reading</div>
-                    <h2 class="display-6 text-white mb-3"><?php echo $mode === 'prep' ? 'Practice with the same structure before the monitored run.' : 'Launch a standardized TOEIC simulation with the official sequence.'; ?></h2>
-                    <p class="text-white-50 mb-0">
-                        <?php if ($mode === 'prep'): ?>
-                            Practice simulation preserves the same order, timing, and answer flow used by the full TOEIC experience so you can rehearse the complete test architecture.
-                        <?php else: ?>
-                            Full simulation follows the official Listening-then-Reading order, with equipment checks and proctoring-ready flow before the session starts.
-                        <?php endif; ?>
+                    <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Exam Format</span>
+                    <h2 class="display-4 text-white mb-3">Official TOEIC® Structure</h2>
+                    <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
+                        This session consists of two main sections: Listening Comprehension and Reading. The total duration is approximately 2 hours.
                     </p>
+                    <div class="row g-3">
+                        <?php foreach ($full_test_parts as $item): ?>
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded-4" style="background: rgba(255,255,255,0.1);">
+                                    <div class="fw-bold uppercase small text-warning mb-1"><?php echo htmlspecialchars($item['label']); ?></div>
+                                    <div class="fw-bold"><?php echo htmlspecialchars($item['detail']); ?></div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="toeic-band h-100">
-                        <div class="toeic-eyebrow mb-3">Access product</div>
-                        <div class="h3 mb-2"><?php echo $has_full_credit ? 'Active TOEIC package detected' : 'Active TOEIC package required'; ?></div>
-                        <div class="small text-muted mb-2">Active packages: <strong><?php echo $full_credit_count; ?></strong></div>
-                        <p class="small text-muted mb-0">
-                            <?php if ($mode === 'prep'): ?>
-                                Practice simulation uses one active TOEIC package while keeping proctoring off.
-                            <?php elseif ($has_full_credit): ?>
-                                Your account is ready to launch the full TOEIC simulation.
-                            <?php else: ?>
-                                Activate one TOEIC package before running the full simulation.
-                            <?php endif; ?>
-                        </p>
+                    <div class="study-card text-center bg-white border-0 shadow-lg p-4">
+                        <div class="study-kicker">Account Status</div>
+                        <div class="h4 fw-bold mb-2" style="color:var(--focus-blue);">
+                            <?php echo $has_full_credit ? 'Credit Available' : 'Credit Required'; ?>
+                        </div>
+                        <p class="small text-muted mb-4">You have <strong><?php echo $full_credit_count; ?></strong> active package(s).</p>
+
+                        <form method="post">
+                            <input type="hidden" name="mode" value="<?php echo htmlspecialchars($mode); ?>">
+                            <button type="submit" name="confirm_instructions" class="study-button w-100" <?php echo !$has_full_credit ? 'disabled' : ''; ?>>
+                                Launch Session
+                            </button>
+                        </form>
+
+                        <?php if (!$has_full_credit): ?>
+                            <a href="buy_exam.php" class="study-button study-button-secondary w-100 mt-3">Buy Package</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -100,72 +108,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
 
         <div class="row g-4">
             <div class="col-lg-8">
-                <section class="toeic-panel p-4 p-lg-5 mb-4">
-                    <div class="toeic-eyebrow mb-3">The TOEIC tests</div>
-                    <h2 class="h3 mb-4">Format that follows your simulator session.</h2>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-6">
-                            <div class="toeic-surface p-4 h-100 <?php echo $mode !== 'prep' ? 'border border-warning' : ''; ?>">
-                                <div class="toeic-eyebrow mb-3">Package + Proctor</div>
-                                <h3 class="h4 mb-2">Full Simulation</h3>
-                                <p class="toeic-copy mb-0">Listening 45 minutes, then Reading 75 minutes, with proctoring and one active TOEIC package.</p>
+                <section class="study-card mb-4">
+                    <span class="study-kicker">Important</span>
+                    <h2 class="h4 mb-4">Rules & Guidelines</h2>
+
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item bg-transparent border-0 px-0 pb-3 d-flex gap-3">
+                            <div class="avatar-circle flex-shrink-0" style="width:36px; height:36px; background:rgba(72,127,181,0.1) !important; border:none;">
+                                <i class="fas fa-headphones text-primary"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Headphones Recommended</div>
+                                <div class="small text-muted">Listening audio plays once. Ensure your volume is correctly adjusted.</div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="toeic-surface p-4 h-100 <?php echo $mode === 'prep' ? 'border border-warning' : ''; ?>">
-                                <div class="toeic-eyebrow mb-3">Package + No Proctor</div>
-                                <h3 class="h4 mb-2">Practice Simulation</h3>
-                                <p class="toeic-copy mb-0">The same TOEIC flow without proctoring, using one active package at launch.</p>
+                        <div class="list-group-item bg-transparent border-0 px-0 py-3 d-flex gap-3">
+                            <div class="avatar-circle flex-shrink-0" style="width:36px; height:36px; background:rgba(72,127,181,0.1) !important; border:none;">
+                                <i class="fas fa-clock text-primary"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Non-Stop Timer</div>
+                                <div class="small text-muted">The timer cannot be paused. Make sure you have 2 hours of uninterrupted time.</div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-0 px-0 py-3 d-flex gap-3">
+                            <div class="avatar-circle flex-shrink-0" style="width:36px; height:36px; background:rgba(72,127,181,0.1) !important; border:none;">
+                                <i class="fas fa-shield-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <div class="fw-bold">Proctoring Rules</div>
+                                <div class="small text-muted">Do not switch tabs or exit full-screen. Suspicious activity may disqualify your result.</div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row g-3">
-                        <?php foreach ($full_test_parts as $item): ?>
-                            <div class="col-md-6">
-                                <div class="toeic-stat h-100">
-                                    <div class="toeic-stat-value"><?php echo htmlspecialchars($item['label']); ?></div>
-                                    <div class="toeic-stat-label"><?php echo htmlspecialchars($item['detail']); ?></div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
-
-                <section class="toeic-panel p-4 p-lg-5">
-                    <div class="toeic-eyebrow mb-3">Ready check</div>
-                    <h2 class="h3 mb-4">Rules before you begin.</h2>
-                    <ul class="toeic-list-check">
-                        <li>Use headphones or earphones so the Listening audio can be heard clearly.</li>
-                        <li>The timer runs continuously while a section is active. There is no pause during the session.</li>
-                        <li>Both modes keep the TOEIC order: Listening first, then Reading.</li>
-                        <?php if ($mode === 'prep'): ?>
-                            <li>Practice simulation keeps the same layout, timer, and question flow without proctoring, and uses one active package at launch.</li>
-                        <?php else: ?>
-                            <li>Full simulation uses proctoring. Do not switch tabs, excessively resize the window, or replay audio by other means.</li>
-                        <?php endif; ?>
-                        <li>Both modes save answers per question and end in a TOEIC score or summary view.</li>
-                    </ul>
                 </section>
             </div>
 
             <div class="col-lg-4">
-                <section class="toeic-band position-sticky" style="top: 2rem;">
-                    <div class="toeic-eyebrow mb-3">Launch</div>
-                    <h2 class="h3 mb-3">Start your TOEIC session.</h2>
-                    <p class="toeic-copy mb-4">Confirm the route you want to run, then continue to the simulator flow.</p>
-                    <form method="post">
-                        <input type="hidden" name="mode" value="<?php echo htmlspecialchars($mode); ?>">
-                        <button type="submit" name="confirm_instructions" class="btn btn-warning w-100">
-                            <?php echo $mode === 'prep' ? 'Start Practice Simulation' : 'Start Full Simulation'; ?>
-                        </button>
-                    </form>
-                    <?php if (!$has_full_credit): ?>
-                        <div class="small text-muted mt-3">TOEIC simulation requires one active package for each new attempt.</div>
-                    <?php endif; ?>
-                </section>
+                <div class="study-card h-100" style="background: rgba(72, 127, 181, 0.05);">
+                    <span class="study-kicker">Environment</span>
+                    <h2 class="h4 mb-4">Checklist</h2>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Quiet room</span></li>
+                        <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Stable internet</span></li>
+                        <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Charged laptop/PC</span></li>
+                        <li class="d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Webcam ready</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

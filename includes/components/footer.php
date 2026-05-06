@@ -14,7 +14,7 @@ $footerYear = date('Y');
                     <?php echo htmlspecialchars($website_title); ?>
                 </h5>
                 <p class="mb-3">
-                    Powering focused TOEIC preparation through a simulator built around the Listening and Reading format, official timing flow, score reporting, and structured practice.
+                    Focused TOEIC preparation with Listening and Reading simulation, official-style timing, score reporting, and structured practice.
                 </p>
                 <div class="d-flex gap-3">
                     <a href="index.php#overview">Overview</a>
@@ -25,9 +25,9 @@ $footerYear = date('Y');
             <div class="col-lg-2 col-md-6 col-6">
                 <h5>Explore</h5>
                 <ul class="rg-footer-links">
-                    <li><a href="index.php#overview">Global English Skills</a></li>
+                    <li><a href="index.php#overview">TOEIC Overview</a></li>
                     <li><a href="index.php#proof">Score Report</a></li>
-                    <li><a href="index.php#simulator">Learning Modules</a></li>
+                    <li><a href="index.php#simulator">TOEIC Simulation</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6 col-6">
@@ -57,6 +57,9 @@ $footerYear = date('Y');
         </div>
         <div class="rg-footer-bottom">
             <p class="mb-0">&copy; <?php echo $footerYear; ?> <?php echo htmlspecialchars($website_title); ?>. All rights reserved.</p>
+            <p class="mb-0 mt-2" style="font-size:0.78rem; color:rgba(255,255,255,0.45); line-height:1.6;">
+                TOEIC is a registered trademark of Educational Testing Service (ETS). This web is not affiliated with or endorsed by Educational Testing Service.
+            </p>
         </div>
     </div>
 </footer>
