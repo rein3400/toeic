@@ -160,7 +160,7 @@ try {
 
     $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
     $requestMethod = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
-    $publicGracefulPaths = ['/', '/index.php', '/login.php', '/register.php', '/checkout-va.php'];
+    $publicGracefulPaths = ['/', '/index.php', '/login.php', '/register.php', '/checkout-va.php', '/logout.php'];
     $canRenderWithoutDb = $requestMethod === 'GET' && in_array($requestPath, $publicGracefulPaths, true);
 
     if ($canRenderWithoutDb) {

@@ -515,6 +515,12 @@ $prev_link = $prev_q > 0 ? "test_toeic.php?section=" . urlencode($section) . "&t
 $is_last_question = $is_batch
     ? (($batch_questions ? end($batch_questions)['question_order'] : $question_num) >= $total_questions)
     : ($question_num >= $total_questions);
+$active_question_orders = [$question_num => true];
+if ($is_batch) {
+    foreach ($batch_questions as $batch_row) {
+        $active_question_orders[(int)($batch_row['question_order'] ?? $question_num)] = true;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html class="light" lang="en">
@@ -522,7 +528,7 @@ $is_last_question = $is_batch
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title><?php echo htmlspecialchars($page_title); ?> - <?php echo ucfirst($section); ?> - <?php echo htmlspecialchars($website_title); ?></title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,650..800,35,0&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
@@ -532,16 +538,17 @@ $is_last_question = $is_batch
             theme: {
                 extend: {
                     colors: {
-                        primary: "#f59e0b",
-                        "primary-hover": "#d97706",
-                        "background-light": "#f5f7fb",
+                        primary: "#436cac",
+                        "primary-hover": "#263f78",
+                        "sunbeam": "#ffe77f",
+                        "background-light": "#ffedcb",
                         "background-dark": "#101622",
                         "surface-light": "#ffffff",
                         "surface-dark": "#1e293b",
                     },
                     fontFamily: {
-                        display: ["Lexend", "sans-serif"],
-                        serif: ["Noto Serif", "serif"],
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        serif: ["Fraunces", "serif"],
                     },
                 }
             }
@@ -577,14 +584,41 @@ $is_last_question = $is_batch
                 <span>Quit Test</span>
             </a>
         </div>
-        <div class="px-6 py-3 bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-slate-800 flex items-center gap-6">
-            <span class="text-sm font-semibold whitespace-nowrap">
-                <?php echo $practice_mode ? 'Practice' : 'Question'; ?> <?php echo $question_num; ?> of <?php echo $total_questions; ?>
-            </span>
-            <div class="h-2 w-full max-w-md rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                <div class="h-full bg-primary rounded-full" style="width: <?php echo $progress_percent; ?>%;"></div>
+        <div class="toeic-test-statusbar">
+            <div>
+                <span class="text-sm font-semibold whitespace-nowrap">
+                    <?php echo $practice_mode ? 'Practice' : 'Question'; ?> <?php echo $question_num; ?> of <?php echo $total_questions; ?>
+                </span>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    <?php echo $answered_count; ?> answered | <?php echo max(0, $total_questions - $answered_count); ?> unanswered
+                </div>
             </div>
-            <div class="text-sm text-slate-500 dark:text-slate-400"><?php echo $answered_count; ?> answered</div>
+            <div>
+                <div class="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                    <div class="h-full bg-primary rounded-full" style="width: <?php echo $progress_percent; ?>%;"></div>
+                </div>
+                <div class="toeic-test-map" aria-label="Question map">
+                    <?php for ($map_i = 1; $map_i <= $total_questions; $map_i++): ?>
+                        <?php
+                            $map_classes = [];
+                            if (!empty($progress_map[$map_i])) {
+                                $map_classes[] = 'answered';
+                            }
+                            if (!empty($active_question_orders[$map_i])) {
+                                $map_classes[] = 'active';
+                            }
+                            $map_href = "test_toeic.php?section=" . urlencode($section)
+                                . "&test_session=" . urlencode($test_session)
+                                . "&q={$map_i}&setup_complete=1{$mode_query}";
+                        ?>
+                        <a class="<?php echo htmlspecialchars(implode(' ', $map_classes)); ?>" data-question-map-link="true" href="<?php echo htmlspecialchars($map_href); ?>"><?php echo $map_i; ?></a>
+                    <?php endfor; ?>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2 justify-end">
+                <span class="status-pill">Answered <?php echo $answered_count; ?></span>
+                <span class="status-pill">Unanswered <?php echo max(0, $total_questions - $answered_count); ?></span>
+            </div>
         </div>
     </header>
 
@@ -923,6 +957,31 @@ $is_last_question = $is_batch
                 }
             });
         }
+
+        document.querySelectorAll('[data-question-map-link="true"]').forEach((link) => {
+            link.addEventListener('click', async function (event) {
+                event.preventDefault();
+                if (isNavigating || isSubmitting) {
+                    return;
+                }
+
+                isNavigating = true;
+                setNextButtonBusy(true, 'Saving');
+                pauseProctorForNavigation();
+
+                try {
+                    await flushSelectedAnswers();
+                    window.location.href = this.href;
+                } catch (error) {
+                    isNavigating = false;
+                    setNextButtonBusy(false);
+                    if (window.proctorSDK) {
+                        window.proctorSDK.resume();
+                    }
+                    alert('Jawaban belum berhasil tersimpan. Periksa koneksi lalu coba lagi.\n\nDetail: ' + error.message);
+                }
+            });
+        });
 
         async function handleNext() {
             if (isNavigating || isSubmitting) {

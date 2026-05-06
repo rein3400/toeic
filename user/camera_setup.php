@@ -102,8 +102,8 @@ $stmt->close();
         
         .setup-container {
             background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
-            border-radius: 28px;
-            box-shadow: 0 20px 60px rgba(21,39,66,0.16);
+            border-radius: 12px;
+            box-shadow: none;
             max-width: 900px;
             width: 100%;
             overflow: hidden;
@@ -111,7 +111,7 @@ $stmt->close();
         }
         
         .setup-header {
-            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+            background: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -138,7 +138,7 @@ $stmt->close();
         }
         
         .step.active {
-            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+            background: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
             color: white;
             transform: scale(1.05);
         }
@@ -246,7 +246,7 @@ $stmt->close();
         }
         
         .btn-start {
-            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+            background: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
             color: white;
             padding: 15px 40px;
             border: none;

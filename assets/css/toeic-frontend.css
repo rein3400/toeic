@@ -1,28 +1,28 @@
 :root {
-    --toeic-night: #152742;
-    --toeic-night-soft: #21385c;
-    --toeic-ink: #17263f;
-    --toeic-muted: #61718b;
-    --toeic-muted-strong: #435167;
-    --toeic-paper: #fffdf8;
-    --toeic-cream: #f5efe2;
-    --toeic-sand: #ece1cc;
-    --toeic-shell: #f8f3ea;
-    --toeic-shell-deep: #efe6d5;
-    --toeic-amber: #d18b1f;
-    --toeic-amber-deep: #ab6711;
-    --toeic-amber-soft: #f8ebc8;
-    --toeic-teal: #1e8078;
-    --toeic-border: rgba(23, 38, 63, 0.12);
-    --toeic-border-strong: rgba(23, 38, 63, 0.2);
-    --toeic-shadow-sm: 0 16px 40px rgba(21, 39, 66, 0.08);
-    --toeic-shadow-lg: 0 30px 80px rgba(21, 39, 66, 0.16);
-    --toeic-radius-lg: 32px;
-    --toeic-radius-md: 24px;
-    --toeic-radius-sm: 18px;
+    --toeic-night: #436cac;
+    --toeic-night-soft: #487fb5;
+    --toeic-ink: #263f78;
+    --toeic-muted: #64748b;
+    --toeic-muted-strong: #436cac;
+    --toeic-paper: #ffffff;
+    --toeic-cream: #ffedcb;
+    --toeic-sand: #f6dca8;
+    --toeic-shell: #ffedcb;
+    --toeic-shell-deep: #f8dda6;
+    --toeic-amber: #ffe77f;
+    --toeic-amber-deep: #436cac;
+    --toeic-amber-soft: #fff5c4;
+    --toeic-teal: #487fb5;
+    --toeic-border: rgba(67, 108, 172, 0.16);
+    --toeic-border-strong: rgba(67, 108, 172, 0.28);
+    --toeic-shadow-sm: none;
+    --toeic-shadow-lg: none;
+    --toeic-radius-lg: 12px;
+    --toeic-radius-md: 12px;
+    --toeic-radius-sm: 8px;
     --rg-primary: var(--toeic-night);
     --rg-primary-dark: #102036;
-    --rg-primary-light: rgba(30, 128, 120, 0.12);
+    --rg-primary-light: rgba(72, 127, 181, 0.12);
     --rg-secondary: var(--toeic-amber);
     --rg-secondary-light: var(--toeic-amber-soft);
     --rg-text: var(--toeic-ink);
@@ -32,9 +32,9 @@
     --rg-border-light: rgba(23, 38, 63, 0.08);
     --rg-bg: var(--toeic-shell);
     --rg-bg-white: var(--toeic-paper);
-    --rg-bg-hero: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
-    --rg-accent-blue: #365d88;
-    --rg-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --rg-bg-hero: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
+    --rg-accent-blue: #487fb5;
+    --rg-font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --rg-display: "Fraunces", Georgia, serif;
 }
 
@@ -44,8 +44,8 @@ html {
 
 body {
     background:
-        radial-gradient(circle at top right, rgba(209, 139, 31, 0.16), transparent 28%),
-        radial-gradient(circle at 10% 20%, rgba(30, 128, 120, 0.08), transparent 22%),
+        radial-gradient(circle at top right, rgba(255, 231, 127, 0.16), transparent 28%),
+        radial-gradient(circle at 10% 20%, rgba(72, 127, 181, 0.08), transparent 22%),
         linear-gradient(180deg, #faf6ee 0%, #f5efe2 42%, #f7f2e8 100%);
     color: var(--toeic-ink);
     font-family: var(--rg-font);
@@ -167,12 +167,12 @@ a:hover {
     width: 14rem;
     height: 14rem;
     border-radius: 50%;
-    background: rgba(209, 139, 31, 0.08);
+    background: rgba(255, 231, 127, 0.08);
     pointer-events: none;
 }
 
 .toeic-hero-card {
-    background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+    background: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: var(--toeic-shadow-lg);
@@ -226,7 +226,7 @@ a:hover {
 .toeic-band {
     padding: 2rem;
     background:
-        radial-gradient(circle at top right, rgba(209, 139, 31, 0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(255, 231, 127, 0.14), transparent 24%),
         linear-gradient(135deg, rgba(255, 249, 235, 0.98), rgba(245, 239, 226, 0.98));
 }
 
@@ -285,7 +285,7 @@ a:hover {
     width: 2rem;
     height: 2rem;
     border-radius: 999px;
-    background: rgba(209, 139, 31, 0.14);
+    background: rgba(255, 231, 127, 0.14);
     color: var(--toeic-amber-deep);
     font-size: 0.9rem;
     font-weight: 800;
@@ -305,7 +305,7 @@ a:hover {
 .toeic-form-panel {
     background:
         radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 30%),
-        linear-gradient(145deg, #152742 0%, #21385c 55%, #c5851c 200%);
+        linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
     color: #fff;
     border-radius: var(--toeic-radius-lg);
     padding: 2.4rem;
@@ -352,8 +352,8 @@ a:hover {
 .toeic-form-control:focus,
 .form-control:focus,
 .form-select:focus {
-    border-color: rgba(209, 139, 31, 0.55);
-    box-shadow: 0 0 0 4px rgba(209, 139, 31, 0.12);
+    border-color: rgba(255, 231, 127, 0.55);
+    box-shadow: 0 0 0 4px rgba(255, 231, 127, 0.12);
     background: #fffefb;
     color: var(--toeic-ink);
 }
@@ -390,7 +390,7 @@ a:hover {
     background: linear-gradient(135deg, var(--toeic-amber), var(--toeic-amber-deep));
     border: none;
     color: #1f1605 !important;
-    box-shadow: 0 16px 32px rgba(209, 139, 31, 0.26);
+    box-shadow: 0 16px 32px rgba(255, 231, 127, 0.26);
 }
 
 .btn-warning:hover,
@@ -400,7 +400,7 @@ a:hover {
 }
 
 .btn-outline-warning {
-    border: 1px solid rgba(209, 139, 31, 0.5);
+    border: 1px solid rgba(255, 231, 127, 0.5);
     color: var(--toeic-amber-deep);
     background: rgba(255, 249, 235, 0.85);
 }
@@ -453,9 +453,9 @@ a:hover {
 
 .text-bg-warning,
 .toeic-pill-warning {
-    background: rgba(209, 139, 31, 0.14) !important;
+    background: rgba(255, 231, 127, 0.14) !important;
     color: var(--toeic-amber-deep) !important;
-    border: 1px solid rgba(209, 139, 31, 0.22);
+    border: 1px solid rgba(255, 231, 127, 0.22);
 }
 
 .text-bg-light,
@@ -530,7 +530,7 @@ a:hover {
 .rg-navbar .nav-link:hover,
 .rg-navbar .nav-link.active {
     color: var(--toeic-night) !important;
-    background: rgba(209, 139, 31, 0.12);
+    background: rgba(255, 231, 127, 0.12);
 }
 
 .rg-navbar .navbar-toggler {
@@ -542,20 +542,20 @@ a:hover {
 }
 
 .rg-navbar .navbar-toggler:focus {
-    box-shadow: 0 0 0 4px rgba(209, 139, 31, 0.12);
+    box-shadow: 0 0 0 4px rgba(255, 231, 127, 0.12);
 }
 
 .rg-navbar .navbar-toggler-icon {
     width: 1.2rem;
     height: 1.2rem;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2821,39,66,0.92%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2838,63,120,0.92%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .rg-footer {
     margin-top: 4rem;
     padding: 4rem 0 1.75rem;
     background:
-        radial-gradient(circle at top right, rgba(209, 139, 31, 0.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(255, 231, 127, 0.16), transparent 24%),
         linear-gradient(135deg, #13243d 0%, #203557 54%, #12243f 100%);
     color: rgba(255, 255, 255, 0.9);
 }

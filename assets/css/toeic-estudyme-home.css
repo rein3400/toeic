@@ -1,18 +1,18 @@
 :root {
-    --est-primary: #ff8159;
-    --est-primary-deep: #e9613a;
-    --est-blue: #223668;
-    --est-blue-soft: #304375;
-    --est-tertiary: #2253b6;
-    --est-ink: #333333;
-    --est-copy: #535353;
-    --est-muted: #7d8491;
-    --est-bg: #f5f7fd;
-    --est-cream: #fff8f4;
+    --est-primary: #ffe77f;
+    --est-primary-deep: #d7bd58;
+    --est-blue: #436cac;
+    --est-blue-soft: #487fb5;
+    --est-tertiary: #263f78;
+    --est-ink: #263f78;
+    --est-copy: #64748b;
+    --est-muted: #64748b;
+    --est-bg: #ffedcb;
+    --est-cream: #fff9ec;
     --est-card: #ffffff;
     --est-border: rgba(34, 54, 104, 0.11);
-    --est-shadow: 0 8px 15px rgba(218, 220, 237, 0.55);
-    --est-shadow-lg: 0 24px 70px rgba(34, 54, 104, 0.16);
+    --est-shadow: none;
+    --est-shadow-lg: none;
 }
 
 * {
@@ -28,7 +28,7 @@ body.toeic-estudy-home {
     margin: 0;
     color: var(--est-ink);
     background: #fff;
-    font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     overflow-x: hidden;
     padding-bottom: 0 !important;
 }
@@ -66,7 +66,7 @@ body.toeic-estudy-home {
     align-items: center;
     gap: 10px;
     min-width: max-content;
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.3rem;
     font-weight: 900;
     color: var(--est-blue);
@@ -79,9 +79,9 @@ body.toeic-estudy-home {
     display: grid;
     place-items: center;
     overflow: hidden;
-    color: #fff;
-    background: linear-gradient(135deg, var(--est-primary), #ffb199);
-    box-shadow: 0 10px 24px rgba(255, 129, 89, 0.24);
+    color: var(--est-blue);
+    background: var(--est-primary);
+    box-shadow: 0 4px 0 var(--est-primary-deep);
 }
 
 .est-brand-mark img {
@@ -180,7 +180,7 @@ body.toeic-estudy-home {
 .est-download-section h2 {
     margin: 0;
     color: var(--est-blue);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-weight: 900;
     letter-spacing: 0;
 }
@@ -275,7 +275,7 @@ body.toeic-estudy-home {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .est-phone-top span {
@@ -304,7 +304,7 @@ body.toeic-estudy-home {
     display: block;
     margin: 8px 0;
     color: var(--est-primary);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 4rem;
     line-height: 0.9;
 }
@@ -357,7 +357,7 @@ body.toeic-estudy-home {
 
 .est-orbit-card strong {
     color: var(--est-blue);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.7rem;
     line-height: 1;
 }
@@ -413,7 +413,7 @@ body.toeic-estudy-home {
 
 .est-stats-strip strong {
     color: var(--est-primary);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: clamp(2rem, 5vw, 3rem);
     line-height: 1;
 }
@@ -528,7 +528,7 @@ body.toeic-estudy-home {
     font-size: 1.35rem;
 }
 
-.est-topic-icon.coral { background: #ff8159; }
+.est-topic-icon.coral { background: #ffe77f; }
 .est-topic-icon.blue { background: #2253b6; }
 .est-topic-icon.gold { background: #ffc107; }
 .est-topic-icon.navy { background: #304375; }
@@ -537,7 +537,7 @@ body.toeic-estudy-home {
 .est-topic-card strong {
     display: block;
     color: var(--est-ink);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.1rem;
     font-weight: 900;
 }
@@ -610,7 +610,7 @@ body.toeic-estudy-home {
 .est-ai-card strong {
     display: block;
     margin-top: 10px;
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.45rem;
     line-height: 1.25;
 }
@@ -717,7 +717,7 @@ body.toeic-estudy-home {
 .est-function-card strong {
     display: block;
     color: var(--est-blue);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.15rem;
     line-height: 1.3;
 }
@@ -758,7 +758,7 @@ body.toeic-estudy-home {
 .est-review-wall strong {
     display: block;
     color: var(--est-blue);
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.25rem;
     line-height: 1.45;
 }
@@ -802,7 +802,7 @@ body.toeic-estudy-home {
 .est-footer strong {
     display: block;
     color: #fff;
-    font-family: "Nunito", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 1.2rem;
 }
 

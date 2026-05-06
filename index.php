@@ -21,7 +21,7 @@ $secondary_cta = $is_logged_in ? 'user/test_instructions.php?mode=full' : 'login
     <meta name="description" content="Platform simulasi TOEIC Listening dan Reading dengan practice by part, full simulation, analytics, AI analysis, secure audio, dan proctoring-ready test flow.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,650..800,35,0&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css')); ?>" rel="stylesheet">

@@ -1,27 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,650..800,35,0&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 /* ================================================================
    TOEIC Production UI Upgrade
    Scoped visual layer for public, student, payment, proctoring, and test pages.
    ================================================================ */
 
 :root {
-    --toeic-ui-ink: #14213d;
-    --toeic-ui-ink-2: #24365f;
-    --toeic-ui-muted: #63728a;
-    --toeic-ui-soft: #f7f4ed;
-    --toeic-ui-paper: #fffdf8;
-    --toeic-ui-line: rgba(20, 33, 61, 0.11);
-    --toeic-ui-line-strong: rgba(20, 33, 61, 0.19);
-    --toeic-ui-orange: #ff7a4f;
-    --toeic-ui-orange-2: #e85f36;
-    --toeic-ui-gold: #f5b84b;
-    --toeic-ui-teal: #1d8178;
-    --toeic-ui-blue: #315d9a;
+    --toeic-ui-ink: #263f78;
+    --toeic-ui-ink-2: #436cac;
+    --toeic-ui-muted: #64748b;
+    --toeic-ui-soft: #ffedcb;
+    --toeic-ui-paper: #ffffff;
+    --toeic-ui-line: rgba(67, 108, 172, 0.16);
+    --toeic-ui-line-strong: rgba(67, 108, 172, 0.28);
+    --toeic-ui-orange: #ffe77f;
+    --toeic-ui-orange-2: #436cac;
+    --toeic-ui-gold: #ffe77f;
+    --toeic-ui-teal: #487fb5;
+    --toeic-ui-blue: #436cac;
     --toeic-ui-danger: #b42318;
-    --toeic-ui-radius-xl: 30px;
-    --toeic-ui-radius-lg: 22px;
-    --toeic-ui-radius-md: 16px;
-    --toeic-ui-shadow: 0 18px 52px rgba(20, 33, 61, 0.11);
-    --toeic-ui-shadow-lg: 0 34px 90px rgba(20, 33, 61, 0.18);
+    --toeic-ui-radius-xl: 12px;
+    --toeic-ui-radius-lg: 12px;
+    --toeic-ui-radius-md: 12px;
+    --toeic-ui-shadow: none;
+    --toeic-ui-shadow-lg: none;
 }
 
 html {
@@ -33,11 +35,11 @@ body {
     background:
         linear-gradient(rgba(20, 33, 61, 0.026) 1px, transparent 1px),
         linear-gradient(90deg, rgba(20, 33, 61, 0.026) 1px, transparent 1px),
-        radial-gradient(circle at 8% 8%, rgba(255, 122, 79, 0.14), transparent 26rem),
+        radial-gradient(circle at 8% 8%, rgba(255, 231, 127, 0.14), transparent 26rem),
         radial-gradient(circle at 92% 14%, rgba(49, 93, 154, 0.12), transparent 28rem),
         linear-gradient(180deg, #fffdf8 0%, #f7f4ed 46%, #f4efe4 100%) !important;
     background-size: 32px 32px, 32px 32px, auto, auto, auto !important;
-    font-family: var(--rg-font, "Manrope", system-ui, sans-serif);
+    font-family: var(--rg-font, "Plus Jakarta Sans", system-ui, sans-serif);
 }
 
 body::selection {
@@ -49,7 +51,7 @@ body.toeic-estudy-home {
     background:
         linear-gradient(rgba(20, 33, 61, 0.022) 1px, transparent 1px),
         linear-gradient(90deg, rgba(20, 33, 61, 0.022) 1px, transparent 1px),
-        radial-gradient(circle at 78% 12%, rgba(255, 122, 79, 0.2), transparent 30rem),
+        radial-gradient(circle at 78% 12%, rgba(255, 231, 127, 0.2), transparent 30rem),
         linear-gradient(180deg, #fffdf8 0%, #f8f4ee 42%, #ffffff 100%) !important;
     background-size: 34px 34px, 34px 34px, auto, auto !important;
 }
@@ -90,7 +92,7 @@ p,
     padding: clamp(1.5rem, 3vw, 2.45rem);
     overflow: hidden;
     background:
-        radial-gradient(circle at 92% 12%, rgba(255, 122, 79, 0.16), transparent 18rem),
+        radial-gradient(circle at 92% 12%, rgba(255, 231, 127, 0.16), transparent 18rem),
         linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(246, 241, 230, 0.9));
     border: 1px solid var(--toeic-ui-line);
     border-radius: var(--toeic-ui-radius-xl);
@@ -104,7 +106,7 @@ p,
     bottom: -72px;
     width: 210px;
     height: 210px;
-    border: 1px solid rgba(255, 122, 79, 0.24);
+    border: 1px solid rgba(255, 231, 127, 0.24);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -189,9 +191,9 @@ p,
     overflow: hidden;
     color: #fff !important;
     background:
-        radial-gradient(circle at 82% 18%, rgba(255, 184, 75, 0.22), transparent 20rem),
-        radial-gradient(circle at 14% 90%, rgba(29, 129, 120, 0.23), transparent 24rem),
-        linear-gradient(135deg, #101d35 0%, #1c3760 56%, #ff7a4f 165%) !important;
+        radial-gradient(circle at 82% 18%, rgba(255, 231, 127, 0.22), transparent 20rem),
+        radial-gradient(circle at 14% 90%, rgba(72, 127, 181, 0.23), transparent 24rem),
+        linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: var(--toeic-ui-radius-xl) !important;
     box-shadow: var(--toeic-ui-shadow-lg) !important;
@@ -265,7 +267,7 @@ p,
 .stats-card:hover,
 .week-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(255, 122, 79, 0.28) !important;
+    border-color: rgba(255, 231, 127, 0.28) !important;
     box-shadow: var(--toeic-ui-shadow-lg) !important;
 }
 
@@ -314,7 +316,7 @@ p,
     color: #fff !important;
     background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
     border-color: transparent !important;
-    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.3) !important;
+    box-shadow: 0 16px 34px rgba(255, 231, 127, 0.3) !important;
 }
 
 .btn-warning:hover,
@@ -359,8 +361,8 @@ p,
 .form-control:focus,
 .form-select:focus,
 .toeic-form-control:focus {
-    border-color: rgba(255, 122, 79, 0.62) !important;
-    box-shadow: 0 0 0 5px rgba(255, 122, 79, 0.13) !important;
+    border-color: rgba(255, 231, 127, 0.62) !important;
+    box-shadow: 0 0 0 5px rgba(255, 231, 127, 0.13) !important;
 }
 
 .navbar,
@@ -393,7 +395,7 @@ p,
 .toeic-feature-icon {
     background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
     color: #fff !important;
-    box-shadow: 0 14px 28px rgba(255, 122, 79, 0.22) !important;
+    box-shadow: 0 14px 28px rgba(255, 231, 127, 0.22) !important;
 }
 
 .dropdown-menu-dark-custom {
@@ -408,7 +410,7 @@ p,
 
 .dropdown-menu-dark-custom .dropdown-item:hover,
 .dropdown-menu-dark-custom .dropdown-item.active {
-    background: rgba(255, 122, 79, 0.12) !important;
+    background: rgba(255, 231, 127, 0.12) !important;
 }
 
 /* Public homepage */
@@ -437,7 +439,7 @@ p,
 .est-hero {
     padding-top: clamp(50px, 6vw, 86px) !important;
     background:
-        radial-gradient(circle at 78% 16%, rgba(255, 122, 79, 0.2), transparent 24rem),
+        radial-gradient(circle at 78% 16%, rgba(255, 231, 127, 0.2), transparent 24rem),
         linear-gradient(180deg, rgba(255, 247, 242, 0.82), rgba(255, 253, 248, 0) 70%) !important;
 }
 
@@ -472,7 +474,7 @@ p,
 .est-topic-card:hover,
 .est-function-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(255, 122, 79, 0.32) !important;
+    border-color: rgba(255, 231, 127, 0.32) !important;
     box-shadow: var(--toeic-ui-shadow-lg) !important;
 }
 
@@ -493,7 +495,7 @@ p,
 
 .est-footer {
     background:
-        radial-gradient(circle at 80% 20%, rgba(255, 122, 79, 0.2), transparent 20rem),
+        radial-gradient(circle at 80% 20%, rgba(255, 231, 127, 0.2), transparent 20rem),
         linear-gradient(135deg, #101d35 0%, #1a3157 58%, #12213a 100%) !important;
 }
 
@@ -518,9 +520,9 @@ p,
 
 .payment-method-active {
     background:
-        radial-gradient(circle at 92% 10%, rgba(255, 122, 79, 0.16), transparent 8rem),
+        radial-gradient(circle at 92% 10%, rgba(255, 231, 127, 0.16), transparent 8rem),
         linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 246, 238, 0.98)) !important;
-    border-color: rgba(255, 122, 79, 0.46) !important;
+    border-color: rgba(255, 231, 127, 0.46) !important;
 }
 
 .status-card .text-white-50,
@@ -540,15 +542,15 @@ code {
     border-radius: var(--toeic-ui-radius-xl);
     border: 1px solid rgba(255, 255, 255, 0.12);
     background:
-        radial-gradient(circle at 72% 18%, rgba(255, 184, 75, 0.18), transparent 18rem),
-        linear-gradient(135deg, #101d35 0%, #1d3a66 62%, #ff7a4f 170%) !important;
+        radial-gradient(circle at 72% 18%, rgba(255, 231, 127, 0.18), transparent 18rem),
+        linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%) !important;
     box-shadow: var(--toeic-ui-shadow-lg);
 }
 
 .profile-avatar {
-    background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
-    color: #fff !important;
-    box-shadow: 0 20px 44px rgba(255, 122, 79, 0.25) !important;
+    background: var(--sunbeam-yellow) !important;
+    color: var(--focus-blue) !important;
+    box-shadow: 0 4px 0 var(--yellow-shadow) !important;
 }
 
 .profile-name,
@@ -615,13 +617,13 @@ code {
 .btn-start {
     border-radius: 999px !important;
     background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
-    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.26) !important;
+    box-shadow: 0 16px 34px rgba(255, 231, 127, 0.26) !important;
 }
 
 /* Learning pathway */
 .lp-layout {
     background:
-        radial-gradient(circle at 80% 8%, rgba(255, 122, 79, 0.16), transparent 30rem),
+        radial-gradient(circle at 80% 8%, rgba(255, 231, 127, 0.16), transparent 30rem),
         linear-gradient(180deg, #fffdf8, #f4efe4) !important;
 }
 
@@ -656,7 +658,7 @@ code {
 }
 
 .lp-module-item:hover {
-    background: rgba(255, 122, 79, 0.1) !important;
+    background: rgba(255, 231, 127, 0.1) !important;
 }
 
 .lp-module-item.active {
@@ -689,8 +691,8 @@ code {
 }
 
 .exercise-option.selected {
-    border-color: rgba(255, 122, 79, 0.48) !important;
-    background: rgba(255, 122, 79, 0.1) !important;
+    border-color: rgba(255, 231, 127, 0.48) !important;
+    background: rgba(255, 231, 127, 0.1) !important;
 }
 
 .btn-generate,
@@ -699,7 +701,7 @@ code {
     border-radius: 999px !important;
     background: linear-gradient(135deg, var(--toeic-ui-orange), var(--toeic-ui-orange-2)) !important;
     color: #fff !important;
-    box-shadow: 0 16px 34px rgba(255, 122, 79, 0.24) !important;
+    box-shadow: 0 16px 34px rgba(255, 231, 127, 0.24) !important;
 }
 
 /* Syllabus */
@@ -715,8 +717,8 @@ code {
 
 .day-badge {
     color: var(--toeic-ui-ink) !important;
-    background: rgba(255, 122, 79, 0.1) !important;
-    border: 1px solid rgba(255, 122, 79, 0.22) !important;
+    background: rgba(255, 231, 127, 0.1) !important;
+    border: 1px solid rgba(255, 231, 127, 0.22) !important;
 }
 
 /* Disqualified */
@@ -743,7 +745,7 @@ code {
 /* TOEIC test runner */
 body.h-screen.flex.flex-col.overflow-hidden {
     background:
-        radial-gradient(circle at 8% 0%, rgba(255, 122, 79, 0.12), transparent 26rem),
+        radial-gradient(circle at 8% 0%, rgba(255, 231, 127, 0.12), transparent 26rem),
         linear-gradient(180deg, #f8f4ed 0%, #eef3f8 100%) !important;
 }
 
@@ -784,7 +786,7 @@ body.h-screen.flex.flex-col.overflow-hidden h4 {
 
 #singleAnswerContainer label:hover,
 #batchQuestionsContainer > div:hover {
-    border-color: rgba(255, 122, 79, 0.38) !important;
+    border-color: rgba(255, 231, 127, 0.38) !important;
 }
 
 #nextBtn {
@@ -884,5 +886,1113 @@ img[data-toeic-photo="true"] {
     body.h-screen.flex.flex-col.overflow-hidden > header > div {
         flex-wrap: wrap;
         gap: 0.7rem;
+    }
+}
+
+/* ================================================================
+   Public visual pages parity layer
+   Source of truth: docs/previews/public-visual-pages.html + design.md
+   ================================================================ */
+
+:root {
+    --academy-blue: #487fb5;
+    --focus-blue: #436cac;
+    --sunbeam-yellow: #ffe77f;
+    --study-cream: #ffedcb;
+    --yellow-shadow: #d7bd58;
+    --paper-white: #ffffff;
+    --cloud-line: #d9e4ee;
+    --muted-slate: #64748b;
+    --ink-blue: #263f78;
+    --blue-black: #142652;
+    --soft-blue: #edf5fb;
+    --warm-paper: #fff9ec;
+    --toeic-ui-ink: var(--ink-blue);
+    --toeic-ui-ink-2: var(--focus-blue);
+    --toeic-ui-muted: var(--muted-slate);
+    --toeic-ui-soft: var(--study-cream);
+    --toeic-ui-paper: var(--paper-white);
+    --toeic-ui-line: rgba(67, 108, 172, 0.16);
+    --toeic-ui-line-strong: rgba(67, 108, 172, 0.28);
+    --toeic-ui-orange: var(--sunbeam-yellow);
+    --toeic-ui-orange-2: var(--focus-blue);
+    --toeic-ui-gold: var(--sunbeam-yellow);
+    --toeic-ui-teal: var(--academy-blue);
+    --toeic-ui-blue: var(--focus-blue);
+    --toeic-ui-danger: #b42318;
+    --toeic-ui-radius-xl: 12px;
+    --toeic-ui-radius-lg: 12px;
+    --toeic-ui-radius-md: 12px;
+    --toeic-ui-shadow: none;
+    --toeic-ui-shadow-lg: none;
+    --toeic-night: var(--focus-blue);
+    --toeic-night-soft: var(--academy-blue);
+    --toeic-ink: var(--ink-blue);
+    --toeic-muted: var(--muted-slate);
+    --toeic-muted-strong: var(--focus-blue);
+    --toeic-paper: var(--paper-white);
+    --toeic-cream: var(--study-cream);
+    --toeic-sand: #f6dca8;
+    --toeic-shell: var(--study-cream);
+    --toeic-shell-deep: #f8dda6;
+    --toeic-amber: var(--sunbeam-yellow);
+    --toeic-amber-deep: var(--focus-blue);
+    --toeic-amber-soft: #fff5c4;
+    --toeic-teal: var(--academy-blue);
+    --toeic-border: rgba(67, 108, 172, 0.16);
+    --toeic-border-strong: rgba(67, 108, 172, 0.28);
+    --toeic-radius-lg: 12px;
+    --toeic-radius-md: 12px;
+    --toeic-radius-sm: 8px;
+    --rg-primary: var(--focus-blue);
+    --rg-primary-dark: var(--blue-black);
+    --rg-primary-light: rgba(72, 127, 181, 0.12);
+    --rg-secondary: var(--sunbeam-yellow);
+    --rg-secondary-light: #fff5c4;
+    --rg-text: var(--ink-blue);
+    --rg-text-secondary: var(--muted-slate);
+    --rg-border: rgba(67, 108, 172, 0.16);
+    --rg-border-light: rgba(67, 108, 172, 0.1);
+    --rg-bg: var(--study-cream);
+    --rg-bg-white: var(--paper-white);
+    --rg-bg-hero: linear-gradient(180deg, var(--academy-blue) 0 48%, var(--focus-blue) 48% 100%);
+    --rg-accent-blue: var(--academy-blue);
+    --rg-font: "Plus Jakarta Sans", sans-serif;
+    --rg-display: "Fraunces", serif;
+}
+
+html {
+    background: var(--study-cream) !important;
+}
+
+body,
+body.toeic-estudy-home,
+body.bg-background-light {
+    color: var(--ink-blue) !important;
+    font-family: var(--rg-font) !important;
+    letter-spacing: 0 !important;
+    background:
+        linear-gradient(90deg, rgba(72, 127, 181, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(72, 127, 181, 0.05) 1px, transparent 1px),
+        var(--study-cream) !important;
+    background-size: 32px 32px !important;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.16;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.64), transparent 34%),
+        linear-gradient(245deg, rgba(255, 231, 127, 0.32), transparent 44%);
+}
+
+* {
+    letter-spacing: 0 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6,
+.toeic-headline,
+.section-title,
+.app-title,
+.est-hero h1,
+.est-section-heading h2,
+.est-ai-copy h2,
+.est-exam-copy h2,
+.est-review-copy h2,
+.est-download-section h2,
+.hero-copy h1 {
+    color: var(--focus-blue) !important;
+    font-family: var(--rg-display) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    line-height: 1.02 !important;
+}
+
+p,
+.toeic-copy,
+.toeic-subcopy,
+.text-muted,
+.text-white-50,
+.small,
+small {
+    color: var(--muted-slate) !important;
+    font-weight: 600;
+    line-height: 1.65;
+}
+
+.text-white,
+.toeic-hero-card .text-white,
+.dark-surface .text-white,
+.setup-header .text-white {
+    color: var(--paper-white) !important;
+}
+
+.text-white-50,
+.toeic-hero-card .text-white-50,
+.toeic-form-panel .text-white-50,
+.dark-surface .text-white-50,
+.status-card .text-white-50 {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+a {
+    color: var(--focus-blue);
+}
+
+a:hover {
+    color: var(--blue-black);
+}
+
+.toeic-page-shell,
+.main-content > .container,
+.setup-container,
+.profile-hero + .container,
+.navbar > .container,
+.syllabus-header,
+.lp-layout {
+    width: min(1180px, calc(100% - 32px)) !important;
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.toeic-page-shell {
+    padding: 28px 0 80px !important;
+}
+
+.navbar,
+.rg-navbar,
+.est-home-nav,
+.top-island {
+    border: 2px solid rgba(67, 108, 172, 0.18) !important;
+    border-bottom-width: 5px !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(18px);
+    box-shadow: none !important;
+}
+
+.navbar {
+    width: min(1180px, calc(100% - 32px));
+    margin: 16px auto 0;
+}
+
+.navbar-brand,
+.est-brand,
+.brand-lockup {
+    color: var(--focus-blue) !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+}
+
+.navbar-brand img,
+.est-brand-mark img {
+    border-radius: 8px !important;
+}
+
+.est-brand-mark,
+.brand-mark,
+.small-mark,
+.toeic-feature-icon,
+.avatar-circle,
+.lp-module-icon,
+.checklist-icon,
+.step-icon {
+    display: inline-grid;
+    place-items: center;
+    border: 2px solid rgba(38, 63, 120, 0.18) !important;
+    border-bottom-width: 4px !important;
+    border-radius: 8px !important;
+    color: var(--focus-blue) !important;
+    background: var(--sunbeam-yellow) !important;
+    box-shadow: 0 4px 0 var(--yellow-shadow) !important;
+}
+
+.toeic-page-header,
+.toeic-panel,
+.toeic-surface,
+.toeic-stat,
+.toeic-band,
+.toeic-form-shell,
+.glass-card,
+.card,
+.setup-container,
+.status-card,
+.analysis-card,
+.week-card,
+.stats-card,
+.profile-card,
+.syllabus-header,
+.week-section,
+.lp-main,
+.lp-sidebar,
+.lp-welcome,
+.exercise-card,
+.module-content-card,
+.est-topic-card,
+.est-function-card,
+.est-review-wall article,
+.est-ai-card,
+.est-phone-frame,
+.est-orbit-card,
+.est-stats-strip article {
+    position: relative;
+    overflow: hidden;
+    color: var(--ink-blue) !important;
+    background:
+        linear-gradient(135deg, rgba(255, 231, 127, 0.16) 0 20%, transparent 20% 100%),
+        rgba(255, 255, 255, 0.86) !important;
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    border-bottom-width: 5px !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.toeic-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 26px !important;
+    padding: 24px !important;
+}
+
+.toeic-panel::before,
+.toeic-surface::before,
+.toeic-stat::before,
+.toeic-form-shell::before,
+.status-card::before,
+.stats-card::before,
+.week-card::before,
+.lp-main::before,
+.lp-sidebar::before,
+.profile-card::before {
+    display: none !important;
+}
+
+.toeic-hero-card,
+.toeic-form-panel,
+.setup-header,
+.dark-surface,
+.profile-hero,
+.status-card {
+    color: var(--paper-white) !important;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 42%),
+        linear-gradient(180deg, var(--academy-blue) 0 48%, var(--focus-blue) 48% 100%) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    border-bottom-width: 6px !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.toeic-hero-card h1,
+.toeic-hero-card h2,
+.toeic-hero-card h3,
+.toeic-form-panel h1,
+.toeic-form-panel h2,
+.toeic-form-panel h3,
+.setup-header h1,
+.setup-header h2,
+.dark-surface h1,
+.dark-surface h2,
+.dark-surface h3,
+.profile-hero h1,
+.profile-hero h2,
+.profile-hero h3,
+.status-card h1,
+.status-card h2,
+.status-card h3,
+.status-card h4 {
+    color: var(--paper-white) !important;
+}
+
+.toeic-kicker,
+.toeic-eyebrow,
+.est-kicker,
+.eyebrow,
+.status-pill,
+.toeic-pill,
+.badge,
+.lp-progress-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    min-height: 32px;
+    padding: 7px 11px;
+    border: 2px solid rgba(67, 108, 172, 0.14);
+    border-radius: 12px;
+    color: var(--focus-blue) !important;
+    background: var(--sunbeam-yellow) !important;
+    font-family: var(--rg-font) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+}
+
+.toeic-kicker::before,
+.toeic-eyebrow::before {
+    display: none !important;
+}
+
+.btn,
+.est-primary-button,
+.est-secondary-button,
+.est-app-button,
+.est-link-button,
+.btn-start,
+.btn-generate,
+.btn-check-answer,
+.btn-complete-module,
+.btn-danger,
+.btn-success {
+    min-height: 42px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px !important;
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    border-bottom-width: 5px !important;
+    border-radius: 12px !important;
+    color: var(--focus-blue) !important;
+    background: var(--sunbeam-yellow) !important;
+    box-shadow: 0 4px 0 var(--yellow-shadow) !important;
+    font-family: var(--rg-font) !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.btn:hover,
+.est-primary-button:hover,
+.est-secondary-button:hover,
+.est-app-button:hover,
+.est-link-button:hover,
+.btn-start:hover,
+.btn-generate:hover,
+.btn-check-answer:hover,
+.btn-complete-module:hover {
+    color: var(--focus-blue) !important;
+    background: #fff0a5 !important;
+    transform: translateY(-1px);
+}
+
+.btn:active,
+.est-primary-button:active,
+.est-secondary-button:active,
+.est-app-button:active,
+.est-link-button:active,
+.btn-start:active,
+.btn-generate:active,
+.btn-check-answer:active,
+.btn-complete-module:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--yellow-shadow) !important;
+}
+
+.btn-outline-secondary,
+.btn-outline-warning,
+.btn-outline-primary,
+.btn.secondary,
+.est-secondary-button,
+.est-link-button,
+#prevBtn,
+#skipSectionBtn,
+.nav-pills .nav-link {
+    color: var(--focus-blue) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
+    border-color: rgba(67, 108, 172, 0.18) !important;
+    box-shadow: none !important;
+}
+
+.btn-danger {
+    color: var(--paper-white) !important;
+    background: #b42318 !important;
+    box-shadow: 0 4px 0 #7f1d1d !important;
+}
+
+.btn-success {
+    color: var(--ink-blue) !important;
+    background: var(--sunbeam-yellow) !important;
+}
+
+.form-control,
+.form-select,
+input,
+select,
+textarea,
+.field input,
+.word-input {
+    min-height: 44px;
+    border: 2px solid rgba(67, 108, 172, 0.16) !important;
+    border-radius: 12px !important;
+    color: var(--ink-blue) !important;
+    background: var(--paper-white) !important;
+    font-family: var(--rg-font) !important;
+    font-weight: 700;
+    box-shadow: none !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--focus-blue) !important;
+    box-shadow: 0 0 0 4px rgba(72, 127, 181, 0.16) !important;
+}
+
+.toeic-card-grid,
+.workspace-main,
+.payment-grid,
+.landing-grid,
+.est-topic-grid,
+.est-inside-grid,
+.est-stats-strip,
+.section-scores,
+.stats-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.toeic-card-grid,
+.workspace-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.payment-grid {
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+    align-items: stretch;
+}
+
+.toeic-display-panel,
+.toeic-panel,
+.toeic-surface,
+.toeic-band {
+    padding: 24px !important;
+}
+
+.toeic-stat {
+    padding: 18px !important;
+}
+
+.toeic-stat-value,
+.score-number,
+.display-4 {
+    color: var(--focus-blue) !important;
+    font-family: var(--rg-display) !important;
+    font-size: 44px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+.dark-surface .score-number,
+.toeic-hero-card .score-number,
+.status-card .score-number {
+    color: var(--sunbeam-yellow) !important;
+}
+
+.progress-row,
+.toeic-table-row,
+.table-row,
+.method-row,
+.checklist-item,
+.lp-module-item,
+.exercise-option,
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px !important;
+    border: 2px solid rgba(67, 108, 172, 0.12) !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    color: var(--ink-blue) !important;
+    box-shadow: none !important;
+}
+
+.toeic-table-row,
+.table-row {
+    justify-content: space-between;
+}
+
+.track,
+.lp-progress-bar,
+.progress {
+    height: 10px !important;
+    border-radius: 999px !important;
+    overflow: hidden;
+    background: rgba(67, 108, 172, 0.12) !important;
+}
+
+.fill,
+.lp-progress-fill,
+.progress-bar {
+    display: block;
+    height: 100%;
+    width: var(--value, 50%);
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--sunbeam-yellow), var(--academy-blue)) !important;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.field,
+.toeic-field-label {
+    display: grid;
+    gap: 7px;
+    color: var(--focus-blue) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+.plain-list,
+.toeic-list-check {
+    display: grid;
+    gap: 10px;
+    padding-left: 0 !important;
+    list-style: none !important;
+}
+
+.plain-list li,
+.toeic-list-check li {
+    display: flex;
+    gap: 10px;
+    color: var(--ink-blue) !important;
+    font-weight: 700;
+}
+
+.plain-list li::before,
+.toeic-list-check li::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-top: 9px;
+    flex: 0 0 8px;
+    border-radius: 999px;
+    background: var(--sunbeam-yellow);
+    border: 2px solid var(--focus-blue);
+}
+
+.toeic-form-panel .toeic-list-check li {
+    color: rgba(255, 255, 255, 0.82) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.toeic-form-panel .toeic-list-check li::before {
+    background: var(--sunbeam-yellow) !important;
+    border-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+/* Homepage parity */
+.est-home-header {
+    padding: 16px 0 0;
+}
+
+.est-home-nav {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    min-height: 60px;
+    padding: 8px !important;
+}
+
+.est-nav-links a,
+.nav-link,
+.dropdown-item,
+.est-exam-tabs a,
+.est-skill-tabs span {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px !important;
+    border: 2px solid rgba(67, 108, 172, 0.12);
+    border-radius: 12px;
+    color: var(--focus-blue) !important;
+    background: rgba(255, 255, 255, 0.64);
+    font-weight: 800 !important;
+    text-decoration: none;
+}
+
+.est-nav-links a:hover,
+.nav-link:hover,
+.est-exam-tabs a:hover,
+.est-skill-tabs span:hover,
+.est-exam-tabs a.active,
+.est-skill-tabs span.active {
+    background: var(--sunbeam-yellow) !important;
+}
+
+.est-hero {
+    padding: 74px 0 52px !important;
+}
+
+.est-hero-inner,
+.landing-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr) !important;
+    gap: 44px !important;
+    align-items: center;
+}
+
+.est-hero h1 {
+    max-width: 700px;
+    font-size: 64px !important;
+}
+
+.est-hero h1 span {
+    color: var(--focus-blue) !important;
+    background: linear-gradient(180deg, transparent 54%, var(--sunbeam-yellow) 54% 82%, transparent 82%);
+}
+
+.est-hero-text,
+.est-section-heading p,
+.est-ai-copy p,
+.est-exam-copy p,
+.est-review-copy p,
+.est-download-section p {
+    max-width: 640px;
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+}
+
+.est-hero-visual,
+.est-ai-visual {
+    border: 2px solid rgba(67, 108, 172, 0.16);
+    border-bottom-width: 6px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.48);
+    padding: 8px;
+}
+
+.est-phone-frame {
+    min-height: 390px;
+    display: grid;
+    align-content: end;
+    padding: 28px !important;
+}
+
+.est-phone-top,
+.browser-bar,
+.app-top,
+.test-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 54px;
+    padding: 10px 12px;
+    border-bottom: 2px solid rgba(67, 108, 172, 0.12);
+}
+
+.est-stats-strip,
+.est-practice-section,
+.est-ai-section,
+.est-exam-section,
+.est-inside-section,
+.est-review-section,
+.est-download-section,
+.est-footer {
+    width: min(1180px, calc(100% - 32px)) !important;
+    max-width: 1180px !important;
+}
+
+.est-practice-section,
+.est-inside-section,
+.est-review-section {
+    padding: 64px 0 !important;
+}
+
+.est-ai-section,
+.est-exam-section,
+.est-download-section {
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    border-bottom-width: 5px !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.52) !important;
+    padding: 28px !important;
+    box-shadow: none !important;
+}
+
+/* App/workspace parity */
+.app-preview,
+.browser-preview,
+.auth-preview,
+.test-preview,
+.toeic-app-frame,
+.main-content .container,
+.setup-body {
+    border: 2px solid rgba(67, 108, 172, 0.16);
+    border-bottom-width: 6px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.48);
+    padding: 8px;
+}
+
+.app-core,
+.browser-core,
+.auth-core,
+.test-core,
+.toeic-app-core {
+    overflow: hidden;
+    border: 2px solid rgba(67, 108, 172, 0.12);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(255, 231, 127, 0.24) 0 26%, transparent 26% 100%),
+        var(--paper-white);
+}
+
+.auth-core,
+.toeic-auth-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.toeic-form-panel,
+.auth-side {
+    padding: 28px !important;
+}
+
+.toeic-form-shell,
+.auth-form {
+    padding: 28px !important;
+}
+
+.method-list,
+.table,
+.progress-list,
+.bar-list,
+.checklist {
+    display: grid;
+    gap: 10px;
+}
+
+.payment-code,
+.timeline-row {
+    padding: 24px !important;
+}
+
+.code-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px;
+    border: 2px dashed rgba(67, 108, 172, 0.28);
+    border-radius: 12px;
+    color: var(--focus-blue);
+    background: var(--warm-paper);
+    font-weight: 800;
+}
+
+/* Camera/proctoring parity */
+.setup-container {
+    margin-top: 30px !important;
+}
+
+.setup-body {
+    margin-top: 16px;
+    background: rgba(255, 255, 255, 0.86) !important;
+}
+
+.video-container,
+.camera-frame {
+    overflow: hidden;
+    min-height: 300px;
+    border: 2px solid rgba(67, 108, 172, 0.16);
+    border-bottom-width: 5px;
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg, rgba(255, 231, 127, 0.24), transparent 40%),
+        var(--soft-blue);
+}
+
+.video-overlay,
+.status-badge,
+.alert-box {
+    border-radius: 12px !important;
+    font-weight: 800;
+}
+
+/* Test runner parity */
+body.h-screen.flex.flex-col.overflow-hidden {
+    background:
+        linear-gradient(90deg, rgba(72, 127, 181, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(72, 127, 181, 0.05) 1px, transparent 1px),
+        var(--study-cream) !important;
+    background-size: 32px 32px !important;
+    color: var(--ink-blue) !important;
+    font-family: var(--rg-font) !important;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden > header {
+    border: 2px solid rgba(67, 108, 172, 0.16) !important;
+    border-bottom-width: 6px !important;
+    border-radius: 0 0 12px 12px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: none !important;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden main {
+    gap: 10px;
+    padding: 10px;
+}
+
+body.h-screen.flex.flex-col.overflow-hidden main > aside,
+body.h-screen.flex.flex-col.overflow-hidden main > section {
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    border-bottom-width: 5px !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.74) !important;
+    box-shadow: none !important;
+}
+
+#timerDisplay,
+.toeic-test-timer {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 2px solid rgba(67, 108, 172, 0.14);
+    border-bottom-width: 5px;
+    border-radius: 12px;
+    color: var(--focus-blue) !important;
+    background: var(--sunbeam-yellow);
+    box-shadow: 0 4px 0 var(--yellow-shadow);
+    font-weight: 800;
+}
+
+.toeic-test-statusbar {
+    display: grid;
+    grid-template-columns: minmax(180px, auto) minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 24px;
+    border-top: 2px solid rgba(67, 108, 172, 0.1);
+    background: rgba(255, 255, 255, 0.62);
+}
+
+.toeic-test-map {
+    display: flex;
+    gap: 6px;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+}
+
+.toeic-test-map a,
+.toeic-test-map span,
+.question-map span {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border: 2px solid rgba(67, 108, 172, 0.16);
+    border-radius: 8px;
+    color: var(--focus-blue);
+    background: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.toeic-test-map .answered,
+.question-map .answered {
+    background: var(--academy-blue);
+    color: var(--paper-white);
+}
+
+.toeic-test-map .active,
+.question-map .active {
+    background: var(--sunbeam-yellow);
+    color: var(--focus-blue);
+    box-shadow: 0 4px 0 var(--yellow-shadow);
+}
+
+.toeic-test-map .flagged,
+.question-map .flagged {
+    border-color: var(--sunbeam-yellow);
+    background: var(--warm-paper);
+}
+
+#singleAnswerContainer label,
+#batchQuestionsContainer > div {
+    border-radius: 12px !important;
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    background: rgba(255, 255, 255, 0.86) !important;
+    box-shadow: none !important;
+}
+
+#singleAnswerContainer label:hover,
+#batchQuestionsContainer > div:hover,
+.exercise-option:hover,
+.payment-method:hover {
+    border-color: var(--focus-blue) !important;
+}
+
+#nextBtn {
+    color: var(--focus-blue) !important;
+    background: var(--sunbeam-yellow) !important;
+    box-shadow: 0 4px 0 var(--yellow-shadow) !important;
+}
+
+/* Learning/profile/status pages */
+.lp-layout {
+    display: grid !important;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 16px;
+    padding: 28px 0 72px;
+}
+
+.lp-sidebar {
+    position: sticky !important;
+    top: 16px !important;
+    height: calc(100vh - 32px) !important;
+    padding: 18px !important;
+}
+
+.lp-main {
+    padding: 24px !important;
+}
+
+.lp-module-item.active,
+.lp-module-item:hover {
+    background: var(--sunbeam-yellow) !important;
+    color: var(--focus-blue) !important;
+}
+
+.profile-hero,
+.syllabus-header,
+.disqualified-card {
+    padding: 32px !important;
+}
+
+.disqualified-card .icon,
+.danger-lock {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 16px;
+    border: 2px solid rgba(180, 35, 24, 0.2);
+    border-bottom-width: 5px;
+    border-radius: 12px;
+    color: #b42318;
+    background: #fff1f1;
+    font-size: 28px !important;
+}
+
+.alert,
+.dropdown-menu,
+.modal-content {
+    border: 2px solid rgba(67, 108, 172, 0.14) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 980px) {
+    .est-hero-inner,
+    .landing-grid,
+    .auth-core,
+    .toeic-auth-grid,
+    .payment-grid,
+    .toeic-card-grid,
+    .workspace-main,
+    .lp-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .lp-sidebar {
+        position: relative !important;
+        top: auto !important;
+        height: auto !important;
+    }
+
+    .toeic-test-statusbar {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .toeic-page-shell,
+    .main-content > .container,
+    .setup-container,
+    .profile-hero + .container,
+    .navbar,
+    .est-home-nav,
+    .est-hero-inner,
+    .est-stats-strip,
+    .est-practice-section,
+    .est-ai-section,
+    .est-exam-section,
+    .est-inside-section,
+    .est-review-section,
+    .est-download-section,
+    .est-footer,
+    .lp-layout {
+        width: min(calc(100% - 24px), 100%) !important;
+    }
+
+    .toeic-page-header,
+    .est-home-nav,
+    .est-nav-links,
+    .est-nav-actions,
+    .est-hero-actions,
+    .est-exam-section,
+    .est-download-section,
+    .toeic-test-statusbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .toeic-page-header {
+        display: grid !important;
+    }
+
+    .est-hero h1 {
+        font-size: 42px !important;
+    }
+
+    .est-hero-visual,
+    .est-ai-visual {
+        min-height: auto !important;
+    }
+
+    .field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn,
+    .est-primary-button,
+    .est-secondary-button,
+    .est-app-button,
+    .est-link-button {
+        width: 100%;
     }
 }

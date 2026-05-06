@@ -40,14 +40,14 @@ $website_logo = getWebsiteLogo();
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,650..800,35,0&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-frontend.css', '../assets/css/toeic-frontend.css')); ?>" rel="stylesheet">
     <link href="../includes/modern-theme.css" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/dark-user.css', 'css/dark-user.css')); ?>" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('user/css/mobile-responsive.css', 'css/mobile-responsive.css')); ?>" rel="stylesheet">
     <style>
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             padding-top: 80px;
             background: linear-gradient(180deg, #faf6ee 0%, #f5efe2 100%);
         }
@@ -56,10 +56,10 @@ $website_logo = getWebsiteLogo();
             background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
             backdrop-filter: blur(20px);
             padding: 2rem;
-            border-radius: 24px;
-            box-shadow: 0 18px 42px rgba(21, 39, 66, 0.1);
+            border-radius: 12px;
+            box-shadow: none;
             margin-bottom: 2rem;
-            border-left: 5px solid #152742;
+            border-left: 5px solid #436cac;
             border: 1px solid rgba(23,38,63,0.08);
             color: var(--toeic-ink);
         }
@@ -67,7 +67,7 @@ $website_logo = getWebsiteLogo();
         .analysis-card {
             background: rgba(21,39,66,0.06);
             border: 1px solid rgba(23,38,63,0.08);
-            border-radius: 24px;
+            border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
             color: var(--toeic-ink);
@@ -76,8 +76,8 @@ $website_logo = getWebsiteLogo();
         .week-card {
             background: linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(252, 248, 240, 0.98));
             border: 1px solid rgba(23,38,63,0.08);
-            border-radius: 24px;
-            box-shadow: 0 16px 34px rgba(21,39,66,0.08);
+            border-radius: 12px;
+            box-shadow: none;
             margin-bottom: 1.5rem;
             overflow: hidden;
             transition: transform 0.2s;
@@ -89,7 +89,7 @@ $website_logo = getWebsiteLogo();
         }
 
         .week-header {
-            background: linear-gradient(135deg, #152742 0%, #21385c 58%, #c5851c 170%);
+            background: linear-gradient(180deg, #487fb5 0%, #436cac 52%, #263f78 100%);
             color: white;
             padding: 1rem 1.5rem;
             font-weight: 600;
@@ -135,7 +135,7 @@ $website_logo = getWebsiteLogo();
             font-weight: 900;
             position: absolute;
             left: 0;
-            color: #1e8078;
+            color: #487fb5;
         }
     </style>
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
