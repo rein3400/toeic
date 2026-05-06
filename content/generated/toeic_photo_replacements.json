@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-05-05T23:06:41+07:00",
+  "public_base_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev",
+  "bucket": "toeic-assets",
+  "purpose": "Replace imported TOEIC Part 1 photos that contain generated text, logo, or watermark artifacts.",
+  "replacements": [
+    {
+      "package": "package_02",
+      "item_id": "PKG02-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg02_p1_06.png",
+      "new_image_file": "toeic_pkg02_p1_06_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_02/toeic_pkg02_p1_06_v2.png",
+      "r2_key": "toeic/photos/package_02/toeic_pkg02_p1_06_v2.png",
+      "reason": "Visible watermark or fake logo artifact in the lower-right corner.",
+      "bytes": 1300621,
+      "sha256": "ad03362cbc0a40b204d6e76dc9c5af8a7443ab143bf1c6b98218bd7f61e2c315",
+      "public_status": 200
+    },
+    {
+      "package": "package_04",
+      "item_id": "PKG04-P1-05",
+      "title": "Hotel Event Desk",
+      "old_image_file": "toeic_pkg04_p1_05.png",
+      "new_image_file": "toeic_pkg04_p1_05_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_04/toeic_pkg04_p1_05_v2.png",
+      "r2_key": "toeic/photos/package_04/toeic_pkg04_p1_05_v2.png",
+      "reason": "Visible TOEIC text artifact in the lower-right corner.",
+      "bytes": 1600378,
+      "sha256": "6c3ef1d052ba7998e5aed0a19ede4e50455b695b265f2a39709c38db998450c2",
+      "public_status": 200
+    },
+    {
+      "package": "package_06",
+      "item_id": "PKG06-P1-05",
+      "title": "Hotel Event Desk",
+      "old_image_file": "toeic_pkg06_p1_05.png",
+      "new_image_file": "toeic_pkg06_p1_05_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_06/toeic_pkg06_p1_05_v2.png",
+      "r2_key": "toeic/photos/package_06/toeic_pkg06_p1_05_v2.png",
+      "reason": "Badge or name-card area contains repeated pseudo-logo artifacts.",
+      "bytes": 1617500,
+      "sha256": "5a31400de3c34943c032bbb185c5ded8c12bae3ac81cab257b0b18561ab47366",
+      "public_status": 200
+    },
+    {
+      "package": "package_07",
+      "item_id": "PKG07-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg07_p1_06.png",
+      "new_image_file": "toeic_pkg07_p1_06_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_07/toeic_pkg07_p1_06_v2.png",
+      "r2_key": "toeic/photos/package_07/toeic_pkg07_p1_06_v2.png",
+      "reason": "Large generated caption or subtitle text is burned into the photo.",
+      "bytes": 1422528,
+      "sha256": "e3a52dca5a94bf81569d66de917d6d782cbdbea36ba287701664624cc36948a1",
+      "public_status": 200
+    },
+    {
+      "package": "package_08",
+      "item_id": "PKG08-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg08_p1_06.png",
+      "new_image_file": "toeic_pkg08_p1_06_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_08/toeic_pkg08_p1_06_v2.png",
+      "r2_key": "toeic/photos/package_08/toeic_pkg08_p1_06_v2.png",
+      "reason": "Paper or poster area contains too many readable-text-like artifacts.",
+      "bytes": 1265109,
+      "sha256": "e7656fb4e0d3d36252cfcd91da590a89a116d903283deecc8b77941ad8c01ec3",
+      "public_status": 200
+    },
+    {
+      "package": "package_09",
+      "item_id": "PKG09-P1-02",
+      "title": "Warehouse Quality Inspection",
+      "old_image_file": "toeic_pkg09_p1_02.png",
+      "new_image_file": "toeic_pkg09_p1_02_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_09/toeic_pkg09_p1_02_v2.png",
+      "r2_key": "toeic/photos/package_09/toeic_pkg09_p1_02_v2.png",
+      "reason": "Carton labels are too close to readable pseudo-brand text.",
+      "bytes": 1372881,
+      "sha256": "14b8fef4c50915e0b2b4c20aa89fb8a485f5c8513486b8abf73e880bca2391a7",
+      "public_status": 200
+    },
+    {
+      "package": "package_10",
+      "item_id": "PKG10-P1-06",
+      "title": "Print Production Area",
+      "old_image_file": "toeic_pkg10_p1_06.png",
+      "new_image_file": "toeic_pkg10_p1_06_v2.png",
+      "public_url": "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/photos/package_10/toeic_pkg10_p1_06_v2.png",
+      "r2_key": "toeic/photos/package_10/toeic_pkg10_p1_06_v2.png",
+      "reason": "Visible stock-style watermark or logo artifact in the lower-right corner.",
+      "bytes": 1433383,
+      "sha256": "d604af6d69b29477f983778467216defccb9ab77d96266fdcf35993d44011486",
+      "public_status": 200
+    }
+  ]
+}
