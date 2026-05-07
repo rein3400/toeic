@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $conn->prepare("INSERT INTO users (full_name, username, password, role) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $full_name, $username, $hashed_password, $role);
             if ($stmt->execute()) {
+                $new_user_id = $conn->insert_id;
+                grantTestCredit($conn, $new_user_id, 'toeic', 'FREE_TRIAL');
                 $success = "Registration successful! You can now log in.";
                 header("refresh:2;url=login.php");
             } else {

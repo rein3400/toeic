@@ -301,6 +301,12 @@ $stmt->close();
                 });
                 const data = await res.json();
                 if (data.success) {
+                    try {
+                        await fetch('../api/ajax_proctor.php', {
+                            method: 'POST', headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'update_permissions', testSession: TEST_SESSION, camera: true, microphone: true })
+                        });
+                    } catch (permErr) { console.error('Permission update failed:', permErr); }
                     clearInterval(faceDetectionInterval);
                     document.getElementById('faceStep').style.display = 'none';
                     document.getElementById('summaryStep').style.display = 'block';

@@ -68,9 +68,12 @@ class SecureAudioPlayer {
             };
 
             this.audioElement.onerror = () => {
-                this.btn.innerHTML = 'Error';
-                this.btn.disabled = false;
-                alert("Playback Error. Please try again.");
+                this.btn.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i> Error';
+                this.btn.classList.remove('btn-primary');
+                this.btn.classList.add('btn-danger');
+                this.statusText.innerText = 'Audio playback failed. The audio file could not be loaded.';
+                this.statusText.className = "text-center mt-2 small text-danger fw-bold";
+                try { fetch('../api/mark_audio_completed.php', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({audio_id: this.audioId, error: true}) }); } catch(e){}
             };
 
             await this.audioElement.play();

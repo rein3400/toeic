@@ -64,7 +64,18 @@ if (($audioSource['mode'] ?? 'missing') === 'missing') {
 }
 
 if (($audioSource['mode'] ?? '') === 'remote') {
-    toeicStreamRemoteFile($audioSource['url']);
+    $localFallback = $audioSource['local_fallback'] ?? null;
+    if (!$localFallback && !empty($audioSource['url'])) {
+        $parsedPath = parse_url($audioSource['url'], PHP_URL_PATH);
+        $basename = basename((string)$parsedPath);
+        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
+            $candidate = __DIR__ . '/../uploads/toeic_audio/' . $basename;
+            if (is_file($candidate)) {
+                $localFallback = $candidate;
+            }
+        }
+    }
+    toeicStreamRemoteFile($audioSource['url'], $localFallback);
     exit();
 }
 

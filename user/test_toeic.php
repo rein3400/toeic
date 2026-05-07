@@ -474,10 +474,6 @@ if ($section === 'listening') {
 
 $primary_photo_url = $photo_urls[0] ?? '';
 $fallback_photo_urls = array_values(array_slice($photo_urls, 1));
-$photo_fallback_json = htmlspecialchars(
-    json_encode($fallback_photo_urls, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT),
-    ENT_QUOTES
-);
 
 if ($is_batch) {
     foreach ($batch_questions as $row) {
@@ -653,8 +649,8 @@ if ($is_batch) {
 
             <div class="flex-1 overflow-y-auto p-8 pb-20">
                 <?php if ($part === '1' && $primary_photo_url !== ''): ?>
-                    <div class="rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white">
-                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="Photo" class="w-full h-auto object-contain" style="max-height: 460px;">
+                    <div class="rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white" id="photo-container-<?php echo (int)$question_number; ?>">
+                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="Photo" class="w-full h-auto object-contain" style="max-height: 460px;" data-fallbacks="<?php echo htmlspecialchars(json_encode($fallback_photo_urls), ENT_QUOTES); ?>" onerror="if(!this._fb){this._fb=JSON.parse(this.dataset.fallbacks||'[]');}if(this._fb.length>0){this.src=this._fb.shift();}else{this.onerror=null;var c=this.parentElement;c.innerHTML='<div class=\'d-flex align-items-center justify-content-center\' style=\'height:200px;background:#f8fafc;border-radius:12px;\'><div class=\'text-center text-muted\'><i class=\'fas fa-image fa-2x mb-2 d-block\'></i><small>Photo unavailable</small></div></div>';}">
                     </div>
                 <?php endif; ?>
 

@@ -218,11 +218,23 @@ function toeicAudioUrl($filePath) {
         return '';
     }
     if (preg_match('#^https?://#i', $key)) {
+        $parsedPath = parse_url($key, PHP_URL_PATH);
+        $basename = basename((string)$parsedPath);
+        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
+            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $basename;
+            if (is_file($localPath)) {
+                return '../uploads/toeic_audio/' . rawurlencode($basename);
+            }
+        }
         return $key;
     }
     if (toeicAssetDriver('audio') === 'r2') {
         $base = toeicAssetBaseUrl('audio');
         if ($base !== '') {
+            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $key;
+            if (is_file($localPath)) {
+                return '../uploads/toeic_audio/' . rawurlencode($key);
+            }
             return $base . '/' . rawurlencode($key);
         }
     }
@@ -235,23 +247,35 @@ function toeicAudioSource($filePath) {
         return ['mode' => 'missing'];
     }
     if (preg_match('#^https?://#i', $key)) {
+        $parsedPath = parse_url($key, PHP_URL_PATH);
+        $basename = basename((string)$parsedPath);
+        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
+            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $basename;
+            if (is_file($localPath)) {
+                return ['mode' => 'local', 'path' => $localPath];
+            }
+        }
         return ['mode' => 'remote', 'url' => $key];
     }
     if (toeicAssetDriver('audio') === 'r2') {
         $base = toeicAssetBaseUrl('audio');
         if ($base !== '') {
+            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $key;
+            if (is_file($localPath)) {
+                return ['mode' => 'local', 'path' => $localPath];
+            }
             return ['mode' => 'remote', 'url' => $base . '/' . rawurlencode($key)];
         }
     }
     return ['mode' => 'local', 'path' => __DIR__ . '/../uploads/toeic_audio/' . $key];
 }
 
-function toeicStreamRemoteFile($url) {
+function toeicStreamRemoteFile($url, $localFallbackPath = null) {
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_TIMEOUT => 120,
+        CURLOPT_TIMEOUT => 30,
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_HEADER => true,
     ]);
@@ -262,12 +286,24 @@ function toeicStreamRemoteFile($url) {
     $error = curl_error($ch);
     curl_close($ch);
 
-    if ($raw === false || $status >= 400) {
+    $body = $raw !== false ? substr($raw, $headerSize) : '';
+    $isHtml = stripos($contentType, 'text/html') !== false || stripos($contentType, 'text/plain') !== false;
+
+    if ($raw === false || $status >= 400 || $isHtml) {
+        if ($localFallbackPath && is_file($localFallbackPath)) {
+            $fSize = filesize($localFallbackPath);
+            $fMime = mime_content_type($localFallbackPath) ?: 'audio/mpeg';
+            header("Content-Type: $fMime");
+            header("Content-Length: $fSize");
+            header("Accept-Ranges: bytes");
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            readfile($localFallbackPath);
+            exit();
+        }
         header("HTTP/1.1 404 Not Found");
         die($error ?: "Remote audio fetch failed");
     }
 
-    $body = substr($raw, $headerSize);
     header("Content-Type: $contentType");
     header("Content-Length: " . strlen($body));
     header("Accept-Ranges: bytes");
