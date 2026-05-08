@@ -260,6 +260,8 @@ class ProctorSDK {
     }
 
     processFaceResults(results) {
+        if (this._paused || this.state.terminated) return;
+
         const count = results.detections.length;
         this.state.facesDetected = count;
         this.state.lastFaceCallback = Date.now();
@@ -361,7 +363,7 @@ class ProctorSDK {
     }
 
     captureSnapshot(reason, options = {}) {
-        if (!this.videoStream) return;
+        if (!this.videoStream || this._paused || this.state.terminated) return;
 
         const track = this.videoStream.getVideoTracks()[0];
         if (!track || track.readyState !== 'live') return;
@@ -398,7 +400,7 @@ class ProctorSDK {
     }
 
     async capturePeriodicSnapshot() {
-        if (!this.videoStream || this.state.terminated) return;
+        if (!this.videoStream || this.state.terminated || this._paused) return;
 
         try {
             const track = this.videoStream.getVideoTracks()[0];
@@ -456,7 +458,7 @@ class ProctorSDK {
     // CORE & NETWORK
     // ============================================
     logEvent(type, severity, metadata = {}) {
-        if (this.state.terminated) return;
+        if (this.state.terminated || this._paused) return;
 
         const event = { type, severity, metadata, timestamp: Date.now() };
         this.state.eventsBuffer.push(event);

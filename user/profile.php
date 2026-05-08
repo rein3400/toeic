@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 // Check if user is logged in and is student
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
@@ -107,6 +108,12 @@ $stats_stmt->bind_param("i", $_SESSION['user_id']);
 $stats_stmt->execute();
 $user_stats = $stats_stmt->get_result()->fetch_assoc();
 
+$total_tests = (int)($user_stats['total_tests'] ?? 0);
+$best_score_display = toeicDisplayRoundedScore($user_stats['best_score'] ?? null);
+$avg_score_display = toeicDisplayRoundedScore($user_stats['avg_score'] ?? null);
+$first_test = $user_stats['first_test'] ?? null;
+$last_test = $user_stats['last_test'] ?? null;
+
 $user_name = $_SESSION['full_name'] ?? 'Student';
 $initials = strtoupper(substr($user_name, 0, 1));
 if (strpos($user_name, ' ') !== false) {
@@ -199,36 +206,36 @@ if (strpos($user_name, ' ') !== false) {
                         <h2 class="h4 mb-4">Stats Summary</h2>
 
                         <div class="p-3 rounded-3 bg-light mb-3 text-center">
-                            <div class="h2 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo $user_stats['total_tests'] ?: '0'; ?></div>
+                            <div class="h2 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo $total_tests; ?></div>
                             <div class="small text-muted fw-bold">Tests Completed</div>
                         </div>
 
                         <div class="row g-2">
                             <div class="col-6">
                                 <div class="p-3 rounded-3 bg-light text-center">
-                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo $user_stats['best_score'] ?: '-'; ?></div>
+                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo htmlspecialchars($best_score_display); ?></div>
                                     <div class="small text-muted fw-bold">Best</div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="p-3 rounded-3 bg-light text-center">
-                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo round($user_stats['avg_score']) ?: '-'; ?></div>
+                                    <div class="h4 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo htmlspecialchars($avg_score_display); ?></div>
                                     <div class="small text-muted fw-bold">Avg</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <?php if ($user_stats['total_tests'] > 0): ?>
+                    <?php if ($total_tests > 0 && $first_test && $last_test): ?>
                         <div class="study-card">
                             <span class="study-kicker">Timeline</span>
                             <div class="mb-3">
                                 <div class="small text-muted fw-bold uppercase mb-1">First Attempt</div>
-                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($user_stats['first_test'])); ?></div>
+                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($first_test)); ?></div>
                             </div>
                             <div>
                                 <div class="small text-muted fw-bold uppercase mb-1">Latest Attempt</div>
-                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($user_stats['last_test'])); ?></div>
+                                <div class="fw-bold"><?php echo date('M j, Y', strtotime($last_test)); ?></div>
                             </div>
                         </div>
                     <?php endif; ?>

@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/csrf_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -45,6 +46,7 @@ if (hasTestCredit($conn, $user_id, 'toeic')) {
 }
 
 $website_title = getWebsiteTitle();
+$flash_messages = toeicConsumeFlashes();
 $toeic_name = htmlspecialchars(getSiteSetting('name_toeic', 'TOEIC Listening & Reading'));
 $toeic_price = number_format((int)getSiteSetting('price_toeic', '175000'), 0, ',', '.');
 $features = json_decode(getSiteSetting('features_toeic', ''), true) ?: [
@@ -80,10 +82,16 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
     </header>
 
     <main class="toeic-page-shell">
+        <?php foreach ($flash_messages as $flash): ?>
+            <div class="alert tc-page-alert <?php echo htmlspecialchars($flash['type']); ?> mb-4" role="alert">
+                <?php echo htmlspecialchars($flash['message']); ?>
+            </div>
+        <?php endforeach; ?>
+
         <div class="mb-5">
-            <span class="study-kicker">TOEIC Packages</span>
-            <h1 class="display-5 mb-2">Activate Full Simulation</h1>
-            <p class="lead text-muted">Choose a package to unlock the full monitored exam experience.</p>
+            <span class="study-kicker">Paket TOEIC</span>
+            <h1 class="display-5 mb-2">Aktifkan Simulasi Full</h1>
+            <p class="lead text-muted">Pilih paket untuk membuka simulasi penuh dengan laporan skor TOEIC.</p>
         </div>
 
         <section class="study-card p-4 p-lg-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
@@ -92,7 +100,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Special Offer</span>
                     <h2 class="display-4 text-white mb-3"><?php echo $toeic_name; ?></h2>
                     <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
-                        Get access to 200 original questions, real-time proctoring, and official score conversion table.
+                        Akses 200 soal, mode full dengan proctoring, dan konversi skor TOEIC Listening & Reading.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
                         <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">200 Questions</span>
@@ -102,28 +110,30 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 </div>
                 <div class="col-lg-5">
                     <div class="study-card text-center bg-white border-0 shadow-lg p-4">
-                        <div class="study-kicker">Total Price</div>
+                        <div class="study-kicker">Total Harga</div>
                         <div class="display-3 fw-bold mb-4" style="color:var(--focus-blue);">Rp <?php echo $toeic_price; ?></div>
 
                         <?php if ($hasAvailableToeicFullAccess): ?>
                             <div class="alert alert-success border-0 small mb-3">
-                                <i class="fas fa-check-circle me-1"></i> You have active credits.
+                                <i class="fas fa-check-circle me-1"></i> Anda punya kredit aktif.
                             </div>
-                            <a href="test_instructions.php?mode=full" class="study-button w-100 mb-3">Launch Simulation</a>
+                            <a href="test_instructions.php?mode=full" class="study-button w-100 mb-3">Mulai Simulasi Full</a>
                             <?php if ($tripay_ready): ?>
-                                <a href="payment.php?exam_type=toeic" class="study-button study-button-secondary w-100">Buy Another</a>
+                                <a href="payment.php?exam_type=toeic" class="study-button study-button-secondary w-100">Beli Paket Lagi</a>
                             <?php endif; ?>
                         <?php elseif ($tripay_ready): ?>
-                            <a href="payment.php?exam_type=toeic" class="study-button w-100">Checkout Now</a>
+                            <a href="payment.php?exam_type=toeic" class="study-button w-100">Lanjut Bayar</a>
                         <?php else: ?>
-                            <div class="alert alert-warning border-0 small mb-0">Payment gateway offline.</div>
+                            <div class="alert alert-warning border-0 small mb-0">
+                                Payment gateway belum aktif. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                            </div>
                         <?php endif; ?>
 
                         <div class="mt-4 pt-4 border-top">
-                            <div class="study-kicker mb-3">Or Redeem Voucher</div>
-                            <div class="d-flex gap-2">
-                                <input type="text" id="voucherCode" class="form-control" placeholder="CODE123" style="min-height: 48px;">
-                                <button class="study-button py-2 px-3" onclick="redeemVoucher()" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
+                            <div class="study-kicker mb-3">Atau Pakai Voucher</div>
+                            <div class="d-flex gap-2 voucher-redeem-row">
+                                <input type="text" id="voucherCode" class="form-control" placeholder="OSGLI-33YRB" style="min-height: 48px;">
+                                <button type="button" class="study-button py-2 px-3 voucher-icon-button" onclick="redeemVoucher()" aria-label="Tukar voucher" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
                             </div>
                             <div id="voucherMessage" class="small mt-2"></div>
                         </div>
@@ -150,18 +160,24 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
+        function normalizeVoucherCode(value) {
+            return value.trim().replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\s+/g, '').toUpperCase();
+        }
+
         async function redeemVoucher() {
-            const code = document.getElementById('voucherCode').value.trim();
+            const input = document.getElementById('voucherCode');
+            const code = normalizeVoucherCode(input.value);
             const message = document.getElementById('voucherMessage');
+            input.value = code;
 
             if (!code) {
                 message.className = 'small mt-2 text-danger fw-bold';
-                message.textContent = 'Enter code first.';
+                message.textContent = 'Masukkan kode voucher dulu.';
                 return;
             }
 
             message.className = 'small mt-2 text-muted';
-            message.textContent = 'Processing...';
+            message.textContent = 'Memproses voucher...';
 
             try {
                 const response = await fetch('ajax_redeem_voucher.php', {
@@ -176,14 +192,14 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 const isSuccess = Boolean(data.success);
 
                 message.className = 'small mt-2 fw-bold ' + (isSuccess ? 'text-success' : 'text-danger');
-                message.textContent = data.message || data.error || 'Failed to process.';
+                message.textContent = data.message || data.error || 'Voucher gagal diproses.';
 
                 if (isSuccess) {
                     setTimeout(() => window.location.href = 'index.php', 1200);
                 }
             } catch (error) {
                 message.className = 'small mt-2 text-danger fw-bold';
-                message.textContent = 'Error processing voucher.';
+                message.textContent = 'Voucher gagal diproses. Coba lagi.';
             }
         }
     </script>

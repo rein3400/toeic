@@ -3,6 +3,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -12,14 +13,12 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
 $website_title = getWebsiteTitle();
 $test_session = $_GET['session'] ?? $_SESSION['toeic_test_session'] ?? $_SESSION['test_session'] ?? null;
 if (!$test_session || strpos($test_session, 'toeic_') !== 0) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Hasil TOEIC akan tersedia setelah sesi selesai.');
 }
 
 $session_info = getTOEICSessionInfo($_SESSION['user_id'], $test_session);
 if (!$session_info) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'error', 'Hasil TOEIC tidak ditemukan untuk akun ini.');
 }
 
 $is_practice = !empty($session_info['practice_mode']);

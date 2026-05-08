@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 require_once __DIR__ . '/../includes/session_handler.php';
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/proctor_helper.php';
+require_once __DIR__ . '/../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
@@ -26,9 +27,19 @@ if (!$test_session) {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = (int)$_SESSION['user_id'];
 $test_format = 'toeic';
 $integrity_threshold = (int)getProctoringSetting('integrity_threshold', 40);
+
+if (toeicIsPracticeSession($conn, $user_id, (string)$test_session)) {
+    echo json_encode([
+        'success' => true,
+        'ignored' => true,
+        'practice_mode' => true,
+        'message' => 'Practice sessions do not use proctoring.',
+    ]);
+    exit;
+}
 
 // Resolve session_id from test_session for all non-init actions
 $session_id = null;

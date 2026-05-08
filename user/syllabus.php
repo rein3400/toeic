@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -10,8 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
 
 $syllabus_id = $_GET['id'] ?? 0;
 if (!$syllabus_id) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Study plan akan tersedia setelah Anda punya hasil TOEIC yang bisa dianalisis.');
 }
 
 $stmt = $conn->prepare("SELECT * FROM user_syllabus WHERE id = ? AND user_id = ?");
@@ -21,7 +21,7 @@ $result = $stmt->get_result();
 $syllabus_row = $result->fetch_assoc();
 
 if (!$syllabus_row) {
-    die("Syllabus not found.");
+    toeicRedirectWithFlash('index.php', 'error', 'Study plan tidak ditemukan untuk akun ini.');
 }
 
 $syllabus = json_decode($syllabus_row['syllabus_content'], true);

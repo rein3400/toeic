@@ -4,6 +4,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/csrf_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Sesi tidak valid. Silakan login kembali.']);
@@ -21,7 +22,7 @@ $user_id = (int)$_SESSION['user_id'];
 
 // Parse JSON body
 $input = json_decode(file_get_contents('php://input'), true);
-$code = strtoupper(trim($input['code'] ?? ''));
+$code = toeicNormalizeVoucherCode($input['code'] ?? '');
 
 if (empty($code)) {
     echo json_encode(['success' => false, 'error' => 'Kode voucher tidak boleh kosong.']);

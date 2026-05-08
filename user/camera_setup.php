@@ -8,6 +8,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/proctor_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -29,9 +30,27 @@ $microphone_reason = 'Required for proctoring integrity and audio compatibility'
 $consent_label = 'I Consent to Required Permissions';
 $ready_message = 'All checks passed. You are ready to start the TOEIC® simulator.';
 
-if (!$test_session) {
-    header("Location: index.php");
-    exit();
+if (!$test_session || !preg_match('/^[a-zA-Z0-9_-]+$/', (string)$test_session)) {
+    toeicRedirectWithFlash('index.php', 'info', 'Camera setup hanya terbuka dari sesi full simulation yang sedang berjalan.');
+}
+
+$session_summary = toeicGetSessionSummary($conn, (int)$_SESSION['user_id'], (string)$test_session);
+if (!$session_summary) {
+    toeicRedirectWithFlash('index.php', 'error', 'Sesi TOEIC tidak ditemukan atau sudah tidak bisa diakses.');
+}
+
+if ($mode === 'prep' && empty($session_summary['practice_mode'])) {
+    toeicRedirectWithFlash('index.php', 'error', 'Link practice tidak cocok dengan data sesi. Silakan mulai practice baru dari dashboard.');
+}
+
+if (!empty($session_summary['practice_mode'])) {
+    $practice_part = preg_replace('/[^1-7]/', '', (string)($session_summary['target_part'] ?? ''));
+    $practice_section = $session_summary['current_section'] ?: $section;
+    $target = "{$redirect_target}?section=" . urlencode($practice_section) . "&test_session=" . urlencode((string)$test_session) . "&setup_complete=1&mode=prep";
+    if ($practice_part !== '') {
+        $target .= '&part=' . urlencode($practice_part);
+    }
+    toeicRedirectWithFlash($target, 'info', 'Mode practice tidak memakai kamera atau proctoring.');
 }
 
 $dev_bypass_token = getenv('DEV_BYPASS_TOKEN') ?: '';

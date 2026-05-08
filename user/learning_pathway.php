@@ -5,6 +5,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -17,8 +18,7 @@ $test_session = $_GET['session'] ?? '';
 $website_title = getWebsiteTitle();
 
 if (empty($test_session)) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Selesaikan simulasi TOEIC dulu untuk membuka learning pathway.');
 }
 
 // Verify access
@@ -27,8 +27,7 @@ if (!$is_admin) {
     $stmt->bind_param("is", $user_id, $test_session);
     $stmt->execute();
     if ($stmt->get_result()->num_rows === 0) {
-        header("Location: index.php?error=access_denied");
-        exit();
+        toeicRedirectWithFlash('index.php', 'error', 'Learning pathway ini bukan milik akun Anda.');
     }
     $stmt->close();
 }

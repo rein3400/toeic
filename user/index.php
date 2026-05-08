@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -14,6 +15,13 @@ $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
 $user_id = (int)$_SESSION['user_id'];
 $user_name = $_SESSION['full_name'] ?? 'Student';
+if (($_GET['payment'] ?? '') === 'success') {
+    toeicSetFlash('success', 'Pembayaran berhasil. Kredit TOEIC Anda sudah aktif.');
+}
+if (($_GET['error'] ?? '') === 'access_denied') {
+    toeicSetFlash('error', 'Halaman yang diminta bukan milik akun Anda.');
+}
+$flash_messages = toeicConsumeFlashes();
 $has_full_credit = hasStrictTestCredit($conn, $user_id, 'toeic');
 $full_credit_count = countStrictTestCredits($conn, $user_id, 'toeic');
 
@@ -135,22 +143,28 @@ if (strpos($user_name, ' ') !== false) {
     </header>
 
     <main class="toeic-page-shell">
+        <?php foreach ($flash_messages as $flash): ?>
+            <div class="alert tc-page-alert <?php echo htmlspecialchars($flash['type']); ?> mb-4" role="alert">
+                <?php echo htmlspecialchars($flash['message']); ?>
+            </div>
+        <?php endforeach; ?>
+
         <section class="tc-dashboard-hero mb-4">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
                     <span class="study-kicker" style="color:var(--tc-amber) !important;">TOEIC Score Cockpit</span>
-                    <h1 class="display-5 text-white mb-3">Welcome back, <?php echo htmlspecialchars($user_name); ?>.</h1>
+                    <h1 class="display-5 text-white mb-3">Selamat datang, <?php echo htmlspecialchars($user_name); ?>.</h1>
                     <p class="text-white-50 mb-4" style="font-size: 1.08rem; color: rgba(255,255,255,0.8) !important;">
                         Skor terakhir, paket aktif, dan latihan berikutnya diringkas dalam satu layar.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
                         <?php if ($has_full_credit): ?>
-                            <a href="test_instructions.php?test_format=toeic&mode=full" class="tc-button">Launch Full Simulation</a>
+                            <a href="test_instructions.php?test_format=toeic&mode=full" class="tc-button">Mulai Simulasi Full</a>
                         <?php else: ?>
-                            <a href="buy_exam.php" class="tc-button">Activate TOEIC Package</a>
+                            <a href="buy_exam.php" class="tc-button">Aktifkan Paket TOEIC</a>
                         <?php endif; ?>
                         <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=prep' : 'buy_exam.php'; ?>" class="tc-button-outline">
-                            <?php echo $has_full_credit ? 'Open Practice' : 'Buy Practice Pack'; ?>
+                            <?php echo $has_full_credit ? 'Buka Practice' : 'Beli Paket Practice'; ?>
                         </a>
                     </div>
                 </div>
@@ -175,11 +189,11 @@ if (strpos($user_name, ' ') !== false) {
 
         <section class="tc-next-action mb-4">
             <div>
-                <h2 class="h4 mb-0">Next best action: <?php echo htmlspecialchars($next_focus_name); ?></h2>
+                <h2 class="h4 mb-0">Langkah berikutnya: <?php echo htmlspecialchars($next_focus_name); ?></h2>
                 <p><?php echo htmlspecialchars($next_focus_detail); ?></p>
             </div>
             <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=prep' : 'buy_exam.php'; ?>" class="tc-button-outline">
-                Start drill
+                Mulai latihan
             </a>
         </section>
 

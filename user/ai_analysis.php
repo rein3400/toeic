@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/ai_helper.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -17,8 +18,7 @@ $test_session = $_GET['session'] ?? null;
 $format = $_GET['format'] ?? 'toeic';
 
 if (!$test_session || $format !== 'toeic') {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Selesaikan simulasi TOEIC dulu untuk membuka AI analysis.');
 }
 
 $stmt = $conn->prepare("SELECT tr.*, u.full_name FROM toeic_test_results tr JOIN users u ON tr.user_id = u.id_user WHERE tr.test_session = ?");
@@ -28,13 +28,11 @@ $test_data = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$test_data) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Belum ada hasil TOEIC untuk dianalisis.');
 }
 
 if (!$is_admin && (int)$test_data['user_id'] !== $user_id) {
-    header("Location: index.php?error=access_denied");
-    exit();
+    toeicRedirectWithFlash('index.php', 'error', 'AI analysis ini bukan milik akun Anda.');
 }
 
 $conn->query("

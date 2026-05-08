@@ -3,6 +3,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/csrf_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -11,8 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $exam_type = $_GET['exam_type'] ?? 'toeic';
 if ($exam_type !== 'toeic') {
-    header("Location: buy_exam.php");
-    exit();
+    toeicRedirectWithFlash('buy_exam.php', 'info', 'Produk yang tersedia di halaman ini hanya TOEIC.');
 }
 
 $website_title = getWebsiteTitle();
@@ -63,22 +63,22 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
                 <?php echo htmlspecialchars($website_title); ?>
             </a>
-            <a href="buy_exam.php" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Back</a>
+            <a href="buy_exam.php" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">Kembali</a>
         </div>
     </header>
 
     <main class="toeic-page-shell">
         <div class="mb-5">
             <span class="study-kicker">Checkout</span>
-            <h1 class="display-5 mb-2">Payment Method</h1>
-            <p class="lead text-muted">Securely complete your purchase to start your TOEIC simulation.</p>
+            <h1 class="display-5 mb-2">Metode Pembayaran</h1>
+            <p class="lead text-muted">Selesaikan pembelian untuk membuka simulasi TOEIC.</p>
         </div>
 
         <div class="row g-4">
             <div class="col-lg-8">
                 <section class="study-card mb-4">
                     <span class="study-kicker">Selection</span>
-                    <h2 class="h4 mb-4">Choose Method</h2>
+                    <h2 class="h4 mb-4">Pilih Metode</h2>
 
                     <div class="row g-3">
                         <?php foreach ([
@@ -106,13 +106,13 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     </div>
 
                     <div class="mt-5 pt-4 border-top">
-                        <div class="study-kicker mb-3">Or Use Voucher</div>
+                        <div class="study-kicker mb-3">Atau Pakai Voucher</div>
                         <div class="row g-3">
                             <div class="col-md-8">
-                                <input type="text" id="voucherCode" class="form-control" placeholder="VOUCHER_CODE_HERE">
+                                <input type="text" id="voucherCode" class="form-control" placeholder="OSGLI-33YRB">
                             </div>
                             <div class="col-md-4">
-                                <button class="study-button w-100" onclick="redeemVoucher()">Redeem</button>
+                                <button type="button" class="study-button w-100" onclick="redeemVoucher()">Tukar</button>
                             </div>
                         </div>
                         <div id="voucherMessage" class="small mt-2 fw-bold"></div>
@@ -123,11 +123,11 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             <div class="col-lg-4">
                 <section class="study-card h-100">
                     <span class="study-kicker">Order</span>
-                    <h2 class="h4 mb-4">Summary</h2>
+                    <h2 class="h4 mb-4">Ringkasan</h2>
 
                     <div class="p-4 rounded-4 mb-4" style="background: rgba(72, 127, 181, 0.05);">
                         <div class="fw-bold h5 mb-1" style="color:var(--focus-blue);"><?php echo htmlspecialchars($product_name); ?></div>
-                        <div class="text-muted small mb-4">Full access with score reports</div>
+                        <div class="text-muted small mb-4">Akses full dengan laporan skor</div>
 
                         <div class="d-flex justify-content-between align-items-center pt-3 border-top">
                             <span class="fw-bold">Total</span>
@@ -136,15 +136,17 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     </div>
 
                     <ul class="list-unstyled mb-5">
-                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Instant Activation</li>
-                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Secure Transaction</li>
-                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Valid for 1 Session</li>
+                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Aktivasi instan</li>
+                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Transaksi aman</li>
+                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Berlaku untuk 1 sesi</li>
                     </ul>
 
                     <?php if ($tripay_ready): ?>
-                        <button id="payButton" class="study-button w-100" onclick="createTransaction()">Complete Purchase</button>
+                        <button id="payButton" class="study-button w-100" onclick="createTransaction()">Selesaikan Pembelian</button>
                     <?php else: ?>
-                        <div class="alert alert-warning border-0 small text-center">Payment system offline.</div>
+                        <div class="alert alert-warning border-0 small text-center">
+                            Payment gateway belum aktif di environment ini. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                        </div>
                     <?php endif; ?>
                     <div id="paymentMessage" class="small mt-3 text-center text-muted"></div>
                 </section>
@@ -168,7 +170,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
             const message = document.getElementById('paymentMessage');
             button.disabled = true;
-            button.textContent = 'Processing...';
+            button.textContent = 'Memproses...';
             message.textContent = '';
 
             try {
@@ -182,20 +184,26 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     window.location.href = data.payment_url || data.redirect_url || 'index.php';
                     return;
                 }
-                message.textContent = data.message || 'Failed to create transaction.';
+                message.textContent = data.message || 'Transaksi gagal dibuat.';
             } catch (error) {
                 message.textContent = error.message;
             } finally {
                 button.disabled = false;
-                button.textContent = 'Complete Purchase';
+                button.textContent = 'Selesaikan Pembelian';
             }
         }
 
+        function normalizeVoucherCode(value) {
+            return value.trim().replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\s+/g, '').toUpperCase();
+        }
+
         async function redeemVoucher() {
-            const code = document.getElementById('voucherCode').value.trim();
+            const input = document.getElementById('voucherCode');
+            const code = normalizeVoucherCode(input.value);
             const message = document.getElementById('voucherMessage');
+            input.value = code;
             if (!code) {
-                message.textContent = 'Enter code first.';
+                message.textContent = 'Masukkan kode voucher dulu.';
                 message.className = 'small mt-2 fw-bold text-danger';
                 return;
             }

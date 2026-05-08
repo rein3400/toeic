@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../login.php');
@@ -20,8 +21,7 @@ if (strpos($user_name, ' ') !== false) {
 
 $order_id = trim($_GET['order_id'] ?? '');
 if (empty($order_id)) {
-    header('Location: buy_exam.php');
-    exit;
+    toeicRedirectWithFlash('index.php', 'info', 'Belum ada transaksi pembayaran yang sedang menunggu.');
 }
 
 $hasTransactionId = $conn->query("SHOW COLUMNS FROM payment_transactions LIKE 'transaction_id'")->num_rows > 0;
@@ -29,8 +29,7 @@ $idCol            = $hasTransactionId ? 'transaction_id' : 'order_id';
 
 $stmt = $conn->prepare("SELECT status, amount FROM payment_transactions WHERE $idCol = ? AND user_id = ? LIMIT 1");
 if (!$stmt) {
-    header('Location: buy_exam.php');
-    exit;
+    toeicRedirectWithFlash('index.php', 'error', 'Status pembayaran belum bisa dibuka saat ini.');
 }
 $stmt->bind_param('si', $order_id, $user_id);
 $stmt->execute();
@@ -38,13 +37,11 @@ $tx = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$tx) {
-    header('Location: buy_exam.php');
-    exit;
+    toeicRedirectWithFlash('index.php', 'info', 'Transaksi pembayaran tidak ditemukan untuk akun ini.');
 }
 
 if ($tx['status'] === 'settlement') {
-    header('Location: index.php?payment=success');
-    exit;
+    toeicRedirectWithFlash('index.php', 'success', 'Pembayaran berhasil. Kredit TOEIC Anda sudah aktif.');
 }
 
 $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');

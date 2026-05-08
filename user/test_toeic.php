@@ -13,6 +13,7 @@ require_once '../includes/settings.php';
 require_once '../includes/proctor_helper.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/csrf_helper.php';
+require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_helper.php';
 require_once '../includes/toeic_asset_storage.php';
 
@@ -73,8 +74,7 @@ if ($start_new) {
     }
 
     if (!hasStrictTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
-        header("Location: buy_exam.php");
-        exit();
+        toeicRedirectWithFlash('buy_exam.php', 'info', 'Aktifkan paket TOEIC dulu sebelum mulai simulasi.');
     }
 
     if (empty($_SESSION['instructions_confirmed_toeic'])) {
@@ -164,14 +164,13 @@ if ($resume && $candidate_session !== '') {
         }
         header("Location: $url");
     } else {
-        header("Location: index.php");
+        toeicRedirectWithFlash('index.php', 'info', 'Tidak ada sesi TOEIC aktif untuk dilanjutkan.');
     }
     exit();
 }
 
 if (!isset($_SESSION[$session_key]) && !isset($_SESSION['test_session']) && $requested_test_session === '') {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'info', 'Buka simulasi TOEIC dari dashboard atau halaman instruksi.');
 }
 
 $test_session = $requested_test_session ?: ($_SESSION[$session_key] ?? $_SESSION['test_session']);
@@ -186,8 +185,7 @@ $session_info = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$session_info) {
-    header("Location: index.php");
-    exit();
+    toeicRedirectWithFlash('index.php', 'error', 'Sesi TOEIC tidak ditemukan atau sudah tidak bisa diakses.');
 }
 
 if (($session_info['status'] ?? '') === 'completed') {
@@ -196,6 +194,10 @@ if (($session_info['status'] ?? '') === 'completed') {
 }
 
 $practice_mode = !empty($session_info['practice_mode']);
+if ($requested_mode === 'prep' && !$practice_mode) {
+    unset($_SESSION[$session_key], $_SESSION['test_session']);
+    toeicRedirectWithFlash('index.php', 'error', 'Link practice tidak cocok dengan data sesi. Silakan mulai practice baru dari dashboard.');
+}
 $practice_part = preg_replace('/[^1-7]/', '', (string)($session_info['target_part'] ?? ''));
 $practice_config = $practice_part !== '' ? getTOEICPracticeConfig($practice_part) : null;
 if ($practice_part !== '' && !$practice_config) {
@@ -550,38 +552,111 @@ if ($is_batch) {
                 }
             }
         };
+
+        function handleToeicPhotoFailure(img) {
+            if (!img) return;
+            let fallbacks = [];
+            try {
+                fallbacks = JSON.parse(img.dataset.fallbacks || '[]');
+            } catch (error) {
+                fallbacks = [];
+            }
+
+            const next = fallbacks.shift();
+            if (next) {
+                img.dataset.fallbacks = JSON.stringify(fallbacks);
+                img.src = next;
+                return;
+            }
+
+            const frame = img.closest('.toeic-photo-frame') || img.parentElement;
+            if (frame) {
+                frame.innerHTML = '<div class="toeic-photo-placeholder"><span class="material-symbols-outlined">image_not_supported</span><span>Foto soal belum tersedia</span></div>';
+            }
+        }
     </script>
     <style>
         .toeic-test-statusbar {
             display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
+            grid-template-columns: auto minmax(0, 1fr);
+            gap: 1rem;
             align-items: center;
             padding: 1rem 2rem;
             background: white;
             border-bottom: 2px solid var(--cloud-line);
         }
         .toeic-test-map {
-            display: flex;
-            gap: 4px;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 42px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding: 2px 2px 8px;
+            scroll-snap-type: x proximity;
+            scrollbar-gutter: stable;
         }
         .toeic-test-map a {
-            flex: 0 0 32px;
-            height: 32px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
+            border-radius: 999px;
             border: 1px solid var(--cloud-line);
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             text-decoration: none;
             color: var(--muted-slate);
+            scroll-snap-align: center;
+            line-height: 1;
         }
         .toeic-test-map a.answered { background: var(--academy-blue); color: white; border-color: var(--academy-blue); }
-        .toeic-test-map a.active { border: 2px solid var(--focus-blue); color: var(--focus-blue); background: var(--sunbeam-yellow); }
+        .toeic-test-map a.active { border: 2px solid var(--focus-blue); color: var(--focus-blue); background: var(--sunbeam-yellow); outline: 3px solid rgba(242, 103, 34, 0.18); }
+
+        .toeic-photo-frame {
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+        }
+        .toeic-photo-image {
+            width: 100%;
+            max-height: 460px;
+            object-fit: contain;
+            display: block;
+        }
+        .toeic-photo-placeholder {
+            width: 100%;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #64748b;
+            font-weight: 700;
+            background: #f8fafc;
+        }
+
+        .tc-test-loading {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.18);
+            backdrop-filter: blur(2px);
+        }
+        body.tc-saving .tc-test-loading { display: flex; }
+        .tc-test-loading span {
+            padding: 0.9rem 1.2rem;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--focus-blue);
+            font-weight: 800;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.14);
+        }
 
         .answer-choice {
             display: flex;
@@ -623,7 +698,7 @@ if ($is_batch) {
         </div>
         <div class="toeic-test-statusbar">
             <div class="shrink-0">
-                <div class="text-xs font-black text-slate-400 uppercase mb-1">Progress</div>
+                <div class="text-xs font-black text-slate-400 uppercase mb-1">Progres</div>
                 <div class="text-sm font-bold text-primary"><?php echo $answered_count; ?> / <?php echo $total_questions; ?></div>
             </div>
             <div class="toeic-test-map">
@@ -649,8 +724,15 @@ if ($is_batch) {
 
             <div class="flex-1 overflow-y-auto p-8 pb-20">
                 <?php if ($part === '1' && $primary_photo_url !== ''): ?>
-                    <div class="rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white" id="photo-container-<?php echo (int)$question_number; ?>">
-                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="Photo" class="w-full h-auto object-contain" style="max-height: 460px;" data-fallbacks="<?php echo htmlspecialchars(json_encode($fallback_photo_urls), ENT_QUOTES); ?>" onerror="if(!this._fb){this._fb=JSON.parse(this.dataset.fallbacks||'[]');}if(this._fb.length>0){this.src=this._fb.shift();}else{this.onerror=null;var c=this.parentElement;c.innerHTML='<div class=\'d-flex align-items-center justify-content-center\' style=\'height:200px;background:#f8fafc;border-radius:12px;\'><div class=\'text-center text-muted\'><i class=\'fas fa-image fa-2x mb-2 d-block\'></i><small>Photo unavailable</small></div></div>';}">
+                    <div class="toeic-photo-frame rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white" id="photo-container-<?php echo (int)$question_num; ?>">
+                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="TOEIC Part 1 photo" class="toeic-photo-image" data-fallbacks="<?php echo htmlspecialchars(json_encode($fallback_photo_urls), ENT_QUOTES); ?>" loading="eager" decoding="async" onload="this.dataset.loaded='1';" onerror="handleToeicPhotoFailure(this);">
+                    </div>
+                <?php elseif ($part === '1'): ?>
+                    <div class="toeic-photo-frame rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white">
+                        <div class="toeic-photo-placeholder">
+                            <span class="material-symbols-outlined">image_not_supported</span>
+                            <span>Foto soal belum tersedia</span>
+                        </div>
                     </div>
                 <?php endif; ?>
 
@@ -708,7 +790,7 @@ if ($is_batch) {
                                 <?php foreach (['A', 'B', 'C', 'D'] as $opt): ?>
                                     <?php $val = $row['opsi_' . strtolower($opt)] ?? ''; if ($val === '') continue; ?>
                                     <label class="answer-choice <?php echo $selected === $opt ? 'selected' : ''; ?>">
-                                        <input type="radio" name="batch_<?php echo (int)$row['question_id']; ?>" value="<?php echo $opt; ?>" class="mt-1 batch-answer" <?php echo $selected === $opt ? 'checked' : ''; ?> hidden>
+                                        <input type="radio" name="batch_<?php echo (int)$row['question_id']; ?>" value="<?php echo $opt; ?>" class="mt-1 batch-answer" data-question-id="<?php echo (int)$row['question_id']; ?>" <?php echo $selected === $opt ? 'checked' : ''; ?> hidden>
                                         <span class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-black text-xs"><?php echo $opt; ?></span>
                                         <span class="choice-label text-sm"><?php echo htmlspecialchars((string)$val); ?></span>
                                     </label>
@@ -739,20 +821,33 @@ if ($is_batch) {
 
             <div class="p-6 border-t-4 border-slate-200 bg-white shrink-0 flex justify-between">
                 <a href="<?php echo $prev_link; ?>" id="prevBtn" class="study-button study-button-secondary <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
-                    <i class="fas fa-arrow-left me-2"></i> Previous
+                    <i class="fas fa-arrow-left me-2"></i> Sebelumnya
                 </a>
                 <button type="button" id="nextBtn" class="study-button" onclick="handleNext()">
-                    <?php echo $is_last_question ? 'Finish Section' : 'Next'; ?> <i class="fas fa-arrow-right ms-2"></i>
+                    <?php echo $is_last_question ? 'Selesai Section' : 'Berikutnya'; ?> <i class="fas fa-arrow-right ms-2"></i>
                 </button>
             </div>
         </section>
     </main>
 
+    <div class="tc-test-loading" aria-live="polite" aria-hidden="true"><span>Menyimpan jawaban...</span></div>
+
     <script>
         const testSession = document.getElementById('testSession').value, currentSection = document.getElementById('currentSection').value;
         const csrfToken = document.getElementById('csrfToken').value, mode = document.getElementById('mode').value, targetPart = document.getElementById('targetPart').value;
         const nextBtn = document.getElementById('nextBtn'), prevBtn = document.getElementById('prevBtn');
+        const nextBtnDefault = nextBtn.innerHTML;
         let isNavigating = false, isSubmitting = false;
+
+        function setTestBusy(message) {
+            const loadingText = document.querySelector('.tc-test-loading span');
+            if (loadingText) loadingText.textContent = message;
+            document.body.classList.add('tc-saving');
+        }
+
+        function clearTestBusy() {
+            document.body.classList.remove('tc-saving');
+        }
 
         function saveAnswer(id, ans) {
             return fetch('ajax_save_toeic_answer.php', {
@@ -777,23 +872,23 @@ if ($is_batch) {
 
         async function handleNext() {
             if (isNavigating || isSubmitting) return;
-            isNavigating = true; nextBtn.disabled = true; nextBtn.innerHTML = 'Saving...';
+            isNavigating = true; nextBtn.disabled = true; nextBtn.innerHTML = 'Menyimpan...'; setTestBusy('Menyimpan jawaban...');
             try {
                 await Promise.all(collectAnswers());
                 const nextQ = parseInt(document.getElementById('isBatch').value === '1' ? document.getElementById('lastOrder').value : document.getElementById('currentOrder').value) + 1;
                 if (nextQ <= parseInt(document.getElementById('totalQuestions').value)) {
                     window.location.href = `test_toeic.php?section=${currentSection}&test_session=${testSession}&q=${nextQ}&setup_complete=1&mode=${mode}${targetPart ? '&part='+targetPart : ''}`;
                 } else { submitSection(); }
-            } catch (e) { alert('Save failed: ' + e.message); isNavigating = false; nextBtn.disabled = false; nextBtn.innerHTML = 'Next'; }
+            } catch (e) { alert('Save failed: ' + e.message); isNavigating = false; nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy(); }
         }
 
         function submitSection() {
-            isSubmitting = true; nextBtn.innerHTML = 'Submitting...';
+            isSubmitting = true; nextBtn.innerHTML = 'Mengirim...'; setTestBusy('Mengirim section...');
             fetch('ajax_submit_section_toeic.php', {
                 method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
                 body: JSON.stringify({ test_session: testSession, section: currentSection, mode: mode, target_part: targetPart })
             }).then(r => r.json()).then(d => { if (d.redirect) window.location.href = d.redirect; else throw new Error(d.error); })
-            .catch(e => { alert('Submit failed: '+e.message); isSubmitting = false; nextBtn.disabled = false; });
+            .catch(e => { alert('Submit failed: '+e.message); isSubmitting = false; nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy(); });
         }
 
         document.querySelectorAll('input[type="radio"]').forEach(i => {
@@ -802,6 +897,40 @@ if ($is_batch) {
                 i.closest('.answer-choice').classList.add('selected');
                 saveAnswer(i.dataset.questionId, i.value);
             });
+        });
+
+        document.querySelectorAll('[data-question-map-link="true"]').forEach(link => {
+            link.addEventListener('click', async (event) => {
+                if (isNavigating || isSubmitting) {
+                    event.preventDefault();
+                    return;
+                }
+
+                event.preventDefault();
+                isNavigating = true;
+                setTestBusy('Membuka nomor soal...');
+                try {
+                    await Promise.all(collectAnswers());
+                    window.location.href = link.href;
+                } catch (error) {
+                    alert('Save failed: ' + error.message);
+                    isNavigating = false;
+                    clearTestBusy();
+                }
+            });
+        });
+
+        const activeMapLink = document.querySelector('.toeic-test-map a.active');
+        if (activeMapLink) {
+            setTimeout(() => activeMapLink.scrollIntoView({ block: 'nearest', inline: 'center' }), 80);
+        }
+
+        document.querySelectorAll('.toeic-photo-image').forEach(img => {
+            setTimeout(() => {
+                if (!img.dataset.loaded && (!img.complete || img.naturalWidth === 0)) {
+                    handleToeicPhotoFailure(img);
+                }
+            }, 2500);
         });
 
         let timeLeft = <?php echo (int)$remaining_time; ?>;

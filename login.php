@@ -16,10 +16,19 @@ $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
 $db_unavailable = !($conn instanceof mysqli);
 $error = '';
+$notice = '';
+
+if (($_GET['registered'] ?? '') === '1') {
+    $notice = 'Akun berhasil dibuat. Silakan masuk untuk melanjutkan.';
+} elseif (($_GET['message'] ?? '') === 'logged_out') {
+    $notice = 'Anda sudah logout dari sesi sebelumnya.';
+} elseif (!empty($_GET['message'])) {
+    $notice = trim((string)$_GET['message']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($db_unavailable) {
-        $error = "Login is temporarily unavailable because the database connection failed.";
+        $error = "Login sementara tidak tersedia karena koneksi database gagal.";
     } else {
         $username = trim($_POST['username']);
         $password = $_POST['password'];
@@ -51,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 exit();
             } else {
-                $error = "Invalid credentials.";
+                $error = "Username atau password salah.";
             }
         } else {
-            $error = "Invalid credentials.";
+            $error = "Username atau password salah.";
         }
         $stmt->close();
     }
@@ -95,13 +104,19 @@ $redirect = $_GET['redirect'] ?? '';
             <section class="tc-auth-form-panel">
                 <div class="tc-auth-top">
                     <div>
-                        <span class="tc-panel-label">STUDENT ACCESS</span>
-                        <h1>Sign In</h1>
+                        <span class="tc-panel-label">AKSES SISWA</span>
+                        <h1>Masuk</h1>
                     </div>
                     <a href="index.php" class="tc-icon-link" aria-label="Back to homepage">
-                        <i class="fas fa-house"></i><span>Home</span>
+                        <i class="fas fa-house"></i><span>Beranda</span>
                     </a>
                 </div>
+
+                <?php if ($notice): ?>
+                    <div class="alert alert-success rounded-3 mb-4 border-0" style="background: #f0fdf4; color: #15803d; font-weight: 600;">
+                        <i class="fas fa-check-circle me-2"></i> <?php echo htmlspecialchars($notice); ?>
+                    </div>
+                <?php endif; ?>
 
                 <?php if ($error): ?>
                     <div class="alert alert-danger rounded-3 mb-4 border-0" style="background: #fff1f2; color: #be123c; font-weight: 600;">
@@ -120,13 +135,13 @@ $redirect = $_GET['redirect'] ?? '';
                         <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
                     </div>
                     <button type="submit" class="tc-button w-100 mb-4">
-                        <i class="fas fa-arrow-right-to-bracket me-2"></i>Login to My Account
+                        <i class="fas fa-arrow-right-to-bracket me-2"></i>Masuk ke Akun
                     </button>
                 </form>
 
                 <div class="tc-auth-foot">
-                    <p class="text-muted mb-0">Don't have an account?</p>
-                    <a href="register.php<?php echo $redirect !== '' ? '?redirect=' . urlencode($redirect) : ''; ?>" class="fw-bold text-decoration-none" style="color: var(--focus-blue);">Create free account <i class="fas fa-arrow-right ms-1"></i></a>
+                    <p class="text-muted mb-0">Belum punya akun?</p>
+                    <a href="register.php<?php echo $redirect !== '' ? '?redirect=' . urlencode($redirect) : ''; ?>" class="fw-bold text-decoration-none" style="color: var(--focus-blue);">Buat akun gratis <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </section>
         </div>

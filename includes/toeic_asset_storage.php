@@ -72,6 +72,28 @@ function toeicAssetPathCandidates($filePath, $kind) {
         $candidates[] = $basename;
     }
 
+    if (strtolower((string)$kind) === 'photo') {
+        $withVariants = $candidates;
+        foreach ($candidates as $candidate) {
+            if (preg_match('#^https?://#i', $candidate)) {
+                continue;
+            }
+
+            $extension = strtolower(pathinfo($candidate, PATHINFO_EXTENSION));
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'], true)) {
+                continue;
+            }
+
+            $stem = substr($candidate, 0, -(strlen($extension) + 1));
+            foreach (['jpg', 'jpeg', 'png', 'webp'] as $variantExtension) {
+                if ($variantExtension !== $extension) {
+                    $withVariants[] = $stem . '.' . $variantExtension;
+                }
+            }
+        }
+        $candidates = $withVariants;
+    }
+
     return toeicUniqueAssetValues($candidates);
 }
 

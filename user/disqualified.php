@@ -2,11 +2,34 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_quality_helpers.php';
 
 $test_session = $_GET['session'] ?? '';
 if (!preg_match('/^[a-zA-Z0-9_-]+$/', $test_session)) $test_session = '';
 
 $website_title = getWebsiteTitle();
+
+if ($test_session !== '' && isset($_SESSION['user_id'])) {
+    $session_summary = toeicGetSessionSummary($conn, (int)$_SESSION['user_id'], $test_session);
+    if ($session_summary && !empty($session_summary['practice_mode'])) {
+        $_SESSION['toeic_test_session'] = $test_session;
+        $_SESSION['test_session'] = $test_session;
+        $_SESSION['test_format'] = 'toeic';
+
+        $part = preg_replace('/[^1-7]/', '', (string)($session_summary['target_part'] ?? ''));
+        if (($session_summary['status'] ?? '') === 'completed') {
+            $target = 'result_toeic.php?session=' . urlencode($test_session);
+        } else {
+            $section = $session_summary['current_section'] ?: 'listening';
+            $target = 'test_toeic.php?resume=1&test_session=' . urlencode($test_session) . '&section=' . urlencode($section) . '&setup_complete=1&mode=prep';
+            if ($part !== '') {
+                $target .= '&part=' . urlencode($part);
+            }
+        }
+
+        toeicRedirectWithFlash($target, 'info', 'Mode practice tidak memakai proctoring. Sesi latihan Anda bisa dilanjutkan.');
+    }
+}
 
 unset($_SESSION['test_session'], $_SESSION['test_session_2026'], $_SESSION['toeic_test_session']);
 ?>

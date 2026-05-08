@@ -24,17 +24,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $confirm_password = $_POST['confirm_password'];
 
     if (empty($full_name) || empty($username) || empty($password) || empty($confirm_password)) {
-        $error = "All fields are required.";
+        $error = "Semua field wajib diisi.";
     } elseif ($password !== $confirm_password) {
-        $error = "Passwords do not match.";
+        $error = "Konfirmasi password tidak cocok.";
     } elseif (strlen($password) < 6) {
-        $error = "Password must be at least 6 characters long.";
+        $error = "Password minimal 6 karakter.";
     } else {
         $stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         if ($stmt->get_result()->num_rows > 0) {
-            $error = "Username already exists.";
+            $error = "Username sudah digunakan.";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $role = 'student';
@@ -43,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->execute()) {
                 $new_user_id = $conn->insert_id;
                 grantTestCredit($conn, $new_user_id, 'toeic', 'FREE_TRIAL');
-                $success = "Registration successful! You can now log in.";
-                header("refresh:2;url=login.php");
+                header("Location: login.php?registered=1");
+                exit();
             } else {
-                $error = "Registration failed: " . $conn->error;
+                $error = "Pendaftaran gagal: " . $conn->error;
             }
         }
         $stmt->close();
@@ -86,11 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <section class="tc-auth-form-panel">
                 <div class="tc-auth-top">
                     <div>
-                        <span class="tc-panel-label">NEW STUDENT</span>
-                        <h1>Create Account</h1>
+                        <span class="tc-panel-label">SISWA BARU</span>
+                        <h1>Buat Akun</h1>
                     </div>
                     <a href="login.php" class="tc-icon-link" aria-label="Back to login page">
-                        <i class="fas fa-arrow-right-to-bracket"></i><span>Login</span>
+                        <i class="fas fa-arrow-right-to-bracket"></i><span>Masuk</span>
                     </a>
                 </div>
 
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form method="POST">
                     <div class="row g-3">
                         <div class="col-12">
-                            <label class="toeic-field-label" for="full_name">Full Name</label>
+                            <label class="toeic-field-label" for="full_name">Nama Lengkap</label>
                             <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Raka Pratama" required>
                         </div>
                         <div class="col-12">
@@ -121,19 +121,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="toeic-field-label" for="confirm_password">Confirm</label>
+                            <label class="toeic-field-label" for="confirm_password">Konfirmasi</label>
                             <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
                         </div>
                         <div class="col-12 pt-3">
                             <button type="submit" class="tc-button w-100">
-                                <i class="fas fa-user-plus me-2"></i>Create My Free Account
+                                <i class="fas fa-user-plus me-2"></i>Buat Akun Gratis
                             </button>
                         </div>
                     </div>
                 </form>
 
                 <div class="tc-auth-foot small">
-                    By registering, you agree to our <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>.
+                    Dengan mendaftar, Anda menyetujui <a href="#" class="text-decoration-none">Ketentuan Layanan</a> dan <a href="#" class="text-decoration-none">Kebijakan Privasi</a>.
                 </div>
             </section>
         </div>
