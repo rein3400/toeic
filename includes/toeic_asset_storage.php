@@ -48,6 +48,11 @@ function toeicAssetPathCandidates($filePath, $kind) {
         $basename = basename((string)$parsedPath);
         if ($basename !== '' && $basename !== '/' && $basename !== '.') {
             $paths[] = $basename;
+            if (strtolower((string)$kind) === 'photo') {
+                foreach (toeicPhotoExtensionVariants($basename) as $variant) {
+                    $paths[] = $variant;
+                }
+            }
         }
         return toeicUniqueAssetValues($paths);
     }
@@ -79,22 +84,31 @@ function toeicAssetPathCandidates($filePath, $kind) {
                 continue;
             }
 
-            $extension = strtolower(pathinfo($candidate, PATHINFO_EXTENSION));
-            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'], true)) {
-                continue;
-            }
-
-            $stem = substr($candidate, 0, -(strlen($extension) + 1));
-            foreach (['jpg', 'jpeg', 'png', 'webp'] as $variantExtension) {
-                if ($variantExtension !== $extension) {
-                    $withVariants[] = $stem . '.' . $variantExtension;
-                }
+            foreach (toeicPhotoExtensionVariants($candidate) as $variant) {
+                $withVariants[] = $variant;
             }
         }
         $candidates = $withVariants;
     }
 
     return toeicUniqueAssetValues($candidates);
+}
+
+function toeicPhotoExtensionVariants($path) {
+    $extension = strtolower(pathinfo((string)$path, PATHINFO_EXTENSION));
+    if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp'], true)) {
+        return [(string)$path];
+    }
+
+    $stem = substr((string)$path, 0, -(strlen($extension) + 1));
+    $variants = [(string)$path];
+    foreach (['jpg', 'jpeg', 'png', 'webp'] as $variantExtension) {
+        if ($variantExtension !== $extension) {
+            $variants[] = $stem . '.' . $variantExtension;
+        }
+    }
+
+    return $variants;
 }
 
 function toeicAssetRemoteUrlCandidates($filePath, $kind) {

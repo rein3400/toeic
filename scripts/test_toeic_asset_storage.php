@@ -24,7 +24,7 @@ putenv('R2_PUBLIC_BASE_URL');
 putenv('R2_PHOTO_PUBLIC_BASE_URL');
 
 $localCandidates = toeicPhotoUrlCandidates('uploads/toeic_photos/toeic_p1_01.png');
-assertSame('../uploads/toeic_photos/toeic_p1_01.png', $localCandidates[0] ?? null, 'local path keeps uploads-based candidate first');
+assertSame('../uploads/toeic_photos/toeic_p1_01.jpg', $localCandidates[0] ?? null, 'local path prefers existing extension variant first');
 assertTrue(
     in_array('../uploads/toeic_photos/toeic_p1_01.png', $localCandidates, true),
     'local candidates include uploads/toeic_photos fallback'
@@ -47,13 +47,13 @@ assertTrue(
 
 $existingLocalPreferred = toeicPhotoUrlCandidates('toeic_p1_02.png');
 assertSame(
-    '../uploads/toeic_photos/toeic_p1_02.png',
+    '../uploads/toeic_photos/toeic_p1_02.jpg',
     $existingLocalPreferred[0] ?? null,
     'existing local photo is preferred over remote candidate'
 );
 
 $absoluteUrl = toeicPhotoUrlCandidates('https://static.example.com/toeic_p1_03.png');
-assertSame('../uploads/toeic_photos/toeic_p1_03.png', $absoluteUrl[0] ?? null, 'existing local file is preferred over absolute remote URL');
+assertSame('../uploads/toeic_photos/toeic_p1_03.jpg', $absoluteUrl[0] ?? null, 'existing local extension variant is preferred over absolute remote URL');
 assertTrue(
     in_array('https://static.example.com/toeic_p1_03.png', $absoluteUrl, true),
     'absolute remote URL is retained as a later fallback candidate'
