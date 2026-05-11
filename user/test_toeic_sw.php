@@ -133,6 +133,11 @@ $section_detail = $section === 'speaking'
     ? '11 questions, ETS-style prepare and record timing'
     : '8 questions, autosave, word count, and writing timers';
 $mode_label = $practice_mode ? 'Practice' : 'Full Simulation';
+$answered_count = count(array_filter($progress));
+$total_questions = $question_count;
+$remaining_time = max(0, $section_deadline - time());
+$page_title = $practice_mode ? 'TOEIC SW Practice' : 'TOEIC SW Full Simulation';
+$context_title = $section === 'speaking' ? 'Speaking Context' : 'Writing Context';
 
 function toeicSwH($value): string {
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
@@ -165,73 +170,121 @@ function toeicSwRenderPrompt(array $question): void {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <?= csrfMeta() ?>
-    <title>TOEIC SW <?php echo toeicSwH($section_label); ?> - <?php echo toeicSwH($website_title); ?></title>
+    <title><?php echo toeicSwH($page_title); ?> - <?php echo toeicSwH($section_label); ?> - <?php echo toeicSwH($website_title); ?></title>
     <?php echo getFaviconHTML(); ?>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="<?php echo toeicSwH(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00A68C",
+                        "primary-hover": "#008F78",
+                        "sunbeam": "#F26722",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        display: ["Instrument Sans", "sans-serif"],
+                        serif: ["Instrument Sans", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                }
+            }
+        };
+    </script>
     <style>
-        .sw-topbar {
+        .toeic-test-statusbar {
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: auto minmax(0, 1fr);
             gap: 1rem;
             align-items: center;
+            padding: 1rem 2rem;
             background: white;
-            border: 1px solid var(--cloud-line);
-            border-radius: 12px;
-            padding: 1rem;
+            border-bottom: 2px solid var(--cloud-line);
         }
-        .sw-timer {
-            min-width: 120px;
-            text-align: center;
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--focus-blue);
-        }
-        .tc-test-page {
-            padding-bottom: 106px;
-        }
-        .sw-test-grid {
+        .toeic-test-map {
             display: grid;
-            grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
-            gap: 1rem;
-            align-items: start;
+            grid-auto-flow: column;
+            grid-auto-columns: 42px;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 2px 2px 8px;
+            scroll-snap-type: x proximity;
+            scrollbar-gutter: stable;
         }
-        .sw-progress-panel {
-            position: sticky;
-            top: 82px;
-            z-index: 5;
-        }
-        .sw-progress-panel .study-kicker {
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        .sw-question-stage {
-            min-width: 0;
-        }
-        .sw-question {
+        .toeic-test-map button {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
             border: 1px solid var(--cloud-line);
-            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--muted-slate);
             background: white;
-            padding: 1.25rem;
-            margin-bottom: 0;
+            scroll-snap-align: center;
+            line-height: 1;
+            transition: 0.15s ease;
         }
-        .sw-question[hidden] {
-            display: none !important;
+        .toeic-test-map button.done {
+            background: var(--academy-blue);
+            color: white;
+            border-color: var(--academy-blue);
         }
-        .sw-question.active {
-            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+        .toeic-test-map button.active {
+            border: 2px solid var(--focus-blue);
+            color: var(--focus-blue);
+            background: var(--sunbeam-yellow);
+            outline: 3px solid rgba(242, 103, 34, 0.18);
         }
+        .toeic-test-map button:disabled {
+            opacity: 0.48;
+            cursor: not-allowed;
+        }
+
+        .tc-test-loading {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.18);
+            backdrop-filter: blur(2px);
+        }
+        body.tc-saving .tc-test-loading { display: flex; }
+        .tc-test-loading span {
+            padding: 0.9rem 1.2rem;
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--focus-blue);
+            font-weight: 800;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.14);
+        }
+
+        .sw-question[hidden] { display: none !important; }
+        .sw-question.active { display: block; }
         .sw-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin: 0.9rem 0 1.1rem;
         }
         .sw-pill {
             border: 1px solid rgba(72,127,181,0.2);
@@ -240,15 +293,18 @@ function toeicSwRenderPrompt(array $question): void {
             border-radius: 999px;
             padding: 0.25rem 0.65rem;
             font-size: 0.78rem;
-            font-weight: 700;
+            font-weight: 800;
+            white-space: nowrap;
         }
-        .sw-prompt-text, .sw-info-card, .sw-repeat-box {
+        .sw-prompt-text,
+        .sw-info-card,
+        .sw-repeat-box {
             background: rgba(72,127,181,0.05);
             border: 1px solid rgba(72,127,181,0.14);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 1rem;
             color: #1f2937;
-            line-height: 1.65;
+            line-height: 1.7;
         }
         .sw-info-card {
             background: #fff9e6;
@@ -257,16 +313,17 @@ function toeicSwRenderPrompt(array $question): void {
         .sw-mini-label {
             color: var(--muted-slate);
             font-size: 0.72rem;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 0.35rem;
+            letter-spacing: 0.02em;
         }
         .sw-image-frame {
             width: 100%;
-            max-width: 620px;
+            max-width: 680px;
             background: #f8fafc;
             border: 1px solid var(--cloud-line);
-            border-radius: 10px;
+            border-radius: 16px;
             overflow: hidden;
         }
         .sw-image-frame img {
@@ -278,99 +335,85 @@ function toeicSwRenderPrompt(array $question): void {
             max-width: 560px;
         }
         .sw-answer-box {
-            min-height: 130px;
+            min-height: 170px;
+            width: 100%;
             resize: vertical;
+            border: 2px solid var(--cloud-line);
+            border-radius: 16px;
+            padding: 1rem;
+            font: inherit;
+            color: #0f172a;
+            background: white;
+        }
+        .sw-answer-box:focus {
+            border-color: var(--focus-blue);
+            outline: 3px solid rgba(72, 127, 181, 0.14);
         }
         .sw-status {
             min-height: 1.25rem;
             font-size: 0.82rem;
             color: var(--muted-slate);
+            text-align: right;
         }
         .sw-status.saved { color: #059669; }
         .sw-status.pending { color: #f59e0b; }
-        .sw-status.error { color: #dc2626; font-weight: 700; }
-        .sw-section-map {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.85rem;
-        }
-        .sw-section-map button {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--cloud-line);
-            font-weight: 800;
-            font-size: 0.8rem;
-            color: var(--muted-slate);
-            background: white;
-            transition: 0.15s ease;
-        }
-        .sw-section-map button.done {
-            background: var(--academy-blue);
-            color: white;
-            border-color: var(--academy-blue);
-        }
-        .sw-section-map button.active {
-            outline: 2px solid rgba(72,127,181,0.28);
-            color: var(--focus-blue);
-            border-color: var(--focus-blue);
-        }
-        .sw-section-map button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .sw-status.error { color: #dc2626; font-weight: 800; }
         .sw-record-panel {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
             align-items: center;
-            border-top: 1px solid var(--cloud-line);
-            margin-top: 1.2rem;
-            padding-top: 1rem;
+            border-top: 2px solid var(--cloud-line);
+            margin-top: 1.3rem;
+            padding-top: 1.1rem;
         }
         .sw-record-panel audio {
-            max-width: 320px;
-            width: min(320px, 100%);
+            max-width: 360px;
+            width: min(360px, 100%);
         }
-        .sw-command-bar {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--cloud-line);
-            box-shadow: 0 -18px 42px rgba(15, 23, 42, 0.08);
-            padding: 0.75rem 0;
-        }
-        .sw-command-inner {
+        .sw-context-list {
             display: grid;
-            grid-template-columns: auto minmax(90px, 120px) auto minmax(220px, 1fr);
             gap: 0.65rem;
+        }
+        .sw-context-list li {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.24);
+            padding-bottom: 0.65rem;
+            font-size: 0.92rem;
+        }
+        .sw-context-list li:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        .sw-context-list strong {
+            color: #0f172a;
+        }
+        .sw-action-footer {
+            display: grid;
+            grid-template-columns: auto minmax(70px, 1fr) auto auto;
+            grid-template-areas:
+                "previous counter next submit"
+                "message message message message";
+            gap: 0.85rem;
             align-items: center;
         }
+        #sw-prev-question { grid-area: previous; }
+        .sw-current-counter { grid-area: counter; }
+        #sw-next-question { grid-area: next; }
+        #sw-submit-section { grid-area: submit; }
         .sw-current-counter {
             text-align: center;
-            font-weight: 800;
+            font-weight: 900;
             color: var(--focus-blue);
             white-space: nowrap;
         }
-        .sw-submit-area {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 0.75rem;
-            align-items: center;
-            justify-self: end;
-            width: min(520px, 100%);
-        }
         #sw-submit-message {
+            grid-area: message;
             min-height: 1.2rem;
             text-align: right;
+            color: var(--muted-slate);
         }
         #sw-submit-section:disabled,
         #sw-prev-question:disabled,
@@ -390,13 +433,8 @@ function toeicSwRenderPrompt(array $question): void {
             text-align: center;
             padding: 1.5rem;
         }
-        .sw-scoring-overlay.active {
-            display: flex;
-        }
-        .sw-scoring-box {
-            max-width: 420px;
-            width: 100%;
-        }
+        .sw-scoring-overlay.active { display: flex; }
+        .sw-scoring-box { max-width: 420px; width: 100%; }
         .sw-scoring-spinner {
             width: 54px;
             height: 54px;
@@ -406,203 +444,266 @@ function toeicSwRenderPrompt(array $question): void {
             animation: swSpin 0.9s linear infinite;
             margin: 0 auto 1rem;
         }
-        @keyframes swSpin {
-            to { transform: rotate(360deg); }
-        }
-        @media (max-width: 768px) {
-            .sw-topbar { grid-template-columns: 1fr; }
-            .sw-timer { text-align: left; }
-            .tc-test-page {
-                padding-bottom: 176px;
+        @keyframes swSpin { to { transform: rotate(360deg); } }
+
+        aside { background: white !important; }
+        main { background: var(--study-cream) !important; }
+
+        @media (max-width: 900px) {
+            body.tc-test-page {
+                min-height: 100vh;
+                height: auto;
+                overflow: auto;
+                padding-bottom: 210px;
             }
-            .sw-test-grid {
-                grid-template-columns: 1fr;
+            .sw-main-shell {
+                display: block;
+                overflow: visible;
             }
-            .sw-progress-panel {
-                position: static;
-                order: 2;
+            .sw-context-pane {
+                width: 100%;
+                min-width: 0;
+                border-right: 0;
+                border-bottom: 4px solid #e2e8f0;
             }
-            .sw-question-stage {
-                order: 1;
+            .sw-context-pane .sw-context-scroll {
+                padding: 1rem;
             }
-            .sw-command-inner {
+            .sw-question-pane {
+                min-height: 72vh;
+                overflow: visible;
+            }
+            .sw-question-scroll {
+                padding: 1rem;
+                overflow: visible;
+            }
+            .sw-action-footer {
                 grid-template-columns: 1fr 1fr;
+                grid-template-areas:
+                    "counter counter"
+                    "previous next"
+                    "message message"
+                    "submit submit";
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 20;
+                padding: 0.85rem 1rem;
+                background: #ffffff;
+                border-top: 4px solid #e2e8f0;
+                box-shadow: 0 -18px 42px rgba(15, 23, 42, 0.12);
             }
-            .sw-current-counter {
-                grid-column: 1 / -1;
-                order: -1;
-            }
-            .sw-submit-area {
-                grid-column: 1 / -1;
-                grid-template-columns: 1fr;
-                justify-self: stretch;
-            }
+            .sw-current-counter,
             #sw-submit-message {
-                text-align: left;
+                grid-column: 1 / -1;
+                text-align: center;
             }
             #sw-submit-section {
+                grid-column: 1 / -1;
                 width: 100%;
+            }
+            .toeic-test-statusbar {
+                grid-template-columns: 1fr;
+                padding: 0.85rem 1rem;
             }
         }
     </style>
 </head>
-<body class="tc-user-page tc-test-page">
-    <header class="navbar py-2 border-bottom shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand study-headline mb-0" href="index.php">
-                <span class="avatar-circle d-inline-flex me-2" style="width:32px; height:32px; font-size:14px;">T</span>
-                <?php echo toeicSwH($website_title); ?>
+<body class="font-display h-screen flex flex-col overflow-hidden tc-test-page">
+    <header class="bg-white border-b-4 border-slate-200 z-10 shrink-0">
+        <div class="px-6 py-3 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="avatar-circle" style="width:40px; height:40px;">T</span>
+                <div class="min-w-0">
+                    <h1 class="text-base font-extrabold text-primary leading-tight truncate"><?php echo toeicSwH($page_title); ?></h1>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                        <?php echo toeicSwH($section_label); ?> &middot; TOEIC SW
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-xl border-2 border-slate-100">
+                <span class="material-symbols-outlined text-slate-400">timer</span>
+                <div class="font-mono font-bold text-xl text-primary" id="sw-section-timer"><?php echo gmdate('i:s', $remaining_time); ?></div>
+            </div>
+            <a href="index.php" onclick="return confirm('Exit exam? Progress is saved.');" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
+                Quit
             </a>
-            <a href="index.php" class="study-button study-button-secondary py-2 px-3" style="min-height:40px;font-size:13px;">Dashboard</a>
+        </div>
+        <div class="toeic-test-statusbar">
+            <div class="shrink-0">
+                <div class="text-xs font-black text-slate-400 uppercase mb-1">Progress</div>
+                <div class="text-sm font-bold text-primary"><?php echo (int)$answered_count; ?> / <?php echo (int)$total_questions; ?></div>
+            </div>
+            <div class="toeic-test-map sw-section-map">
+                <?php foreach ($questions as $map_index => $map_question): ?>
+                    <?php
+                    $map_number = (int)$map_question['question_order'];
+                    $map_done = !empty($progress[$map_number]);
+                    $map_classes = [];
+                    if ($map_done) $map_classes[] = 'done';
+                    if ($map_index === 0) $map_classes[] = 'active';
+                    ?>
+                    <button type="button"
+                            class="<?php echo toeicSwH(implode(' ', $map_classes)); ?>"
+                            data-question-jump="<?php echo (int)$map_index; ?>"
+                            aria-label="Go to question <?php echo $map_number; ?>"
+                            onclick="showToeicSwQuestion(<?php echo (int)$map_index; ?>)">
+                        <?php echo $map_number; ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
         </div>
     </header>
 
-    <main class="toeic-page-shell">
-        <section class="sw-topbar mb-4">
-            <div>
-                <span class="study-kicker">TOEIC SW <?php echo toeicSwH($mode_label); ?></span>
-                <h1 class="h3 mb-1"><?php echo toeicSwH($section_label); ?> Section</h1>
-                <p class="mb-0 text-muted"><?php echo toeicSwH($section_detail); ?></p>
+    <main class="flex-1 flex overflow-hidden sw-main-shell">
+        <aside class="w-1/2 min-w-[500px] border-r-4 border-slate-200 flex flex-col sw-context-pane">
+            <div class="flex items-center justify-between px-6 py-4 border-b-2 border-slate-100 bg-white shrink-0">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest"><?php echo toeicSwH($context_title); ?></h3>
+                <span class="study-pill" style="font-size:10px; background:var(--sunbeam-yellow); border-radius:8px; padding: 4px 8px;"><?php echo toeicSwH($mode_label); ?></span>
             </div>
-            <div class="sw-timer" id="sw-section-timer">--:--</div>
-        </section>
 
-        <div class="sw-test-grid">
-        <section class="study-card sw-progress-panel mb-4">
-            <div>
-                <div>
-                    <span class="study-kicker">Progress</span>
-                    <div class="fw-bold"><?php echo $question_count; ?> questions in this section</div>
+            <div class="flex-1 overflow-y-auto p-8 pb-20 sw-context-scroll">
+                <div class="study-card mb-6">
+                    <span class="study-kicker">Current Section</span>
+                    <h2 class="text-2xl font-extrabold text-slate-950 mt-2 mb-2"><?php echo toeicSwH($section_label); ?> Section</h2>
+                    <p class="text-slate-500 font-semibold mb-0"><?php echo toeicSwH($section_detail); ?></p>
                 </div>
-                <div class="sw-section-map">
-                    <?php foreach ($questions as $map_index => $map_question): ?>
-                        <?php
-                        $map_number = (int)$map_question['question_order'];
-                        $map_done = !empty($progress[$map_number]);
-                        ?>
-                        <button type="button"
-                                class="<?php echo $map_done ? 'done' : ''; ?>"
-                                data-question-jump="<?php echo (int)$map_index; ?>"
-                                aria-label="Go to question <?php echo $map_number; ?>"
-                                onclick="showToeicSwQuestion(<?php echo (int)$map_index; ?>)">
-                            <?php echo $map_number; ?>
-                        </button>
-                    <?php endforeach; ?>
+
+                <div class="study-card mb-6">
+                    <span class="study-kicker">Section Setup</span>
+                    <ul class="sw-context-list mt-4">
+                        <li><span>Questions</span><strong><?php echo (int)$question_count; ?></strong></li>
+                        <li><span>Mode</span><strong><?php echo toeicSwH($mode_label); ?></strong></li>
+                        <li><span>Score scale</span><strong>0-200</strong></li>
+                        <li><span>Order</span><strong><?php echo $section === 'speaking' ? 'Speaking first' : 'Writing second'; ?></strong></li>
+                    </ul>
+                </div>
+
+                <div class="study-card" style="background:var(--academy-blue); color:white; border:none;">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-black uppercase opacity-75"><?php echo $section === 'speaking' ? 'Recording Flow' : 'Writing Flow'; ?></span>
+                        <i class="fas <?php echo $section === 'speaking' ? 'fa-microphone' : 'fa-keyboard'; ?>"></i>
+                    </div>
+                    <p class="mb-0 text-sm leading-relaxed opacity-90">
+                        <?php echo $section === 'speaking'
+                            ? 'Prepare, record, and wait for the upload status before moving to the next response.'
+                            : 'Type your response in the answer box. Responses autosave while you write.'; ?>
+                    </p>
                 </div>
             </div>
-        </section>
+        </aside>
 
-        <div class="sw-question-stage">
-        <?php foreach ($questions as $question_index => $question): ?>
-            <?php
-            $row_id = (int)$question['id'];
-            $number = (int)$question['question_order'];
-            $type = (string)$question['question_type'];
-            $task_info = getToeicSwTaskInfo($section, $number) ?: [];
-            $content = $question['content'] ?? [];
-            $required_words = json_decode((string)($content['required_words_json'] ?? '[]'), true) ?: [];
-            $has_answer = trim((string)($question['user_answer'] ?? $question['source_path'] ?? '')) !== '';
-            $playback_src = $section === 'speaking' ? toeicSwMediaUrl($question['source_path'] ?? '') : '';
-            ?>
-            <section class="sw-question question-card <?php echo $question_index === 0 ? 'active' : ''; ?>"
-                     id="question-<?php echo $row_id; ?>"
-                     data-question="<?php echo (int)$question_index; ?>"
-                     data-row-id="<?php echo $row_id; ?>"
-                     data-section="<?php echo toeicSwH($section); ?>"
-                     data-type="<?php echo toeicSwH($type); ?>"
-                     data-question-number="<?php echo $number; ?>"
-                     data-has-answer="<?php echo $has_answer ? '1' : '0'; ?>"
-                     <?php echo $question_index === 0 ? '' : 'hidden'; ?>>
-                <div class="d-flex flex-wrap justify-content-between gap-3 mb-2">
-                    <div>
-                        <span class="study-kicker">Question <?php echo $number; ?></span>
-                        <h2 class="h5 mb-0"><?php echo toeicSwH($task_info['label'] ?? $type); ?></h2>
-                    </div>
-                    <div class="sw-status" id="sw-status-<?php echo $row_id; ?>"></div>
-                </div>
-
-                <div class="sw-meta">
-                    <span class="sw-pill"><?php echo toeicSwH($task_info['part'] ?? 'SW'); ?></span>
-                    <?php if (!empty($question['prepare_seconds'])): ?>
-                        <span class="sw-pill">Prepare <?php echo (int)$question['prepare_seconds']; ?>s</span>
-                    <?php endif; ?>
-                    <?php if (!empty($question['read_seconds'])): ?>
-                        <span class="sw-pill">Read <?php echo (int)$question['read_seconds']; ?>s</span>
-                    <?php endif; ?>
-                    <?php if (!empty($question['response_seconds'])): ?>
-                        <span class="sw-pill">Response <?php echo (int)$question['response_seconds']; ?>s</span>
-                    <?php endif; ?>
-                    <?php if (!empty($question['task_minutes'])): ?>
-                        <span class="sw-pill">Task <?php echo (int)$question['task_minutes']; ?>m</span>
-                    <?php endif; ?>
-                    <?php if ($type === 'write_opinion_essay'): ?>
-                        <span class="sw-pill">Target 300+ words</span>
-                    <?php endif; ?>
-                </div>
-
-                <?php toeicSwRenderPrompt($question); ?>
-
-                <?php if ($section === 'speaking'): ?>
-                    <div class="sw-record-panel">
-                        <button type="button" id="record-btn-<?php echo $row_id; ?>" class="study-button py-2 px-3" onclick="startToeicSwPrepare(<?php echo $row_id; ?>, <?php echo (int)$question['prepare_seconds']; ?>, <?php echo (int)$question['response_seconds']; ?>)">
-                            <i class="fas fa-hourglass-start me-2"></i>Start Prepare
-                        </button>
-                        <span class="fw-bold text-muted" id="sw-record-timer-<?php echo $row_id; ?>"></span>
-                        <audio id="sw-playback-<?php echo $row_id; ?>" controls <?php echo $playback_src ? 'src="' . toeicSwH($playback_src) . '"' : 'hidden'; ?>></audio>
-                    </div>
-                <?php else: ?>
-                    <?php if ($required_words): ?>
-                        <div class="mt-3">
-                            <div class="sw-mini-label">Required words or phrases</div>
-                            <div class="d-flex flex-wrap gap-2">
-                                <?php foreach ($required_words as $word): ?>
-                                    <span class="sw-pill"><?php echo toeicSwH($word); ?></span>
-                                <?php endforeach; ?>
+        <section class="flex-1 flex flex-col relative overflow-hidden sw-question-pane">
+            <div class="flex-1 overflow-y-auto p-8 space-y-6 sw-question-scroll">
+                <?php foreach ($questions as $question_index => $question): ?>
+                    <?php
+                    $row_id = (int)$question['id'];
+                    $number = (int)$question['question_order'];
+                    $type = (string)$question['question_type'];
+                    $task_info = getToeicSwTaskInfo($section, $number) ?: [];
+                    $content = $question['content'] ?? [];
+                    $required_words = json_decode((string)($content['required_words_json'] ?? '[]'), true) ?: [];
+                    $has_answer = trim((string)($question['user_answer'] ?? $question['source_path'] ?? '')) !== '';
+                    $playback_src = $section === 'speaking' ? toeicSwMediaUrl($question['source_path'] ?? '') : '';
+                    ?>
+                    <section class="sw-question study-card <?php echo $question_index === 0 ? 'active' : ''; ?>"
+                             id="question-<?php echo $row_id; ?>"
+                             data-question="<?php echo (int)$question_index; ?>"
+                             data-row-id="<?php echo $row_id; ?>"
+                             data-section="<?php echo toeicSwH($section); ?>"
+                             data-type="<?php echo toeicSwH($type); ?>"
+                             data-question-number="<?php echo $number; ?>"
+                             data-has-answer="<?php echo $has_answer ? '1' : '0'; ?>"
+                             <?php echo $question_index === 0 ? '' : 'hidden'; ?>>
+                        <div class="flex flex-wrap justify-between gap-3">
+                            <div>
+                                <span class="study-kicker">Question <?php echo $number; ?></span>
+                                <h2 class="text-2xl font-extrabold text-slate-950 mt-2 mb-0"><?php echo toeicSwH($task_info['label'] ?? $type); ?></h2>
                             </div>
+                            <div class="sw-status" id="sw-status-<?php echo $row_id; ?>"></div>
                         </div>
-                    <?php endif; ?>
-                    <div class="mt-3">
-                        <textarea class="form-control sw-answer-box" data-row-id="<?php echo $row_id; ?>" placeholder="Type your answer here..."><?php echo toeicSwH($question['user_answer'] ?? ''); ?></textarea>
-                        <div class="d-flex justify-content-between small text-muted mt-2">
-                            <span id="sw-word-count-<?php echo $row_id; ?>">0 words</span>
+
+                        <div class="sw-meta">
+                            <span class="sw-pill"><?php echo toeicSwH($task_info['part'] ?? 'SW'); ?></span>
+                            <?php if (!empty($question['prepare_seconds'])): ?>
+                                <span class="sw-pill">Prepare <?php echo (int)$question['prepare_seconds']; ?>s</span>
+                            <?php endif; ?>
+                            <?php if (!empty($question['read_seconds'])): ?>
+                                <span class="sw-pill">Read <?php echo (int)$question['read_seconds']; ?>s</span>
+                            <?php endif; ?>
+                            <?php if (!empty($question['response_seconds'])): ?>
+                                <span class="sw-pill">Response <?php echo (int)$question['response_seconds']; ?>s</span>
+                            <?php endif; ?>
+                            <?php if (!empty($question['task_minutes'])): ?>
+                                <span class="sw-pill">Task <?php echo (int)$question['task_minutes']; ?>m</span>
+                            <?php endif; ?>
                             <?php if ($type === 'write_opinion_essay'): ?>
-                                <span>300 words is a quality target, not a submit blocker.</span>
+                                <span class="sw-pill">Target 300+ words</span>
                             <?php endif; ?>
                         </div>
-                    </div>
-                <?php endif; ?>
-            </section>
-        <?php endforeach; ?>
-        </div>
-        </div>
-    </main>
 
-    <div class="sw-command-bar">
-        <div class="container sw-command-inner">
-            <button type="button" id="sw-prev-question" class="study-button study-button-secondary py-2 px-3" onclick="prevToeicSwQuestion()">
-                <i class="fas fa-arrow-left me-2"></i>Previous
-            </button>
-            <div class="sw-current-counter">
-                <span id="sw-current-question">1</span>/<span id="sw-total-questions"><?php echo $question_count; ?></span>
+                        <?php toeicSwRenderPrompt($question); ?>
+
+                        <?php if ($section === 'speaking'): ?>
+                            <div class="sw-record-panel">
+                                <button type="button" id="record-btn-<?php echo $row_id; ?>" class="study-button py-2 px-3" onclick="startToeicSwPrepare(<?php echo $row_id; ?>, <?php echo (int)$question['prepare_seconds']; ?>, <?php echo (int)$question['response_seconds']; ?>)">
+                                    <i class="fas fa-hourglass-start me-2"></i>Start Prepare
+                                </button>
+                                <span class="font-bold text-slate-500" id="sw-record-timer-<?php echo $row_id; ?>"></span>
+                                <audio id="sw-playback-<?php echo $row_id; ?>" controls <?php echo $playback_src ? 'src="' . toeicSwH($playback_src) . '"' : 'hidden'; ?>></audio>
+                            </div>
+                        <?php else: ?>
+                            <?php if ($required_words): ?>
+                                <div class="mt-5">
+                                    <div class="sw-mini-label">Required words or phrases</div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <?php foreach ($required_words as $word): ?>
+                                            <span class="sw-pill"><?php echo toeicSwH($word); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="mt-5">
+                                <textarea class="sw-answer-box" data-row-id="<?php echo $row_id; ?>" placeholder="Type your answer here..."><?php echo toeicSwH($question['user_answer'] ?? ''); ?></textarea>
+                                <div class="flex flex-wrap justify-between gap-2 text-sm text-slate-500 mt-2">
+                                    <span id="sw-word-count-<?php echo $row_id; ?>">0 words</span>
+                                    <?php if ($type === 'write_opinion_essay'): ?>
+                                        <span>300 words is a quality target, not a submit blocker.</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </section>
+                <?php endforeach; ?>
             </div>
-            <button type="button" id="sw-next-question" class="study-button py-2 px-3" onclick="nextToeicSwQuestion()">
-                Next<i class="fas fa-arrow-right ms-2"></i>
-            </button>
-            <div class="sw-submit-area">
-                <div id="sw-submit-message" class="small text-muted">
+
+            <div class="p-6 border-t-4 border-slate-200 bg-white shrink-0 sw-action-footer">
+                <button type="button" id="sw-prev-question" class="study-button study-button-secondary" onclick="prevToeicSwQuestion()">
+                    <i class="fas fa-arrow-left me-2"></i> Previous
+                </button>
+                <div class="sw-current-counter">
+                    <span id="sw-current-question">1</span>/<span id="sw-total-questions"><?php echo (int)$question_count; ?></span>
+                </div>
+                <div id="sw-submit-message" class="text-sm font-semibold">
                     <?php echo $section === 'speaking' ? 'Complete all recordings before submit.' : 'Writing autosaves while you type.'; ?>
                 </div>
+                <button type="button" id="sw-next-question" class="study-button" onclick="nextToeicSwQuestion()">
+                    Next <i class="fas fa-arrow-right ms-2"></i>
+                </button>
                 <button type="button" id="sw-submit-section" class="study-button" onclick="submitToeicSwSection()">
                     <?php echo $section === 'speaking' ? 'Submit Speaking' : 'Submit Writing'; ?>
                 </button>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <div class="tc-test-loading" aria-live="polite" aria-hidden="true"><span>Saving answer...</span></div>
 
     <div class="sw-scoring-overlay" id="sw-scoring-overlay" role="status" aria-live="polite">
         <div class="sw-scoring-box">
             <div class="sw-scoring-spinner"></div>
-            <h2 class="h5 mb-2">Submitting your <?php echo toeicSwH(strtolower($section_label)); ?> section</h2>
+            <h2 class="text-xl font-extrabold mb-2">Submitting your <?php echo toeicSwH(strtolower($section_label)); ?> section</h2>
             <p class="mb-0">Please wait while uploads and saved answers are verified.</p>
         </div>
     </div>
