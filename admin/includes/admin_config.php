@@ -20,12 +20,6 @@ function getAdminNavigation()
             'description' => 'Manage TOEIC parts, questions, audio, and text linkage',
             'group' => 'content'
         ],
-        'import_toeic_sw_packages.php' => [
-            'icon' => 'fa-file-import',
-            'title' => 'Import TOEIC SW',
-            'description' => 'Validate and import TOEIC Speaking & Writing packages',
-            'group' => 'content'
-        ],
         'test_results.php' => [
             'icon' => 'fa-chart-line',
             'title' => 'TOEIC Results',
