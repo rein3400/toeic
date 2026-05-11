@@ -140,12 +140,12 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                         <?php endif; ?>
 
                         <div class="mt-4 pt-4 border-top">
-                            <div class="study-kicker mb-3">Atau Pakai Voucher</div>
+                            <div class="study-kicker mb-3">Voucher TOEIC LR</div>
                             <div class="d-flex gap-2 voucher-redeem-row">
-                                <input type="text" id="voucherCode" class="form-control" placeholder="OSGLI-33YRB" style="min-height: 48px;">
-                                <button type="button" class="study-button py-2 px-3 voucher-icon-button" onclick="redeemVoucher()" aria-label="Tukar voucher" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
+                                <input type="text" id="voucherCodeToeic" class="form-control" placeholder="OSGLI-33YRB" style="min-height: 48px;">
+                                <button type="button" class="study-button py-2 px-3 voucher-icon-button" onclick="redeemVoucher('toeic')" aria-label="Tukar voucher TOEIC LR" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
                             </div>
-                            <div id="voucherMessage" class="small mt-2"></div>
+                            <div id="voucherMessageToeic" class="small mt-2"></div>
                         </div>
                     </div>
                 </div>
@@ -186,6 +186,15 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                                 Payment gateway belum aktif. Gunakan voucher atau hubungi admin untuk aktivasi manual.
                             </div>
                         <?php endif; ?>
+
+                        <div class="mt-4 pt-4 border-top">
+                            <div class="study-kicker mb-3">Voucher TOEIC SW</div>
+                            <div class="d-flex gap-2 voucher-redeem-row">
+                                <input type="text" id="voucherCodeToeicSw" class="form-control" placeholder="OSGLI-33YRB" style="min-height: 48px;">
+                                <button type="button" class="study-button py-2 px-3 voucher-icon-button" onclick="redeemVoucher('toeic_sw')" aria-label="Tukar voucher TOEIC SW" style="min-height: 48px;"><i class="fas fa-gift"></i></button>
+                            </div>
+                            <div id="voucherMessageToeicSw" class="small mt-2"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,10 +232,11 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             return value.trim().replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\s+/g, '').toUpperCase();
         }
 
-        async function redeemVoucher() {
-            const input = document.getElementById('voucherCode');
+        async function redeemVoucher(expectedExamType) {
+            const isSw = expectedExamType === 'toeic_sw';
+            const input = document.getElementById(isSw ? 'voucherCodeToeicSw' : 'voucherCodeToeic');
             const code = normalizeVoucherCode(input.value);
-            const message = document.getElementById('voucherMessage');
+            const message = document.getElementById(isSw ? 'voucherMessageToeicSw' : 'voucherMessageToeic');
             input.value = code;
 
             if (!code) {
@@ -245,7 +255,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                         'Content-Type': 'application/json',
                         'X-CSRF-Token': csrfToken
                     },
-                    body: JSON.stringify({code})
+                    body: JSON.stringify({code, expected_exam_type: expectedExamType})
                 });
                 const data = await response.json();
                 const isSuccess = Boolean(data.success);

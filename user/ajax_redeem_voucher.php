@@ -23,9 +23,15 @@ $user_id = (int)$_SESSION['user_id'];
 // Parse JSON body
 $input = json_decode(file_get_contents('php://input'), true);
 $code = toeicNormalizeVoucherCode($input['code'] ?? '');
+$expected_exam_type = trim((string)($input['expected_exam_type'] ?? ''));
 
 if (empty($code)) {
     echo json_encode(['success' => false, 'error' => 'Kode voucher tidak boleh kosong.']);
+    exit;
+}
+
+if ($expected_exam_type !== '' && !in_array($expected_exam_type, ['toeic', 'toeic_sw'], true)) {
+    echo json_encode(['success' => false, 'error' => 'Jenis paket voucher tidak valid.']);
     exit;
 }
 
@@ -85,6 +91,17 @@ try {
     if (!in_array($exam_type, ['toeic', 'toeic_sw'], true)) {
         $conn->rollback();
         echo json_encode(['success' => false, 'error' => 'Voucher ini bukan untuk produk TOEIC di repo ini.']);
+        exit;
+    }
+
+    if ($expected_exam_type !== '' && $exam_type !== $expected_exam_type) {
+        $conn->rollback();
+        $expected_label = $expected_exam_type === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
+        $actual_label = $exam_type === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
+        echo json_encode([
+            'success' => false,
+            'error' => "Voucher {$actual_label} tidak bisa dipakai untuk paket {$expected_label}."
+        ]);
         exit;
     }
 

@@ -119,7 +119,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     </div>
 
                     <div class="mt-5 pt-4 border-top">
-                        <div class="study-kicker mb-3">Atau Pakai Voucher</div>
+                        <div class="study-kicker mb-3">Voucher <?php echo $exam_type === 'toeic_sw' ? 'TOEIC SW' : 'TOEIC LR'; ?></div>
                         <div class="row g-3">
                             <div class="col-md-8">
                                 <input type="text" id="voucherCode" class="form-control" placeholder="OSGLI-33YRB">
@@ -225,7 +225,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 const response = await fetch('ajax_redeem_voucher.php', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
-                    body: JSON.stringify({code})
+                    body: JSON.stringify({code, expected_exam_type: <?php echo json_encode($exam_type); ?>})
                 });
                 const data = await response.json();
                 message.textContent = data.message || data.error || '';
