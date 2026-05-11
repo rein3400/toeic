@@ -20,12 +20,13 @@ class ToeicSwTestBuilder {
         }
 
         $currentSection = $options['current_section'] ?? getToeicSwSectionOrder()[0];
+        $practiceMode = !empty($options['practice_mode']) ? 1 : 0;
         $stmt = $this->conn->prepare("
             INSERT IGNORE INTO toeic_sw_test_sessions
-            (test_session, user_id, package_number, current_section, status)
-            VALUES (?, ?, ?, ?, 'active')
+            (test_session, user_id, package_number, current_section, status, practice_mode)
+            VALUES (?, ?, ?, ?, 'active', ?)
         ");
-        $stmt->bind_param("siis", $testSession, $userId, $packageNumber, $currentSection);
+        $stmt->bind_param("siisi", $testSession, $userId, $packageNumber, $currentSection, $practiceMode);
         $ok = $stmt->execute();
         $stmt->close();
         return $ok;

@@ -41,7 +41,7 @@ if ($users_id_check && $users_id_check->num_rows > 0) {
     $users_id_col = 'id_user';
 }
 $result = $conn->query("
-    SELECT s.test_session, s.user_id, s.package_number, s.status, s.current_section,
+    SELECT s.test_session, s.user_id, s.package_number, s.status, s.current_section, s.practice_mode,
            s.speaking_scaled, s.writing_scaled, s.total_score, s.started_at, s.completed_at,
            u.full_name,
            SUM(CASE WHEN sc.status = 'scored' THEN 1 ELSE 0 END) AS scored_count,
@@ -111,7 +111,10 @@ function toeicSwAdminResultH($value): string {
                                         <tr>
                                             <td><?php echo toeicSwAdminResultH($row['full_name'] ?? ('User ' . $row['user_id'])); ?></td>
                                             <td><code><?php echo toeicSwAdminResultH($row['test_session']); ?></code></td>
-                                            <td><?php echo (int)$row['package_number']; ?></td>
+                                            <td>
+                                                <?php echo (int)$row['package_number']; ?>
+                                                <div class="small text-muted"><?php echo !empty($row['practice_mode']) ? 'Practice' : 'Full Simulation'; ?></div>
+                                            </td>
                                             <td><?php echo toeicSwAdminResultH($row['status']); ?> / <?php echo toeicSwAdminResultH($row['current_section']); ?></td>
                                             <td>
                                                 S <?php echo (int)($row['speaking_scaled'] ?? 0); ?> -

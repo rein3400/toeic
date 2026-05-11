@@ -52,10 +52,14 @@ if (checkTableExists($conn, 'toeic_test_results')) {
 $recent_sw_results = [];
 if (checkTableExists($conn, 'toeic_sw_test_results')) {
     $stmt = $conn->prepare("
-        SELECT test_session, speaking_scaled, writing_scaled, total_score, completed_at
-        FROM toeic_sw_test_results
-        WHERE user_id = ?
-        ORDER BY completed_at DESC
+        SELECT r.test_session, r.speaking_scaled, r.writing_scaled, r.total_score, r.completed_at,
+               COALESCE(s.practice_mode, 0) AS practice_mode
+        FROM toeic_sw_test_results r
+        LEFT JOIN toeic_sw_test_sessions s
+          ON s.test_session = r.test_session
+         AND s.user_id = r.user_id
+        WHERE r.user_id = ?
+        ORDER BY r.completed_at DESC
         LIMIT 5
     ");
     $stmt->bind_param("i", $user_id);
@@ -107,7 +111,7 @@ if (checkTableExists($conn, 'toeic_test_sessions')) {
 $active_sw_session = null;
 if (checkTableExists($conn, 'toeic_sw_test_sessions')) {
     $stmt = $conn->prepare("
-        SELECT test_session, current_section, started_at
+        SELECT test_session, current_section, started_at, practice_mode
         FROM toeic_sw_test_sessions
         WHERE user_id = ?
           AND status = 'active'
@@ -204,7 +208,8 @@ if (strpos($user_name, ' ') !== false) {
                             <a href="buy_exam.php" class="tc-button">Aktifkan Paket TOEIC</a>
                         <?php endif; ?>
                         <?php if ($has_sw_credit): ?>
-                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="tc-button-outline">Mulai TOEIC SW</a>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="tc-button-outline">SW Full</a>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=prep" class="tc-button-outline">SW Practice</a>
                         <?php else: ?>
                             <a href="buy_exam.php" class="tc-button-outline">Aktifkan SW</a>
                         <?php endif; ?>
@@ -260,15 +265,16 @@ if (strpos($user_name, ' ') !== false) {
         <?php endif; ?>
 
         <?php if ($active_sw_session): ?>
+            <?php $active_sw_mode = !empty($active_sw_session['practice_mode']) ? 'prep' : 'full'; ?>
             <section class="study-card mb-4" style="background: #eef6ff !important; border-color: rgba(72,127,181,0.35) !important;">
                 <div class="row g-3 align-items-center">
                     <div class="col-lg-8 text-dark">
-                        <span class="study-kicker">Resume SW Attempt</span>
+                        <span class="study-kicker">Resume SW <?php echo $active_sw_mode === 'prep' ? 'Practice' : 'Full Simulation'; ?></span>
                         <h2 class="h3 mb-2">TOEIC Speaking & Writing in progress.</h2>
                         <p class="mb-0 text-muted">Current section: <strong><?php echo htmlspecialchars(ucfirst($active_sw_session['current_section'])); ?></strong>.</p>
                     </div>
                     <div class="col-lg-4 text-lg-end">
-                        <a href="test_toeic_sw.php?resume=1&test_session=<?php echo urlencode($active_sw_session['test_session']); ?>&mode=full" class="study-button">Resume SW</a>
+                        <a href="test_toeic_sw.php?resume=1&test_session=<?php echo urlencode($active_sw_session['test_session']); ?>&mode=<?php echo urlencode($active_sw_mode); ?>" class="study-button">Resume SW</a>
                     </div>
                 </div>
             </section>
@@ -309,7 +315,10 @@ if (strpos($user_name, ' ') !== false) {
                                 <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 border bg-light-subtle">
                                     <div>
                                         <div class="fw-bold h5 mb-1" style="color:var(--focus-blue);">SW <?php echo (int)$row['total_score']; ?>/400</div>
-                                        <div class="small text-muted"><?php echo date('d M Y', strtotime($row['completed_at'])); ?></div>
+                                        <div class="small text-muted">
+                                            <?php echo !empty($row['practice_mode']) ? 'Practice' : 'Full Simulation'; ?> -
+                                            <?php echo date('d M Y', strtotime($row['completed_at'])); ?>
+                                        </div>
                                     </div>
                                     <div class="text-end">
                                         <div class="small fw-bold mb-2">S <?php echo (int)$row['speaking_scaled']; ?> &middot; W <?php echo (int)$row['writing_scaled']; ?></div>

@@ -50,6 +50,7 @@ try {
         echo json_encode(['success' => false, 'error' => 'Section is no longer active']);
         exit();
     }
+    $mode = !empty($session['practice_mode']) ? 'prep' : 'full';
 
     if ($section === 'speaking') {
         $stmt = $conn->prepare("
@@ -75,7 +76,7 @@ try {
 
     if ($is_last) {
         $results = $scorer->saveResults($test_session, $user_id);
-        unset($_SESSION['toeic_sw_test_session'], $_SESSION['test_session'], $_SESSION['test_format'], $_SESSION['current_section']);
+        unset($_SESSION['toeic_sw_test_session'], $_SESSION['test_session'], $_SESSION['test_format'], $_SESSION['current_section'], $_SESSION['practice_mode_toeic_sw']);
         if (isset($_SESSION['toeic_sw_section_start_times']) && is_array($_SESSION['toeic_sw_section_start_times'])) {
             unset($_SESSION['toeic_sw_section_start_times'][$test_session . ':speaking'], $_SESSION['toeic_sw_section_start_times'][$test_session . ':writing']);
         }
@@ -103,7 +104,7 @@ try {
 
     echo json_encode([
         'success' => true,
-        'redirect' => 'test_toeic_sw.php?section=' . urlencode($next_section) . '&test_session=' . urlencode($test_session) . '&setup_complete=1&mode=full',
+        'redirect' => 'test_toeic_sw.php?section=' . urlencode($next_section) . '&test_session=' . urlencode($test_session) . '&setup_complete=1&mode=' . urlencode($mode),
         'section_score' => $section_score,
     ]);
 } catch (Throwable $e) {

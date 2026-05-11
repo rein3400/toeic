@@ -20,9 +20,6 @@ if (!defined('FEATURE_TOEIC') || !FEATURE_TOEIC) {
 $website_title = getWebsiteTitle();
 $test_format = (($_GET['test_format'] ?? 'toeic') === 'toeic_sw') ? 'toeic_sw' : 'toeic';
 $mode = (($_GET['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
-if ($test_format === 'toeic_sw') {
-    $mode = 'full';
-}
 
 $credit_type = $test_format === 'toeic_sw' ? 'toeic_sw' : 'toeic';
 $has_full_credit = hasStrictTestCredit($conn, (int)$_SESSION['user_id'], $credit_type);
@@ -50,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
 
     if ($postedFormat === 'toeic_sw') {
         $_SESSION['instructions_confirmed_toeic_sw'] = time();
-        header("Location: test_toeic_sw.php?start_new=1&mode=full");
+        $_SESSION['practice_mode_toeic_sw'] = $postedMode === 'prep' ? 1 : 0;
+        header("Location: test_toeic_sw.php?start_new=1&mode=" . urlencode($postedMode));
         exit();
     }
 
@@ -124,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                             <input type="hidden" name="mode" value="<?php echo htmlspecialchars($mode); ?>">
                             <input type="hidden" name="test_format" value="<?php echo htmlspecialchars($test_format); ?>">
                             <button type="submit" name="confirm_instructions" class="study-button w-100" <?php echo !$has_full_credit ? 'disabled' : ''; ?>>
-                                Launch Session
+                                <?php echo $mode === 'prep' ? 'Launch Practice' : 'Launch Full Simulation'; ?>
                             </button>
                         </form>
 

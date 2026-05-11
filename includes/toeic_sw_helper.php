@@ -152,6 +152,7 @@ if (!function_exists('ensureToeicSwSchema')) {
                 package_number INT NOT NULL,
                 current_section VARCHAR(20) NOT NULL DEFAULT 'speaking',
                 status VARCHAR(20) NOT NULL DEFAULT 'active',
+                practice_mode TINYINT(1) NOT NULL DEFAULT 0,
                 speaking_raw DECIMAL(8,2) DEFAULT NULL,
                 speaking_scaled INT DEFAULT NULL,
                 writing_raw DECIMAL(8,2) DEFAULT NULL,
@@ -237,6 +238,7 @@ if (!function_exists('ensureToeicSwSchema')) {
         ");
 
         toeicSwEnsureContentTables($conn);
+        toeicSwEnsureColumn($conn, 'toeic_sw_test_sessions', 'practice_mode', 'TINYINT(1) NOT NULL DEFAULT 0 AFTER status');
         toeicSwEnsureColumn($conn, 'toeic_sw_subjective_scores', 'fallback_reason', 'TEXT DEFAULT NULL');
         toeicSwEnsureDefaultSettings($conn);
     }
@@ -480,7 +482,15 @@ if (!function_exists('getToeicSwSessionInfo')) {
 if (!function_exists('getToeicSwTestResults')) {
     function getToeicSwTestResults(mysqli $conn, int $userId, string $testSession): ?array {
         ensureToeicSwSchema($conn);
-        $stmt = $conn->prepare("SELECT * FROM toeic_sw_test_results WHERE user_id = ? AND test_session = ? LIMIT 1");
+        $stmt = $conn->prepare("
+            SELECT r.*, COALESCE(s.practice_mode, 0) AS practice_mode
+            FROM toeic_sw_test_results r
+            LEFT JOIN toeic_sw_test_sessions s
+              ON s.test_session = r.test_session
+             AND s.user_id = r.user_id
+            WHERE r.user_id = ? AND r.test_session = ?
+            LIMIT 1
+        ");
         $stmt->bind_param("is", $userId, $testSession);
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc() ?: null;

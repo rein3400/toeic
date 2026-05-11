@@ -144,7 +144,8 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                             <div class="alert alert-success border-0 small mb-3">
                                 <i class="fas fa-check-circle me-1"></i> Anda punya kredit SW aktif.
                             </div>
-                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="study-button w-100 mb-3">Mulai TOEIC SW</a>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="study-button w-100 mb-3">Mulai SW Full Simulation</a>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=prep" class="study-button study-button-secondary w-100 mb-3">Mulai SW Practice</a>
                             <?php if ($tripay_ready): ?>
                                 <a href="payment.php?exam_type=toeic_sw" class="study-button study-button-secondary w-100">Beli Paket SW Lagi</a>
                             <?php endif; ?>

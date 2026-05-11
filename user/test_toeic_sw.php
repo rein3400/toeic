@@ -24,17 +24,21 @@ $requested_section = (string)($_GET['section'] ?? 'speaking');
 $section = in_array($requested_section, $valid_sections, true) ? $requested_section : 'speaking';
 $session_key = 'toeic_sw_test_session';
 $requested_session = trim((string)($_GET['test_session'] ?? $_SESSION[$session_key] ?? ''));
-$mode = 'full';
+$requested_mode = (($_GET['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
+$mode = $requested_mode;
 
 ensureToeicSwSchema($conn);
 
 if (isset($_GET['start_new'])) {
+    $practice_mode = $requested_mode === 'prep' || !empty($_SESSION['practice_mode_toeic_sw']);
+    $mode = $practice_mode ? 'prep' : 'full';
+
     if (!hasStrictTestCredit($conn, $user_id, 'toeic_sw')) {
         toeicRedirectWithFlash('buy_exam.php', 'info', 'Aktifkan paket TOEIC Speaking & Writing dulu sebelum mulai simulasi.');
     }
 
     if (empty($_SESSION['instructions_confirmed_toeic_sw'])) {
-        header("Location: test_instructions.php?test_format=toeic_sw&mode=full");
+        header("Location: test_instructions.php?test_format=toeic_sw&mode=" . urlencode($mode));
         exit();
     }
 
@@ -49,17 +53,20 @@ if (isset($_GET['start_new'])) {
 
     $test_session = generateToeicSwTestSession();
     $builder = new ToeicSwTestBuilder($conn);
-    $builder->createSession($test_session, $user_id);
+    $builder->createSession($test_session, $user_id, [
+        'practice_mode' => $practice_mode ? 1 : 0,
+    ]);
     $builder->buildTest($test_session, $user_id);
 
-    unset($_SESSION['instructions_confirmed_toeic_sw']);
+    unset($_SESSION['instructions_confirmed_toeic_sw'], $_SESSION['practice_mode_toeic_sw']);
     $_SESSION[$session_key] = $test_session;
     $_SESSION['test_session'] = $test_session;
     $_SESSION['test_format'] = 'toeic_sw';
     $_SESSION['current_section'] = 'speaking';
+    $_SESSION['practice_mode_toeic_sw'] = $practice_mode ? 1 : 0;
     $_SESSION['toeic_sw_section_start_times'] = [$test_session . ':speaking' => time()];
 
-    header("Location: test_toeic_sw.php?section=speaking&test_session=" . urlencode($test_session) . "&setup_complete=1&mode=full");
+    header("Location: test_toeic_sw.php?section=speaking&test_session=" . urlencode($test_session) . "&setup_complete=1&mode=" . urlencode($mode));
     exit();
 }
 
@@ -83,6 +90,13 @@ if (($session_info['status'] ?? '') === 'completed') {
     exit();
 }
 
+$practice_mode = !empty($session_info['practice_mode']);
+$mode = $practice_mode ? 'prep' : 'full';
+if ($requested_mode === 'prep' && !$practice_mode) {
+    unset($_SESSION[$session_key], $_SESSION['test_session']);
+    toeicRedirectWithFlash('index.php', 'error', 'Link practice tidak cocok dengan data sesi SW. Silakan mulai practice baru dari dashboard.');
+}
+
 $current_section = in_array(($session_info['current_section'] ?? 'speaking'), $valid_sections, true)
     ? $session_info['current_section']
     : 'speaking';
@@ -94,6 +108,7 @@ $_SESSION[$session_key] = $requested_session;
 $_SESSION['test_session'] = $requested_session;
 $_SESSION['test_format'] = 'toeic_sw';
 $_SESSION['current_section'] = $section;
+$_SESSION['practice_mode_toeic_sw'] = $practice_mode ? 1 : 0;
 
 if (!isset($_SESSION['toeic_sw_section_start_times']) || !is_array($_SESSION['toeic_sw_section_start_times'])) {
     $_SESSION['toeic_sw_section_start_times'] = [];
@@ -113,6 +128,7 @@ $section_label = $section === 'speaking' ? 'Speaking' : 'Writing';
 $section_detail = $section === 'speaking'
     ? '11 questions, ETS-style prepare and record timing'
     : '8 questions, autosave, word count, and writing timers';
+$mode_label = $practice_mode ? 'Practice' : 'Full Simulation';
 
 function toeicSwH($value): string {
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
@@ -285,7 +301,7 @@ function toeicSwRenderPrompt(array $question): void {
     <main class="toeic-page-shell">
         <section class="sw-topbar mb-4">
             <div>
-                <span class="study-kicker">TOEIC Speaking & Writing</span>
+                <span class="study-kicker">TOEIC SW <?php echo toeicSwH($mode_label); ?></span>
                 <h1 class="h3 mb-1"><?php echo toeicSwH($section_label); ?> Section</h1>
                 <p class="mb-0 text-muted"><?php echo toeicSwH($section_detail); ?></p>
             </div>
@@ -397,6 +413,8 @@ function toeicSwRenderPrompt(array $question): void {
         window.TOEIC_SW_CONFIG = <?php echo toeicSwJson([
             'testSession' => $requested_session,
             'section' => $section,
+            'mode' => $mode,
+            'practiceMode' => $practice_mode,
             'csrfToken' => generateCsrfToken(),
             'sectionDeadline' => $section_deadline,
         ]); ?>;

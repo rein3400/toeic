@@ -210,6 +210,11 @@ start_match_assert(strpos($swDirectStart['url'], '/user/buy_exam.php') !== false
 start_match_assert(start_match_active_sessions($conn, $userId, 'toeic_sw') === 0, 'LR-only user should not create an SW session from direct start.');
 start_match_assert(countStrictTestCredits($conn, $userId, 'toeic') === 1, 'Rejected direct SW start should not consume LR credit.');
 
+$swPracticeDirectStart = $lrOnlyClient->request('GET', '/user/test_toeic_sw.php?start_new=1&mode=prep');
+start_match_assert(strpos($swPracticeDirectStart['url'], '/user/buy_exam.php') !== false, 'LR-only user should be redirected to buy page when directly starting SW practice.');
+start_match_assert(start_match_active_sessions($conn, $userId, 'toeic_sw') === 0, 'LR-only user should not create an SW practice session from direct start.');
+start_match_assert(countStrictTestCredits($conn, $userId, 'toeic') === 1, 'Rejected direct SW practice start should not consume LR credit.');
+
 start_match_grant_only($conn, $userId, 'toeic_sw');
 $swOnlyClient = new StartMatchHttpClient($baseUrl);
 start_match_login($swOnlyClient, $username, $password);

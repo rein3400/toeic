@@ -138,6 +138,7 @@ function toeicSwAdminAnswerText(array $question, array $score): string {
                         <div class="col-md-2">
                             <div class="text-muted small text-uppercase">Package</div>
                             <div class="fw-bold"><?php echo (int)$session['package_number']; ?></div>
+                            <div class="small text-muted"><?php echo !empty($session['practice_mode']) ? 'Practice' : 'Full Simulation'; ?></div>
                         </div>
                         <div class="col-md-3">
                             <div class="text-muted small text-uppercase">Score</div>
@@ -220,9 +221,8 @@ function toeicSwAdminAnswerText(array $question, array $score): string {
                                     <?php endif; ?>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="text-muted small text-uppercase">
-                                        <?php echo (($question['section'] ?? '') === 'speaking') ? 'Student Transcript' : 'Student Written Answer'; ?>
-                                    </div>
+                                    <div class="text-muted small text-uppercase">Student Answer / Transcript</div>
+                                    <div class="small text-muted mb-2"><?php echo (($question['section'] ?? '') === 'speaking') ? 'Transcript from speaking response' : 'Written answer submitted by student'; ?></div>
                                     <pre class="review-pre p-3 bg-dark text-light rounded"><?php echo toeicSwAdminDetailH($studentAnswerText); ?></pre>
 
                                     <div class="review-meta mb-3">

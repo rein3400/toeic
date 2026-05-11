@@ -23,6 +23,9 @@ if (!$result) {
 }
 
 $level = $result['level'] ?? getToeicSwLevel((int)$result['total_score']);
+$is_practice = !empty($result['practice_mode']);
+$mode_label = $is_practice ? 'Practice' : 'Full Simulation';
+$mode_param = $is_practice ? 'prep' : 'full';
 
 $stmt = $conn->prepare("
     SELECT q.section, q.question_order, q.question_type, q.source_path,
@@ -120,8 +123,8 @@ function toeicSwFeedbackSummary(?string $json): string {
 
     <main class="toeic-page-shell">
         <section class="mb-4">
-            <span class="study-kicker">TOEIC Speaking & Writing Result</span>
-            <h1 class="display-5 mb-2">Score Report</h1>
+            <span class="study-kicker">TOEIC SW <?php echo toeicSwResultH($mode_label); ?> Result</span>
+            <h1 class="display-5 mb-2"><?php echo toeicSwResultH($mode_label); ?> Score Report</h1>
             <p class="lead text-muted mb-0">Speaking and Writing are reported separately on a 0-200 scale, with a combined summary out of 400.</p>
         </section>
 
@@ -148,9 +151,9 @@ function toeicSwFeedbackSummary(?string $json): string {
             <div class="d-flex flex-wrap justify-content-between gap-3">
                 <div>
                     <h2 class="h4 mb-1">Package <?php echo (int)$result['package_number']; ?></h2>
-                    <p class="text-muted mb-0">Completed <?php echo toeicSwResultH(date('d M Y H:i', strtotime((string)$result['completed_at']))); ?></p>
+                    <p class="text-muted mb-0"><?php echo toeicSwResultH($mode_label); ?> completed <?php echo toeicSwResultH(date('d M Y H:i', strtotime((string)$result['completed_at']))); ?></p>
                 </div>
-                <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="study-button study-button-secondary">Try Another SW Package</a>
+                <a href="test_instructions.php?test_format=toeic_sw&mode=<?php echo toeicSwResultH($mode_param); ?>" class="study-button study-button-secondary">Try Another SW <?php echo toeicSwResultH($mode_label); ?></a>
             </div>
         </section>
 
