@@ -130,6 +130,7 @@ function toeicSwLockC2(array $tasks, int $package, bool $withAudio): array {
             $tasks[$index]['audio_model'] = 'gpt-realtime-1.5';
             $tasks[$index]['audio_loudness'] = 'peak-normalized loud version';
             $tasks[$index]['audio_script'] = toeicSwAudioScript($tasks[$index]);
+            $tasks[$index]['audio_transcript'] = $tasks[$index]['audio_script'];
         } elseif ($withAudio) {
             $tasks[$index]['audio_path'] = null;
             $tasks[$index]['audio_note'] = 'No prompt audio: this TOEIC SW task uses on-screen text or picture stimulus.';

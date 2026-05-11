@@ -183,6 +183,13 @@ function toeicSwPrettyJson(?string $json): string {
                                         </div>
                                     <?php endif; ?>
 
+                                    <?php if (!empty($content['audio_transcript'])): ?>
+                                        <div class="mb-3">
+                                            <div class="text-muted small text-uppercase">Prompt Audio Transcript</div>
+                                            <pre class="review-pre p-3 bg-dark text-light rounded"><?php echo toeicSwAdminDetailH($content['audio_transcript']); ?></pre>
+                                        </div>
+                                    <?php endif; ?>
+
                                     <?php if ($answerAudio): ?>
                                         <div class="mb-3">
                                             <div class="text-muted small text-uppercase">Student Recording</div>

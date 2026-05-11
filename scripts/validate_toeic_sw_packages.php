@@ -56,6 +56,7 @@ if (!is_dir($packageRoot)) {
                 }
                 if ($section === 'speaking' && toeicSwSpeakingUsesPromptAudio((string)($task['type'] ?? ''))) {
                     $audioPath = trim((string)($task['audio_path'] ?? ''));
+                    $audioTranscript = trim((string)($task['audio_transcript'] ?? $task['audio_script'] ?? ''));
                     if ($audioPath === '') {
                         toeicSwValidateFail("{$packageName}: Speaking Q{$number} missing audio_path");
                     } else {
@@ -66,8 +67,13 @@ if (!is_dir($packageRoot)) {
                             toeicSwValidateFail("{$packageName}: audio too small {$audioPath}");
                         }
                     }
+                    if ($audioTranscript === '') {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} missing audio transcript");
+                    }
                 } elseif ($section === 'speaking' && !empty($task['audio_path'])) {
                     toeicSwValidateFail("{$packageName}: Speaking Q{$number} should not reference prompt audio for {$task['type']}");
+                } elseif ($section === 'speaking' && trim((string)($task['audio_transcript'] ?? $task['audio_script'] ?? '')) !== '') {
+                    toeicSwValidateFail("{$packageName}: Speaking Q{$number} should not reference prompt audio transcript for {$task['type']}");
                 }
                 if (($task['type'] ?? '') === 'write_sentence_based_on_picture' && count($task['required_words'] ?? []) !== 2) {
                     toeicSwValidateFail("{$packageName}: Writing Q{$number} must have two required words");

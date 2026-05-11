@@ -105,7 +105,7 @@ function toeicSwAdminH($value): string {
                 <?php if ($result): ?>
                     <div class="content-card">
                         <div class="d-flex flex-wrap gap-3 mb-4">
-                            <?php foreach (['packages', 'validated', 'inserted', 'updated', 'skipped', 'audio_files', 'image_files', 'errors'] as $key): ?>
+                            <?php foreach (['packages', 'validated', 'inserted', 'updated', 'skipped', 'audio_files', 'audio_transcripts', 'image_files', 'errors'] as $key): ?>
                                 <div class="p-3 rounded border" style="min-width:130px;">
                                     <div class="text-muted small text-uppercase"><?php echo toeicSwAdminH($key); ?></div>
                                     <div class="h3 mb-0">

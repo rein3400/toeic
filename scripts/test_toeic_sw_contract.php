@@ -128,13 +128,22 @@ for ($package = 1; $package <= 10; $package++) {
     toeic_sw_check(count($writing) === 8, "{$packageName} must contain 8 Writing tasks.");
 
     $images = [];
+    $speakingPromptAudio = 0;
+    $speakingPromptAudioTranscripts = 0;
     foreach (array_merge($speaking, $writing) as $task) {
         if (!empty($task['image_path'])) {
             $images[$task['image_path']] = true;
             toeic_sw_check(file_exists($packageRoot . '/' . $packageName . '/' . $task['image_path']), "{$packageName} image {$task['image_path']} must exist.");
         }
+        if (($task['type'] ?? '') && function_exists('toeicSwSpeakingUsesPromptAudio') && toeicSwSpeakingUsesPromptAudio((string)$task['type'])) {
+            $speakingPromptAudio += empty($task['audio_path']) ? 0 : 1;
+            $audioTranscript = trim((string)($task['audio_transcript'] ?? $task['audio_script'] ?? ''));
+            $speakingPromptAudioTranscripts += $audioTranscript === '' ? 0 : 1;
+        }
     }
     toeic_sw_check(count($images) === 7, "{$packageName} must reference exactly 7 unique images.");
+    toeic_sw_check($speakingPromptAudio === 7, "{$packageName} must reference exactly 7 speaking prompt audio files.");
+    toeic_sw_check($speakingPromptAudioTranscripts === 7, "{$packageName} must include exactly 7 speaking prompt audio transcripts.");
 }
 
 if (!empty($failures)) {

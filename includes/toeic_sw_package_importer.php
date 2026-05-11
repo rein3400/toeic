@@ -29,6 +29,7 @@ class ToeicSwPackageImporter {
             'updated' => 0,
             'skipped' => 0,
             'audio_files' => 0,
+            'audio_transcripts' => 0,
             'image_files' => 0,
             'remote_media' => $this->useRemoteMedia,
             'media_base_url' => $this->mediaBaseUrl,
@@ -133,10 +134,16 @@ class ToeicSwPackageImporter {
                     if (filesize($absoluteAudio) < 1024) {
                         throw new RuntimeException("{$section} Q{$number} audio is too small to be valid: {$audioPath}.");
                     }
+                    if ($this->audioTranscriptForTask($task) === '') {
+                        throw new RuntimeException("{$section} Q{$number} missing audio transcript.");
+                    }
                     $audio[$audioPath] = true;
                     $stats['audio_files']++;
+                    $stats['audio_transcripts']++;
                 } elseif ($section === 'speaking' && !empty($task['audio_path'])) {
                     throw new RuntimeException("{$section} Q{$number} should not reference prompt audio for {$task['type']}.");
+                } elseif ($section === 'speaking' && $this->audioTranscriptForTask($task) !== '') {
+                    throw new RuntimeException("{$section} Q{$number} should not reference prompt audio transcript for {$task['type']}.");
                 }
 
                 if (in_array($task['type'], ['describe_picture', 'write_sentence_based_on_picture'], true)) {
@@ -229,6 +236,7 @@ class ToeicSwPackageImporter {
         $audioPath = !empty($task['audio_path'])
             ? $this->resolveMediaPath($packageName, (string)$task['audio_path'])
             : '';
+        $audioTranscript = $audioPath !== '' ? $this->audioTranscriptForTask($task) : '';
 
         switch ($table) {
             case 'toeic_sw_describe_picture':
@@ -303,7 +311,16 @@ class ToeicSwPackageImporter {
         $stmt->execute();
         $stmt->close();
 
-        $this->updateAudioPath($table, $package, $number, $audioPath);
+        $this->updateAudioMetadata($table, $package, $number, $audioPath, $audioTranscript);
+    }
+
+    private function audioTranscriptForTask(array $task): string {
+        $transcript = trim((string)($task['audio_transcript'] ?? ''));
+        if ($transcript !== '') {
+            return $transcript;
+        }
+
+        return trim((string)($task['audio_script'] ?? ''));
     }
 
     private function resolveMediaPath(string $packageName, string $relativePath): string {
@@ -319,12 +336,12 @@ class ToeicSwPackageImporter {
         return "content/generated/toeic_sw/{$packageName}/{$relativePath}";
     }
 
-    private function updateAudioPath(string $table, int $package, int $questionNumber, string $audioPath): void {
-        $stmt = $this->conn->prepare("UPDATE {$table} SET audio_path = ? WHERE package_number = ? AND question_number = ?");
+    private function updateAudioMetadata(string $table, int $package, int $questionNumber, string $audioPath, string $audioTranscript): void {
+        $stmt = $this->conn->prepare("UPDATE {$table} SET audio_path = ?, audio_transcript = ? WHERE package_number = ? AND question_number = ?");
         if (!$stmt) {
             return;
         }
-        $stmt->bind_param("sii", $audioPath, $package, $questionNumber);
+        $stmt->bind_param("ssii", $audioPath, $audioTranscript, $package, $questionNumber);
         $stmt->execute();
         $stmt->close();
     }

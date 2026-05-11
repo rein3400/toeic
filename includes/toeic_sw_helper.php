@@ -250,11 +250,31 @@ if (!function_exists('toeicSwEnsureColumn')) {
             return;
         }
 
-        $result = $conn->query("SHOW COLUMNS FROM {$safeTable} LIKE '{$conn->real_escape_string($safeColumn)}'");
-        if ($result && $result->num_rows > 0) {
-            return;
+        $stmt = $conn->prepare("
+            SELECT COUNT(*) AS count
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE()
+              AND TABLE_NAME = ?
+              AND COLUMN_NAME = ?
+        ");
+        if ($stmt) {
+            $stmt->bind_param("ss", $safeTable, $safeColumn);
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            if ((int)($row['count'] ?? 0) > 0) {
+                return;
+            }
         }
-        $conn->query("ALTER TABLE {$safeTable} ADD COLUMN {$safeColumn} {$definition}");
+
+        try {
+            $conn->query("ALTER TABLE {$safeTable} ADD COLUMN {$safeColumn} {$definition}");
+        } catch (mysqli_sql_exception $e) {
+            if ((int)$e->getCode() === 1060) {
+                return;
+            }
+            throw $e;
+        }
     }
 }
 
@@ -271,6 +291,7 @@ if (!function_exists('toeicSwEnsureContentTables')) {
             difficulty VARCHAR(20) DEFAULT 'C2',
             cefr_level VARCHAR(10) DEFAULT 'C2',
             audio_path VARCHAR(500) DEFAULT NULL,
+            audio_transcript LONGTEXT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ";
         $unique = "UNIQUE KEY uniq_package_question (package_number, question_number)";
@@ -295,6 +316,7 @@ if (!function_exists('toeicSwEnsureContentTables')) {
             'write_opinion_essay',
         ]))) as $table) {
             toeicSwEnsureColumn($conn, $table, 'audio_path', 'VARCHAR(500) DEFAULT NULL');
+            toeicSwEnsureColumn($conn, $table, 'audio_transcript', 'LONGTEXT DEFAULT NULL');
         }
     }
 }
@@ -343,6 +365,7 @@ if (!function_exists('getToeicSwContentReadiness')) {
             $speaking = 0;
             $writing = 0;
             $speakingAudio = 0;
+            $speakingAudioTranscripts = 0;
             $images = [];
             foreach (getToeicSwTaskBlueprint() as $section => $tasks) {
                 foreach ($tasks as $questionNumber => $task) {
@@ -361,6 +384,9 @@ if (!function_exists('getToeicSwContentReadiness')) {
                             if (!empty($row['audio_path'])) {
                                 $speakingAudio++;
                             }
+                            if (!empty($row['audio_transcript'])) {
+                                $speakingAudioTranscripts++;
+                            }
                         } else {
                             $writing++;
                         }
@@ -373,7 +399,8 @@ if (!function_exists('getToeicSwContentReadiness')) {
             $packageReady = $speaking === $requirements['speaking_per_package']
                 && $writing === $requirements['writing_per_package']
                 && count($images) === $requirements['images_per_package']
-                && $speakingAudio === $requirements['speaking_audio_per_package'];
+                && $speakingAudio === $requirements['speaking_audio_per_package']
+                && $speakingAudioTranscripts === $requirements['speaking_audio_per_package'];
             if (!$packageReady) {
                 $ready = false;
             }
@@ -381,6 +408,7 @@ if (!function_exists('getToeicSwContentReadiness')) {
                 'speaking' => $speaking,
                 'writing' => $writing,
                 'speaking_audio' => $speakingAudio,
+                'speaking_audio_transcripts' => $speakingAudioTranscripts,
                 'images' => count($images),
                 'ready' => $packageReady,
             ];

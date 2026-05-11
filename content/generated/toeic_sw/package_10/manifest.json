@@ -67,6 +67,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the following question.\n\nHow often do you attend online meetings for work or study, and what makes one of those meetings genuinely productive?",
+      "audio_transcript": "Directions: Answer the following question.\n\nHow often do you attend online meetings for work or study, and what makes one of those meetings genuinely productive?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -98,6 +99,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the following question.\n\nWhat do you usually do to prepare before an important meeting with people from different departments?",
+      "audio_transcript": "Directions: Answer the following question.\n\nWhat do you usually do to prepare before an important meeting with people from different departments?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -129,6 +131,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the following question.\n\nDo you think companies should let employees choose between remote and office work when collaboration quality is difficult to measure? Why or why not?",
+      "audio_transcript": "Directions: Answer the following question.\n\nDo you think companies should let employees choose between remote and office work when collaboration quality is difficult to measure? Why or why not?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -163,6 +166,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the question using the information provided.\n\nQuestion: When does the orientation begin?",
+      "audio_transcript": "Directions: Answer the question using the information provided.\n\nQuestion: When does the orientation begin?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -197,6 +201,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the question using the information provided.\n\nQuestion: Where will the client support workshop take place?",
+      "audio_transcript": "Directions: Answer the question using the information provided.\n\nQuestion: Where will the client support workshop take place?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -231,6 +236,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Answer the question using the information provided.\n\nQuestion: A visitor can only arrive after lunch. Which activities can the visitor still attend, and which morning activity will they miss?\n\nThe question will be repeated.\n\nQuestion: A visitor can only arrive after lunch. Which activities can the visitor still attend, and which morning activity will they miss?",
+      "audio_transcript": "Directions: Answer the question using the information provided.\n\nQuestion: A visitor can only arrive after lunch. Which activities can the visitor still attend, and which morning activity will they miss?\n\nThe question will be repeated.\n\nQuestion: A visitor can only arrive after lunch. Which activities can the visitor still attend, and which morning activity will they miss?",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {
@@ -262,6 +268,7 @@
       "audio_model": "speech-2.8-hd",
       "audio_loudness": "peak-normalized loud version",
       "audio_script": "Directions: Express your opinion and support it with reasons and examples.\n\nSome companies provide short professional courses every month, while others pay for one major certification course each year. Which approach is more valuable for employees whose work changes quickly? Give reasons and examples.",
+      "audio_transcript": "Directions: Express your opinion and support it with reasons and examples.\n\nSome companies provide short professional courses every month, while others pay for one major certification course each year. Which approach is more valuable for employees whose work changes quickly? Give reasons and examples.",
       "audio_provider": "MiniMax",
       "audio_voice": "English_Trustworth_Man",
       "audio_generation": {

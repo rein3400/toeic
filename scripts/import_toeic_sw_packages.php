@@ -34,6 +34,7 @@ echo json_encode([
     'updated' => $result['updated'],
     'skipped' => $result['skipped'],
     'audio_files' => $result['audio_files'],
+    'audio_transcripts' => $result['audio_transcripts'],
     'image_files' => $result['image_files'],
     'errors' => $result['errors'],
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
