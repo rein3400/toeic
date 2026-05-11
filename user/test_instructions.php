@@ -3,6 +3,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
+require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_sw_helper.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
@@ -40,6 +41,12 @@ $full_test_parts = $test_format === 'toeic_sw'
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'])) {
     $postedMode = (($_POST['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
     $postedFormat = (($_POST['test_format'] ?? 'toeic') === 'toeic_sw') ? 'toeic_sw' : 'toeic';
+    $postedCreditType = $postedFormat === 'toeic_sw' ? 'toeic_sw' : 'toeic';
+    $postedFormatTitle = $postedFormat === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
+
+    if (!hasStrictTestCredit($conn, (int)$_SESSION['user_id'], $postedCreditType)) {
+        toeicRedirectWithFlash('buy_exam.php', 'info', "Aktifkan paket {$postedFormatTitle} dulu sebelum mulai simulasi.");
+    }
 
     if ($postedFormat === 'toeic_sw') {
         $_SESSION['instructions_confirmed_toeic_sw'] = time();

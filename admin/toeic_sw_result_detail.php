@@ -75,6 +75,24 @@ function toeicSwPrettyJson(?string $json): string {
     }
     return json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: (string)$json;
 }
+
+function toeicSwAdminRecordingUrl(array $question): string {
+    $source = trim((string)($question['source_path'] ?? ''));
+    if ($source === '' || ($question['section'] ?? '') !== 'speaking') {
+        return '';
+    }
+    return 'stream_toeic_sw_recording.php?session=' . rawurlencode((string)$question['test_session'])
+        . '&question_id=' . (int)$question['id'];
+}
+
+function toeicSwAdminAnswerText(array $question, array $score): string {
+    $transcript = trim((string)($score['transcript_text'] ?? ''));
+    $answer = trim((string)($question['user_answer'] ?? ''));
+    if (($question['section'] ?? '') === 'speaking') {
+        return $transcript !== '' ? $transcript : ($answer !== '' ? $answer : '-');
+    }
+    return $answer !== '' ? $answer : ($transcript !== '' ? $transcript : '-');
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -147,7 +165,8 @@ function toeicSwPrettyJson(?string $json): string {
                         $content = $question['content'] ?? [];
                         $promptAudio = toeicSwMediaUrl($content['audio_path'] ?? '');
                         $imageUrl = toeicSwMediaUrl($content['image_path'] ?? '');
-                        $answerAudio = toeicSwMediaUrl($question['source_path'] ?? '');
+                        $answerAudio = toeicSwAdminRecordingUrl($question);
+                        $studentAnswerText = toeicSwAdminAnswerText($question, $score);
                         ?>
                         <div class="content-card review-row">
                             <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
@@ -193,13 +212,18 @@ function toeicSwPrettyJson(?string $json): string {
                                     <?php if ($answerAudio): ?>
                                         <div class="mb-3">
                                             <div class="text-muted small text-uppercase">Student Recording</div>
-                                            <audio controls preload="metadata" src="<?php echo toeicSwAdminDetailH($answerAudio); ?>"></audio>
+                                            <audio controls preload="metadata" src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" style="width:100%; max-width:560px;"></audio>
+                                            <div class="small text-muted mt-1">Stored source: <?php echo toeicSwAdminDetailH($question['source_path'] ?? ''); ?></div>
                                         </div>
+                                    <?php elseif (($question['section'] ?? '') === 'speaking'): ?>
+                                        <div class="alert alert-secondary py-2">No student recording uploaded for this speaking item.</div>
                                     <?php endif; ?>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="text-muted small text-uppercase">Student Answer / Transcript</div>
-                                    <pre class="review-pre p-3 bg-dark text-light rounded"><?php echo toeicSwAdminDetailH(trim((string)($score['transcript_text'] ?? $question['user_answer'] ?? '')) ?: '-'); ?></pre>
+                                    <div class="text-muted small text-uppercase">
+                                        <?php echo (($question['section'] ?? '') === 'speaking') ? 'Student Transcript' : 'Student Written Answer'; ?>
+                                    </div>
+                                    <pre class="review-pre p-3 bg-dark text-light rounded"><?php echo toeicSwAdminDetailH($studentAnswerText); ?></pre>
 
                                     <div class="review-meta mb-3">
                                         <span class="badge bg-info text-dark">Provider: <?php echo toeicSwAdminDetailH($score['ai_provider'] ?? '-'); ?></span>

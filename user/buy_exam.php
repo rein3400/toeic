@@ -12,39 +12,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = (int)$_SESSION['user_id'];
-$hasAvailableToeicFullAccess = false;
+$hasAvailableToeicFullAccess = hasStrictTestCredit($conn, $user_id, 'toeic');
 $hasAvailableToeicSwAccess = hasStrictTestCredit($conn, $user_id, 'toeic_sw');
-
-if (hasTestCredit($conn, $user_id, 'toeic')) {
-    $hasCompletedRealToeicSession = false;
-
-    try {
-        if (checkTableExists($conn, 'toeic_test_sessions')) {
-            $conditions = ["user_id = ?"];
-
-            if (checkColumnExists($conn, 'toeic_test_sessions', 'practice_mode')) {
-                $conditions[] = "(practice_mode = 0 OR practice_mode IS NULL)";
-            }
-
-            if (checkColumnExists($conn, 'toeic_test_sessions', 'status')) {
-                $conditions[] = "status = 'completed'";
-            }
-
-            $sql = "SELECT test_session FROM toeic_test_sessions WHERE " . implode(' AND ', $conditions) . " LIMIT 1";
-            $checkStmt = $conn->prepare($sql);
-            if ($checkStmt) {
-                $checkStmt->bind_param('i', $user_id);
-                $checkStmt->execute();
-                $hasCompletedRealToeicSession = $checkStmt->get_result()->num_rows > 0;
-                $checkStmt->close();
-            }
-        }
-    } catch (\Throwable $e) {
-        $hasCompletedRealToeicSession = false;
-    }
-
-    $hasAvailableToeicFullAccess = !$hasCompletedRealToeicSession;
-}
 
 $website_title = getWebsiteTitle();
 $flash_messages = toeicConsumeFlashes();
