@@ -1,4 +1,17 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+if (function_exists('set_time_limit')) {
+    set_time_limit(300);
+}
+set_error_handler(static function ($severity, $message, $file, $line): bool {
+    if (!(error_reporting() & $severity)) {
+        return false;
+    }
+    throw new ErrorException($message, 0, $severity, $file, $line);
+});
+
 header('Content-Type: application/json');
 
 require_once '../includes/session_handler.php';
@@ -108,6 +121,11 @@ try {
         'section_score' => $section_score,
     ]);
 } catch (Throwable $e) {
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    http_response_code(200);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage(),
+        'file' => basename($e->getFile()) . ':' . $e->getLine(),
+    ]);
 }
 ?>

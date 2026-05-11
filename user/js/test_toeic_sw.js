@@ -2,11 +2,23 @@
     const cfg = window.TOEIC_SW_CONFIG || {};
     const csrfToken = cfg.csrfToken || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     const saveTimers = new Map();
+    const pendingTextSaves = new Map();
     const pendingUploads = new Map();
     const uploadErrors = new Map();
     const recorders = new Map();
     const recordingStreams = new Map();
+    const recordingTimers = new Map();
     const prepareTimers = new Map();
+    let currentQuestion = 0;
+    let submitting = false;
+
+    function rowKey(rowId) {
+        return String(rowId);
+    }
+
+    function questionCards() {
+        return Array.from(document.querySelectorAll('.sw-question[data-question]'));
+    }
 
     function setStatus(rowId, text, state) {
         const el = document.getElementById(`sw-status-${rowId}`);
@@ -18,6 +30,22 @@
         el.className = `sw-status ${state || ''}`.trim();
     }
 
+    function setSubmitMessage(text, state) {
+        const message = document.getElementById('sw-submit-message');
+        if (!message) {
+            return;
+        }
+        message.textContent = text || '';
+        message.className = state === 'error' ? 'small text-danger fw-bold' : 'small text-muted';
+    }
+
+    function setOverlay(active) {
+        const overlay = document.getElementById('sw-scoring-overlay');
+        if (overlay) {
+            overlay.classList.toggle('active', Boolean(active));
+        }
+    }
+
     async function postJson(url, payload) {
         const response = await fetch(url, {
             method: 'POST',
@@ -27,113 +55,228 @@
             },
             body: JSON.stringify(Object.assign({csrf_token: csrfToken}, payload)),
         });
-        const data = await response.json();
-        if (!data.success) {
-            throw new Error(data.error || data.message || 'Request failed');
+        const data = await response.json().catch(() => ({
+            success: false,
+            error: `Invalid JSON response from ${url}`,
+        }));
+        if (!response.ok || !data.success) {
+            throw new Error(data.error || data.message || `HTTP ${response.status}`);
         }
         return data;
     }
 
     function countWords(text) {
-        const words = String(text || '').trim().split(/\s+/).filter(Boolean);
-        return words.length;
+        return String(text || '').trim().split(/\s+/).filter(Boolean).length;
     }
 
-    window.persistToeicSwAnswer = async function persistToeicSwAnswer(rowId, answer) {
-        setStatus(rowId, 'Saving...', 'pending');
-        const data = await postJson('ajax_save_toeic_sw_answer.php', {
-            test_session: cfg.testSession,
-            section: cfg.section,
-            question_row_id: rowId,
-            answer: answer,
-        });
-        setStatus(rowId, 'Saved', 'saved');
-        return data;
-    };
-
-    function queueTextSave(textarea) {
+    function setWordCount(textarea) {
         const rowId = textarea.dataset.rowId;
         const counter = document.getElementById(`sw-word-count-${rowId}`);
         if (counter) {
             counter.textContent = `${countWords(textarea.value)} words`;
         }
+    }
+
+    function markQuestionAnswered(rowId, answered) {
+        const card = document.querySelector(`.sw-question[data-row-id="${rowId}"]`);
+        if (!card) {
+            return;
+        }
+        card.dataset.hasAnswer = answered ? '1' : '0';
+        const index = card.dataset.question;
+        const mapButton = document.querySelector(`.sw-section-map [data-question-jump="${index}"]`);
+        if (mapButton) {
+            mapButton.classList.toggle('done', Boolean(answered));
+        }
+    }
+
+    function trackTextSave(rowId, promise) {
+        const key = rowKey(rowId);
+        pendingTextSaves.set(key, promise);
+        promise.then(() => {}, () => {}).finally(() => {
+            if (pendingTextSaves.get(key) === promise) {
+                pendingTextSaves.delete(key);
+            }
+        });
+        return promise;
+    }
+
+    window.persistToeicSwAnswer = async function persistToeicSwAnswer(rowId, answer) {
+        const key = rowKey(rowId);
+        setStatus(key, 'Saving...', 'pending');
+        const promise = postJson('ajax_save_toeic_sw_answer.php', {
+            test_session: cfg.testSession,
+            section: cfg.section,
+            question_row_id: key,
+            answer: answer,
+        });
+        trackTextSave(key, promise);
+        const data = await promise;
+        setStatus(key, 'Saved', 'saved');
+        markQuestionAnswered(key, String(answer || '').trim() !== '');
+        return data;
+    };
+
+    function queueTextSave(textarea) {
+        const rowId = textarea.dataset.rowId;
+        setWordCount(textarea);
+        markQuestionAnswered(rowId, textarea.value.trim() !== '');
+
         if (saveTimers.has(rowId)) {
             clearTimeout(saveTimers.get(rowId));
         }
         saveTimers.set(rowId, setTimeout(() => {
+            saveTimers.delete(rowId);
             window.persistToeicSwAnswer(rowId, textarea.value).catch((error) => {
                 setStatus(rowId, error.message || 'Save failed', 'error');
             });
         }, 650));
     }
 
+    async function flushTextAnswers() {
+        document.querySelectorAll('textarea[data-row-id]').forEach((textarea) => {
+            const rowId = textarea.dataset.rowId;
+            if (saveTimers.has(rowId)) {
+                clearTimeout(saveTimers.get(rowId));
+                saveTimers.delete(rowId);
+            }
+        });
+
+        const previousSaves = Array.from(pendingTextSaves.values());
+        if (previousSaves.length > 0) {
+            await Promise.allSettled(previousSaves);
+        }
+
+        const finalSaves = Array.from(document.querySelectorAll('textarea[data-row-id]')).map((textarea) => {
+            return window.persistToeicSwAnswer(textarea.dataset.rowId, textarea.value);
+        });
+        if (finalSaves.length === 0) {
+            return;
+        }
+
+        const results = await Promise.allSettled(finalSaves);
+        const failed = results.filter((result) => result.status === 'rejected');
+        if (failed.length > 0) {
+            const firstReason = failed[0].reason && failed[0].reason.message ? failed[0].reason.message : 'Save failed';
+            throw new Error(`${failed.length} writing answer(s) failed to save. ${firstReason}`);
+        }
+    }
+
+    function getPreferredAudioMimeType() {
+        const candidates = [
+            'audio/webm;codecs=opus',
+            'audio/webm',
+            'audio/ogg;codecs=opus',
+            'audio/ogg',
+            'audio/mp4',
+        ];
+
+        if (typeof MediaRecorder === 'undefined' || typeof MediaRecorder.isTypeSupported !== 'function') {
+            return '';
+        }
+
+        return candidates.find((type) => MediaRecorder.isTypeSupported(type)) || '';
+    }
+
+    function audioExtensionFromMime(mimeType) {
+        if (String(mimeType).includes('ogg')) return 'ogg';
+        if (String(mimeType).includes('mp4')) return 'mp4';
+        if (String(mimeType).includes('mpeg')) return 'mp3';
+        if (String(mimeType).includes('wav')) return 'wav';
+        return 'webm';
+    }
+
+    function clearRecordingTimer(rowId) {
+        const key = rowKey(rowId);
+        if (recordingTimers.has(key)) {
+            clearInterval(recordingTimers.get(key));
+            recordingTimers.delete(key);
+        }
+    }
+
+    function stopStream(rowId) {
+        const key = rowKey(rowId);
+        const stream = recordingStreams.get(key);
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            recordingStreams.delete(key);
+        }
+    }
+
+    function stopRecorder(rowId) {
+        const key = rowKey(rowId);
+        const recorder = recorders.get(key);
+        if (recorder && recorder.state !== 'inactive') {
+            recorder.stop();
+        }
+    }
+
     async function uploadRecording(rowId, blob) {
-        pendingUploads.set(String(rowId), true);
-        uploadErrors.delete(String(rowId));
-        setStatus(rowId, 'Uploading recording...', 'pending');
+        const key = rowKey(rowId);
+        pendingUploads.set(key, true);
+        uploadErrors.delete(key);
+        setStatus(key, 'Uploading recording...', 'pending');
 
         const form = new FormData();
+        const extension = audioExtensionFromMime(blob.type || 'audio/webm');
         form.append('csrf_token', csrfToken);
         form.append('test_session', cfg.testSession);
         form.append('section', cfg.section);
-        form.append('question_row_id', rowId);
-        form.append('recording', blob, `toeic-sw-${rowId}.webm`);
+        form.append('question_row_id', key);
+        form.append('recording', blob, `toeic-sw-${key}.${extension}`);
 
         try {
             const response = await fetch('ajax_save_toeic_sw_recording.php', {
                 method: 'POST',
                 body: form,
             });
-            const data = await response.json();
-            if (!data.success) {
-                throw new Error(data.error || 'Upload failed');
+            const data = await response.json().catch(() => ({
+                success: false,
+                error: 'Invalid JSON response from recording upload',
+            }));
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || `HTTP ${response.status}`);
             }
-            setStatus(rowId, 'Recording saved', 'saved');
-            const audio = document.getElementById(`sw-playback-${rowId}`);
+
+            const audio = document.getElementById(`sw-playback-${key}`);
             if (audio) {
                 audio.src = URL.createObjectURL(blob);
                 audio.hidden = false;
             }
-            const question = document.querySelector(`.sw-question[data-row-id="${rowId}"]`);
-            if (question) {
-                question.dataset.hasAnswer = '1';
-            }
+            markQuestionAnswered(key, true);
+            setStatus(key, 'Recording saved', 'saved');
+            return data;
         } catch (error) {
-            uploadErrors.set(String(rowId), error.message || 'Upload failed');
-            setStatus(rowId, error.message || 'Upload failed', 'error');
+            uploadErrors.set(key, error.message || 'Upload failed');
+            markQuestionAnswered(key, false);
+            setStatus(key, error.message || 'Upload failed', 'error');
+            throw error;
         } finally {
-            pendingUploads.delete(String(rowId));
-        }
-    }
-
-    function stopRecorder(rowId) {
-        const recorder = recorders.get(String(rowId));
-        if (recorder && recorder.state !== 'inactive') {
-            recorder.stop();
+            pendingUploads.delete(key);
         }
     }
 
     window.startToeicSwPrepare = function startToeicSwPrepare(rowId, prepareSeconds, maxSeconds) {
-        rowId = String(rowId);
-        if (prepareTimers.has(rowId) || recorders.has(rowId)) {
+        const key = rowKey(rowId);
+        if (prepareTimers.has(key) || recorders.has(key)) {
             return;
         }
 
-        const button = document.getElementById(`record-btn-${rowId}`);
-        const timer = document.getElementById(`sw-record-timer-${rowId}`);
+        const button = document.getElementById(`record-btn-${key}`);
+        const timer = document.getElementById(`sw-record-timer-${key}`);
         let remaining = Math.max(0, Number(prepareSeconds || 0));
 
         const enableRecording = () => {
-            prepareTimers.delete(rowId);
+            prepareTimers.delete(key);
             if (button) {
                 button.disabled = false;
                 button.innerHTML = '<i class="fas fa-microphone me-2"></i>Start Recording';
-                button.onclick = () => window.startToeicSwTimedRecording(rowId, maxSeconds);
+                button.onclick = () => window.startToeicSwTimedRecording(key, maxSeconds);
             }
             if (timer) {
                 timer.textContent = 'Ready';
             }
-            setStatus(rowId, 'Preparation complete', 'saved');
+            setStatus(key, 'Preparation complete', 'saved');
         };
 
         if (remaining <= 0) {
@@ -145,13 +288,13 @@
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-hourglass-half me-2"></i>Preparing';
         }
-        setStatus(rowId, 'Preparing...', 'pending');
+        setStatus(key, 'Preparing...', 'pending');
         if (timer) {
             timer.textContent = `Prepare ${remaining}s`;
         }
 
         const interval = setInterval(() => {
-            remaining--;
+            remaining -= 1;
             if (timer) {
                 timer.textContent = remaining > 0 ? `Prepare ${remaining}s` : 'Ready';
             }
@@ -160,31 +303,67 @@
                 enableRecording();
             }
         }, 1000);
-        prepareTimers.set(rowId, interval);
+        prepareTimers.set(key, interval);
     };
 
     window.startToeicSwTimedRecording = async function startToeicSwTimedRecording(rowId, maxSeconds) {
-        rowId = String(rowId);
-        if (recorders.has(rowId)) {
-            stopRecorder(rowId);
+        const key = rowKey(rowId);
+        const button = document.getElementById(`record-btn-${key}`);
+        const timer = document.getElementById(`sw-record-timer-${key}`);
+
+        if (recorders.has(key)) {
+            stopRecorder(key);
+            return;
+        }
+
+        if (recorders.size > 0) {
+            setStatus(key, 'Stop the current recording before starting another', 'error');
+            return;
+        }
+
+        if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+            setStatus(key, 'Microphone recording is not supported in this browser', 'error');
+            return;
+        }
+
+        if (typeof MediaRecorder === 'undefined') {
+            setStatus(key, 'MediaRecorder is not available in this browser', 'error');
             return;
         }
 
         let stream;
+        let recorder;
+        const mimeType = getPreferredAudioMimeType();
+        const chunks = [];
+
         try {
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Opening Mic';
+            }
+            setStatus(key, 'Requesting microphone permission...', 'pending');
             stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
+            try {
+                recorder = mimeType ? new MediaRecorder(stream, {mimeType}) : new MediaRecorder(stream);
+            } catch (error) {
+                recorder = new MediaRecorder(stream);
+            }
         } catch (error) {
-            setStatus(rowId, 'Microphone permission is required', 'error');
+            stopStream(key);
+            if (stream) {
+                stream.getTracks().forEach((track) => track.stop());
+            }
+            if (button) {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-microphone me-2"></i>Start Recording';
+            }
+            const blocked = error && (error.name === 'NotAllowedError' || error.name === 'SecurityError');
+            setStatus(key, blocked ? 'Please allow microphone access for this site' : 'Could not access microphone', 'error');
             return;
         }
 
-        const chunks = [];
-        let remaining = Math.max(1, Number(maxSeconds || 30));
-        const button = document.getElementById(`record-btn-${rowId}`);
-        const timer = document.getElementById(`sw-record-timer-${rowId}`);
-        const recorder = new MediaRecorder(stream);
-        recorders.set(rowId, recorder);
-        recordingStreams.set(rowId, stream);
+        recorders.set(key, recorder);
+        recordingStreams.set(key, stream);
 
         recorder.ondataavailable = (event) => {
             if (event.data && event.data.size > 0) {
@@ -192,98 +371,175 @@
             }
         };
 
+        recorder.onerror = () => {
+            setStatus(key, 'Recording failed. Please record again.', 'error');
+            stopRecorder(key);
+        };
+
         recorder.onstop = () => {
-            const savedStream = recordingStreams.get(rowId);
-            if (savedStream) {
-                savedStream.getTracks().forEach(track => track.stop());
-            }
-            recorders.delete(rowId);
-            recordingStreams.delete(rowId);
-            if (button) {
-                button.disabled = false;
-                button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
-            }
+            clearRecordingTimer(key);
+            stopStream(key);
+            recorders.delete(key);
+            const recordedMime = recorder.mimeType || (chunks[0] && chunks[0].type) || mimeType || 'audio/webm';
+
             if (timer) {
                 timer.textContent = '';
             }
-            const blob = new Blob(chunks, {type: recorder.mimeType || 'audio/webm'});
-            uploadRecording(rowId, blob);
+
+            if (chunks.length === 0) {
+                if (button) {
+                    button.disabled = false;
+                    button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
+                }
+                setStatus(key, 'No audio was captured. Please record again.', 'error');
+                return;
+            }
+
+            const blob = new Blob(chunks, {type: recordedMime});
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-cloud-upload-alt me-2"></i>Uploading';
+            }
+
+            uploadRecording(key, blob)
+                .catch((error) => {
+                    console.error('TOEIC SW recording upload failed:', error);
+                })
+                .finally(() => {
+                    if (button) {
+                        button.disabled = false;
+                        button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
+                    }
+                });
         };
 
+        let remaining = Math.max(1, Number(maxSeconds || 30));
         if (button) {
+            button.disabled = false;
             button.innerHTML = '<i class="fas fa-stop me-2"></i>Stop Recording';
         }
-        setStatus(rowId, 'Recording...', 'pending');
+        if (timer) {
+            timer.textContent = `${remaining}s`;
+        }
+        setStatus(key, 'Recording...', 'pending');
         recorder.start();
 
         const interval = setInterval(() => {
-            if (!recorders.has(rowId)) {
-                clearInterval(interval);
+            if (!recorders.has(key)) {
+                clearRecordingTimer(key);
                 return;
             }
+            remaining -= 1;
             if (timer) {
-                timer.textContent = `${remaining}s`;
+                timer.textContent = remaining > 0 ? `${remaining}s` : 'Done';
             }
-            remaining--;
-            if (remaining < 0) {
-                clearInterval(interval);
-                stopRecorder(rowId);
+            if (remaining <= 0) {
+                stopRecorder(key);
             }
         }, 1000);
+        recordingTimers.set(key, interval);
     };
 
     window.waitForToeicSwRecordingSaves = async function waitForToeicSwRecordingSaves() {
-        while (pendingUploads.size > 0) {
-            await new Promise(resolve => setTimeout(resolve, 300));
+        const activeRecorders = Array.from(recorders.values()).filter((recorder) => recorder && recorder.state === 'recording');
+        if (activeRecorders.length > 0) {
+            throw new Error('A recording is still in progress. Stop it before submitting.');
         }
+
+        while (pendingUploads.size > 0) {
+            await new Promise((resolve) => setTimeout(resolve, 250));
+        }
+
         if (uploadErrors.size > 0) {
             const firstError = Array.from(uploadErrors.values())[0];
-            throw new Error(firstError || 'A recording upload failed');
+            throw new Error(firstError || 'A recording upload failed. Please record again.');
         }
     };
 
+    window.showToeicSwQuestion = function showToeicSwQuestion(index) {
+        const cards = questionCards();
+        if (cards.length === 0) {
+            return;
+        }
+        const nextIndex = Math.max(0, Math.min(Number(index) || 0, cards.length - 1));
+        cards.forEach((card, cardIndex) => {
+            const active = cardIndex === nextIndex;
+            card.hidden = !active;
+            card.classList.toggle('active', active);
+        });
+
+        currentQuestion = nextIndex;
+        document.querySelectorAll('.sw-section-map [data-question-jump]').forEach((button) => {
+            button.classList.toggle('active', Number(button.dataset.questionJump) === nextIndex);
+        });
+
+        const current = document.getElementById('sw-current-question');
+        if (current) {
+            current.textContent = String(nextIndex + 1);
+        }
+        const prev = document.getElementById('sw-prev-question');
+        const next = document.getElementById('sw-next-question');
+        if (prev) {
+            prev.disabled = nextIndex === 0;
+        }
+        if (next) {
+            next.disabled = nextIndex >= cards.length - 1;
+        }
+
+        const activeCard = cards[nextIndex];
+        if (activeCard) {
+            activeCard.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+    };
+
+    window.prevToeicSwQuestion = function prevToeicSwQuestion() {
+        window.showToeicSwQuestion(currentQuestion - 1);
+    };
+
+    window.nextToeicSwQuestion = function nextToeicSwQuestion() {
+        window.showToeicSwQuestion(currentQuestion + 1);
+    };
+
     window.submitToeicSwSection = async function submitToeicSwSection() {
+        if (submitting) {
+            return;
+        }
+
         const submit = document.getElementById('sw-submit-section');
-        const message = document.getElementById('sw-submit-message');
+        submitting = true;
+        setSubmitMessage('', '');
+        setOverlay(true);
         if (submit) {
             submit.disabled = true;
             submit.textContent = 'Submitting...';
         }
-        if (message) {
-            message.textContent = '';
-            message.className = 'small text-muted';
-        }
 
         try {
-            document.querySelectorAll('textarea[data-row-id]').forEach((textarea) => {
-                if (saveTimers.has(textarea.dataset.rowId)) {
-                    clearTimeout(saveTimers.get(textarea.dataset.rowId));
-                }
-            });
-            for (const textarea of document.querySelectorAll('textarea[data-row-id]')) {
-                await window.persistToeicSwAnswer(textarea.dataset.rowId, textarea.value);
-            }
+            await flushTextAnswers();
             await window.waitForToeicSwRecordingSaves();
+
             if (cfg.section === 'speaking') {
                 const missing = Array.from(document.querySelectorAll('.sw-question[data-section="speaking"][data-has-answer="0"]'));
                 if (missing.length > 0) {
+                    const firstMissing = missing[0];
+                    window.showToeicSwQuestion(Number(firstMissing.dataset.question || 0));
                     throw new Error(`Complete and upload all speaking recordings before submitting. Missing: ${missing.length}`);
                 }
             }
+
             const data = await postJson('ajax_submit_section_toeic_sw.php', {
                 test_session: cfg.testSession,
                 section: cfg.section,
             });
             window.location.href = data.redirect || 'index.php';
         } catch (error) {
-            if (message) {
-                message.textContent = error.message || 'Submit failed';
-                message.className = 'small text-danger fw-bold';
-            }
+            setOverlay(false);
+            setSubmitMessage(error.message || 'Submit failed', 'error');
             if (submit) {
                 submit.disabled = false;
                 submit.textContent = cfg.section === 'speaking' ? 'Submit Speaking' : 'Submit Writing';
             }
+            submitting = false;
         }
     };
 
@@ -292,6 +548,8 @@
         if (!timer || !cfg.sectionDeadline) {
             return;
         }
+
+        let interval = null;
         const tick = () => {
             const remaining = Math.max(0, Number(cfg.sectionDeadline) - Math.floor(Date.now() / 1000));
             const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
@@ -302,15 +560,16 @@
                 window.submitToeicSwSection();
             }
         };
-        const interval = setInterval(tick, 1000);
+        interval = setInterval(tick, 1000);
         tick();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('textarea[data-row-id]').forEach((textarea) => {
+            setWordCount(textarea);
             textarea.addEventListener('input', () => queueTextSave(textarea));
-            queueTextSave(textarea);
         });
+        window.showToeicSwQuestion(0);
         startSectionTimer();
     });
 })();
