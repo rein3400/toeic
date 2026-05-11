@@ -51,12 +51,11 @@ async function main() {
     await page.locator('#sw-next-question').click();
     assert((await page.textContent('#sw-current-question')).trim() === '2', 'Speaking Next should move to question 2.');
     assert(await visibleCards() === 1, 'Speaking navigation should keep one visible card.');
-    await page.locator('#sw-submit-section').click();
-    await page.waitForSelector('#sw-submit-message.text-danger', {timeout: 10000});
+    assert(await page.locator('#sw-submit-section').isDisabled(), 'Speaking submit should stay disabled until recordings upload.');
     const speakingSubmitMessage = (await page.textContent('#sw-submit-message')).trim();
     assert(
-        /Complete and upload all speaking recordings/i.test(speakingSubmitMessage),
-        'Speaking submit should be blocked until recordings upload.'
+        /recordings? remaining/i.test(speakingSubmitMessage),
+        'Speaking submit should explain the missing recordings before scoring.'
     );
 
     await page.goto(setup.baseUrl + setup.writingUrl, {waitUntil: 'domcontentloaded'});

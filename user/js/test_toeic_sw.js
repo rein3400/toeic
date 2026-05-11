@@ -9,6 +9,7 @@
     const recordingStreams = new Map();
     const recordingTimers = new Map();
     const prepareTimers = new Map();
+    const micRequests = new Set();
     let currentQuestion = 0;
     let submitting = false;
 
@@ -36,7 +37,75 @@
             return;
         }
         message.textContent = text || '';
-        message.className = state === 'error' ? 'small text-danger fw-bold' : 'small text-muted';
+        message.dataset.state = state || '';
+        if (state === 'error') {
+            message.className = 'small text-danger fw-bold';
+        } else if (state === 'ok') {
+            message.className = 'small text-success fw-bold';
+        } else if (state === 'pending') {
+            message.className = 'small text-warning fw-bold';
+        } else {
+            message.className = 'small text-muted';
+        }
+    }
+
+    function getMissingSpeakingCount() {
+        return document.querySelectorAll('.sw-question[data-section="speaking"][data-has-answer="0"]').length;
+    }
+
+    function isSpeakingFlowBusy() {
+        return recorders.size > 0 || pendingUploads.size > 0 || prepareTimers.size > 0 || micRequests.size > 0;
+    }
+
+    function refreshSubmitState() {
+        const submit = document.getElementById('sw-submit-section');
+        const cards = questionCards();
+        const prev = document.getElementById('sw-prev-question');
+        const next = document.getElementById('sw-next-question');
+        const busyNav = cfg.section === 'speaking' && isSpeakingFlowBusy();
+        if (prev) {
+            prev.disabled = currentQuestion <= 0 || busyNav;
+        }
+        if (next) {
+            next.disabled = currentQuestion >= cards.length - 1 || busyNav;
+        }
+        document.querySelectorAll('.sw-section-map [data-question-jump]').forEach((button) => {
+            const target = Number(button.dataset.questionJump || 0);
+            button.disabled = busyNav && target !== currentQuestion;
+        });
+
+        if (!submit) {
+            return;
+        }
+
+        if (submitting) {
+            submit.disabled = true;
+            return;
+        }
+
+        if (cfg.section !== 'speaking') {
+            submit.disabled = false;
+            const message = document.getElementById('sw-submit-message');
+            if (message && !message.dataset.state) {
+                setSubmitMessage('Writing autosaves while you type.', '');
+            }
+            return;
+        }
+
+        const missing = getMissingSpeakingCount();
+        const busy = isSpeakingFlowBusy();
+        const failedUploads = uploadErrors.size;
+        submit.disabled = missing > 0 || busy || failedUploads > 0;
+
+        if (failedUploads > 0) {
+            setSubmitMessage('A recording upload failed. Record that question again before submitting.', 'error');
+        } else if (busy) {
+            setSubmitMessage('Finish the current preparation, recording, or upload before moving on.', 'pending');
+        } else if (missing > 0) {
+            setSubmitMessage(`${missing} recording${missing === 1 ? '' : 's'} remaining before submit.`, '');
+        } else {
+            setSubmitMessage('All recordings uploaded. Ready to submit.', 'ok');
+        }
     }
 
     function setOverlay(active) {
@@ -88,6 +157,7 @@
         if (mapButton) {
             mapButton.classList.toggle('done', Boolean(answered));
         }
+        refreshSubmitState();
     }
 
     function trackTextSave(rowId, promise) {
@@ -216,6 +286,7 @@
         pendingUploads.set(key, true);
         uploadErrors.delete(key);
         setStatus(key, 'Uploading recording...', 'pending');
+        refreshSubmitState();
 
         const form = new FormData();
         const extension = audioExtensionFromMime(blob.type || 'audio/webm');
@@ -253,6 +324,7 @@
             throw error;
         } finally {
             pendingUploads.delete(key);
+            refreshSubmitState();
         }
     }
 
@@ -277,6 +349,7 @@
                 timer.textContent = 'Ready';
             }
             setStatus(key, 'Preparation complete', 'saved');
+            refreshSubmitState();
         };
 
         if (remaining <= 0) {
@@ -292,6 +365,7 @@
         if (timer) {
             timer.textContent = `Prepare ${remaining}s`;
         }
+        refreshSubmitState();
 
         const interval = setInterval(() => {
             remaining -= 1;
@@ -304,6 +378,7 @@
             }
         }, 1000);
         prepareTimers.set(key, interval);
+        refreshSubmitState();
     };
 
     window.startToeicSwTimedRecording = async function startToeicSwTimedRecording(rowId, maxSeconds) {
@@ -335,13 +410,17 @@
         let recorder;
         const mimeType = getPreferredAudioMimeType();
         const chunks = [];
+        uploadErrors.delete(key);
+        refreshSubmitState();
 
         try {
+            micRequests.add(key);
             if (button) {
                 button.disabled = true;
                 button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Opening Mic';
             }
             setStatus(key, 'Requesting microphone permission...', 'pending');
+            refreshSubmitState();
             stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
             try {
                 recorder = mimeType ? new MediaRecorder(stream, {mimeType}) : new MediaRecorder(stream);
@@ -349,6 +428,7 @@
                 recorder = new MediaRecorder(stream);
             }
         } catch (error) {
+            micRequests.delete(key);
             stopStream(key);
             if (stream) {
                 stream.getTracks().forEach((track) => track.stop());
@@ -359,11 +439,14 @@
             }
             const blocked = error && (error.name === 'NotAllowedError' || error.name === 'SecurityError');
             setStatus(key, blocked ? 'Please allow microphone access for this site' : 'Could not access microphone', 'error');
+            refreshSubmitState();
             return;
         }
 
+        micRequests.delete(key);
         recorders.set(key, recorder);
         recordingStreams.set(key, stream);
+        refreshSubmitState();
 
         recorder.ondataavailable = (event) => {
             if (event.data && event.data.size > 0) {
@@ -380,6 +463,7 @@
             clearRecordingTimer(key);
             stopStream(key);
             recorders.delete(key);
+            refreshSubmitState();
             const recordedMime = recorder.mimeType || (chunks[0] && chunks[0].type) || mimeType || 'audio/webm';
 
             if (timer) {
@@ -392,6 +476,7 @@
                     button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
                 }
                 setStatus(key, 'No audio was captured. Please record again.', 'error');
+                refreshSubmitState();
                 return;
             }
 
@@ -423,6 +508,7 @@
         }
         setStatus(key, 'Recording...', 'pending');
         recorder.start();
+        refreshSubmitState();
 
         const interval = setInterval(() => {
             if (!recorders.has(key)) {
@@ -456,12 +542,19 @@
         }
     };
 
-    window.showToeicSwQuestion = function showToeicSwQuestion(index) {
+    window.showToeicSwQuestion = function showToeicSwQuestion(index, options) {
+        options = options || {};
         const cards = questionCards();
         if (cards.length === 0) {
             return;
         }
         const nextIndex = Math.max(0, Math.min(Number(index) || 0, cards.length - 1));
+        if (!options.force && nextIndex !== currentQuestion && cfg.section === 'speaking' && isSpeakingFlowBusy()) {
+            refreshSubmitState();
+            setSubmitMessage('Finish the current preparation, recording, or upload before changing questions.', 'error');
+            return;
+        }
+
         cards.forEach((card, cardIndex) => {
             const active = cardIndex === nextIndex;
             card.hidden = !active;
@@ -487,9 +580,10 @@
         }
 
         const activeCard = cards[nextIndex];
-        if (activeCard) {
+        if (activeCard && options.scroll !== false) {
             activeCard.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
+        refreshSubmitState();
     };
 
     window.prevToeicSwQuestion = function prevToeicSwQuestion() {
@@ -522,7 +616,7 @@
                 const missing = Array.from(document.querySelectorAll('.sw-question[data-section="speaking"][data-has-answer="0"]'));
                 if (missing.length > 0) {
                     const firstMissing = missing[0];
-                    window.showToeicSwQuestion(Number(firstMissing.dataset.question || 0));
+                    window.showToeicSwQuestion(Number(firstMissing.dataset.question || 0), {force: true});
                     throw new Error(`Complete and upload all speaking recordings before submitting. Missing: ${missing.length}`);
                 }
             }
@@ -534,12 +628,12 @@
             window.location.href = data.redirect || 'index.php';
         } catch (error) {
             setOverlay(false);
-            setSubmitMessage(error.message || 'Submit failed', 'error');
+            submitting = false;
             if (submit) {
-                submit.disabled = false;
                 submit.textContent = cfg.section === 'speaking' ? 'Submit Speaking' : 'Submit Writing';
             }
-            submitting = false;
+            refreshSubmitState();
+            setSubmitMessage(error.message || 'Submit failed', 'error');
         }
     };
 
@@ -569,7 +663,8 @@
             setWordCount(textarea);
             textarea.addEventListener('input', () => queueTextSave(textarea));
         });
-        window.showToeicSwQuestion(0);
+        window.showToeicSwQuestion(0, {force: true, scroll: false});
+        refreshSubmitState();
         startSectionTimer();
     });
 })();

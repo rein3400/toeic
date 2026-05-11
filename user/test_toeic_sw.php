@@ -193,12 +193,33 @@ function toeicSwRenderPrompt(array $question): void {
             font-weight: 800;
             color: var(--focus-blue);
         }
+        .tc-test-page {
+            padding-bottom: 106px;
+        }
+        .sw-test-grid {
+            display: grid;
+            grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+            gap: 1rem;
+            align-items: start;
+        }
+        .sw-progress-panel {
+            position: sticky;
+            top: 82px;
+            z-index: 5;
+        }
+        .sw-progress-panel .study-kicker {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .sw-question-stage {
+            min-width: 0;
+        }
         .sw-question {
             border: 1px solid var(--cloud-line);
-            border-radius: 12px;
+            border-radius: 10px;
             background: white;
             padding: 1.25rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
         }
         .sw-question[hidden] {
             display: none !important;
@@ -272,11 +293,12 @@ function toeicSwRenderPrompt(array $question): void {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
+            margin-top: 0.85rem;
         }
         .sw-section-map button {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -293,24 +315,68 @@ function toeicSwRenderPrompt(array $question): void {
             border-color: var(--academy-blue);
         }
         .sw-section-map button.active {
-            outline: 3px solid rgba(72,127,181,0.24);
+            outline: 2px solid rgba(72,127,181,0.28);
             color: var(--focus-blue);
             border-color: var(--focus-blue);
         }
-        .sw-nav-panel {
-            position: sticky;
+        .sw-section-map button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .sw-record-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            border-top: 1px solid var(--cloud-line);
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+        }
+        .sw-record-panel audio {
+            max-width: 320px;
+            width: min(320px, 100%);
+        }
+        .sw-command-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
             bottom: 0;
-            z-index: 15;
+            z-index: 1000;
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--cloud-line);
-            padding: 0.9rem 0;
+            box-shadow: 0 -18px 42px rgba(15, 23, 42, 0.08);
+            padding: 0.75rem 0;
+        }
+        .sw-command-inner {
+            display: grid;
+            grid-template-columns: auto minmax(90px, 120px) auto minmax(220px, 1fr);
+            gap: 0.65rem;
+            align-items: center;
         }
         .sw-current-counter {
-            min-width: 110px;
             text-align: center;
             font-weight: 800;
             color: var(--focus-blue);
+            white-space: nowrap;
+        }
+        .sw-submit-area {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.75rem;
+            align-items: center;
+            justify-self: end;
+            width: min(520px, 100%);
+        }
+        #sw-submit-message {
+            min-height: 1.2rem;
+            text-align: right;
+        }
+        #sw-submit-section:disabled,
+        #sw-prev-question:disabled,
+        #sw-next-question:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
         }
         .sw-scoring-overlay {
             display: none;
@@ -346,11 +412,36 @@ function toeicSwRenderPrompt(array $question): void {
         @media (max-width: 768px) {
             .sw-topbar { grid-template-columns: 1fr; }
             .sw-timer { text-align: left; }
-            .sw-nav-panel .container {
-                flex-direction: column;
+            .tc-test-page {
+                padding-bottom: 176px;
+            }
+            .sw-test-grid {
+                grid-template-columns: 1fr;
+            }
+            .sw-progress-panel {
+                position: static;
+                order: 2;
+            }
+            .sw-question-stage {
+                order: 1;
+            }
+            .sw-command-inner {
+                grid-template-columns: 1fr 1fr;
             }
             .sw-current-counter {
+                grid-column: 1 / -1;
                 order: -1;
+            }
+            .sw-submit-area {
+                grid-column: 1 / -1;
+                grid-template-columns: 1fr;
+                justify-self: stretch;
+            }
+            #sw-submit-message {
+                text-align: left;
+            }
+            #sw-submit-section {
+                width: 100%;
             }
         }
     </style>
@@ -376,8 +467,9 @@ function toeicSwRenderPrompt(array $question): void {
             <div class="sw-timer" id="sw-section-timer">--:--</div>
         </section>
 
-        <section class="study-card mb-4">
-            <div class="d-flex flex-wrap justify-content-between gap-3 align-items-center">
+        <div class="sw-test-grid">
+        <section class="study-card sw-progress-panel mb-4">
+            <div>
                 <div>
                     <span class="study-kicker">Progress</span>
                     <div class="fw-bold"><?php echo $question_count; ?> questions in this section</div>
@@ -400,6 +492,7 @@ function toeicSwRenderPrompt(array $question): void {
             </div>
         </section>
 
+        <div class="sw-question-stage">
         <?php foreach ($questions as $question_index => $question): ?>
             <?php
             $row_id = (int)$question['id'];
@@ -450,7 +543,7 @@ function toeicSwRenderPrompt(array $question): void {
                 <?php toeicSwRenderPrompt($question); ?>
 
                 <?php if ($section === 'speaking'): ?>
-                    <div class="mt-4 d-flex flex-wrap gap-2 align-items-center">
+                    <div class="sw-record-panel">
                         <button type="button" id="record-btn-<?php echo $row_id; ?>" class="study-button py-2 px-3" onclick="startToeicSwPrepare(<?php echo $row_id; ?>, <?php echo (int)$question['prepare_seconds']; ?>, <?php echo (int)$question['response_seconds']; ?>)">
                             <i class="fas fa-hourglass-start me-2"></i>Start Prepare
                         </button>
@@ -480,34 +573,31 @@ function toeicSwRenderPrompt(array $question): void {
                 <?php endif; ?>
             </section>
         <?php endforeach; ?>
+        </div>
+        </div>
+    </main>
 
-        <section class="sw-nav-panel">
-            <div class="container d-flex justify-content-between align-items-center gap-2">
-                <button type="button" id="sw-prev-question" class="study-button study-button-secondary py-2 px-3" onclick="prevToeicSwQuestion()">
-                    <i class="fas fa-arrow-left me-2"></i>Previous
-                </button>
-                <div class="sw-current-counter">
-                    <span id="sw-current-question">1</span>/<span id="sw-total-questions"><?php echo $question_count; ?></span>
-                </div>
-                <button type="button" id="sw-next-question" class="study-button py-2 px-3" onclick="nextToeicSwQuestion()">
-                    Next<i class="fas fa-arrow-right ms-2"></i>
-                </button>
+    <div class="sw-command-bar">
+        <div class="container sw-command-inner">
+            <button type="button" id="sw-prev-question" class="study-button study-button-secondary py-2 px-3" onclick="prevToeicSwQuestion()">
+                <i class="fas fa-arrow-left me-2"></i>Previous
+            </button>
+            <div class="sw-current-counter">
+                <span id="sw-current-question">1</span>/<span id="sw-total-questions"><?php echo $question_count; ?></span>
             </div>
-        </section>
-
-        <section class="study-card">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <div>
-                    <span class="study-kicker">Submit</span>
-                    <div class="fw-bold"><?php echo $section === 'speaking' ? 'Make sure every recording is uploaded.' : 'Your writing responses autosave while you type.'; ?></div>
-                    <div id="sw-submit-message" class="small text-muted"></div>
+            <button type="button" id="sw-next-question" class="study-button py-2 px-3" onclick="nextToeicSwQuestion()">
+                Next<i class="fas fa-arrow-right ms-2"></i>
+            </button>
+            <div class="sw-submit-area">
+                <div id="sw-submit-message" class="small text-muted">
+                    <?php echo $section === 'speaking' ? 'Complete all recordings before submit.' : 'Writing autosaves while you type.'; ?>
                 </div>
                 <button type="button" id="sw-submit-section" class="study-button" onclick="submitToeicSwSection()">
                     <?php echo $section === 'speaking' ? 'Submit Speaking' : 'Submit Writing'; ?>
                 </button>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <div class="sw-scoring-overlay" id="sw-scoring-overlay" role="status" aria-live="polite">
         <div class="sw-scoring-box">
