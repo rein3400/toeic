@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_sw_helper.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -13,6 +14,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
 $website_title = getWebsiteTitle();
 $user_id = (int)$_SESSION['user_id'];
 $results = [];
+$sw_results = [];
 
 if (checkTableExists($conn, 'toeic_test_results')) {
     $stmt = $conn->prepare("
@@ -24,6 +26,25 @@ if (checkTableExists($conn, 'toeic_test_results')) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
+
+try {
+    ensureToeicSwSchema($conn);
+} catch (Throwable $e) {
+    error_log('TOEIC SW analytics schema check failed: ' . $e->getMessage());
+}
+
+if (checkTableExists($conn, 'toeic_sw_test_results')) {
+    $stmt = $conn->prepare("
+        SELECT test_session, speaking_scaled, writing_scaled, total_score, completed_at
+        FROM toeic_sw_test_results
+        WHERE user_id = ?
+        ORDER BY completed_at DESC
+    ");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $sw_results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 }
 
@@ -164,6 +185,47 @@ $latest_score = $total_attempts ? (int)$results[0]['total_score'] : 0;
                 </section>
             </div>
         </div>
+
+        <section class="study-card mt-4">
+            <span class="study-kicker">Speaking & Writing</span>
+            <h2 class="h4 mb-4">SW Report Timeline</h2>
+
+            <?php if (empty($sw_results)): ?>
+                <div class="text-center py-5 opacity-50">
+                    <i class="fas fa-microphone fa-3x mb-3"></i>
+                    <p>No TOEIC Speaking & Writing history available.</p>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle">
+                        <thead>
+                            <tr class="small text-muted uppercase fw-bold">
+                                <th>Date</th>
+                                <th>Score</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach (array_slice($sw_results, 0, 10) as $row): ?>
+                                <tr class="border-bottom-faint">
+                                    <td class="py-3">
+                                        <div class="fw-bold"><?php echo date('d M Y', strtotime($row['completed_at'])); ?></div>
+                                        <div class="small text-muted"><?php echo date('H:i', strtotime($row['completed_at'])); ?></div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="h5 fw-bold mb-0" style="color:var(--focus-blue);"><?php echo (int)$row['total_score']; ?>/400</div>
+                                        <div class="small text-muted">S: <?php echo (int)$row['speaking_scaled']; ?> - W: <?php echo (int)$row['writing_scaled']; ?></div>
+                                    </td>
+                                    <td class="py-3 text-end">
+                                        <a href="result_toeic_sw.php?session=<?php echo urlencode($row['test_session']); ?>" class="study-button py-1 px-3" style="min-height: 36px; font-size: 13px;">Details</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </section>
     </main>
 
     <style>

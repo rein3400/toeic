@@ -5,6 +5,7 @@ require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
+require_once '../includes/toeic_sw_helper.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -24,6 +25,14 @@ if (($_GET['error'] ?? '') === 'access_denied') {
 $flash_messages = toeicConsumeFlashes();
 $has_full_credit = hasStrictTestCredit($conn, $user_id, 'toeic');
 $full_credit_count = countStrictTestCredits($conn, $user_id, 'toeic');
+$has_sw_credit = hasStrictTestCredit($conn, $user_id, 'toeic_sw');
+$sw_credit_count = countStrictTestCredits($conn, $user_id, 'toeic_sw');
+
+try {
+    ensureToeicSwSchema($conn);
+} catch (Throwable $e) {
+    error_log('TOEIC SW dashboard schema check failed: ' . $e->getMessage());
+}
 
 $recent_results = [];
 if (checkTableExists($conn, 'toeic_test_results')) {
@@ -37,6 +46,21 @@ if (checkTableExists($conn, 'toeic_test_results')) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $recent_results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
+
+$recent_sw_results = [];
+if (checkTableExists($conn, 'toeic_sw_test_results')) {
+    $stmt = $conn->prepare("
+        SELECT test_session, speaking_scaled, writing_scaled, total_score, completed_at
+        FROM toeic_sw_test_results
+        WHERE user_id = ?
+        ORDER BY completed_at DESC
+        LIMIT 5
+    ");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $recent_sw_results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 }
 
@@ -77,6 +101,22 @@ if (checkTableExists($conn, 'toeic_test_sessions')) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $active_session = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+}
+
+$active_sw_session = null;
+if (checkTableExists($conn, 'toeic_sw_test_sessions')) {
+    $stmt = $conn->prepare("
+        SELECT test_session, current_section, started_at
+        FROM toeic_sw_test_sessions
+        WHERE user_id = ?
+          AND status = 'active'
+        ORDER BY id DESC
+        LIMIT 1
+    ");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $active_sw_session = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 }
 
@@ -163,6 +203,11 @@ if (strpos($user_name, ' ') !== false) {
                         <?php else: ?>
                             <a href="buy_exam.php" class="tc-button">Aktifkan Paket TOEIC</a>
                         <?php endif; ?>
+                        <?php if ($has_sw_credit): ?>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="tc-button-outline">Mulai TOEIC SW</a>
+                        <?php else: ?>
+                            <a href="buy_exam.php" class="tc-button-outline">Aktifkan SW</a>
+                        <?php endif; ?>
                         <a href="<?php echo $has_full_credit ? 'test_instructions.php?test_format=toeic&mode=prep' : 'buy_exam.php'; ?>" class="tc-button-outline">
                             <?php echo $has_full_credit ? 'Buka Practice' : 'Beli Paket Practice'; ?>
                         </a>
@@ -179,7 +224,7 @@ if (strpos($user_name, ' ') !== false) {
                             <div class="toeic-stat-label text-white-50">Best Score</div>
                         </div>
                         <div class="tc-stat-card toeic-stat">
-                            <div class="toeic-stat-value"><?php echo $full_credit_count; ?></div>
+                            <div class="toeic-stat-value"><?php echo $full_credit_count + $sw_credit_count; ?></div>
                             <div class="toeic-stat-label text-white-50">Active Packages</div>
                         </div>
                     </div>
@@ -214,6 +259,21 @@ if (strpos($user_name, ' ') !== false) {
             </section>
         <?php endif; ?>
 
+        <?php if ($active_sw_session): ?>
+            <section class="study-card mb-4" style="background: #eef6ff !important; border-color: rgba(72,127,181,0.35) !important;">
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-8 text-dark">
+                        <span class="study-kicker">Resume SW Attempt</span>
+                        <h2 class="h3 mb-2">TOEIC Speaking & Writing in progress.</h2>
+                        <p class="mb-0 text-muted">Current section: <strong><?php echo htmlspecialchars(ucfirst($active_sw_session['current_section'])); ?></strong>.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="test_toeic_sw.php?resume=1&test_session=<?php echo urlencode($active_sw_session['test_session']); ?>&mode=full" class="study-button">Resume SW</a>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <div class="row g-4">
             <div class="col-lg-7">
                 <section class="study-card h-100">
@@ -240,6 +300,24 @@ if (strpos($user_name, ' ') !== false) {
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if (!empty($recent_sw_results)): ?>
+                        <div class="mt-4 pt-4 border-top">
+                            <h3 class="h6 fw-bold mb-3">Speaking & Writing Reports</h3>
+                            <?php foreach ($recent_sw_results as $row): ?>
+                                <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 border bg-light-subtle">
+                                    <div>
+                                        <div class="fw-bold h5 mb-1" style="color:var(--focus-blue);">SW <?php echo (int)$row['total_score']; ?>/400</div>
+                                        <div class="small text-muted"><?php echo date('d M Y', strtotime($row['completed_at'])); ?></div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="small fw-bold mb-2">S <?php echo (int)$row['speaking_scaled']; ?> &middot; W <?php echo (int)$row['writing_scaled']; ?></div>
+                                        <a href="result_toeic_sw.php?session=<?php echo urlencode($row['test_session']); ?>" class="study-button py-1 px-3" style="min-height: 36px; font-size: 13px;">View</a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                 </section>
             </div>

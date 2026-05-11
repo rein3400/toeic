@@ -82,7 +82,7 @@ try {
 
     $exam_type = $row['exam_type'];
 
-    if ($exam_type !== 'toeic') {
+    if (!in_array($exam_type, ['toeic', 'toeic_sw'], true)) {
         $conn->rollback();
         echo json_encode(['success' => false, 'error' => 'Voucher ini bukan untuk produk TOEIC di repo ini.']);
         exit;
@@ -119,11 +119,11 @@ try {
 
     $conn->commit();
 
-    // Build friendly exam type label
+    $label = $exam_type === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
     echo json_encode([
         'success' => true,
         'exam_type' => $exam_type,
-        'message' => 'Voucher berhasil ditukarkan! Kredit TOEIC Anda aktif.'
+        'message' => 'Voucher berhasil ditukarkan! Kredit ' . $label . ' Anda aktif.'
     ]);
 
 } catch (Throwable $e) {

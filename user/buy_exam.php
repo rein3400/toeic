@@ -13,6 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = (int)$_SESSION['user_id'];
 $hasAvailableToeicFullAccess = false;
+$hasAvailableToeicSwAccess = hasStrictTestCredit($conn, $user_id, 'toeic_sw');
 
 if (hasTestCredit($conn, $user_id, 'toeic')) {
     $hasCompletedRealToeicSession = false;
@@ -49,12 +50,21 @@ $website_title = getWebsiteTitle();
 $flash_messages = toeicConsumeFlashes();
 $toeic_name = htmlspecialchars(getSiteSetting('name_toeic', 'TOEIC Listening & Reading'));
 $toeic_price = number_format((int)getSiteSetting('price_toeic', '175000'), 0, ',', '.');
+$toeic_sw_name = htmlspecialchars(getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'));
+$toeic_sw_price = number_format((int)getSiteSetting('price_toeic_sw', '175000'), 0, ',', '.');
 $features = json_decode(getSiteSetting('features_toeic', ''), true) ?: [
     'Full simulation 200 soal',
     'Prep mode Part 1-7',
     'Score report TOEIC',
     'Weakness map per part',
     'Secure audio dan proctoring ready',
+];
+$sw_features = json_decode(getSiteSetting('features_toeic_sw', ''), true) ?: [
+    'Speaking 11 questions',
+    'Writing 8 questions',
+    'Score report Speaking 0-200',
+    'Score report Writing 0-200',
+    'AI-assisted transcript and feedback',
 ];
 $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(TRIPAY_MERCHANT_CODE);
 ?>
@@ -94,7 +104,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             <p class="lead text-muted">Pilih paket untuk membuka simulasi penuh dengan laporan skor TOEIC.</p>
         </div>
 
-        <section class="study-card p-4 p-lg-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
+        <section class="study-card p-4 p-lg-5 mb-4 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
                     <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Special Offer</span>
@@ -142,6 +152,45 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
             </div>
         </section>
 
+        <section class="study-card p-4 p-lg-5 mb-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <span class="study-kicker">Separate SW Package</span>
+                    <h2 class="display-5 mb-3"><?php echo $toeic_sw_name; ?></h2>
+                    <p class="text-muted mb-4" style="font-size: 1.05rem;">
+                        Paket terpisah untuk simulasi Speaking 11 soal dan Writing 8 soal, dengan score report Speaking 0-200 dan Writing 0-200.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-bold">Speaking 11 Qs</span>
+                        <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-bold">Writing 8 Qs</span>
+                        <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-bold">Score /400</span>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="study-card text-center bg-white border shadow-sm p-4">
+                        <div class="study-kicker">Total Harga</div>
+                        <div class="display-4 fw-bold mb-4" style="color:var(--focus-blue);">Rp <?php echo $toeic_sw_price; ?></div>
+
+                        <?php if ($hasAvailableToeicSwAccess): ?>
+                            <div class="alert alert-success border-0 small mb-3">
+                                <i class="fas fa-check-circle me-1"></i> Anda punya kredit SW aktif.
+                            </div>
+                            <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="study-button w-100 mb-3">Mulai TOEIC SW</a>
+                            <?php if ($tripay_ready): ?>
+                                <a href="payment.php?exam_type=toeic_sw" class="study-button study-button-secondary w-100">Beli Paket SW Lagi</a>
+                            <?php endif; ?>
+                        <?php elseif ($tripay_ready): ?>
+                            <a href="payment.php?exam_type=toeic_sw" class="study-button w-100">Lanjut Bayar SW</a>
+                        <?php else: ?>
+                            <div class="alert alert-warning border-0 small mb-0">
+                                Payment gateway belum aktif. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <h3 class="h4 mb-4 fw-bold">What's Included?</h3>
         <div class="row g-4">
             <?php foreach ($features as $feature): ?>
@@ -149,6 +198,16 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     <div class="study-card h-100 py-3 d-flex align-items-center gap-3">
                         <div class="avatar-circle flex-shrink-0" style="width:40px; height:40px; background:rgba(72,127,181,0.1) !important; border:none;">
                             <i class="fas fa-check text-primary"></i>
+                        </div>
+                        <div class="fw-bold"><?php echo htmlspecialchars($feature); ?></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <?php foreach ($sw_features as $feature): ?>
+                <div class="col-md-4">
+                    <div class="study-card h-100 py-3 d-flex align-items-center gap-3">
+                        <div class="avatar-circle flex-shrink-0" style="width:40px; height:40px; background:rgba(72,127,181,0.1) !important; border:none;">
+                            <i class="fas fa-microphone text-primary"></i>
                         </div>
                         <div class="fw-bold"><?php echo htmlspecialchars($feature); ?></div>
                     </div>

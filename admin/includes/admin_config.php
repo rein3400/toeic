@@ -20,10 +20,22 @@ function getAdminNavigation()
             'description' => 'Manage TOEIC parts, questions, audio, and text linkage',
             'group' => 'content'
         ],
+        'import_toeic_sw_packages.php' => [
+            'icon' => 'fa-file-import',
+            'title' => 'Import TOEIC SW',
+            'description' => 'Validate and import TOEIC Speaking & Writing packages',
+            'group' => 'content'
+        ],
         'test_results.php' => [
             'icon' => 'fa-chart-line',
             'title' => 'TOEIC Results',
             'description' => 'View TOEIC result reports and completion history',
+            'group' => 'analytics'
+        ],
+        'toeic_sw_results.php' => [
+            'icon' => 'fa-microphone',
+            'title' => 'TOEIC SW Results',
+            'description' => 'Review TOEIC Speaking & Writing results and rescoring',
             'group' => 'analytics'
         ],
         'test_sessions.php' => [

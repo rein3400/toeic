@@ -254,7 +254,8 @@ $expired_vouchers  = $stats_result['expired_disabled'] ?? 0;
                                 <div class="col-md-4">
                                     <label class="form-label" style="color:rgba(255,255,255,0.7); font-size:0.85rem;">Jenis Ujian</label>
                                     <select id="examType" class="form-select form-select-dark">
-                                        <option value="toeic">TOEIC</option>
+                                        <option value="toeic">TOEIC Listening & Reading</option>
+                                        <option value="toeic_sw">TOEIC Speaking & Writing</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -292,7 +293,8 @@ $expired_vouchers  = $stats_result['expired_disabled'] ?? 0;
                                 <div class="col-md-3">
                                     <select id="filterExamType" class="form-select form-select-dark">
                                         <option value="">Semua Voucher TOEIC</option>
-                                        <option value="toeic">TOEIC</option>
+                                        <option value="toeic">TOEIC Listening & Reading</option>
+                                        <option value="toeic_sw">TOEIC Speaking & Writing</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -331,7 +333,7 @@ $expired_vouchers  = $stats_result['expired_disabled'] ?? 0;
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function examTypeLabel(type) {
-    const map = { toeic: 'TOEIC' };
+    const map = { toeic: 'TOEIC LR', toeic_sw: 'TOEIC SW' };
     return map[type] || type;
 }
 

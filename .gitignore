@@ -25,6 +25,7 @@ test-results/
 uploads/proctoring/
 uploads/speaking_2026/
 uploads/ai_content/
+storage/
 
 # OS/editor noise
 .DS_Store

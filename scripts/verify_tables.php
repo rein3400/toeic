@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/toeic_helper.php';
+require_once __DIR__ . '/../includes/toeic_sw_helper.php';
 
 if (!($conn instanceof mysqli)) {
     fwrite(STDERR, "Database connection is unavailable. Configure local DB credentials before running TOEIC table verification.\n");
@@ -8,6 +9,8 @@ if (!($conn instanceof mysqli)) {
 }
 
 echo "=== TOEIC STANDALONE TABLE CHECK ===\n";
+
+ensureToeicSwSchema($conn);
 
 $required_tables = [
     'site_settings',
@@ -23,6 +26,18 @@ $required_tables = [
     'toeic_test_sessions',
     'toeic_test_questions',
     'toeic_test_results',
+    'toeic_sw_test_sessions',
+    'toeic_sw_test_questions',
+    'toeic_sw_test_results',
+    'toeic_sw_subjective_scores',
+    'toeic_sw_read_aloud',
+    'toeic_sw_describe_picture',
+    'toeic_sw_respond_questions',
+    'toeic_sw_respond_information',
+    'toeic_sw_express_opinion',
+    'toeic_sw_picture_sentence',
+    'toeic_sw_written_request',
+    'toeic_sw_opinion_essay',
     'toeic_score_conversion',
     'proctoring_settings',
     'proctoring_sessions',
@@ -36,6 +51,20 @@ foreach ($required_tables as $table) {
     $existsResult = $conn->query("SHOW TABLES LIKE '$safeTable'");
     $exists = ($existsResult && $existsResult->num_rows > 0);
     echo ($exists ? '[OK] ' : '[MISSING] ') . $table . PHP_EOL;
+}
+
+echo PHP_EOL . "=== TOEIC SW READINESS BY PACKAGE ===\n";
+$swReadiness = getToeicSwContentReadiness($conn);
+foreach ($swReadiness['packages'] as $package => $stats) {
+    echo sprintf(
+        "Package %02d | speaking=%d/11 | writing=%d/8 | audio=%d/11 | images=%d/7%s\n",
+        $package,
+        $stats['speaking'],
+        $stats['writing'],
+        $stats['speaking_audio'] ?? 0,
+        $stats['images'],
+        !empty($stats['ready']) ? ' | READY' : ''
+    );
 }
 
 echo PHP_EOL . "=== TOEIC READINESS BY PART ===\n";

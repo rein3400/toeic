@@ -197,3 +197,44 @@
 - Risk: production may still contain specific bad photo records that should be repaired in the database even though the UI now tries sibling extensions and shows a clean placeholder.
 - Risk: user-authenticated flows could not be fully browser-tested locally because the database service was unavailable.
 - Rollback: revert the source changes in the listed files, remove `includes/toeic_quality_helpers.php` and `scripts/test_toeic_quality_helpers.php`, then rerun syntax checks.
+
+## 2026-05-10 - TOEIC SW C2 packages, audio, R2 import, and scoring transparency
+
+### Unknowns
+- The exact `@chrome` local plugin endpoint was not callable in this session, so browser verification used the available in-app Browser/Chromium workflow.
+- Public `r2.dev` URL checks from this local network were blocked or redirected, so full remote verification used Cloudflare R2 object APIs plus sample object downloads instead of public HTTP playback.
+- The OpenAI Realtime API reached quota before all initially planned speaking audio files were generated.
+- This checkout does not contain production database environment variables, so the production import path was verified through the browser/admin importer against the local test database; the same page uses the server's runtime DB environment when opened in production.
+
+### Reason for proceeding
+- The user explicitly required autonomous completion without questions and requested local real testing.
+- The TOEIC SW ETS-format structure, package counts, timing metadata, content difficulty, and importer behavior could be validated locally.
+- The remaining referenced prompt audio files could still be generated as loud WAV files through the approved MiniMax setup and verified for readability, duration, and peak level without losing package completeness.
+
+### Assumptions used
+- The browser workflow available through the in-app Browser/Chromium tooling is an acceptable local substitute for the unavailable `@chrome` endpoint.
+- The existing public R2 base URL configured for TOEIC assets is the intended production media base, while Cloudflare API object checks are sufficient evidence that uploaded objects exist and are intact in the bucket.
+- TOEIC SW should not behave like a TOEIC Listening section: Q1-Q4 use on-screen text or picture stimulus without prompt audio, while Q5-Q11 may use heard questions/prompts.
+- The browser import page is the production import mechanism; it must be opened in the production deployment with production database variables loaded to write the production DB.
+
+### Project impact
+- Generated 10 TOEIC SW C2 package manifests with 110 Speaking questions, 80 Writing questions, 70 SVG images, and 70 referenced loud WAV prompt files for Speaking Q5-Q11.
+- Uploaded referenced TOEIC SW media objects to the `toeic-assets` R2 bucket under `toeic/sw/package_XX/...` keys.
+- Removed stale Q1-Q4 prompt-audio objects from the TOEIC SW R2 prefix so the remote prefix matches the active manifest exactly.
+- Added SW audio-aware package validation, R2 upload/verification scripts, CLI/browser import paths, runtime prompt-audio support, and admin item-review transparency.
+- Added subjective scoring fallback storage so admin review can see provider, model, transcript or answer, raw and normalized scores, feedback JSON, status, and fallback reason.
+
+### Verification attempted
+- Ran PHP syntax checks on every changed PHP file.
+- Ran JS syntax checks on the audio generator and TOEIC SW runtime script.
+- Validated all 10 TOEIC SW package manifests with exact ETS counts, C2 metadata, media references, and 11 speaking audio files per package.
+- Verified the audio QA report: referenced audio checked, valid, 0 failed, loud-normalized.
+- Uploaded R2 objects and verified remote objects through Cloudflare API listing and metadata checks.
+- Verified the R2 prefix contains exactly 140 active TOEIC SW objects: 70 prompt audio files and 70 SVG images, with no stale Q1-Q4 audio objects.
+- Downloaded representative R2 objects and matched local SHA-256 hashes.
+- Ran TOEIC SW dry-run import, real import, idempotent rerun, DB readiness check, scoring transparency script, and local browser smoke tests for admin import, student Speaking, student Writing, Q10 repeat display, blocked incomplete speaking submit, and admin item review.
+
+### Risks and rollback
+- Risk: 21 prompt audio files now use the user-approved MiniMax voice setup rather than `gpt-realtime-1.5`; regenerate those with Realtime only if strict single-provider provenance becomes mandatory.
+- Risk: if the public R2 base URL or production custom domain differs, imported media URLs should be updated before or during production import.
+- Rollback: rerun the generator for affected audio files, rerun the R2 uploader, then rerun the idempotent importer; or remove imported rows by package key and repeat import after correcting media URLs.

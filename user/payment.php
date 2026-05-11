@@ -11,13 +11,26 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $exam_type = $_GET['exam_type'] ?? 'toeic';
-if ($exam_type !== 'toeic') {
-    toeicRedirectWithFlash('buy_exam.php', 'info', 'Produk yang tersedia di halaman ini hanya TOEIC.');
+$products = [
+    'toeic' => [
+        'name' => getSiteSetting('name_toeic', 'TOEIC Listening & Reading'),
+        'price' => (int)getSiteSetting('price_toeic', '175000'),
+        'summary' => 'Akses full Listening & Reading dengan laporan skor 10-990',
+    ],
+    'toeic_sw' => [
+        'name' => getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
+        'price' => (int)getSiteSetting('price_toeic_sw', '175000'),
+        'summary' => 'Akses full Speaking & Writing dengan skor Speaking 0-200 dan Writing 0-200',
+    ],
+];
+if (!isset($products[$exam_type])) {
+    toeicRedirectWithFlash('buy_exam.php', 'info', 'Produk TOEIC yang diminta tidak tersedia.');
 }
 
 $website_title = getWebsiteTitle();
-$product_name = getSiteSetting('name_toeic', 'TOEIC Listening & Reading');
-$price_value = (int)getSiteSetting('price_toeic', '175000');
+$product = $products[$exam_type];
+$product_name = $product['name'];
+$price_value = $product['price'];
 $price_formatted = 'Rp ' . number_format($price_value, 0, ',', '.');
 $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(TRIPAY_MERCHANT_CODE);
 ?>
@@ -71,7 +84,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
         <div class="mb-5">
             <span class="study-kicker">Checkout</span>
             <h1 class="display-5 mb-2">Metode Pembayaran</h1>
-            <p class="lead text-muted">Selesaikan pembelian untuk membuka simulasi TOEIC.</p>
+            <p class="lead text-muted">Selesaikan pembelian untuk membuka simulasi <?php echo htmlspecialchars($product_name); ?>.</p>
         </div>
 
         <div class="row g-4">
@@ -127,7 +140,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
 
                     <div class="p-4 rounded-4 mb-4" style="background: rgba(72, 127, 181, 0.05);">
                         <div class="fw-bold h5 mb-1" style="color:var(--focus-blue);"><?php echo htmlspecialchars($product_name); ?></div>
-                        <div class="text-muted small mb-4">Akses full dengan laporan skor</div>
+                        <div class="text-muted small mb-4"><?php echo htmlspecialchars($product['summary']); ?></div>
 
                         <div class="d-flex justify-content-between align-items-center pt-3 border-top">
                             <span class="fw-bold">Total</span>
@@ -177,7 +190,7 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                 const response = await fetch('../api/create_transaction.php', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({exam_type: 'toeic', payment_method: paymentMethod})
+                    body: JSON.stringify({exam_type: <?php echo json_encode($exam_type); ?>, payment_method: paymentMethod})
                 });
                 const data = await response.json();
                 if (data.status === 'success') {

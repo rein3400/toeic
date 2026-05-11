@@ -49,9 +49,24 @@ if (!in_array($payment_method, $allowed_methods)) {
     exit;
 }
 
-if ($exam_type !== 'toeic') {
+$products = [
+    'toeic' => [
+        'name' => getSiteSetting('name_toeic', 'TOEIC Listening & Reading'),
+        'price' => (int) getSiteSetting('price_toeic', '175000'),
+        'prefix' => 'TOEIC',
+        'redirect' => '/user/test_toeic.php?section=listening&start_new=1&mode=full',
+    ],
+    'toeic_sw' => [
+        'name' => getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
+        'price' => (int) getSiteSetting('price_toeic_sw', '175000'),
+        'prefix' => 'TOEICSW',
+        'redirect' => '/user/test_toeic_sw.php?section=speaking&start_new=1&mode=full',
+    ],
+];
+
+if (!isset($products[$exam_type])) {
     http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Only TOEIC is supported in this repository']);
+    echo json_encode(['status' => 'error', 'message' => 'Only TOEIC products are supported in this repository']);
     exit;
 }
 
@@ -61,11 +76,7 @@ if (!defined('FEATURE_TOEIC') || !FEATURE_TOEIC) {
     exit;
 }
 
-$product = [
-    'name'   => getSiteSetting('name_toeic', 'TOEIC Listening & Reading'),
-    'price'  => (int) getSiteSetting('price_toeic', '175000'),
-    'prefix' => 'TOEIC',
-];
+$product = $products[$exam_type];
 $price = $product['price'];
 $prefix = $product['prefix'];
 
@@ -106,7 +117,7 @@ $tripayParams = [
 $tripay = new TripayHandler();
 $tripayResponse = $tripay->createTransaction($tripayParams);
 
-$test_redirect = '/user/test_toeic.php?section=listening&start_new=1&mode=full';
+$test_redirect = $product['redirect'];
 
 if (!$tripayResponse) {
     // Allow bypass only in dev environment (DEV_BYPASS_TOKEN must be set server-side)

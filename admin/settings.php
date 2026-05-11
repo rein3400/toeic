@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $success = "Tripay settings updated successfully! Mode: " . ($tripay_is_production === '1' ? 'PRODUCTION' : 'SANDBOX');
         } elseif ($_POST['action'] == 'update_pricing') {
-            $exam_types = ['toeic'];
+            $exam_types = ['toeic', 'toeic_sw'];
             foreach ($exam_types as $type) {
                 if (!isset($_POST['price_' . $type])) continue;
 
@@ -216,6 +216,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 saveSetting('name_' . $type, $name);
                 saveSetting('features_' . $type, json_encode($features_arr, JSON_UNESCAPED_UNICODE));
             }
+            saveSetting('toeic_sw_scoring_model', trim($_POST['toeic_sw_scoring_model'] ?? 'gpt-5.5'));
+            saveSetting('toeic_sw_transcription_model', trim($_POST['toeic_sw_transcription_model'] ?? 'gpt-4o-transcribe'));
+            saveSetting('toeic_sw_tts_model', trim($_POST['toeic_sw_tts_model'] ?? 'gpt-4o-mini-tts'));
             if (empty($error)) {
                 $success = "Harga produk berhasil disimpan!";
             }
@@ -231,12 +234,18 @@ $current_favicon = getSetting('website_favicon');
 // Default features as JSON
 $default_features = [
     'toeic' => json_encode(['Listening & Reading', '200 Soal', 'Format Terbaru', 'Sertifikat Digital'], JSON_UNESCAPED_UNICODE),
+    'toeic_sw' => json_encode(['Speaking 11 questions', 'Writing 8 questions', 'Score report 0-400', 'AI-assisted feedback'], JSON_UNESCAPED_UNICODE),
 ];
 $pricing = [
     'toeic' => [
         'price'    => (int) getSetting('price_toeic', '175000'),
         'name'     => getSetting('name_toeic', 'TOEIC Prediction'),
         'features' => implode("\n", json_decode(getSetting('features_toeic', $default_features['toeic']), true) ?? []),
+    ],
+    'toeic_sw' => [
+        'price'    => (int) getSetting('price_toeic_sw', '175000'),
+        'name'     => getSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
+        'features' => implode("\n", json_decode(getSetting('features_toeic_sw', $default_features['toeic_sw']), true) ?? []),
     ],
 ];
 ?>
@@ -641,6 +650,44 @@ $pricing = [
                                                     <label class="form-label form-label-sm">Fitur (satu baris = satu poin)</label>
                                                     <textarea class="form-control form-control-sm" name="features_toeic" rows="5"
                                                               placeholder="Listening &amp; Reading&#10;200 Soal"><?php echo htmlspecialchars($pricing['toeic']['features']); ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="p-3 border rounded" style="border-color: rgba(59,130,246,0.4) !important; background: rgba(59,130,246,0.04);">
+                                                <h6 class="fw-bold mb-3" style="color:#60a5fa;"><i class="fas fa-microphone-lines me-2"></i>TOEIC Speaking &amp; Writing</h6>
+                                                <div class="mb-2">
+                                                    <label class="form-label form-label-sm">Nama Produk</label>
+                                                    <input type="text" class="form-control form-control-sm" name="name_toeic_sw"
+                                                           value="<?php echo htmlspecialchars($pricing['toeic_sw']['name']); ?>">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label form-label-sm">Harga (Rp)</label>
+                                                    <input type="number" class="form-control form-control-sm" name="price_toeic_sw"
+                                                           value="<?php echo $pricing['toeic_sw']['price']; ?>" min="0" step="1000">
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label form-label-sm">Fitur (satu baris = satu poin)</label>
+                                                    <textarea class="form-control form-control-sm" name="features_toeic_sw" rows="5"
+                                                              placeholder="Speaking 11 questions&#10;Writing 8 questions"><?php echo htmlspecialchars($pricing['toeic_sw']['features']); ?></textarea>
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="col-12">
+                                                        <label class="form-label form-label-sm">Scoring Model</label>
+                                                        <input type="text" class="form-control form-control-sm" name="toeic_sw_scoring_model"
+                                                               value="<?php echo htmlspecialchars(getSetting('toeic_sw_scoring_model', 'gpt-5.5')); ?>">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label form-label-sm">Transcription Model</label>
+                                                        <input type="text" class="form-control form-control-sm" name="toeic_sw_transcription_model"
+                                                               value="<?php echo htmlspecialchars(getSetting('toeic_sw_transcription_model', 'gpt-4o-transcribe')); ?>">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label class="form-label form-label-sm">Optional TTS Model</label>
+                                                        <input type="text" class="form-control form-control-sm" name="toeic_sw_tts_model"
+                                                               value="<?php echo htmlspecialchars(getSetting('toeic_sw_tts_model', 'gpt-4o-mini-tts')); ?>">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

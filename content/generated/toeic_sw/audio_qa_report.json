@@ -1,0 +1,1133 @@
+{
+  "generated_at": "2026-05-10T15:08:41.061Z",
+  "model": "gpt-realtime-1.5",
+  "voice": "alloy",
+  "overwrite": false,
+  "dry_run": false,
+  "total_tasks": 70,
+  "generated": 0,
+  "skipped": 70,
+  "failed": 0,
+  "files": [
+    {
+      "packageName": "package_01",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 254444,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 5.3,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 640844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.35,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 633644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.2,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 472844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 537644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.2,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1231244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 25.65,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_01",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_01/audio/pkg01_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1111244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 23.15,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 760844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 15.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 552044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.5,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 852044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 17.75,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 532844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.1,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 520844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1224044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 25.5,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_02",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_02/audio/pkg02_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1123244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 23.4,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 756044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 15.75,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 758444,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 15.8,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 703244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 14.65,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 508844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 444044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.25,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1339244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 27.9,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_03",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_03/audio/pkg03_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1051244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 21.9,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 645644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.45,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 628844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.1,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 705644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 14.7,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 412844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 8.6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 472844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1324844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 27.6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_04",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_04/audio/pkg04_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1036844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 21.6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 772844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 16.1,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 619244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 12.9,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 712844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 14.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 288044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 472844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.85,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 240044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 5,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_05",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_05/audio/pkg05_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 900044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 18.75,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 621644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 12.95,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 540044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.25,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 816044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 17,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 499244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.4,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 489644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.2,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1231244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 25.65,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_06",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_06/audio/pkg06_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1308044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 27.25,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 297644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 6.2,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 583244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 12.15,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 828044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 17.25,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 511244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.65,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 492044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.25,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1365644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 28.45,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_07",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_07/audio/pkg07_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1118444,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 23.3,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 628844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.1,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 504044,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.5,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 700844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 14.6,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 580844,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 12.1,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 571244,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.9,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 237644,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 4.95,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_08",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_08/audio/pkg08_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1118444,
+        "sample_rate": 24000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 23.3,
+        "peak": 30000
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 622002,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.718,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 528380,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 8.255,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 685160,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 10.704,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 428812,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 6.699,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 573706,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 8.963,
+        "peak": 32767
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1460896,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 22.825,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_09",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_09/audio/pkg09_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1156990,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 18.077,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 5,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q05_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 599712,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 9.369,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 6,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q06_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 542500,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 8.475,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 7,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q07_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 722314,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 11.285,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 8,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q08_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 457048,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 7.14,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 9,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q09_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 520206,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 8.127,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 10,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q10_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1508450,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 23.568,
+        "peak": 32768
+      }
+    },
+    {
+      "packageName": "package_10",
+      "questionNumber": 11,
+      "output": "content/generated/toeic_sw/package_10/audio/pkg10_speaking_q11_loud.wav",
+      "status": "verified_ok",
+      "qa": {
+        "ok": true,
+        "reason": "",
+        "bytes": 1214206,
+        "sample_rate": 32000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "duration_seconds": 18.971,
+        "peak": 32768
+      }
+    }
+  ]
+}

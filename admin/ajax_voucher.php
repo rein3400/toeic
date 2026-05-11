@@ -45,7 +45,7 @@ switch ($action) {
             echo json_encode(['success' => false, 'error' => 'exam_type is required']);
             exit;
         }
-        $allowed_exam_types = ['toeic'];
+        $allowed_exam_types = ['toeic', 'toeic_sw'];
         if (!in_array($exam_type, $allowed_exam_types)) {
             echo json_encode(['success' => false, 'error' => 'Jenis ujian tidak valid.']);
             exit;

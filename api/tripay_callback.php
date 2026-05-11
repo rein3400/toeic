@@ -108,7 +108,13 @@ if (!$updateStmt->execute()) {
 
 // 9. Grant access if payment successful
 if ($new_status === 'settlement') {
-    $exam_type = (strpos($merchantRef, 'TOEIC-') === 0) ? 'toeic' : 'unknown';
+    if (strpos($merchantRef, 'TOEICSW-') === 0) {
+        $exam_type = 'toeic_sw';
+    } elseif (strpos($merchantRef, 'TOEIC-') === 0) {
+        $exam_type = 'toeic';
+    } else {
+        $exam_type = 'unknown';
+    }
 
     if ($exam_type === 'unknown') {
         $tripay->log("CALLBACK WARNING: Unsupported merchant ref in TOEIC-only repo: $merchantRef");
@@ -117,7 +123,7 @@ if ($new_status === 'settlement') {
         exit;
     }
 
-    if ($exam_type === 'toeic' && (!defined('FEATURE_TOEIC') || !FEATURE_TOEIC)) {
+    if (in_array($exam_type, ['toeic', 'toeic_sw'], true) && (!defined('FEATURE_TOEIC') || !FEATURE_TOEIC)) {
         $tripay->log("CALLBACK INFO: TOEIC is disabled. Access not granted for User " . $transaction['user_id'] . " ($merchantRef)");
         $conn->commit();
         echo json_encode(['status' => 'ok']);
