@@ -64,6 +64,7 @@ try {
         exit();
     }
     $mode = !empty($session['practice_mode']) ? 'prep' : 'full';
+    $GLOBALS['TOEIC_SW_INTERACTIVE_SCORING_DEADLINE'] = microtime(true) + 85;
 
     if ($section === 'speaking') {
         $stmt = $conn->prepare("

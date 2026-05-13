@@ -533,7 +533,7 @@ function toeicSwRenderPrompt(array $question): void {
         <div class="toeic-test-statusbar">
             <div class="shrink-0">
                 <div class="text-xs font-black text-slate-400 uppercase mb-1">Progress</div>
-                <div class="text-sm font-bold text-primary"><?php echo (int)$answered_count; ?> / <?php echo (int)$total_questions; ?></div>
+                <div class="text-sm font-bold text-primary" id="sw-progress-count"><?php echo (int)$answered_count; ?> / <?php echo (int)$total_questions; ?></div>
             </div>
             <div class="toeic-test-map sw-section-map">
                 <?php foreach ($questions as $map_index => $map_question): ?>
@@ -615,6 +615,7 @@ function toeicSwRenderPrompt(array $question): void {
                              data-type="<?php echo toeicSwH($type); ?>"
                              data-question-number="<?php echo $number; ?>"
                              data-has-answer="<?php echo $has_answer ? '1' : '0'; ?>"
+                             data-task-minutes="<?php echo (int)($question['task_minutes'] ?? 0); ?>"
                              <?php echo $question_index === 0 ? '' : 'hidden'; ?>>
                         <div class="flex flex-wrap justify-between gap-3">
                             <div>
@@ -668,6 +669,9 @@ function toeicSwRenderPrompt(array $question): void {
                                 <textarea class="sw-answer-box" data-row-id="<?php echo $row_id; ?>" placeholder="Type your answer here..."><?php echo toeicSwH($question['user_answer'] ?? ''); ?></textarea>
                                 <div class="flex flex-wrap justify-between gap-2 text-sm text-slate-500 mt-2">
                                     <span id="sw-word-count-<?php echo $row_id; ?>">0 words</span>
+                                    <?php if (!empty($question['task_minutes'])): ?>
+                                        <span class="font-bold text-primary" id="sw-task-timer-<?php echo $row_id; ?>"><?php echo sprintf('%02d:00', (int)$question['task_minutes']); ?></span>
+                                    <?php endif; ?>
                                     <?php if ($type === 'write_opinion_essay'): ?>
                                         <span>300 words is a quality target, not a submit blocker.</span>
                                     <?php endif; ?>

@@ -238,3 +238,31 @@
 - Risk: 21 prompt audio files now use the user-approved MiniMax voice setup rather than `gpt-realtime-1.5`; regenerate those with Realtime only if strict single-provider provenance becomes mandatory.
 - Risk: if the public R2 base URL or production custom domain differs, imported media URLs should be updated before or during production import.
 - Rollback: rerun the generator for affected audio files, rerun the R2 uploader, then rerun the idempotent importer; or remove imported rows by package key and repeat import after correcting media URLs.
+
+## 2026-05-13 - TOEIC SW frontend submit timeout guard
+
+### Unknowns
+- The production PHP/server error log for the `ajax_submit_section_toeic_sw.php` 500 response was not available from this session.
+
+### Reason for proceeding
+- The error was reproduced through the production frontend: after all Writing answers autosaved, clicking `Submit Writing` returned a 500 resource error and the UI showed `Invalid JSON response from ajax_submit_section_toeic_sw.php`.
+- The code path performs synchronous AI scoring for every section item, with long per-item API timeouts, which matches the observed long request followed by a frontend 500.
+
+### Assumptions used
+- The production 500 is caused by the interactive submit request exceeding the host/browser request budget while waiting on synchronous AI scoring.
+- It is acceptable for an interactive student submit to complete with conservative fallback scores and mark late AI items as `needs_rescore` for admin review.
+
+### Project impact
+- Added an interactive TOEIC SW scoring deadline for section submission.
+- Reduced per-item interactive scoring/transcription waits and falls back to `needs_rescore` when the budget is exhausted.
+- Added live SW progress-counter updates and visible Writing Q6-Q7 task countdown timers.
+
+### Verification attempted
+- Reproduced the submit failure from the production frontend using Browser/Chromium UI automation.
+- Ran PHP syntax checks for changed PHP files.
+- Ran JS syntax checks for the TOEIC SW runtime script.
+
+### Risks and rollback
+- Risk: if the real 500 comes from another production-only PHP fatal, the deadline guard may only reduce one failure mode. Re-check production after deployment and inspect server logs if the 500 remains.
+- Risk: some Writing items may be stored as `needs_rescore` during busy or slow AI periods; admins should use the existing rescore/review flow.
+- Rollback: revert the changes in `user/ajax_submit_section_toeic_sw.php`, `includes/toeic_sw_subjective_scorer.php`, `user/test_toeic_sw.php`, and `user/js/test_toeic_sw.js`.

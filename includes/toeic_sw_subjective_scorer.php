@@ -55,6 +55,24 @@ function getToeicSwActiveScoringConfig(mysqli $conn): ?array {
     return $config;
 }
 
+function toeicSwScoringRequestTimeoutMs(int $maxMs = 30000, int $reserveMs = 5000): int {
+    $deadline = $GLOBALS['TOEIC_SW_INTERACTIVE_SCORING_DEADLINE'] ?? null;
+    if (!is_numeric($deadline)) {
+        return $maxMs;
+    }
+
+    $remainingMs = (int)floor(((float)$deadline - microtime(true)) * 1000) - $reserveMs;
+    if ($remainingMs <= 0) {
+        return 0;
+    }
+
+    return max(1000, min($maxMs, $remainingMs));
+}
+
+function toeicSwScoringBudgetExhausted(int $reserveMs = 5000): bool {
+    return toeicSwScoringRequestTimeoutMs(30000, $reserveMs) < 5000;
+}
+
 function transcribeToeicSwAudio(mysqli $conn, string $relativePath): array {
     $apiKey = getToeicSwOpenAiKey($conn);
     if (!$apiKey) {
@@ -64,6 +82,11 @@ function transcribeToeicSwAudio(mysqli $conn, string $relativePath): array {
     $absolutePath = realpath(__DIR__ . '/../' . ltrim($relativePath, '/\\'));
     if (!$absolutePath || !is_file($absolutePath)) {
         return ['success' => false, 'error' => 'Audio file not found'];
+    }
+
+    $timeoutMs = toeicSwScoringRequestTimeoutMs(30000);
+    if ($timeoutMs < 5000) {
+        return ['success' => false, 'error' => 'Interactive scoring time budget exhausted; queued for admin rescore'];
     }
 
     $ext = strtolower(pathinfo($absolutePath, PATHINFO_EXTENSION));
@@ -97,8 +120,8 @@ function transcribeToeicSwAudio(mysqli $conn, string $relativePath): array {
         CURLOPT_POSTFIELDS => $postFields,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $apiKey],
-        CURLOPT_TIMEOUT_MS => 120000,
-        CURLOPT_CONNECTTIMEOUT_MS => 120000,
+        CURLOPT_TIMEOUT_MS => $timeoutMs,
+        CURLOPT_CONNECTTIMEOUT_MS => $timeoutMs,
         CURLOPT_NOSIGNAL => 1,
     ]);
 
@@ -189,7 +212,12 @@ Rules:
 - If the response is empty, off-topic, too short, or not assessable, score it low.
 PROMPT;
 
-    $response = callAI($systemPrompt . "\n\n" . $prompt, $activeConfig, 1600, [], 150000);
+    $timeoutMs = toeicSwScoringRequestTimeoutMs(30000);
+    if ($timeoutMs < 5000) {
+        return null;
+    }
+
+    $response = callAI($systemPrompt . "\n\n" . $prompt, $activeConfig, 1600, [], $timeoutMs);
     return parseToeicSwScoreResponse($response);
 }
 
@@ -274,6 +302,30 @@ function fallbackToeicSwSpeakingScore(string $audioPath, ?string $transcript = n
     return 0.1;
 }
 
+function toeicSwStoreFallbackScore(mysqli $conn, array $questionRow, array $activeConfig, string $reason): float {
+    $section = (string)$questionRow['section'];
+    $questionType = (string)$questionRow['question_type'];
+    $userAnswer = (string)($questionRow['user_answer'] ?? '');
+    $sourcePath = (string)($questionRow['source_path'] ?? '');
+    $fallback = $section === 'speaking'
+        ? fallbackToeicSwSpeakingScore($sourcePath ?: $userAnswer)
+        : fallbackToeicSwWritingScore($userAnswer, $questionType === 'write_opinion_essay' ? 300 : 40);
+
+    storeToeicSwSubjectiveScore(
+        $conn,
+        $questionRow,
+        $section === 'speaking' ? ($sourcePath ?: $userAnswer) : null,
+        null,
+        round($fallback * 30, 2),
+        $fallback,
+        ['fallback_reason' => $reason],
+        $activeConfig,
+        'needs_rescore'
+    );
+
+    return $fallback;
+}
+
 function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float {
     $section = (string)$questionRow['section'];
     $questionType = (string)$questionRow['question_type'];
@@ -303,6 +355,10 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
         return $fallback;
     }
 
+    if (toeicSwScoringBudgetExhausted()) {
+        return toeicSwStoreFallbackScore($conn, $questionRow, $activeConfig, 'Interactive scoring time budget exhausted; queued for admin rescore');
+    }
+
     try {
         if ($section === 'speaking') {
             $path = $sourcePath ?: $userAnswer;
@@ -328,6 +384,9 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
             }
 
             $prompt = buildToeicSwContentPrompt($questionRow, $transcription['text']);
+            if (toeicSwScoringBudgetExhausted()) {
+                return toeicSwStoreFallbackScore($conn, $questionRow, $activeConfig, 'Interactive scoring time budget exhausted after transcription; queued for admin rescore');
+            }
             $scoreData = requestToeicSwSubjectiveScore($activeConfig, $section, $questionType, $prompt);
             if (!$scoreData || !isset($scoreData['score_0_to_30'])) {
                 $fallback = fallbackToeicSwSpeakingScore($path, $transcription['text']);
@@ -356,6 +415,9 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
         }
 
         $prompt = buildToeicSwContentPrompt($questionRow);
+        if (toeicSwScoringBudgetExhausted()) {
+            return toeicSwStoreFallbackScore($conn, $questionRow, $activeConfig, 'Interactive scoring time budget exhausted; queued for admin rescore');
+        }
         $scoreData = requestToeicSwSubjectiveScore($activeConfig, $section, $questionType, $prompt);
         if (!$scoreData || !isset($scoreData['score_0_to_30'])) {
             $fallback = fallbackToeicSwWritingScore($userAnswer, $questionType === 'write_opinion_essay' ? 300 : 40);

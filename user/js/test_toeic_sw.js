@@ -9,6 +9,7 @@
     const recordingStreams = new Map();
     const recordingTimers = new Map();
     const prepareTimers = new Map();
+    const taskTimerIntervals = new Map();
     const micRequests = new Set();
     let currentQuestion = 0;
     let submitting = false;
@@ -51,6 +52,16 @@
 
     function getMissingSpeakingCount() {
         return document.querySelectorAll('.sw-question[data-section="speaking"][data-has-answer="0"]').length;
+    }
+
+    function updateProgressCount() {
+        const counter = document.getElementById('sw-progress-count');
+        if (!counter) {
+            return;
+        }
+        const cards = questionCards();
+        const answered = cards.filter((card) => card.dataset.hasAnswer === '1').length;
+        counter.textContent = `${answered} / ${cards.length}`;
     }
 
     function isSpeakingFlowBusy() {
@@ -157,7 +168,85 @@
         if (mapButton) {
             mapButton.classList.toggle('done', Boolean(answered));
         }
+        updateProgressCount();
         refreshSubmitState();
+    }
+
+    function taskTimerStorageKey(rowId) {
+        return `toeic_sw_task_deadline:${cfg.testSession || 'session'}:${rowId}`;
+    }
+
+    function formatTaskSeconds(seconds) {
+        const safeSeconds = Math.max(0, Number(seconds) || 0);
+        const minutes = Math.floor(safeSeconds / 60);
+        const remainder = safeSeconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(remainder).padStart(2, '0')}`;
+    }
+
+    function getStoredTaskDeadline(rowId) {
+        try {
+            return Number(window.sessionStorage.getItem(taskTimerStorageKey(rowId)) || 0);
+        } catch (error) {
+            return 0;
+        }
+    }
+
+    function setStoredTaskDeadline(rowId, deadline) {
+        try {
+            window.sessionStorage.setItem(taskTimerStorageKey(rowId), String(deadline));
+        } catch (error) {
+            // Timer still works for the current page even if sessionStorage is unavailable.
+        }
+    }
+
+    function completeWritingTaskTimer(card) {
+        const rowId = card.dataset.rowId;
+        const textarea = card.querySelector('textarea[data-row-id]');
+        if (textarea) {
+            textarea.disabled = true;
+        }
+        setStatus(rowId, 'Task time ended', 'saved');
+        refreshSubmitState();
+    }
+
+    function startWritingTaskTimer(card) {
+        if (cfg.section !== 'writing' || !card) {
+            return;
+        }
+
+        const minutes = Number(card.dataset.taskMinutes || 0);
+        if (!minutes || minutes <= 0) {
+            return;
+        }
+
+        const rowId = rowKey(card.dataset.rowId);
+        const timer = document.getElementById(`sw-task-timer-${rowId}`);
+        if (!timer) {
+            return;
+        }
+
+        let deadline = getStoredTaskDeadline(rowId);
+        if (!deadline) {
+            deadline = Date.now() + minutes * 60 * 1000;
+            setStoredTaskDeadline(rowId, deadline);
+        }
+
+        const tick = () => {
+            const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            timer.textContent = formatTaskSeconds(remaining);
+            if (remaining <= 0) {
+                if (taskTimerIntervals.has(rowId)) {
+                    clearInterval(taskTimerIntervals.get(rowId));
+                    taskTimerIntervals.delete(rowId);
+                }
+                completeWritingTaskTimer(card);
+            }
+        };
+
+        tick();
+        if (!taskTimerIntervals.has(rowId) && Date.now() < deadline) {
+            taskTimerIntervals.set(rowId, setInterval(tick, 1000));
+        }
     }
 
     function trackTextSave(rowId, promise) {
@@ -580,6 +669,7 @@
         }
 
         const activeCard = cards[nextIndex];
+        startWritingTaskTimer(activeCard);
         if (activeCard && options.scroll !== false) {
             activeCard.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
@@ -664,6 +754,7 @@
             textarea.addEventListener('input', () => queueTextSave(textarea));
         });
         window.showToeicSwQuestion(0, {force: true, scroll: false});
+        updateProgressCount();
         refreshSubmitState();
         startSectionTimer();
     });
