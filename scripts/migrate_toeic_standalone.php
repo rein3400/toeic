@@ -26,6 +26,7 @@ $statements = [
         CREATE TABLE IF NOT EXISTS users (
             id_user INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(191) NOT NULL UNIQUE,
+            email VARCHAR(191) NULL,
             password VARCHAR(255) NOT NULL,
             full_name VARCHAR(191) NOT NULL,
             role ENUM('admin','student') NOT NULL DEFAULT 'student',
@@ -74,6 +75,22 @@ $statements = [
             INDEX idx_user_status (user_id, status),
             INDEX idx_transaction_id (transaction_id),
             INDEX idx_order_id (order_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ",
+    'password_reset_tokens' => "
+        CREATE TABLE IF NOT EXISTS password_reset_tokens (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            email VARCHAR(191) NOT NULL,
+            token_hash CHAR(64) NOT NULL,
+            expires_at DATETIME NOT NULL,
+            used_at DATETIME NULL DEFAULT NULL,
+            ip_address VARCHAR(45) NULL,
+            user_agent TEXT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uniq_password_reset_token_hash (token_hash),
+            INDEX idx_password_reset_user (user_id),
+            INDEX idx_password_reset_expires (expires_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ",
     'toeic_photos' => "
@@ -158,6 +175,8 @@ $statements = [
             status VARCHAR(30) NOT NULL DEFAULT 'active',
             practice_mode TINYINT(1) NOT NULL DEFAULT 0,
             target_part VARCHAR(2) NULL,
+            checkout_source VARCHAR(40) NULL,
+            checkout_reference VARCHAR(120) NULL,
             listening_raw INT NULL,
             listening_scaled INT NULL,
             reading_raw INT NULL,
@@ -326,6 +345,7 @@ foreach ($statements as $label => $sql) {
 }
 
 $alters = [
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR(191) NULL",
     "ALTER TABLE toeic_audio ADD COLUMN IF NOT EXISTS id_photo INT NULL",
     "ALTER TABLE toeic_audio ADD COLUMN IF NOT EXISTS transcript LONGTEXT NULL",
     "ALTER TABLE toeic_teks ADD COLUMN IF NOT EXISTS part VARCHAR(2) NOT NULL DEFAULT '7'",
@@ -336,6 +356,8 @@ $alters = [
     "ALTER TABLE toeic_soal_reading ADD COLUMN IF NOT EXISTS question_type VARCHAR(50) NULL",
     "ALTER TABLE toeic_test_sessions ADD COLUMN IF NOT EXISTS practice_mode TINYINT(1) NOT NULL DEFAULT 0",
     "ALTER TABLE toeic_test_sessions ADD COLUMN IF NOT EXISTS target_part VARCHAR(2) NULL",
+    "ALTER TABLE toeic_test_sessions ADD COLUMN IF NOT EXISTS checkout_source VARCHAR(40) NULL",
+    "ALTER TABLE toeic_test_sessions ADD COLUMN IF NOT EXISTS checkout_reference VARCHAR(120) NULL",
     "ALTER TABLE toeic_test_questions ADD COLUMN IF NOT EXISTS question_type VARCHAR(50) NULL",
     "ALTER TABLE toeic_test_questions ADD COLUMN IF NOT EXISTS stimulus_group_id VARCHAR(100) NULL",
     "ALTER TABLE toeic_test_questions ADD COLUMN IF NOT EXISTS group_order INT NULL",
@@ -360,6 +382,14 @@ $settingStatements = [
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('website_title', 'OSGLI TOEIC') ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('name_toeic', 'TOEIC Listening & Reading') ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_retail', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_partner', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_bulk', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_sw_retail', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_sw_partner', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_sw_bulk', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('payment_mode', 'direct_bank') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('forgot_password_enabled', '1') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('features_toeic', '[\"Full simulation 200 soal\",\"Practice mode Part 1-7\",\"Score report TOEIC\",\"Weakness map per part\"]') ON DUPLICATE KEY UPDATE setting_value = setting_value",
 ];
 

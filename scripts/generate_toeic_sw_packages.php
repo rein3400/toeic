@@ -357,8 +357,268 @@ SVG;
 SVG;
 }
 
+function toeicSwDistinctSvg(string $title, int $seed): string {
+    $palettes = [
+        ['#f4f8fb', '#1f6f8b', '#f0a94a', '#dbe9ef', '#243844'],
+        ['#f7f2e9', '#2c6b5c', '#d77a45', '#e4dccf', '#2f3b36'],
+        ['#f5f4f1', '#4c6178', '#bd4b4b', '#ddd5ca', '#343b46'],
+        ['#f2f7f4', '#315d66', '#e1a03f', '#cee0d6', '#26363a'],
+        ['#f4f2f8', '#59669a', '#d18a43', '#ded9ec', '#30354e'],
+        ['#f2f7f5', '#3e7057', '#d7a23f', '#d2e3da', '#25382d'],
+        ['#f9f5ef', '#70503f', '#4b87a7', '#e6d7c9', '#35271f'],
+        ['#eef5fa', '#2d5275', '#e0b34d', '#d7e1ea', '#26364a'],
+        ['#f8f6f0', '#506044', '#c56b55', '#dfe5d5', '#31372c'],
+        ['#f4f7f1', '#645680', '#4f9b8f', '#e1dced', '#302c3d'],
+    ];
+    [$bg, $primary, $accent, $soft, $ink] = $palettes[$seed % count($palettes)];
+    $sceneKeys = [
+        'warehouse-inspection',
+        'training-room',
+        'hotel-reception',
+        'retail-display',
+        'airport-counter',
+        'clinic-laboratory',
+        'construction-briefing',
+        'delivery-dock',
+        'cafe-service',
+        'boardroom-review',
+        'factory-quality',
+        'library-workshop',
+        'tech-support-desk',
+        'market-stand',
+    ];
+    $sceneIndex = $seed % count($sceneKeys);
+    $sceneKey = $sceneKeys[$sceneIndex];
+    $variant = ($seed * 29) % 48;
+    $safeTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+    $safeSceneKey = htmlspecialchars($sceneKey . '-' . $seed, ENT_QUOTES, 'UTF-8');
+
+    $person = static function (int $x, int $y, string $shirt, string $skin = '#8f6348') use ($ink): string {
+        $bodyX = $x - 26;
+        $bodyY = $y + 34;
+        $armY = $bodyY + 18;
+        $armDrop = $armY + 28;
+        $bodyRight = $bodyX + 52;
+        return <<<SVG
+  <circle cx="{$x}" cy="{$y}" r="23" fill="{$skin}"/>
+  <rect x="{$bodyX}" y="{$bodyY}" width="52" height="78" rx="17" fill="{$shirt}"/>
+  <path d="M{$bodyX} {$armY} C{$x} {$armDrop}, {$x} {$armDrop}, {$bodyRight} {$armY}" fill="none" stroke="{$ink}" stroke-width="5" opacity="0.24"/>
+SVG;
+    };
+
+    switch ($sceneIndex) {
+        case 0:
+            $sceneSvg = <<<SVG
+  <rect x="76" y="82" width="808" height="474" rx="16" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="112" y="124" width="220" height="326" rx="10" fill="{$soft}"/>
+  <rect x="138" y="160" width="72" height="54" rx="8" fill="{$accent}"/>
+  <rect x="224" y="160" width="72" height="54" rx="8" fill="{$primary}" opacity="0.65"/>
+  <rect x="138" y="236" width="158" height="56" rx="8" fill="{$primary}" opacity="0.28"/>
+  <rect x="416" y="338" width="286" height="58" rx="10" fill="{$primary}" opacity="0.84"/>
+  <circle cx="468" cy="414" r="24" fill="{$ink}"/>
+  <circle cx="662" cy="414" r="24" fill="{$ink}"/>
+  <rect x="612" y="170" width="118" height="156" rx="12" fill="{$accent}" opacity="0.88"/>
+  <rect x="640" y="205" width="58" height="48" rx="7" fill="#f8fbfd"/>
+{$person(522 + $variant, 232, $primary)}
+  <rect x="734" y="438" width="76" height="18" rx="9" fill="{$accent}"/>
+SVG;
+            break;
+        case 1:
+            $sceneSvg = <<<SVG
+  <rect x="88" y="86" width="784" height="452" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="130" y="126" width="252" height="178" rx="12" fill="{$soft}"/>
+  <rect x="162" y="158" width="70" height="114" rx="8" fill="{$primary}" opacity="0.48"/>
+  <rect x="246" y="184" width="70" height="88" rx="8" fill="{$accent}" opacity="0.82"/>
+  <rect x="432" y="128" width="324" height="50" rx="12" fill="{$primary}" opacity="0.18"/>
+  <rect x="432" y="208" width="252" height="28" rx="8" fill="{$accent}" opacity="0.62"/>
+  <rect x="146" y="374" width="642" height="58" rx="18" fill="{$primary}" opacity="0.74"/>
+  <rect x="516" y="288" width="112" height="84" rx="10" fill="#f7fbfc" stroke="{$primary}" stroke-width="5"/>
+{$person(332 + $variant, 306, $primary)}
+{$person(704 - $variant, 308, $accent, '#6e4d39')}
+SVG;
+            break;
+        case 2:
+            $sceneSvg = <<<SVG
+  <rect x="84" y="90" width="792" height="448" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="132" y="150" width="246" height="164" rx="13" fill="{$primary}" opacity="0.18"/>
+  <rect x="422" y="132" width="300" height="92" rx="14" fill="{$soft}"/>
+  <rect x="452" y="164" width="240" height="18" rx="9" fill="{$primary}" opacity="0.28"/>
+  <rect x="130" y="376" width="696" height="46" rx="12" fill="{$primary}" opacity="0.80"/>
+  <rect x="188" y="326" width="96" height="58" rx="10" fill="{$accent}" opacity="0.86"/>
+  <rect x="548" y="278" width="132" height="92" rx="12" fill="#f7fbfc" stroke="{$primary}" stroke-width="5"/>
+  <circle cx="704" cy="308" r="28" fill="{$accent}" opacity="0.74"/>
+{$person(250 + $variant, 282, $accent)}
+{$person(625 - $variant, 276, $primary, '#6e4d39')}
+SVG;
+            break;
+        case 3:
+            $sceneSvg = <<<SVG
+  <rect x="92" y="84" width="776" height="454" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="134" y="130" width="188" height="286" rx="13" fill="{$soft}"/>
+  <rect x="166" y="166" width="118" height="20" rx="10" fill="{$primary}" opacity="0.34"/>
+  <rect x="166" y="216" width="118" height="20" rx="10" fill="{$accent}" opacity="0.70"/>
+  <rect x="402" y="136" width="282" height="176" rx="12" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="438" y="176" width="208" height="16" rx="8" fill="{$primary}" opacity="0.30"/>
+  <rect x="438" y="220" width="154" height="16" rx="8" fill="{$accent}" opacity="0.78"/>
+  <rect x="350" y="396" width="418" height="48" rx="12" fill="{$accent}" opacity="0.84"/>
+  <rect x="456" y="340" width="128" height="64" rx="10" fill="#ffffff" stroke="{$soft}" stroke-width="5"/>
+{$person(704 - $variant, 300, $primary)}
+SVG;
+            break;
+        case 4:
+            $sceneSvg = <<<SVG
+  <rect x="92" y="86" width="780" height="452" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="138" y="132" width="652" height="74" rx="14" fill="{$primary}" opacity="0.18"/>
+  <rect x="170" y="238" width="600" height="66" rx="18" fill="{$accent}" opacity="0.84"/>
+  <rect x="198" y="190" width="152" height="90" rx="10" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="220" y="216" width="96" height="12" rx="6" fill="{$primary}" opacity="0.35"/>
+  <rect x="584" y="174" width="164" height="106" rx="12" fill="{$soft}"/>
+  <circle cx="626" cy="224" r="18" fill="{$primary}" opacity="0.46"/>
+{$person(426 + $variant, 186, $primary)}
+{$person(682 - $variant, 334, $accent, '#6e4d39')}
+  <path d="M150 456 H810" stroke="{$primary}" stroke-width="14" stroke-linecap="round" opacity="0.16"/>
+SVG;
+            break;
+        case 5:
+            $sceneSvg = <<<SVG
+  <rect x="100" y="88" width="760" height="448" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="132" y="136" width="224" height="132" rx="12" fill="{$soft}"/>
+  <rect x="398" y="130" width="118" height="180" rx="10" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <circle cx="457" cy="198" r="34" fill="{$accent}" opacity="0.72"/>
+  <rect x="576" y="130" width="210" height="70" rx="12" fill="{$primary}" opacity="0.20"/>
+  <rect x="594" y="222" width="170" height="24" rx="8" fill="{$primary}" opacity="0.32"/>
+  <rect x="140" y="362" width="666" height="54" rx="12" fill="{$primary}" opacity="0.76"/>
+  <rect x="190" y="322" width="82" height="50" rx="8" fill="{$accent}" opacity="0.82"/>
+  <rect x="314" y="316" width="72" height="56" rx="8" fill="{$soft}"/>
+{$person(252 + $variant, 280, $accent)}
+{$person(700 - $variant, 278, $primary, '#6e4d39')}
+SVG;
+            break;
+        case 6:
+            $sceneSvg = <<<SVG
+  <rect x="82" y="88" width="796" height="448" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="126" y="136" width="540" height="88" rx="14" fill="{$primary}" opacity="0.18"/>
+  <rect x="148" y="274" width="670" height="60" rx="18" fill="{$primary}" opacity="0.80"/>
+  <rect x="170" y="222" width="126" height="76" rx="10" fill="#f8fbfd" stroke="{$accent}" stroke-width="5"/>
+  <circle cx="704" cy="226" r="34" fill="{$accent}" opacity="0.78"/>
+  <rect x="674" y="264" width="64" height="94" rx="18" fill="{$primary}"/>
+  <rect x="590" y="382" width="92" height="94" rx="12" fill="{$soft}" stroke="{$primary}" stroke-width="5"/>
+  <circle cx="614" cy="486" r="10" fill="{$ink}"/>
+  <circle cx="658" cy="486" r="10" fill="{$ink}"/>
+{$person(360 + $variant, 224, $accent)}
+  <rect x="188" y="422" width="288" height="14" rx="7" fill="{$accent}"/>
+SVG;
+            break;
+        case 7:
+            $sceneSvg = <<<SVG
+  <rect x="78" y="82" width="804" height="474" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="122" y="130" width="274" height="256" rx="14" fill="{$soft}"/>
+  <rect x="152" y="162" width="88" height="72" rx="9" fill="{$accent}" opacity="0.86"/>
+  <rect x="260" y="162" width="88" height="72" rx="9" fill="{$primary}" opacity="0.64"/>
+  <rect x="152" y="260" width="196" height="34" rx="9" fill="{$primary}" opacity="0.25"/>
+  <path d="M492 386 h254 v48 h-254 z" fill="{$primary}" opacity="0.82"/>
+  <circle cx="536" cy="450" r="22" fill="{$ink}"/>
+  <circle cx="704" cy="450" r="22" fill="{$ink}"/>
+  <rect x="598" y="186" width="130" height="118" rx="12" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+{$person(494 + $variant, 282, $primary)}
+SVG;
+            break;
+        case 8:
+            $sceneSvg = <<<SVG
+  <rect x="88" y="90" width="784" height="444" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="128" y="142" width="336" height="66" rx="12" fill="{$primary}" opacity="0.18"/>
+  <rect x="522" y="136" width="210" height="152" rx="14" fill="{$soft}"/>
+  <circle cx="574" cy="194" r="28" fill="{$accent}" opacity="0.76"/>
+  <rect x="610" y="174" width="86" height="14" rx="7" fill="{$primary}" opacity="0.32"/>
+  <rect x="132" y="358" width="696" height="58" rx="18" fill="{$primary}" opacity="0.78"/>
+  <rect x="196" y="306" width="102" height="58" rx="10" fill="{$accent}" opacity="0.84"/>
+  <rect x="356" y="294" width="100" height="70" rx="10" fill="#f8fbfd" stroke="{$soft}" stroke-width="5"/>
+{$person(250 + $variant, 262, $primary)}
+{$person(672 - $variant, 304, $accent, '#6e4d39')}
+SVG;
+            break;
+        case 9:
+            $sceneSvg = <<<SVG
+  <rect x="90" y="84" width="780" height="456" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="130" y="136" width="704" height="70" rx="14" fill="{$primary}" opacity="0.18"/>
+  <rect x="174" y="246" width="206" height="144" rx="12" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="206" y="282" width="140" height="14" rx="7" fill="{$primary}" opacity="0.32"/>
+  <rect x="206" y="322" width="94" height="14" rx="7" fill="{$accent}" opacity="0.74"/>
+  <rect x="492" y="246" width="206" height="144" rx="12" fill="{$soft}"/>
+  <rect x="522" y="282" width="144" height="14" rx="7" fill="{$primary}" opacity="0.32"/>
+  <rect x="158" y="424" width="648" height="24" rx="12" fill="{$primary}" opacity="0.70"/>
+{$person(428 + $variant, 278, $accent)}
+{$person(746 - $variant, 280, $primary, '#6e4d39')}
+SVG;
+            break;
+        case 10:
+            $sceneSvg = <<<SVG
+  <rect x="80" y="82" width="800" height="472" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="122" y="130" width="306" height="242" rx="12" fill="{$soft}"/>
+  <rect x="154" y="166" width="82" height="152" rx="8" fill="{$primary}" opacity="0.48"/>
+  <rect x="260" y="206" width="82" height="112" rx="8" fill="{$accent}" opacity="0.82"/>
+  <rect x="502" y="132" width="252" height="84" rx="14" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="530" y="166" width="176" height="14" rx="7" fill="{$primary}" opacity="0.32"/>
+  <rect x="150" y="404" width="664" height="50" rx="14" fill="{$primary}" opacity="0.78"/>
+  <rect x="532" y="292" width="116" height="82" rx="10" fill="{$accent}" opacity="0.82"/>
+{$person(374 + $variant, 300, $primary)}
+{$person(724 - $variant, 300, $accent, '#6e4d39')}
+SVG;
+            break;
+        case 11:
+            $sceneSvg = <<<SVG
+  <rect x="92" y="88" width="776" height="448" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="132" y="126" width="160" height="300" rx="12" fill="{$soft}"/>
+  <rect x="168" y="158" width="86" height="26" rx="8" fill="{$primary}" opacity="0.36"/>
+  <rect x="168" y="220" width="86" height="26" rx="8" fill="{$accent}" opacity="0.70"/>
+  <rect x="360" y="136" width="360" height="126" rx="14" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="400" y="174" width="260" height="16" rx="8" fill="{$primary}" opacity="0.30"/>
+  <rect x="400" y="214" width="176" height="16" rx="8" fill="{$accent}" opacity="0.76"/>
+  <rect x="338" y="382" width="426" height="56" rx="14" fill="{$primary}" opacity="0.76"/>
+{$person(468 + $variant, 304, $accent)}
+{$person(676 - $variant, 304, $primary, '#6e4d39')}
+SVG;
+            break;
+        case 12:
+            $sceneSvg = <<<SVG
+  <rect x="88" y="84" width="784" height="456" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="132" y="134" width="342" height="174" rx="14" fill="#f8fbfd" stroke="{$primary}" stroke-width="5"/>
+  <rect x="168" y="174" width="236" height="16" rx="8" fill="{$primary}" opacity="0.30"/>
+  <rect x="168" y="216" width="170" height="16" rx="8" fill="{$accent}" opacity="0.76"/>
+  <rect x="550" y="136" width="170" height="218" rx="13" fill="{$soft}"/>
+  <circle cx="636" cy="214" r="36" fill="{$accent}" opacity="0.78"/>
+  <rect x="126" y="388" width="704" height="54" rx="14" fill="{$primary}" opacity="0.80"/>
+  <rect x="214" y="332" width="118" height="60" rx="10" fill="{$accent}" opacity="0.84"/>
+{$person(414 + $variant, 308, $primary)}
+{$person(700 - $variant, 308, $accent, '#6e4d39')}
+SVG;
+            break;
+        default:
+            $sceneSvg = <<<SVG
+  <rect x="84" y="86" width="792" height="452" rx="18" fill="#ffffff" stroke="{$soft}" stroke-width="6"/>
+  <rect x="126" y="132" width="238" height="160" rx="13" fill="{$soft}"/>
+  <rect x="154" y="166" width="72" height="70" rx="9" fill="{$accent}" opacity="0.84"/>
+  <rect x="246" y="166" width="72" height="70" rx="9" fill="{$primary}" opacity="0.62"/>
+  <rect x="446" y="132" width="270" height="88" rx="14" fill="{$primary}" opacity="0.18"/>
+  <rect x="484" y="164" width="194" height="16" rx="8" fill="{$primary}" opacity="0.34"/>
+  <rect x="138" y="368" width="678" height="58" rx="18" fill="{$primary}" opacity="0.78"/>
+  <path d="M546 292 C570 252, 644 252, 668 292" fill="none" stroke="{$accent}" stroke-width="14" stroke-linecap="round"/>
+  <rect x="570" y="304" width="72" height="70" rx="14" fill="{$primary}"/>
+{$person(286 + $variant, 292, $accent)}
+SVG;
+            break;
+    }
+
+    return <<<SVG
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-label="{$safeTitle}" data-scene-key="{$safeSceneKey}">
+  <rect width="960" height="640" fill="{$bg}"/>
+{$sceneSvg}
+</svg>
+SVG;
+}
+
 function toeicSwWriteSvg(string $path, string $title, int $seed): void {
-    file_put_contents($path, toeicSwSvg($title, $seed));
+    file_put_contents($path, toeicSwDistinctSvg($title, $seed));
 }
 
 function toeicSwRubric(string $type): string {

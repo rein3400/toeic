@@ -11,6 +11,7 @@ if (isset($_SESSION['user_id'])) {
 require_once 'includes/config.php';
 require_once 'includes/settings.php';
 require_once 'includes/db_utils.php';
+require_once 'includes/password_reset_helper.php';
 
 $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
@@ -19,27 +20,32 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $full_name = trim($_POST['full_name']);
+    $email = strtolower(trim($_POST['email'] ?? ''));
     $username = trim($_POST['username']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (empty($full_name) || empty($username) || empty($password) || empty($confirm_password)) {
+    if (empty($full_name) || empty($email) || empty($username) || empty($password) || empty($confirm_password)) {
         $error = "Semua field wajib diisi.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Email terdaftar tidak valid.";
     } elseif ($password !== $confirm_password) {
         $error = "Konfirmasi password tidak cocok.";
     } elseif (strlen($password) < 6) {
         $error = "Password minimal 6 karakter.";
     } else {
-        $stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ?");
-        $stmt->bind_param("s", $username);
+        toeicEnsureUserEmailColumn($conn);
+        $id_col = getUsersIdColumn($conn);
+        $stmt = $conn->prepare("SELECT {$id_col} FROM users WHERE username = ? OR LOWER(email) = ? LIMIT 1");
+        $stmt->bind_param("ss", $username, $email);
         $stmt->execute();
         if ($stmt->get_result()->num_rows > 0) {
-            $error = "Username sudah digunakan.";
+            $error = "Username atau email sudah digunakan.";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $role = 'student';
-            $stmt = $conn->prepare("INSERT INTO users (full_name, username, password, role) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $full_name, $username, $hashed_password, $role);
+            $stmt = $conn->prepare("INSERT INTO users (full_name, email, username, password, role) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $full_name, $email, $username, $hashed_password, $role);
             if ($stmt->execute()) {
                 $new_user_id = $conn->insert_id;
                 grantTestCredit($conn, $new_user_id, 'toeic', 'FREE_TRIAL');
@@ -111,6 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-12">
                             <label class="toeic-field-label" for="full_name">Nama Lengkap</label>
                             <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Raka Pratama" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="toeic-field-label" for="email">Email Terdaftar</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="raka@email.com" required autocomplete="email">
                         </div>
                         <div class="col-12">
                             <label class="toeic-field-label" for="username">Username</label>

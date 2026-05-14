@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
+require_once '../includes/toeic_pricing_helper.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -14,12 +15,12 @@ $exam_type = $_GET['exam_type'] ?? 'toeic';
 $products = [
     'toeic' => [
         'name' => getSiteSetting('name_toeic', 'TOEIC Listening & Reading'),
-        'price' => (int)getSiteSetting('price_toeic', '175000'),
+        'price' => toeicGetProductPrice('toeic', 'retail'),
         'summary' => 'Akses full Listening & Reading dengan laporan skor 10-990',
     ],
     'toeic_sw' => [
         'name' => getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
-        'price' => (int)getSiteSetting('price_toeic_sw', '175000'),
+        'price' => toeicGetProductPrice('toeic_sw', 'retail'),
         'summary' => 'Akses full Speaking & Writing dengan skor Speaking 0-200 dan Writing 0-200',
     ],
 ];
@@ -32,7 +33,11 @@ $product = $products[$exam_type];
 $product_name = $product['name'];
 $price_value = $product['price'];
 $price_formatted = 'Rp ' . number_format($price_value, 0, ',', '.');
-$tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(TRIPAY_MERCHANT_CODE);
+$payment_mode = toeicGetPaymentMode();
+$tripay_ready = toeicPaymentUsesTripay();
+$direct_bank_ready = toeicIsDirectBankConfigured();
+$bank_transfer = toeicGetBankTransferSettings();
+$checkout_ready = $payment_mode === 'direct_bank' ? $direct_bank_ready : $tripay_ready;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,30 +98,51 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                     <span class="study-kicker">Selection</span>
                     <h2 class="h4 mb-4">Pilih Metode</h2>
 
-                    <div class="row g-3">
-                        <?php foreach ([
-                            ['QRIS', 'QRIS', 'fa-qrcode'],
-                            ['OVO', 'OVO', 'fa-wallet'],
-                            ['DANA', 'DANA', 'fa-money-bill'],
-                            ['SHOPEEPAY', 'ShopeePay', 'fa-shopping-bag'],
-                            ['BCAVA', 'BCA Virtual Account', 'fa-building-columns'],
-                            ['BNIVA', 'BNI Virtual Account', 'fa-building-columns'],
-                            ['BRIVA', 'BRI Virtual Account', 'fa-building-columns'],
-                            ['MANDIRIVA', 'Mandiri Virtual Account', 'fa-building-columns'],
-                        ] as $index => $method): ?>
-                            <div class="col-md-6 col-xl-4">
-                                <label class="payment-option d-block <?php echo $index === 0 ? 'active' : ''; ?>" data-method="<?php echo $method[0]; ?>">
-                                    <input type="radio" name="payment_method" value="<?php echo $method[0]; ?>" <?php echo $index === 0 ? 'checked' : ''; ?> class="d-none">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <div class="avatar-circle mb-2" style="width:50px; height:50px; background:rgba(0,0,0,0.03) !important; border:none;">
-                                            <i class="fas <?php echo $method[2]; ?> text-primary h4 mb-0"></i>
+                    <?php if ($payment_mode === 'direct_bank'): ?>
+                        <div class="payment-option active">
+                            <input type="radio" name="payment_method" value="BANK_TRANSFER" checked class="d-none">
+                            <div class="d-flex gap-3 align-items-start">
+                                <div class="avatar-circle flex-shrink-0" style="width:50px; height:50px; background:rgba(16,185,129,0.1) !important; border:none;">
+                                    <i class="fas fa-building-columns text-success h4 mb-0"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">Transfer Bank Langsung</div>
+                                    <div class="small text-muted">Invoice dibuat di sistem, lalu pembayaran diselesaikan ke rekening admin.</div>
+                                    <?php if ($direct_bank_ready): ?>
+                                        <div class="mt-3 small">
+                                            <div class="fw-bold"><?php echo htmlspecialchars($bank_transfer['bank_name']); ?></div>
+                                            <div><?php echo htmlspecialchars($bank_transfer['bank_account_number']); ?> a.n. <?php echo htmlspecialchars($bank_transfer['bank_account_holder']); ?></div>
                                         </div>
-                                        <div class="fw-bold small uppercase"><?php echo htmlspecialchars($method[1]); ?></div>
-                                    </div>
-                                </label>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="row g-3">
+                            <?php foreach ([
+                                ['QRIS', 'QRIS', 'fa-qrcode'],
+                                ['OVO', 'OVO', 'fa-wallet'],
+                                ['DANA', 'DANA', 'fa-money-bill'],
+                                ['SHOPEEPAY', 'ShopeePay', 'fa-shopping-bag'],
+                                ['BCAVA', 'BCA Virtual Account', 'fa-building-columns'],
+                                ['BNIVA', 'BNI Virtual Account', 'fa-building-columns'],
+                                ['BRIVA', 'BRI Virtual Account', 'fa-building-columns'],
+                                ['MANDIRIVA', 'Mandiri Virtual Account', 'fa-building-columns'],
+                            ] as $index => $method): ?>
+                                <div class="col-md-6 col-xl-4">
+                                    <label class="payment-option d-block <?php echo $index === 0 ? 'active' : ''; ?>" data-method="<?php echo $method[0]; ?>">
+                                        <input type="radio" name="payment_method" value="<?php echo $method[0]; ?>" <?php echo $index === 0 ? 'checked' : ''; ?> class="d-none">
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <div class="avatar-circle mb-2" style="width:50px; height:50px; background:rgba(0,0,0,0.03) !important; border:none;">
+                                                <i class="fas <?php echo $method[2]; ?> text-primary h4 mb-0"></i>
+                                            </div>
+                                            <div class="fw-bold small uppercase"><?php echo htmlspecialchars($method[1]); ?></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="mt-5 pt-4 border-top">
                         <div class="study-kicker mb-3">Voucher <?php echo $exam_type === 'toeic_sw' ? 'TOEIC SW' : 'TOEIC LR'; ?></div>
@@ -150,15 +176,15 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
 
                     <ul class="list-unstyled mb-5">
                         <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Aktivasi instan</li>
-                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Transaksi aman</li>
+                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> <?php echo $payment_mode === 'direct_bank' ? 'Transfer bank langsung' : 'Transaksi aman'; ?></li>
                         <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Berlaku untuk 1 sesi</li>
                     </ul>
 
-                    <?php if ($tripay_ready): ?>
+                    <?php if ($checkout_ready): ?>
                         <button id="payButton" class="study-button w-100" onclick="createTransaction()">Selesaikan Pembelian</button>
                     <?php else: ?>
                         <div class="alert alert-warning border-0 small text-center">
-                            Payment gateway belum aktif di environment ini. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                            <?php echo $payment_mode === 'direct_bank' ? 'Rekening direct bank belum lengkap.' : 'Payment gateway belum aktif di environment ini.'; ?> Gunakan voucher atau hubungi admin.
                         </div>
                     <?php endif; ?>
                     <div id="paymentMessage" class="small mt-3 text-center text-muted"></div>
@@ -180,13 +206,14 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
 
         async function createTransaction() {
             const button = document.getElementById('payButton');
-            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
             const message = document.getElementById('paymentMessage');
             button.disabled = true;
             button.textContent = 'Memproses...';
             message.textContent = '';
 
             try {
+                const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+                const paymentMethod = selectedMethod ? selectedMethod.value : 'BANK_TRANSFER';
                 const response = await fetch('../api/create_transaction.php', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},

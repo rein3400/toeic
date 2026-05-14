@@ -917,6 +917,16 @@ if (!function_exists('ensureTOEICSessionModeColumns')) {
             if (!$partCol || $partCol->num_rows === 0) {
                 $conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN target_part VARCHAR(2) NULL DEFAULT NULL AFTER practice_mode");
             }
+
+            $sourceCol = $conn->query("SHOW COLUMNS FROM toeic_test_sessions LIKE 'checkout_source'");
+            if (!$sourceCol || $sourceCol->num_rows === 0) {
+                $conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN checkout_source VARCHAR(40) NULL DEFAULT NULL AFTER target_part");
+            }
+
+            $referenceCol = $conn->query("SHOW COLUMNS FROM toeic_test_sessions LIKE 'checkout_reference'");
+            if (!$referenceCol || $referenceCol->num_rows === 0) {
+                $conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN checkout_reference VARCHAR(120) NULL DEFAULT NULL AFTER checkout_source");
+            }
         } catch (\Throwable $e) {
             error_log('Failed ensuring TOEIC session mode columns: ' . $e->getMessage());
         }

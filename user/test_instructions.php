@@ -24,16 +24,24 @@ $mode = (($_GET['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
 $credit_type = $test_format === 'toeic_sw' ? 'toeic_sw' : 'toeic';
 $has_full_credit = hasStrictTestCredit($conn, (int)$_SESSION['user_id'], $credit_type);
 $full_credit_count = countStrictTestCredits($conn, (int)$_SESSION['user_id'], $credit_type);
+$next_credit = $test_format === 'toeic' ? peekNextTestCredit($conn, (int)$_SESSION['user_id'], $credit_type) : null;
+$is_free_trial_credit = $test_format === 'toeic' && toeicIsFreeTrialCredit($next_credit ?: null);
+$display_mode = $is_free_trial_credit ? 'prep' : $mode;
 $format_title = $test_format === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
 $full_test_parts = $test_format === 'toeic_sw'
     ? [
         ['label' => 'Speaking', 'detail' => '11 Qs - about 20m - score 0-200'],
         ['label' => 'Writing', 'detail' => '8 Qs - about 60m - score 0-200'],
     ]
+    : ($is_free_trial_credit
+        ? [
+            ['label' => 'Free Trial', 'detail' => '15 Qs - mixed Listening & Reading'],
+            ['label' => 'Upgrade', 'detail' => 'Full package unlocks 200 Qs and full score report'],
+        ]
     : [
         ['label' => 'Listening', 'detail' => 'Part 1-4 - 100 Qs - 45m'],
         ['label' => 'Reading', 'detail' => 'Part 5-7 - 100 Qs - 75m'],
-    ];
+    ]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'])) {
     $postedMode = (($_POST['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
@@ -53,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
     }
 
     $_SESSION['instructions_confirmed_toeic'] = time();
-    $_SESSION['practice_mode_toeic'] = $postedMode === 'prep' ? 1 : 0;
+    $postedNextCredit = peekNextTestCredit($conn, (int)$_SESSION['user_id'], 'toeic');
+    $_SESSION['practice_mode_toeic'] = ($postedMode === 'prep' || toeicIsFreeTrialCredit($postedNextCredit ?: null)) ? 1 : 0;
     $_SESSION['practice_part_toeic'] = null;
 
     header("Location: test_toeic.php?start_new=1&mode=" . urlencode($postedMode));
@@ -85,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
     <main class="toeic-page-shell">
         <div class="mb-5">
             <span class="study-kicker">Test Readiness</span>
-            <h1 class="display-5 mb-2"><?php echo htmlspecialchars($format_title); ?> <?php echo $mode === 'prep' ? 'Practice' : 'Full Simulation'; ?></h1>
+            <h1 class="display-5 mb-2"><?php echo htmlspecialchars($format_title); ?> <?php echo $is_free_trial_credit ? 'Free Trial' : ($mode === 'prep' ? 'Practice' : 'Full Simulation'); ?></h1>
             <p class="lead text-muted">Review the exam structure and rules before starting your session.</p>
         </div>
 
@@ -95,9 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                     <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Exam Format</span>
                     <h2 class="display-4 text-white mb-3"><?php echo htmlspecialchars($format_title); ?></h2>
                     <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
-                        <?php echo $test_format === 'toeic_sw'
+                        <?php echo $is_free_trial_credit
+                            ? 'Free trial starts a 15-question mixed TOEIC preview. The full package unlocks the complete 200-question simulator.'
+                            : ($test_format === 'toeic_sw'
                             ? 'This session starts with Speaking and continues to Writing, following the TOEIC Speaking & Writing task order.'
-                            : 'This session consists of two main sections: Listening Comprehension and Reading. The total duration is approximately 2 hours.'; ?>
+                            : 'This session consists of two main sections: Listening Comprehension and Reading. The total duration is approximately 2 hours.'); ?>
                     </p>
                     <div class="row g-3">
                         <?php foreach ($full_test_parts as $item): ?>
@@ -122,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                             <input type="hidden" name="mode" value="<?php echo htmlspecialchars($mode); ?>">
                             <input type="hidden" name="test_format" value="<?php echo htmlspecialchars($test_format); ?>">
                             <button type="submit" name="confirm_instructions" class="study-button w-100" <?php echo !$has_full_credit ? 'disabled' : ''; ?>>
-                                <?php echo $mode === 'prep' ? 'Launch Practice' : 'Launch Full Simulation'; ?>
+                                <?php echo $is_free_trial_credit ? 'Launch Free Trial' : ($mode === 'prep' ? 'Launch Practice' : 'Launch Full Simulation'); ?>
                             </button>
                         </form>
 

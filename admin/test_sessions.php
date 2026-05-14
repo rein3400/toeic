@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/proctor_helper.php';
+require_once '../includes/toeic_helper.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
     header("Location: login.php");
@@ -12,6 +13,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
 
 $website_title = getWebsiteTitle();
 $uid = getUsersIdColumn($conn);
+ensureTOEICSessionModeColumns($conn);
 $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 20;
 $offset = ($page - 1) * $per_page;
@@ -119,6 +121,22 @@ function adminSessionModeLabel(array $row): string {
     return !empty($row['practice_mode']) ? 'Practice' : 'Full';
 }
 
+function adminSessionCheckoutLabel(array $row): array {
+    $source = (string)($row['checkout_source'] ?? '');
+    $reference = (string)($row['checkout_reference'] ?? '');
+    if ($source === '' && $reference !== '') {
+        $source = toeicCreditCheckoutSource($reference)['source'];
+    }
+
+    return match ($source) {
+        'voucher' => ['label' => 'Voucher', 'class' => 'bg-info text-dark'],
+        'free_trial' => ['label' => 'Free Trial', 'class' => 'bg-warning text-dark'],
+        'direct_bank' => ['label' => 'Direct Bank', 'class' => 'bg-success'],
+        'direct_checkout' => ['label' => 'Direct Checkout', 'class' => 'bg-primary'],
+        default => ['label' => 'Unknown', 'class' => 'bg-secondary'],
+    };
+}
+
 function adminSessionStatusLabel(array $row): array {
     if (($row['proctor_status'] ?? '') === 'terminated') {
         return ['label' => 'Proctor Terminated', 'class' => 'bg-danger'];
@@ -210,6 +228,7 @@ function adminSessionStatusLabel(array $row): array {
                                 <tr>
                                     <th>Siswa</th>
                                     <th>Mode</th>
+                                    <th>Checkout Source</th>
                                     <th>Target</th>
                                     <th>Status</th>
                                     <th>Current Section</th>
@@ -221,10 +240,11 @@ function adminSessionStatusLabel(array $row): array {
                             </thead>
                             <tbody>
                                 <?php if (empty($sessions)): ?>
-                                    <tr><td colspan="9" class="text-center text-muted py-4">Belum ada sesi TOEIC yang cocok dengan filter.</td></tr>
+                                    <tr><td colspan="10" class="text-center text-muted py-4">Belum ada sesi TOEIC yang cocok dengan filter.</td></tr>
                                 <?php else: ?>
                                     <?php foreach ($sessions as $row): ?>
                                         <?php $statusBadge = adminSessionStatusLabel($row); ?>
+                                        <?php $checkoutBadge = adminSessionCheckoutLabel($row); ?>
                                         <tr>
                                             <td>
                                                 <div class="fw-semibold"><?php echo htmlspecialchars($row['full_name']); ?></div>
@@ -232,6 +252,12 @@ function adminSessionStatusLabel(array $row): array {
                                                 <div class="small text-muted"><code><?php echo htmlspecialchars($row['test_session']); ?></code></div>
                                             </td>
                                             <td><span class="badge bg-dark"><?php echo adminSessionModeLabel($row); ?></span></td>
+                                            <td>
+                                                <span class="badge <?php echo $checkoutBadge['class']; ?>"><?php echo htmlspecialchars($checkoutBadge['label']); ?></span>
+                                                <?php if (!empty($row['checkout_reference'])): ?>
+                                                    <div class="small text-muted mt-1"><code><?php echo htmlspecialchars((string)$row['checkout_reference']); ?></code></div>
+                                                <?php endif; ?>
+                                            </td>
                                             <td>
                                                 <?php if (!empty($row['practice_mode'])): ?>
                                                     <?php if (!empty($row['target_part'])): ?>

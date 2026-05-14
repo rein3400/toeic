@@ -5,6 +5,7 @@ require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
+require_once '../includes/toeic_pricing_helper.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -18,9 +19,9 @@ $hasAvailableToeicSwAccess = hasStrictTestCredit($conn, $user_id, 'toeic_sw');
 $website_title = getWebsiteTitle();
 $flash_messages = toeicConsumeFlashes();
 $toeic_name = htmlspecialchars(getSiteSetting('name_toeic', 'TOEIC Listening & Reading'));
-$toeic_price = number_format((int)getSiteSetting('price_toeic', '175000'), 0, ',', '.');
+$toeic_price = number_format(toeicGetProductPrice('toeic', 'retail'), 0, ',', '.');
 $toeic_sw_name = htmlspecialchars(getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'));
-$toeic_sw_price = number_format((int)getSiteSetting('price_toeic_sw', '175000'), 0, ',', '.');
+$toeic_sw_price = number_format(toeicGetProductPrice('toeic_sw', 'retail'), 0, ',', '.');
 $features = json_decode(getSiteSetting('features_toeic', ''), true) ?: [
     'Full simulation 200 soal',
     'Prep mode Part 1-7',
@@ -35,7 +36,9 @@ $sw_features = json_decode(getSiteSetting('features_toeic_sw', ''), true) ?: [
     'Score report Writing 0-200',
     'AI-assisted transcript and feedback',
 ];
-$tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(TRIPAY_MERCHANT_CODE);
+$checkout_ready = toeicCheckoutAvailable();
+$payment_mode = toeicGetPaymentMode();
+$checkout_label = $payment_mode === 'direct_bank' ? 'transfer bank langsung' : 'Tripay';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,14 +100,14 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                                 <i class="fas fa-check-circle me-1"></i> Anda punya kredit aktif.
                             </div>
                             <a href="test_instructions.php?mode=full" class="study-button w-100 mb-3">Mulai Simulasi Full</a>
-                            <?php if ($tripay_ready): ?>
+                            <?php if ($checkout_ready): ?>
                                 <a href="payment.php?exam_type=toeic" class="study-button study-button-secondary w-100">Beli Paket Lagi</a>
                             <?php endif; ?>
-                        <?php elseif ($tripay_ready): ?>
+                        <?php elseif ($checkout_ready): ?>
                             <a href="payment.php?exam_type=toeic" class="study-button w-100">Lanjut Bayar</a>
                         <?php else: ?>
                             <div class="alert alert-warning border-0 small mb-0">
-                                Payment gateway belum aktif. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                                Checkout <?php echo htmlspecialchars($checkout_label); ?> belum lengkap. Gunakan voucher atau hubungi admin.
                             </div>
                         <?php endif; ?>
 
@@ -146,14 +149,14 @@ $tripay_ready = !empty(TRIPAY_API_KEY) && !empty(TRIPAY_PRIVATE_KEY) && !empty(T
                             </div>
                             <a href="test_instructions.php?test_format=toeic_sw&mode=full" class="study-button w-100 mb-3">Mulai SW Full Simulation</a>
                             <a href="test_instructions.php?test_format=toeic_sw&mode=prep" class="study-button study-button-secondary w-100 mb-3">Mulai SW Practice</a>
-                            <?php if ($tripay_ready): ?>
+                            <?php if ($checkout_ready): ?>
                                 <a href="payment.php?exam_type=toeic_sw" class="study-button study-button-secondary w-100">Beli Paket SW Lagi</a>
                             <?php endif; ?>
-                        <?php elseif ($tripay_ready): ?>
+                        <?php elseif ($checkout_ready): ?>
                             <a href="payment.php?exam_type=toeic_sw" class="study-button w-100">Lanjut Bayar SW</a>
                         <?php else: ?>
                             <div class="alert alert-warning border-0 small mb-0">
-                                Payment gateway belum aktif. Gunakan voucher atau hubungi admin untuk aktivasi manual.
+                                Checkout <?php echo htmlspecialchars($checkout_label); ?> belum lengkap. Gunakan voucher atau hubungi admin.
                             </div>
                         <?php endif; ?>
 

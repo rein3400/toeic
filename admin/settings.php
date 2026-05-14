@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/toeic_pricing_helper.php';
 
 // Get website settings
 $website_title = getWebsiteTitle();
@@ -181,40 +182,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
         } elseif ($_POST['action'] == 'update_tripay') {
-            // Tripay payment gateway settings for production
+            // Payment routing plus optional Tripay gateway settings.
+            $payment_mode = ($_POST['payment_mode'] ?? 'direct_bank') === 'tripay' ? 'tripay' : 'direct_bank';
+            $bank_name = trim($_POST['bank_name'] ?? '');
+            $bank_account_number = trim($_POST['bank_account_number'] ?? '');
+            $bank_account_holder = trim($_POST['bank_account_holder'] ?? '');
+            $bank_transfer_instructions = trim($_POST['bank_transfer_instructions'] ?? '');
             $tripay_api_key = trim($_POST['tripay_api_key']);
             $tripay_private_key = trim($_POST['tripay_private_key']);
             $tripay_merchant_code = trim($_POST['tripay_merchant_code']);
             $tripay_is_production = isset($_POST['tripay_is_production']) ? '1' : '0';
 
+            saveSetting('payment_mode', $payment_mode);
+            saveSetting('bank_name', $bank_name);
+            saveSetting('bank_account_number', $bank_account_number);
+            saveSetting('bank_account_holder', $bank_account_holder);
+            saveSetting('bank_transfer_instructions', $bank_transfer_instructions);
             saveSetting('tripay_api_key', $tripay_api_key);
             saveSetting('tripay_private_key', $tripay_private_key);
             saveSetting('tripay_merchant_code', $tripay_merchant_code);
             saveSetting('tripay_is_production', $tripay_is_production);
 
-            $success = "Tripay settings updated successfully! Mode: " . ($tripay_is_production === '1' ? 'PRODUCTION' : 'SANDBOX');
+            $success = "Pengaturan pembayaran berhasil disimpan. Checkout aktif: " . ($payment_mode === 'direct_bank' ? 'transfer bank langsung' : 'Tripay');
+        } elseif ($_POST['action'] == 'update_auth_settings') {
+            $forgot_password_enabled = isset($_POST['forgot_password_enabled']) ? '1' : '0';
+            $password_reset_expiry_minutes = max(10, min(1440, (int)($_POST['password_reset_expiry_minutes'] ?? 60)));
+            $password_reset_from_email = trim($_POST['password_reset_from_email'] ?? '');
+            $password_reset_from_name = trim($_POST['password_reset_from_name'] ?? 'TOEIC Support');
+
+            saveSetting('forgot_password_enabled', $forgot_password_enabled);
+            saveSetting('password_reset_expiry_minutes', (string)$password_reset_expiry_minutes);
+            saveSetting('password_reset_from_email', $password_reset_from_email);
+            saveSetting('password_reset_from_name', $password_reset_from_name);
+
+            $success = "Pengaturan lupa password berhasil disimpan.";
         } elseif ($_POST['action'] == 'update_pricing') {
             $exam_types = ['toeic', 'toeic_sw'];
+            $tiers = ['retail', 'partner', 'bulk'];
             foreach ($exam_types as $type) {
-                if (!isset($_POST['price_' . $type])) continue;
-
-                $price = (int) $_POST['price_' . $type];
                 $name  = trim($_POST['name_' . $type] ?? '');
                 $raw_features = trim($_POST['features_' . $type] ?? '');
-
-                if ($price < 0) {
-                    $error = "Harga tidak boleh negatif.";
-                    break;
-                }
 
                 $features_arr = array_values(array_filter(
                     array_map('trim', explode("\n", $raw_features)),
                     fn($line) => $line !== ''
                 ));
 
-                saveSetting('price_' . $type, (string) $price);
                 saveSetting('name_' . $type, $name);
                 saveSetting('features_' . $type, json_encode($features_arr, JSON_UNESCAPED_UNICODE));
+
+                foreach ($tiers as $tier) {
+                    $key = 'price_' . $type . '_' . $tier;
+                    $price = (int)($_POST[$key] ?? 0);
+                    if ($price < 0) {
+                        $error = "Harga tidak boleh negatif.";
+                        break 2;
+                    }
+                    saveSetting($key, (string)$price);
+                    if ($tier === 'retail') {
+                        saveSetting('price_' . $type, (string)$price);
+                    }
+                }
             }
             saveSetting('toeic_sw_scoring_model', trim($_POST['toeic_sw_scoring_model'] ?? 'gpt-5.5'));
             saveSetting('toeic_sw_transcription_model', trim($_POST['toeic_sw_transcription_model'] ?? 'gpt-4o-transcribe'));
@@ -238,12 +266,22 @@ $default_features = [
 ];
 $pricing = [
     'toeic' => [
-        'price'    => (int) getSetting('price_toeic', '175000'),
+        'price'    => (int) getSetting('price_toeic_retail', getSetting('price_toeic', '175000')),
+        'tiers'    => [
+            'retail' => (int) getSetting('price_toeic_retail', getSetting('price_toeic', '175000')),
+            'partner' => (int) getSetting('price_toeic_partner', getSetting('price_toeic', '175000')),
+            'bulk' => (int) getSetting('price_toeic_bulk', getSetting('price_toeic', '175000')),
+        ],
         'name'     => getSetting('name_toeic', 'TOEIC Prediction'),
         'features' => implode("\n", json_decode(getSetting('features_toeic', $default_features['toeic']), true) ?? []),
     ],
     'toeic_sw' => [
-        'price'    => (int) getSetting('price_toeic_sw', '175000'),
+        'price'    => (int) getSetting('price_toeic_sw_retail', getSetting('price_toeic_sw', '175000')),
+        'tiers'    => [
+            'retail' => (int) getSetting('price_toeic_sw_retail', getSetting('price_toeic_sw', '175000')),
+            'partner' => (int) getSetting('price_toeic_sw_partner', getSetting('price_toeic_sw', '175000')),
+            'bulk' => (int) getSetting('price_toeic_sw_bulk', getSetting('price_toeic_sw', '175000')),
+        ],
         'name'     => getSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
         'features' => implode("\n", json_decode(getSetting('features_toeic_sw', $default_features['toeic_sw']), true) ?? []),
     ],
@@ -551,26 +589,63 @@ $pricing = [
                 <div class="row">
 
 
-                    <!-- Tripay Payment Gateway Settings -->
+                    <!-- Payment Routing Settings -->
                     <div class="col-lg-6">
                         <div class="content-card">
                             <div class="setting-section">
-                                <h4><i class="fas fa-qrcode me-2"></i>Tripay Payment Gateway (QRIS)</h4>
-                                <p class="text-muted">Configure Tripay for QRIS checkout. Get your credentials from <a href="https://tripay.co.id/dashboard" target="_blank">Tripay Dashboard</a>.</p>
+                                <h4><i class="fas fa-money-check-alt me-2"></i>Payment Routing</h4>
+                                <p class="text-muted">Pilih apakah checkout memakai transfer bank langsung atau Tripay. Mode direct bank tidak mengarahkan riwayat pembayaran ke Tripay.</p>
                                 
                                 <?php 
+                                $payment_mode = getSetting('payment_mode', 'direct_bank');
                                 $tripay_is_prod = getSetting('tripay_is_production', '0');
                                 $is_configured = !empty(getSetting('tripay_api_key')) && !empty(getSetting('tripay_private_key')) && !empty(getSetting('tripay_merchant_code'));
                                 ?>
                                 
                                 <div class="alert alert-<?php echo $is_configured ? 'success' : 'warning'; ?> mb-3">
                                     <i class="fas fa-<?php echo $is_configured ? 'check-circle' : 'exclamation-triangle'; ?> me-2"></i>
-                                    Status: <?php echo $is_configured ? 'Configured' : 'Not Configured'; ?> | 
+                                    Checkout aktif: <strong><?php echo $payment_mode === 'tripay' ? 'Tripay' : 'Transfer Bank Langsung'; ?></strong> |
+                                    Tripay: <?php echo $is_configured ? 'Configured' : 'Not Configured'; ?> |
                                     Mode: <strong><?php echo $tripay_is_prod === '1' ? 'PRODUCTION' : 'SANDBOX'; ?></strong>
                                 </div>
 
                                 <form method="POST">
                                     <input type="hidden" name="action" value="update_tripay">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Checkout Mode</label>
+                                        <div class="d-flex flex-column gap-2">
+                                            <label class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_mode" value="direct_bank" <?php echo $payment_mode !== 'tripay' ? 'checked' : ''; ?>>
+                                                <span class="form-check-label">Transfer Bank Langsung</span>
+                                            </label>
+                                            <label class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_mode" value="tripay" <?php echo $payment_mode === 'tripay' ? 'checked' : ''; ?>>
+                                                <span class="form-check-label">Tripay Gateway</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 border rounded mb-4" style="border-color: rgba(16,185,129,0.35) !important;">
+                                        <h6 class="fw-bold mb-3 text-success"><i class="fas fa-building-columns me-2"></i>Rekening Direct Bank</h6>
+                                        <div class="mb-2">
+                                            <label class="form-label form-label-sm">Nama Bank</label>
+                                            <input type="text" class="form-control form-control-sm" name="bank_name" value="<?php echo htmlspecialchars(getSetting('bank_name', '')); ?>" placeholder="BCA / Mandiri / BRI">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label form-label-sm">Nomor Rekening</label>
+                                            <input type="text" class="form-control form-control-sm" name="bank_account_number" value="<?php echo htmlspecialchars(getSetting('bank_account_number', '')); ?>" placeholder="1234567890">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label form-label-sm">Atas Nama</label>
+                                            <input type="text" class="form-control form-control-sm" name="bank_account_holder" value="<?php echo htmlspecialchars(getSetting('bank_account_holder', '')); ?>" placeholder="Nama pemilik rekening">
+                                        </div>
+                                        <div class="mb-0">
+                                            <label class="form-label form-label-sm">Instruksi Pembayaran</label>
+                                            <textarea class="form-control form-control-sm" name="bank_transfer_instructions" rows="3"><?php echo htmlspecialchars(getSetting('bank_transfer_instructions', 'Transfer sesuai nominal invoice, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.')); ?></textarea>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="fw-bold mb-3"><i class="fas fa-qrcode me-2"></i>Tripay Payment Gateway</h6>
                                     <div class="mb-3">
                                         <label class="form-label">API Key <span class="text-danger">*</span></label>
                                         <input type="password" class="form-control" name="tripay_api_key" 
@@ -603,7 +678,7 @@ $pricing = [
                                         </div>
                                         <small class="text-muted">Uncheck for Sandbox (testing). Production uses real payments!</small>
                                     </div>
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Tripay Settings</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Payment Settings</button>
                                 </form>
 
                                 <div class="mt-4 p-3 bg-light rounded">
@@ -617,6 +692,37 @@ $pricing = [
                                         <li>Set Callback URL to: <code><?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST']; ?>/api/tripay_callback.php</code></li>
                                     </ol>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="content-card">
+                            <div class="setting-section">
+                                <h4><i class="fas fa-key me-2"></i>Lupa Password Pengguna</h4>
+                                <p class="text-muted">Aktifkan reset password via email terdaftar. Link reset akan kedaluwarsa sesuai durasi di bawah.</p>
+
+                                <form method="POST">
+                                    <input type="hidden" name="action" value="update_auth_settings">
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="forgot_password_enabled" name="forgot_password_enabled" <?php echo getSetting('forgot_password_enabled', '1') === '1' ? 'checked' : ''; ?>>
+                                            <label class="form-check-label fw-bold" for="forgot_password_enabled">Aktifkan fitur lupa password</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Reset Expiry (minutes)</label>
+                                        <input type="number" class="form-control" name="password_reset_expiry_minutes" value="<?php echo htmlspecialchars(getSetting('password_reset_expiry_minutes', '60')); ?>" min="10" max="1440">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">From Email</label>
+                                        <input type="email" class="form-control" name="password_reset_from_email" value="<?php echo htmlspecialchars(getSetting('password_reset_from_email', '')); ?>" placeholder="support@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">From Name</label>
+                                        <input type="text" class="form-control" name="password_reset_from_name" value="<?php echo htmlspecialchars(getSetting('password_reset_from_name', 'TOEIC Support')); ?>">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Password Reset</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -641,10 +747,14 @@ $pricing = [
                                                     <input type="text" class="form-control form-control-sm" name="name_toeic"
                                                            value="<?php echo htmlspecialchars($pricing['toeic']['name']); ?>">
                                                 </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label form-label-sm">Harga (Rp)</label>
-                                                    <input type="number" class="form-control form-control-sm" name="price_toeic"
-                                                           value="<?php echo $pricing['toeic']['price']; ?>" min="0" step="1000">
+                                                <div class="row g-2 mb-2">
+                                                    <?php foreach (['retail' => 'Retail', 'partner' => 'Mitra', 'bulk' => 'Bulking'] as $tier => $label): ?>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label form-label-sm"><?php echo htmlspecialchars($label); ?> (Rp)</label>
+                                                            <input type="number" class="form-control form-control-sm" name="price_toeic_<?php echo $tier; ?>"
+                                                                   value="<?php echo (int)$pricing['toeic']['tiers'][$tier]; ?>" min="0" step="1000">
+                                                        </div>
+                                                    <?php endforeach; ?>
                                                 </div>
                                                 <div class="mb-0">
                                                     <label class="form-label form-label-sm">Fitur (satu baris = satu poin)</label>
@@ -662,10 +772,14 @@ $pricing = [
                                                     <input type="text" class="form-control form-control-sm" name="name_toeic_sw"
                                                            value="<?php echo htmlspecialchars($pricing['toeic_sw']['name']); ?>">
                                                 </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label form-label-sm">Harga (Rp)</label>
-                                                    <input type="number" class="form-control form-control-sm" name="price_toeic_sw"
-                                                           value="<?php echo $pricing['toeic_sw']['price']; ?>" min="0" step="1000">
+                                                <div class="row g-2 mb-2">
+                                                    <?php foreach (['retail' => 'Retail', 'partner' => 'Mitra', 'bulk' => 'Bulking'] as $tier => $label): ?>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label form-label-sm"><?php echo htmlspecialchars($label); ?> (Rp)</label>
+                                                            <input type="number" class="form-control form-control-sm" name="price_toeic_sw_<?php echo $tier; ?>"
+                                                                   value="<?php echo (int)$pricing['toeic_sw']['tiers'][$tier]; ?>" min="0" step="1000">
+                                                        </div>
+                                                    <?php endforeach; ?>
                                                 </div>
                                                 <div class="mb-2">
                                                     <label class="form-label form-label-sm">Fitur (satu baris = satu poin)</label>

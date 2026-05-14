@@ -359,3 +359,49 @@
 ### Risks and rollback
 - Risk: if OpenRouter changes the STT schema or model identifier, transcription may fall back to `needs_rescore` until the endpoint/model is updated.
 - Rollback: remove OpenRouter from `$transcriptionProviders`, remove the OpenRouter transcription branch from `includes/toeic_sw_subjective_scorer.php`, and revert the contract-test assertions.
+
+## 2026-05-14 - TOEIC finance, reset, and free trial scope
+
+### Unknowns
+- The request did not specify whether retail, mitra, and bulking pricing must be separate pages or separate controls inside the existing admin settings page.
+- The request did not identify a dedicated payment-history page, so "riwayat pembayaran alihkan ke rekening langsung" was interpreted as checkout and pending-payment routing.
+- The production mail transport configuration is not visible from this local checkout.
+
+### Reason for proceeding
+- The existing product already centralizes pricing and payment-gateway settings in `admin/settings.php`.
+- Direct-bank routing can be added as a reversible setting while preserving Tripay as an optional mode.
+- Password reset can be implemented with a registered-email token flow without exposing whether an email exists.
+
+### Assumptions used
+- Retail, mitra, and bulking are pricing tiers for TOEIC LR and TOEIC SW products.
+- Direct bank is the default payment mode; Tripay remains available only when explicitly selected.
+- Existing users without a stored `users.email` value can reset only if their username is an email address.
+- A direct-bank payment becomes usable credit after the related `payment_transactions` row reaches `settlement`.
+
+### Project impact
+- Added tiered pricing, direct-bank settings, and forgot-password controls to `admin/settings.php`.
+- Routed checkout, pending-payment display, and settled-payment credit grants through the new payment mode.
+- Added registered-email password reset pages and token storage.
+- Added checkout source/reference metadata to TOEIC LR sessions.
+- Limited free-trial TOEIC LR sessions to 15 mixed questions.
+- Regenerated TOEIC SW SVG images so package images are unique instead of repeating one placeholder.
+
+### Verification attempted
+- Ran PHP syntax checks for all changed PHP files.
+- Ran static TOEIC goal and TOEIC SW contract tests successfully.
+- Validated all 10 TOEIC SW package manifests successfully.
+- Parsed all generated TOEIC SW audio and SVG assets; zero bad audio, zero bad SVG, and 140 unique SVG hashes.
+- Ran `git diff --check` successfully after removing trailing whitespace.
+- Temporarily changed local XAMPP MariaDB replication metadata during verification, then restored the 96 files after the user clarified this work should target production rather than local development.
+- Started MySQL locally during verification, ran the standalone TOEIC migration, and verified required TOEIC tables in that local DB; this is only local evidence and is not a production validation claim.
+- Ran voucher package-separation HTTP scenario successfully through the local PHP server.
+- Ran direct-bank checkout HTTP smoke successfully: login redirected to the student dashboard and `/api/create_transaction.php` returned `BANK_TRANSFER` with a `BANK-TOEIC-*` order.
+- Ran forgot-password HTTP smoke successfully: the page returned 200, showed the neutral reset notice, and created an active reset token.
+- Stopped the local PHP server and gracefully shut down MySQL after verification.
+
+### Risks and rollback
+- Risk: if a separate admin page is desired for retail, mitra, or bulking, move the same setting keys out of `admin/settings.php` into a dedicated page.
+- Risk: email reset delivery depends on the server mail transport; configure SMTP or PHP `mail()` on production before relying on it.
+- Risk: direct-bank credits require an admin or callback process to mark transactions as `settlement`.
+- Risk: local DB checks are not sufficient for production acceptance; production import/payment/reset must be validated against the production environment.
+- Rollback: revert the files listed in this section and restore the previous generated TOEIC SW SVG outputs from git.

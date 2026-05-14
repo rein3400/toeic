@@ -134,6 +134,9 @@ $redirect = $_GET['redirect'] ?? '';
                         <label class="toeic-field-label" for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
                     </div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <a href="forgot_password.php" class="fw-bold text-decoration-none small" style="color: var(--focus-blue);">Lupa password?</a>
+                    </div>
                     <button type="submit" class="tc-button w-100 mb-4">
                         <i class="fas fa-arrow-right-to-bracket me-2"></i>Masuk ke Akun
                     </button>

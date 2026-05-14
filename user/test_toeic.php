@@ -77,6 +77,16 @@ if ($start_new) {
         toeicRedirectWithFlash('buy_exam.php', 'info', 'Aktifkan paket TOEIC dulu sebelum mulai simulasi.');
     }
 
+    $credit_preview = peekNextTestCredit($conn, $_SESSION['user_id'], 'toeic');
+    $checkout_source = toeicCreditCheckoutSource($credit_preview ?: null);
+    $is_free_trial = toeicIsFreeTrialCredit($credit_preview ?: null);
+    if ($is_free_trial) {
+        $practice_mode = true;
+        $practice_part = '';
+        $practice_config = null;
+        $requires_proctoring = false;
+    }
+
     if (empty($_SESSION['instructions_confirmed_toeic'])) {
         $instruction_query = 'test_format=toeic&mode=' . ($practice_mode ? 'prep' : 'full');
         if ($practice_part !== '') {
@@ -108,6 +118,9 @@ if ($start_new) {
         'practice_mode' => $practice_mode ? 1 : 0,
         'target_part' => $practice_part !== '' ? $practice_part : null,
         'target_section' => $practice_config['section'] ?? null,
+        'free_trial' => $is_free_trial ? 1 : 0,
+        'checkout_source' => $checkout_source['source'],
+        'checkout_reference' => $checkout_source['reference'],
     ];
 
     require_once '../includes/toeic_test_builder.php';

@@ -13,6 +13,7 @@ require_once __DIR__ . '/config.php';
 class ToeicTestBuilder {
     private mysqli $conn;
     private int $userId = 0;
+    private const FREE_TRIAL_QUESTION_LIMIT = 15;
 
     private const PART_TARGETS = [
         '1' => ['section' => 'listening', 'questions' => 6,  'grouped' => false],
@@ -35,12 +36,15 @@ class ToeicTestBuilder {
         $currentSection = $options['current_section'] ?? 'listening';
         $practiceMode = !empty($options['practice_mode']) ? 1 : 0;
         $targetPart = isset($options['target_part']) ? (string)$options['target_part'] : null;
+        $checkoutSource = isset($options['checkout_source']) ? (string)$options['checkout_source'] : null;
+        $checkoutReference = isset($options['checkout_reference']) ? (string)$options['checkout_reference'] : null;
 
         $stmt = $this->conn->prepare("
-            INSERT IGNORE INTO toeic_test_sessions (test_session, user_id, current_section, status, practice_mode, target_part)
-            VALUES (?, ?, ?, 'active', ?, ?)
+            INSERT IGNORE INTO toeic_test_sessions
+            (test_session, user_id, current_section, status, practice_mode, target_part, checkout_source, checkout_reference)
+            VALUES (?, ?, ?, 'active', ?, ?, ?, ?)
         ");
-        $stmt->bind_param("sisis", $testSession, $userId, $currentSection, $practiceMode, $targetPart);
+        $stmt->bind_param("sisisss", $testSession, $userId, $currentSection, $practiceMode, $targetPart, $checkoutSource, $checkoutReference);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
@@ -52,6 +56,11 @@ class ToeicTestBuilder {
 
         $targetPart = isset($options['target_part']) ? (string)$options['target_part'] : null;
         $targetSection = $options['target_section'] ?? null;
+
+        if (!empty($options['free_trial'])) {
+            $this->assignFreeTrialQuestions($testSession);
+            return true;
+        }
 
         foreach (['listening', 'reading'] as $sectionName) {
             if ($targetSection && $targetSection !== $sectionName) {
@@ -111,8 +120,49 @@ class ToeicTestBuilder {
             if (!$hasTargetPart || $hasTargetPart->num_rows === 0) {
                 $this->conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN target_part VARCHAR(2) NULL DEFAULT NULL AFTER practice_mode");
             }
+
+            $hasCheckoutSource = $this->conn->query("SHOW COLUMNS FROM toeic_test_sessions LIKE 'checkout_source'");
+            if (!$hasCheckoutSource || $hasCheckoutSource->num_rows === 0) {
+                $this->conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN checkout_source VARCHAR(40) NULL DEFAULT NULL AFTER target_part");
+            }
+
+            $hasCheckoutReference = $this->conn->query("SHOW COLUMNS FROM toeic_test_sessions LIKE 'checkout_reference'");
+            if (!$hasCheckoutReference || $hasCheckoutReference->num_rows === 0) {
+                $this->conn->query("ALTER TABLE toeic_test_sessions ADD COLUMN checkout_reference VARCHAR(120) NULL DEFAULT NULL AFTER checkout_source");
+            }
         } catch (\Throwable $e) {
             error_log('TOEIC builder column check failed: ' . $e->getMessage());
+        }
+    }
+
+    private function assignFreeTrialQuestions(string $testSession): void {
+        $targets = [
+            ['table' => 'toeic_soal_listening', 'section' => 'listening', 'part' => '1', 'questions' => 4],
+            ['table' => 'toeic_soal_listening', 'section' => 'listening', 'part' => '2', 'questions' => 4],
+            ['table' => 'toeic_soal_reading', 'section' => 'reading', 'part' => '5', 'questions' => 7],
+        ];
+
+        $assigned = 0;
+        $sectionOrders = ['listening' => 1, 'reading' => 1];
+        foreach ($targets as $target) {
+            $remaining = self::FREE_TRIAL_QUESTION_LIMIT - $assigned;
+            if ($remaining <= 0) {
+                break;
+            }
+
+            $limit = min((int)$target['questions'], $remaining);
+            $rows = $this->pickIndividualRows($target['table'], $target['part'], $limit);
+            foreach ($rows as $row) {
+                $section = $target['section'];
+                $part = $target['part'];
+                $groupId = $this->normalizeGroupId($part, $row, null, 0);
+                $this->insertAssignment($testSession, $section, $part, $row, $sectionOrders[$section]++, $groupId, 1);
+                $assigned++;
+            }
+        }
+
+        if ($assigned < self::FREE_TRIAL_QUESTION_LIMIT) {
+            error_log("TOEIC builder warning: free trial assigned only {$assigned} of " . self::FREE_TRIAL_QUESTION_LIMIT . ' questions.');
         }
     }
 

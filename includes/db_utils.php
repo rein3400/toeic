@@ -195,6 +195,46 @@ if (!function_exists('countStrictTestCredits')) {
     }
 }
 
+if (!function_exists('peekNextTestCredit')) {
+    function peekNextTestCredit($conn, $user_id, $exam_type) {
+        $target_col = checkColumnExists($conn, 'user_purchases', 'exam_type') ? 'exam_type' : 'test_type';
+        $has_ref = checkColumnExists($conn, 'user_purchases', 'transaction_ref');
+        $refSelect = $has_ref ? 'transaction_ref' : "NULL AS transaction_ref";
+
+        $stmt = $conn->prepare("SELECT id, {$refSelect} FROM user_purchases WHERE user_id = ? AND $target_col = ? AND status = 'active' ORDER BY id ASC LIMIT 1");
+        $stmt->bind_param("is", $user_id, $exam_type);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc() ?: null;
+        $stmt->close();
+
+        return $row;
+    }
+}
+
+if (!function_exists('toeicIsFreeTrialCredit')) {
+    function toeicIsFreeTrialCredit($creditOrRef): bool {
+        $ref = is_array($creditOrRef) ? (string)($creditOrRef['transaction_ref'] ?? '') : (string)$creditOrRef;
+        return strtoupper(trim($ref)) === 'FREE_TRIAL';
+    }
+}
+
+if (!function_exists('toeicCreditCheckoutSource')) {
+    function toeicCreditCheckoutSource($creditOrRef): array {
+        $ref = is_array($creditOrRef) ? (string)($creditOrRef['transaction_ref'] ?? '') : (string)$creditOrRef;
+        $upper = strtoupper(trim($ref));
+        if ($upper === 'FREE_TRIAL') {
+            return ['source' => 'free_trial', 'label' => 'Free Trial', 'reference' => $ref];
+        }
+        if (str_starts_with($upper, 'VOUCHER-')) {
+            return ['source' => 'voucher', 'label' => 'Voucher', 'reference' => $ref];
+        }
+        if (str_starts_with($upper, 'BANK-') || str_contains($upper, 'DIRECT')) {
+            return ['source' => 'direct_bank', 'label' => 'Direct Bank', 'reference' => $ref];
+        }
+        return ['source' => 'direct_checkout', 'label' => 'Direct Checkout', 'reference' => $ref];
+    }
+}
+
 if (!function_exists('hasToeicAccess')) {
     function hasToeicAccess($conn, $user_id) {
         if (hasTestCredit($conn, $user_id, 'toeic')) {
@@ -243,12 +283,7 @@ if (!function_exists('consumeTestCredit')) {
 
         $target_col = checkColumnExists($conn, 'user_purchases', 'exam_type') ? 'exam_type' : 'test_type';
 
-        // Find oldest active credit
-        $stmt = $conn->prepare("SELECT id FROM user_purchases WHERE user_id = ? AND $target_col = ? AND status = 'active' ORDER BY id ASC LIMIT 1");
-        $stmt->bind_param("is", $user_id, $exam_type);
-        $stmt->execute();
-        $row = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
+        $row = peekNextTestCredit($conn, $user_id, $exam_type);
 
         if (!$row) return false;
 
@@ -319,5 +354,30 @@ if (!function_exists('grantTestCredit')) {
             }
             throw $e;
         }
+    }
+}
+
+if (!function_exists('grantSettledPaymentCredit')) {
+    function grantSettledPaymentCredit($conn, $user_id, $exam_type, $transaction_ref) {
+        $exam_type = $exam_type === 'toeic_sw' ? 'toeic_sw' : 'toeic';
+        $transaction_ref = trim((string)$transaction_ref);
+        if ($transaction_ref === '') {
+            return false;
+        }
+
+        $target_col = checkColumnExists($conn, 'user_purchases', 'exam_type') ? 'exam_type' : 'test_type';
+        $has_ref = checkColumnExists($conn, 'user_purchases', 'transaction_ref');
+        if ($has_ref) {
+            $stmt = $conn->prepare("SELECT id FROM user_purchases WHERE user_id = ? AND $target_col = ? AND transaction_ref = ? LIMIT 1");
+            $stmt->bind_param("iss", $user_id, $exam_type, $transaction_ref);
+            $stmt->execute();
+            $exists = $stmt->get_result()->num_rows > 0;
+            $stmt->close();
+            if ($exists) {
+                return true;
+            }
+        }
+
+        return grantTestCredit($conn, $user_id, $exam_type, $transaction_ref);
     }
 }

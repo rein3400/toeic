@@ -2,7 +2,9 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/db_utils.php';
 require_once '../includes/toeic_quality_helpers.php';
+require_once '../includes/toeic_pricing_helper.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../login.php');
@@ -27,7 +29,10 @@ if (empty($order_id)) {
 $hasTransactionId = $conn->query("SHOW COLUMNS FROM payment_transactions LIKE 'transaction_id'")->num_rows > 0;
 $idCol            = $hasTransactionId ? 'transaction_id' : 'order_id';
 
-$stmt = $conn->prepare("SELECT status, amount FROM payment_transactions WHERE $idCol = ? AND user_id = ? LIMIT 1");
+$paymentMethodSelect = $conn->query("SHOW COLUMNS FROM payment_transactions LIKE 'payment_method'")->num_rows > 0 ? ', payment_method' : ", NULL AS payment_method";
+$paymentTypeSelect = $conn->query("SHOW COLUMNS FROM payment_transactions LIKE 'payment_type'")->num_rows > 0 ? ', payment_type' : ", NULL AS payment_type";
+$testTypeSelect = $conn->query("SHOW COLUMNS FROM payment_transactions LIKE 'test_type'")->num_rows > 0 ? ', test_type' : ", NULL AS test_type";
+$stmt = $conn->prepare("SELECT status, amount $paymentMethodSelect $paymentTypeSelect $testTypeSelect FROM payment_transactions WHERE $idCol = ? AND user_id = ? LIMIT 1");
 if (!$stmt) {
     toeicRedirectWithFlash('index.php', 'error', 'Status pembayaran belum bisa dibuka saat ini.');
 }
@@ -41,10 +46,16 @@ if (!$tx) {
 }
 
 if ($tx['status'] === 'settlement') {
+    if (!empty($tx['test_type'])) {
+        grantSettledPaymentCredit($conn, $user_id, (string)$tx['test_type'], $order_id);
+    }
     toeicRedirectWithFlash('index.php', 'success', 'Pembayaran berhasil. Kredit TOEIC Anda sudah aktif.');
 }
 
 $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
+$is_direct_bank = strtoupper((string)($tx['payment_method'] ?? '')) === 'BANK_TRANSFER'
+    || (string)($tx['payment_type'] ?? '') === 'direct_bank';
+$bank_transfer = toeicGetBankTransferSettings();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +105,7 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         <i class="fas fa-clock fa-4x pulse-icon text-warning"></i>
                     </div>
                     <span class="study-kicker">Payment Status</span>
-                    <h2 class="h3 mb-3 fw-bold">Waiting for Payment</h2>
+                    <h2 class="h3 mb-3 fw-bold"><?php echo $is_direct_bank ? 'Transfer Bank Langsung' : 'Waiting for Payment'; ?></h2>
 
                     <div class="p-3 rounded-4 mb-4" style="background: rgba(72,127,181,0.05);">
                         <div class="small text-muted uppercase fw-bold mb-1">Total Amount</div>
@@ -102,11 +113,32 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
                         <div class="mt-2 small">Order ID: <code><?php echo htmlspecialchars($order_id); ?></code></div>
                     </div>
 
-                    <div id="payment-info"></div>
+                    <div id="payment-info">
+                        <?php if ($is_direct_bank): ?>
+                            <div class="p-3 rounded-4 mb-4 text-start" style="background: rgba(16,185,129,0.08);">
+                                <div class="small text-muted uppercase fw-bold mb-2">Direct Bank Transfer</div>
+                                <div class="fw-bold h5 mb-1"><?php echo htmlspecialchars($bank_transfer['bank_name'] ?: 'Bank belum diatur'); ?></div>
+                                <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                                    <code class="h4 fw-bold mb-0" style="letter-spacing:1px; color:var(--focus-blue);"><?php echo htmlspecialchars($bank_transfer['bank_account_number'] ?: '-'); ?></code>
+                                    <?php if (!empty($bank_transfer['bank_account_number'])): ?>
+                                        <button onclick="copyToClipboard('<?php echo htmlspecialchars(preg_replace('/[^0-9]/', '', $bank_transfer['bank_account_number'])); ?>', this)" class="btn btn-sm btn-outline-primary border-0 rounded-pill px-3">
+                                            <i class="fas fa-copy"></i> Copy
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="small mb-2">Atas nama: <strong><?php echo htmlspecialchars($bank_transfer['bank_account_holder'] ?: '-'); ?></strong></div>
+                                <div class="small text-muted"><?php echo nl2br(htmlspecialchars($bank_transfer['instructions'])); ?></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
 
                     <p class="small text-muted mb-4" id="pending-desc">
-                        Please complete the payment in your app.<br>
-                        This page will refresh automatically.
+                        <?php if ($is_direct_bank): ?>
+                            Transfer sesuai nominal, lalu tunggu admin memverifikasi pembayaran.
+                        <?php else: ?>
+                            Please complete the payment in your app.<br>
+                            This page will refresh automatically.
+                        <?php endif; ?>
                     </p>
 
                     <div id="tripay-link-area" class="mb-4" style="display:none;">

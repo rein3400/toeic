@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/session_handler.php';
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db_utils.php';
 require_once __DIR__ . '/../includes/settings.php';
+require_once __DIR__ . '/../includes/toeic_pricing_helper.php';
 require_once __DIR__ . '/../includes/TripayHandler.php';
 // grantTestCredit() is defined in db_utils.php
 
@@ -37,13 +38,16 @@ if (!$userData) {
 $input = json_decode(file_get_contents('php://input'), true);
 $exam_type = $input['exam_type'] ?? '';
 
-$payment_method = strtoupper(trim($input['payment_method'] ?? 'QRIS'));
+$payment_mode = toeicGetPaymentMode();
+$payment_method = $payment_mode === 'direct_bank'
+    ? 'BANK_TRANSFER'
+    : strtoupper(trim($input['payment_method'] ?? 'QRIS'));
 $allowed_methods = [
     'QRIS', 'OVO', 'SHOPEEPAY', 'DANA',
     'BCAVA', 'BNIVA', 'BRIVA', 'MANDIRIVA', 'PERMATAVA', 'CIMBVA',
     'BSIVA', 'MUAMALATVA', 'SAMPOERNAVA', 'SMSVA', 'DANAMONVA', 'MYBVA',
 ];
-if (!in_array($payment_method, $allowed_methods)) {
+if ($payment_mode !== 'direct_bank' && !in_array($payment_method, $allowed_methods, true)) {
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => 'Invalid payment method']);
     exit;
@@ -52,13 +56,13 @@ if (!in_array($payment_method, $allowed_methods)) {
 $products = [
     'toeic' => [
         'name' => getSiteSetting('name_toeic', 'TOEIC Listening & Reading'),
-        'price' => (int) getSiteSetting('price_toeic', '175000'),
+        'price' => toeicGetProductPrice('toeic', 'retail'),
         'prefix' => 'TOEIC',
         'redirect' => '/user/test_toeic.php?section=listening&start_new=1&mode=full',
     ],
     'toeic_sw' => [
         'name' => getSiteSetting('name_toeic_sw', 'TOEIC Speaking & Writing'),
-        'price' => (int) getSiteSetting('price_toeic_sw', '175000'),
+        'price' => toeicGetProductPrice('toeic_sw', 'retail'),
         'prefix' => 'TOEICSW',
         'redirect' => '/user/test_toeic_sw.php?section=speaking&start_new=1&mode=full',
     ],
@@ -83,7 +87,8 @@ $prefix = $product['prefix'];
 // 3. Generate Order ID (Merchant Reference)
 $timestamp = time();
 $random = rand(1000, 9999);
-$order_id = sprintf("%s-%d-%d", $prefix, $timestamp, $random);
+$order_prefix = $payment_mode === 'direct_bank' ? 'BANK-' . $prefix : $prefix;
+$order_id = sprintf("%s-%d-%d", $order_prefix, $timestamp, $random);
 
 // 4. Determine URLs
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
@@ -92,6 +97,83 @@ $base_url = $protocol . '://' . $host;
 
 $callback_url = $base_url . '/api/tripay_callback.php';
 $return_url = $base_url . '/user/index.php?payment=success';
+
+if ($payment_mode === 'direct_bank') {
+    if (!toeicIsDirectBankConfigured()) {
+        http_response_code(503);
+        echo json_encode(['status' => 'error', 'message' => 'Rekening transfer bank belum dikonfigurasi.']);
+        exit;
+    }
+
+    $hasTransactionId = checkColumnExists($conn, 'payment_transactions', 'transaction_id');
+    $idColumn = $hasTransactionId ? 'transaction_id' : 'order_id';
+    $hasSnapToken     = checkColumnExists($conn, 'payment_transactions', 'snap_token');
+    $hasPaymentType   = checkColumnExists($conn, 'payment_transactions', 'payment_type');
+    $hasTestType      = checkColumnExists($conn, 'payment_transactions', 'test_type');
+    $hasPaymentMethod = checkColumnExists($conn, 'payment_transactions', 'payment_method');
+    $hasRawResponse   = checkColumnExists($conn, 'payment_transactions', 'raw_response');
+
+    $cols   = "user_id, $idColumn, amount, status";
+    $vals   = "?, ?, ?, 'pending'";
+    $types  = "isd";
+    $params = [&$user_id, &$order_id, &$price];
+
+    if ($hasTestType) {
+        $cols  .= ', test_type';
+        $vals  .= ', ?';
+        $types .= 's';
+        $params[] = &$exam_type;
+    }
+    if ($hasSnapToken) {
+        $reference = 'DIRECT_BANK';
+        $cols  .= ', snap_token';
+        $vals  .= ', ?';
+        $types .= 's';
+        $params[] = &$reference;
+    }
+    if ($hasPaymentType) {
+        $payment_type_val = 'direct_bank';
+        $cols  .= ', payment_type';
+        $vals  .= ', ?';
+        $types .= 's';
+        $params[] = &$payment_type_val;
+    }
+    if ($hasPaymentMethod) {
+        $cols  .= ', payment_method';
+        $vals  .= ', ?';
+        $types .= 's';
+        $params[] = &$payment_method;
+    }
+    if ($hasRawResponse) {
+        $raw_response = json_encode([
+            'mode' => 'direct_bank',
+            'bank' => toeicGetBankTransferSettings(),
+            'product' => $product['name'],
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $cols  .= ', raw_response';
+        $vals  .= ', ?';
+        $types .= 's';
+        $params[] = &$raw_response;
+    }
+
+    $stmt = $conn->prepare("INSERT INTO payment_transactions ($cols) VALUES ($vals)");
+    array_unshift($params, $types);
+    call_user_func_array([$stmt, 'bind_param'], $params);
+
+    if ($stmt->execute()) {
+        echo json_encode([
+            'status' => 'success',
+            'order_id' => $order_id,
+            'payment_method' => 'BANK_TRANSFER',
+            'payment_url' => '',
+            'redirect_url' => '/user/payment_pending.php?order_id=' . urlencode($order_id),
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $conn->error]);
+    }
+    exit;
+}
 
 // 5. Prepare Tripay Params
 $tripayParams = [
