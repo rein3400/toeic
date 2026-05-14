@@ -96,6 +96,7 @@ $routeFiles = [
     'includes/toeic_sw_scorer.php',
     'includes/toeic_sw_subjective_scorer.php',
     'includes/toeic_sw_package_importer.php',
+    'admin/toeic_sw_bank.php',
     'admin/import_toeic_sw_packages.php',
     'scripts/generate_toeic_sw_packages.php',
     'scripts/validate_toeic_sw_packages.php',
@@ -105,6 +106,12 @@ foreach ($routeFiles as $relativePath) {
     toeic_sw_check(file_exists($root . '/' . $relativePath), "{$relativePath} must exist.");
 }
 
+$adminConfigPath = $root . '/admin/includes/admin_config.php';
+if (file_exists($adminConfigPath)) {
+    $adminConfigSource = file_get_contents($adminConfigPath);
+    toeic_sw_check(strpos($adminConfigSource, 'toeic_sw_bank.php') !== false, 'Admin navigation must expose the TOEIC SW bank.');
+}
+
 $aiSettingsPath = $root . '/admin/ai_api_settings.php';
 if (file_exists($aiSettingsPath)) {
     $aiSettingsSource = file_get_contents($aiSettingsPath);
@@ -112,6 +119,8 @@ if (file_exists($aiSettingsPath)) {
     toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_transcription_ai_api') !== false, 'AI settings must expose TOEIC SW transcription provider selection.');
     toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_scoring_model') !== false, 'AI settings must expose TOEIC SW scoring model override.');
     toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_transcription_model') !== false, 'AI settings must expose TOEIC SW transcription model override.');
+    toeic_sw_check(strpos($aiSettingsSource, "'OpenRouter' => ['models'") !== false, 'AI settings must allow OpenRouter as a TOEIC SW transcription provider.');
+    toeic_sw_check(strpos($aiSettingsSource, 'google/chirp-3') !== false, 'AI settings must suggest google/chirp-3 for OpenRouter transcription.');
 }
 
 $subjectiveScorerPath = $root . '/includes/toeic_sw_subjective_scorer.php';
@@ -121,6 +130,8 @@ if (file_exists($subjectiveScorerPath)) {
     toeic_sw_check(strpos($subjectiveScorerSource, 'toeic_sw_transcription_ai_api') !== false, 'TOEIC SW scorer must read the transcription provider setting.');
     toeic_sw_check(strpos($subjectiveScorerSource, 'api.groq.com/openai/v1/audio/transcriptions') !== false, 'TOEIC SW transcription must support Groq audio transcription.');
     toeic_sw_check(strpos($subjectiveScorerSource, ':generateContent') !== false, 'TOEIC SW transcription must support Gemini audio transcription.');
+    toeic_sw_check(strpos($subjectiveScorerSource, 'openrouter.ai/api/v1/audio/transcriptions') !== false, 'TOEIC SW transcription must support OpenRouter speech-to-text.');
+    toeic_sw_check(strpos($subjectiveScorerSource, 'input_audio') !== false, 'OpenRouter speech-to-text must send base64 input_audio payloads.');
 }
 
 $packageRoot = $root . '/content/generated/toeic_sw';

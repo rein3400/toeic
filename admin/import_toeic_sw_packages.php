@@ -148,9 +148,14 @@ $summaryKeys = [
                     <h1 class="h3 mb-2">TOEIC SW R2 Package Import</h1>
                     <p class="muted mb-0">Imports generated TOEIC Speaking and Writing packages with Cloudflare R2 media URLs.</p>
                 </div>
-                <a href="<?php echo $bootstrapMode ? '../index.php' : 'index.php'; ?>" class="btn btn-outline-secondary">
-                    <?php echo $bootstrapMode ? 'Back to Site' : 'Back to Admin'; ?>
-                </a>
+                <div class="d-flex gap-2 flex-wrap">
+                    <?php if (!$bootstrapMode): ?>
+                        <a href="toeic_sw_bank.php" class="btn btn-outline-primary">Open SW Bank</a>
+                    <?php endif; ?>
+                    <a href="<?php echo $bootstrapMode ? '../index.php' : 'index.php'; ?>" class="btn btn-outline-secondary">
+                        <?php echo $bootstrapMode ? 'Back to Site' : 'Back to Admin'; ?>
+                    </a>
+                </div>
             </div>
         </div>
 

@@ -117,6 +117,7 @@ if (checkTableExists($conn, 'toeic_test_sessions')) {
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
                         <a href="manage_toeic.php" class="btn btn-warning rounded-pill px-4 fw-bold">Open TOEIC Bank</a>
+                        <a href="toeic_sw_bank.php" class="btn btn-outline-warning rounded-pill px-4 fw-bold">Open SW Bank</a>
                         <a href="test_sessions.php" class="btn btn-outline-secondary rounded-pill px-4 fw-bold">Open Sessions</a>
                         <a href="proctoring_sessions.php" class="btn btn-outline-primary rounded-pill px-4 fw-bold">Open Proctoring</a>
                     </div>

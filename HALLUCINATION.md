@@ -304,3 +304,58 @@
 - Risk: if MiniMax later documents or enforces a different volume maximum, regenerate the audio with MiniMax after quota reset and re-run the R2 upload and verification scripts.
 - Risk: production import remains incomplete until a real production DB/browser access path is provided.
 - Rollback: restore the previous `*_clean_loud.wav` artifacts from git or backup, rerun `scripts/upload_toeic_sw_r2_media.ps1`, and rerun the verifier before importing.
+
+## 2026-05-14 - TOEIC SW bank admin scope
+
+### Unknowns
+- The request did not specify whether "TOEIC bank untuk SW" meant a read-only inspector, a manual editor, or a generated-package import surface.
+
+### Reason for proceeding
+- The existing TOEIC SW content is generated package content with importer-managed replacement behavior, audio URLs, image URLs, and C2 requirements.
+- A read-only admin bank is the safest reversible interpretation because it exposes the SW bank without allowing accidental hand edits to generated C2 package rows.
+
+### Assumptions used
+- "TOEIC bank untuk SW" means an admin TOEIC SW bank page that lists imported Speaking and Writing package rows, media, prompts, readiness, and import access.
+- Manual SW question editing should remain out of scope until explicitly requested.
+
+### Project impact
+- Added an admin TOEIC SW bank page and navigation entry.
+- Added links from the admin dashboard and SW importer to the new SW bank.
+- Extended the TOEIC SW contract test so the SW bank route and navigation remain present.
+
+### Verification attempted
+- Ran PHP syntax checks for the changed PHP files.
+- Ran the TOEIC SW contract test successfully.
+- Validated all 10 TOEIC SW package manifests successfully.
+- Attempted the DB-backed SW import/readiness verifier, but local MySQL refused the connection.
+
+### Risks and rollback
+- Risk: if the intended bank was a manual editor, the current page is intentionally inspect-only and will need a separate edit workflow.
+- Rollback: remove `admin/toeic_sw_bank.php`, remove the `toeic_sw_bank.php` navigation entry, remove the dashboard/import links, and revert the contract-test route assertion.
+
+## 2026-05-14 - TOEIC SW OpenRouter transcription
+
+### Unknowns
+- OpenRouter model availability and pricing can change over time, and only the current public docs were checked during implementation.
+
+### Reason for proceeding
+- The user explicitly requested OpenRouter as a TOEIC SW transcription provider and planned to use `google/chirp-3`.
+- OpenRouter currently documents a dedicated speech-to-text endpoint using base64 `input_audio` and lists `google/chirp-3` as a speech-to-text model.
+
+### Assumptions used
+- TOEIC SW student speaking responses should be transcribed as English, so OpenRouter STT requests set `language` to `en`.
+- OpenRouter API keys stored in the existing `ai_api_openrouter` setting are valid for the STT endpoint.
+
+### Project impact
+- Added OpenRouter to the TOEIC SW transcription provider dropdown.
+- Added `google/chirp-3` as a suggested/default OpenRouter transcription model.
+- Added OpenRouter STT routing through `https://openrouter.ai/api/v1/audio/transcriptions`.
+
+### Verification attempted
+- Checked OpenRouter public documentation for the STT endpoint and `google/chirp-3` model page.
+- Ran PHP syntax checks for the changed settings/scorer/test files.
+- Ran the TOEIC SW contract test successfully after adding OpenRouter STT assertions.
+
+### Risks and rollback
+- Risk: if OpenRouter changes the STT schema or model identifier, transcription may fall back to `needs_rescore` until the endpoint/model is updated.
+- Rollback: remove OpenRouter from `$transcriptionProviders`, remove the OpenRouter transcription branch from `includes/toeic_sw_subjective_scorer.php`, and revert the contract-test assertions.

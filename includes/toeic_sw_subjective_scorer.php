@@ -52,6 +52,8 @@ function toeicSwDefaultTranscriptionModel(string $provider): string {
             return 'whisper-large-v3';
         case 'gemini':
             return 'gemini-3-flash-preview';
+        case 'openrouter':
+            return 'google/chirp-3';
         case 'openai':
         default:
             return 'gpt-4o-transcribe';
@@ -304,6 +306,71 @@ function transcribeToeicSwAudioGemini(string $absolutePath, string $mimeType, st
     return ['success' => true, 'text' => $text];
 }
 
+function toeicSwOpenRouterAudioFormat(string $absolutePath): string {
+    $ext = strtolower(pathinfo($absolutePath, PATHINFO_EXTENSION));
+    $formatMap = [
+        'oga' => 'ogg',
+        'opus' => 'ogg',
+        'mpeg' => 'mp3',
+        'mpga' => 'mp3',
+    ];
+    return $formatMap[$ext] ?? ($ext !== '' ? $ext : 'wav');
+}
+
+function transcribeToeicSwAudioOpenRouter(string $absolutePath, string $apiKey, string $model, int $timeoutMs): array {
+    $audioBytes = file_get_contents($absolutePath);
+    if ($audioBytes === false) {
+        return ['success' => false, 'error' => 'OpenRouter transcription failed: unable to read audio file'];
+    }
+
+    $payload = [
+        'input_audio' => [
+            'data' => base64_encode($audioBytes),
+            'format' => toeicSwOpenRouterAudioFormat($absolutePath),
+        ],
+        'model' => $model,
+        'language' => 'en',
+    ];
+
+    $ch = curl_init('https://openrouter.ai/api/v1/audio/transcriptions');
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json',
+            'HTTP-Referer: https://toeic.osgli.example',
+            'X-Title: TOEIC SW Transcription',
+        ],
+        CURLOPT_TIMEOUT_MS => $timeoutMs,
+        CURLOPT_CONNECTTIMEOUT_MS => $timeoutMs,
+        CURLOPT_NOSIGNAL => 1,
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+
+    if ($curlError) {
+        return ['success' => false, 'error' => 'OpenRouter transcription network error: ' . $curlError];
+    }
+
+    $decoded = json_decode((string)$response, true);
+    if ($httpCode !== 200) {
+        $message = $decoded['error']['message'] ?? substr((string)$response, 0, 200);
+        return ['success' => false, 'error' => 'OpenRouter transcription failed: ' . $message];
+    }
+
+    $text = trim((string)($decoded['text'] ?? ''));
+    if ($text === '') {
+        return ['success' => false, 'error' => 'OpenRouter returned an empty transcription result'];
+    }
+
+    return ['success' => true, 'text' => $text];
+}
+
 function getToeicSwTranscriptionConfig(mysqli $conn): ?array {
     $providerKey = trim(getSiteSetting('toeic_sw_transcription_ai_api', 'ai_api_openai'));
     if ($providerKey === '') {
@@ -367,6 +434,8 @@ function transcribeToeicSwAudio(mysqli $conn, string $relativePath): array {
             );
         case 'gemini':
             return transcribeToeicSwAudioGemini($absolutePath, $upload['mime_type'], $apiKey, $model, $timeoutMs);
+        case 'openrouter':
+            return transcribeToeicSwAudioOpenRouter($absolutePath, $apiKey, $model, $timeoutMs);
         default:
             return ['success' => false, 'error' => 'Transcription provider ' . ($config['provider'] ?? 'unknown') . ' is not supported for audio in this app'];
     }

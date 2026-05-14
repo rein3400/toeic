@@ -20,6 +20,12 @@ function getAdminNavigation()
             'description' => 'Manage TOEIC parts, questions, audio, and text linkage',
             'group' => 'content'
         ],
+        'toeic_sw_bank.php' => [
+            'icon' => 'fa-microphone-lines',
+            'title' => 'TOEIC SW Bank',
+            'description' => 'Inspect TOEIC Speaking & Writing packages, prompts, audio, and images',
+            'group' => 'content'
+        ],
         'test_results.php' => [
             'icon' => 'fa-chart-line',
             'title' => 'TOEIC Results',

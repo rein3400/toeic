@@ -33,6 +33,7 @@ $transcriptionProviders = [
     'OpenAI' => ['models' => ['gpt-4o-transcribe', 'whisper-1']],
     'Groq' => ['models' => ['whisper-large-v3', 'whisper-large-v3-turbo', 'distil-whisper-large-v3-en']],
     'Gemini' => ['models' => ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']],
+    'OpenRouter' => ['models' => ['google/chirp-3', 'openai/whisper-large-v3']],
 ];
 
 $scoringModelSuggestions = [];
@@ -486,14 +487,14 @@ $website_title = getWebsiteTitle();
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
-                                <div class="api-info mt-1">Audio transcription didukung via OpenAI, Groq, atau Gemini.</div>
+                                <div class="api-info mt-1">Audio transcription didukung via OpenAI, Groq, Gemini, atau OpenRouter.</div>
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <label class="form-label fw-bold">Transcription Model</label>
                                 <input type="text" class="form-control" name="toeic_sw_transcription_model"
                                     value="<?php echo htmlspecialchars($toeic_sw_transcription_model); ?>"
                                     list="toeic_sw_transcription_models"
-                                    placeholder="e.g. whisper-large-v3">
+                                    placeholder="e.g. google/chirp-3">
                                 <datalist id="toeic_sw_transcription_models">
                                     <?php foreach (array_keys($transcriptionModelSuggestions) as $model): ?>
                                         <option value="<?php echo htmlspecialchars($model); ?>"></option>
