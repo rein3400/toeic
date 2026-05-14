@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:05,137
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:05,087 --> 00:00:13,462
+Some workplaces encourage employees to specialize deeply in one function, while others rotate employees across several departments.
+
+3
+00:00:13,462 --> 00:00:16,950
+Which approach better prepares employees for leadership?
+
+4
+00:00:16,950 --> 00:00:19,362
+Give reasons and examples.
+

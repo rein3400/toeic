@@ -178,7 +178,7 @@ $failed = 0
 for ($i = 0; $i -lt $entries.Count; $i++) {
     $entry = $entries[$i]
     $previous = $existing[[string]$entry.key]
-    if ($previous -and $previous.status -eq "uploaded" -and $previous.sha256 -eq $entry.sha256 -and -not $Overwrite) {
+    if ($previous -and @("uploaded", "skipped") -contains $previous.status -and $previous.sha256 -eq $entry.sha256 -and -not $Overwrite) {
         $entry.status = "skipped"
         $entry.uploaded_at = $previous.uploaded_at
         $skipped++

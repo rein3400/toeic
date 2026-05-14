@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:07,875
+Question: An executive arrives after lunch.
+
+3
+00:00:07,875 --> 00:00:13,900
+Which sessions can the executive still attend, and which risk demonstration will the executive miss?
+
+4
+00:00:13,900 --> 00:00:16,262
+The question will be repeated.
+
+5
+00:00:16,262 --> 00:00:19,750
+Question: An executive arrives after lunch.
+
+6
+00:00:19,750 --> 00:00:25,775
+Which sessions can the executive still attend, and which risk demonstration will the executive miss?
+

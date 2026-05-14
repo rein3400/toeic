@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:08,562
+Describe a professional situation where a small delay would be better than a rushed response.
+

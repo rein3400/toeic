@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:08,000
+How do you decide whether to solve a problem yourself or ask for specialist help?
+

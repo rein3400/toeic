@@ -6,10 +6,50 @@ require_once __DIR__ . '/../includes/toeic_sw_helper.php';
 $root = dirname(__DIR__);
 $packageRoot = $root . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . 'generated' . DIRECTORY_SEPARATOR . 'toeic_sw';
 $failures = [];
+$audioTranscripts = [];
+$forbiddenAudioPatterns = [
+    '/\bsure\b/i',
+    '/\bcertainly\b/i',
+    '/\bokay\b/i',
+    '/\bok\b/i',
+    '/as an ai/i',
+    '/\bi will\b/i',
+    '/\bi\'ll\b/i',
+    '/\bhere is\b/i',
+    '/let me/i',
+    '/\bi can\b/i',
+    '/read a loud/i',
+    '/read aloud/i',
+];
 
 function toeicSwValidateFail(string $message): void {
     global $failures;
     $failures[] = $message;
+}
+
+function toeicSwValidateCleanAudioText(string $label, string $text): void {
+    global $forbiddenAudioPatterns;
+    foreach ($forbiddenAudioPatterns as $pattern) {
+        if (preg_match($pattern, $text) === 1) {
+            toeicSwValidateFail("{$label}: audio transcript contains forbidden AI-preface or nonliteral phrase matching {$pattern}");
+        }
+    }
+}
+
+function toeicSwValidateWav(string $path): bool {
+    if (!file_exists($path) || filesize($path) < 12000) {
+        return false;
+    }
+    $handle = fopen($path, 'rb');
+    if ($handle === false) {
+        return false;
+    }
+    $header = fread($handle, 12);
+    fclose($handle);
+    return is_string($header)
+        && strlen($header) === 12
+        && substr($header, 0, 4) === 'RIFF'
+        && substr($header, 8, 4) === 'WAVE';
 }
 
 if (!is_dir($packageRoot)) {
@@ -56,6 +96,7 @@ if (!is_dir($packageRoot)) {
                 }
                 if ($section === 'speaking' && toeicSwSpeakingUsesPromptAudio((string)($task['type'] ?? ''))) {
                     $audioPath = trim((string)($task['audio_path'] ?? ''));
+                    $audioScript = trim((string)($task['audio_script'] ?? ''));
                     $audioTranscript = trim((string)($task['audio_transcript'] ?? $task['audio_script'] ?? ''));
                     if ($audioPath === '') {
                         toeicSwValidateFail("{$packageName}: Speaking Q{$number} missing audio_path");
@@ -63,12 +104,38 @@ if (!is_dir($packageRoot)) {
                         $fullAudioPath = $dir . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $audioPath);
                         if (!file_exists($fullAudioPath)) {
                             toeicSwValidateFail("{$packageName}: missing audio {$audioPath}");
-                        } elseif (filesize($fullAudioPath) < 12000) {
-                            toeicSwValidateFail("{$packageName}: audio too small {$audioPath}");
+                        } elseif (!toeicSwValidateWav($fullAudioPath)) {
+                            toeicSwValidateFail("{$packageName}: audio is not a valid WAV {$audioPath}");
                         }
+                        $subtitlePath = preg_replace('/\.wav$/i', '.srt', $fullAudioPath);
+                        if (!is_string($subtitlePath) || !file_exists($subtitlePath)) {
+                            toeicSwValidateFail("{$packageName}: missing subtitle transcript sidecar for {$audioPath}");
+                        }
+                    }
+                    if ($audioScript === '') {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} missing audio_script");
                     }
                     if ($audioTranscript === '') {
                         toeicSwValidateFail("{$packageName}: Speaking Q{$number} missing audio transcript");
+                    }
+                    if ($audioScript !== '' && $audioTranscript !== '' && $audioScript !== $audioTranscript) {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} audio_script and audio_transcript differ");
+                    }
+                    if ($audioTranscript !== '') {
+                        $audioTranscripts[] = $audioTranscript;
+                        toeicSwValidateCleanAudioText("{$packageName}: Speaking Q{$number}", $audioTranscript);
+                    }
+                    if (strtolower((string)($task['audio_model'] ?? '')) === 'gpt-realtime-1.5') {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} must not use conversational Realtime audio generation");
+                    }
+                    if (!str_contains($audioPath, '_clean_loud')) {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} must use cache-busted clean loud audio path");
+                    }
+                    if ($number === 10 && substr_count($audioTranscript, 'Question: ') !== 2) {
+                        toeicSwValidateFail("{$packageName}: Speaking Q10 must repeat the spoken question exactly twice");
+                    }
+                    if ($number !== 10 && substr_count($audioTranscript, 'Question: ') > 1) {
+                        toeicSwValidateFail("{$packageName}: Speaking Q{$number} must not repeat the spoken question");
                     }
                 } elseif ($section === 'speaking' && !empty($task['audio_path'])) {
                     toeicSwValidateFail("{$packageName}: Speaking Q{$number} should not reference prompt audio for {$task['type']}");
@@ -105,6 +172,12 @@ if (!is_dir($packageRoot)) {
             toeicSwValidateFail("{$packageName}: must reference 7 unique speaking prompt audio files");
         }
     }
+}
+
+if (count($audioTranscripts) !== 70) {
+    toeicSwValidateFail('Expected 70 speaking prompt audio transcripts.');
+} elseif (count(array_unique($audioTranscripts)) !== 70) {
+    toeicSwValidateFail('Speaking prompt audio transcripts must be unique across all 10 packages.');
 }
 
 if (!empty($failures)) {

@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:07,825
+Question: A carrier manager joins after lunch.
+
+3
+00:00:07,825 --> 00:00:13,737
+Which activities can the manager still attend, and which negotiation call will the manager miss?
+
+4
+00:00:13,737 --> 00:00:16,212
+The question will be repeated.
+
+5
+00:00:16,212 --> 00:00:19,762
+Question: A carrier manager joins after lunch.
+
+6
+00:00:19,762 --> 00:00:25,675
+Which activities can the manager still attend, and which negotiation call will the manager miss?
+

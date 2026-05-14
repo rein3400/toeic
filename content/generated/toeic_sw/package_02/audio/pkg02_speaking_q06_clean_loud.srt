@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,375
+Directions: Answer the following question.
+
+2
+00:00:03,325 --> 00:00:09,025
+Describe a time when written documentation helped prevent a misunderstanding at work or school.
+

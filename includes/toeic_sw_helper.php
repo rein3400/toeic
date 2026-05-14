@@ -328,9 +328,11 @@ if (!function_exists('toeicSwEnsureDefaultSettings')) {
         $defaults = [
             'name_toeic_sw' => 'TOEIC Speaking & Writing',
             'price_toeic_sw' => '175000',
+            'toeic_sw_scoring_ai_api' => '',
             'toeic_sw_scoring_model' => 'gpt-5.5',
+            'toeic_sw_transcription_ai_api' => 'ai_api_openai',
             'toeic_sw_transcription_model' => 'gpt-4o-transcribe',
-            'toeic_sw_tts_model' => 'gpt-realtime-1.5',
+            'toeic_sw_tts_model' => 'speech-2.8-hd',
             'features_toeic_sw' => json_encode([
                 'Speaking 11 questions',
                 'Writing 8 questions',

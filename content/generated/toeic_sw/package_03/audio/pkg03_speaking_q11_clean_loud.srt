@@ -1,0 +1,20 @@
+1
+00:00:00,100 --> 00:00:04,925
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:04,875 --> 00:00:10,512
+Some people believe that workplace mistakes should be discussed openly so everyone can learn from them.
+
+3
+00:00:10,512 --> 00:00:14,975
+Others believe mistakes should be handled privately to protect morale.
+
+4
+00:00:14,975 --> 00:00:17,387
+Which view do you agree with?
+
+5
+00:00:17,387 --> 00:00:19,850
+Give reasons and examples.
+

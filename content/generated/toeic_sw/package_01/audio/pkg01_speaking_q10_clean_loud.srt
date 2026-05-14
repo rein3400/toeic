@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:07,800
+Question: A vendor can arrive only after lunch.
+
+3
+00:00:07,800 --> 00:00:13,900
+Which afternoon activities can the vendor still attend, and which compliance activity will the vendor miss?
+
+4
+00:00:13,900 --> 00:00:16,375
+The question will be repeated.
+
+5
+00:00:16,375 --> 00:00:19,900
+Question: A vendor can arrive only after lunch.
+
+6
+00:00:19,900 --> 00:00:26,000
+Which afternoon activities can the vendor still attend, and which compliance activity will the vendor miss?
+

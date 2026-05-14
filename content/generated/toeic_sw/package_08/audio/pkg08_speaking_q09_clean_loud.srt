@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:08,587
+Question: What topic will managers discuss at eleven o clock?
+

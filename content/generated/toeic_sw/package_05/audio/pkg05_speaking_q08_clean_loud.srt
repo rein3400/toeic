@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:08,237
+Question: Where will the backup-power inspection take place?
+

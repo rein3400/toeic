@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:08,950
+Question: A client representative can attend only in the afternoon.
+
+3
+00:00:08,950 --> 00:00:14,600
+Which sessions remain available, and which negotiation session will the representative miss?
+
+4
+00:00:14,600 --> 00:00:16,962
+The question will be repeated.
+
+5
+00:00:16,962 --> 00:00:21,525
+Question: A client representative can attend only in the afternoon.
+
+6
+00:00:21,525 --> 00:00:27,175
+Which sessions remain available, and which negotiation session will the representative miss?
+

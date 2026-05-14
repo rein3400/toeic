@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             saveSetting('toeic_sw_scoring_model', trim($_POST['toeic_sw_scoring_model'] ?? 'gpt-5.5'));
             saveSetting('toeic_sw_transcription_model', trim($_POST['toeic_sw_transcription_model'] ?? 'gpt-4o-transcribe'));
-            saveSetting('toeic_sw_tts_model', trim($_POST['toeic_sw_tts_model'] ?? 'gpt-4o-mini-tts'));
+            saveSetting('toeic_sw_tts_model', trim($_POST['toeic_sw_tts_model'] ?? 'speech-2.8-hd'));
             if (empty($error)) {
                 $success = "Harga produk berhasil disimpan!";
             }
@@ -686,7 +686,7 @@ $pricing = [
                                                     <div class="col-12">
                                                         <label class="form-label form-label-sm">Optional TTS Model</label>
                                                         <input type="text" class="form-control form-control-sm" name="toeic_sw_tts_model"
-                                                               value="<?php echo htmlspecialchars(getSetting('toeic_sw_tts_model', 'gpt-4o-mini-tts')); ?>">
+                                                               value="<?php echo htmlspecialchars(getSetting('toeic_sw_tts_model', 'speech-2.8-hd')); ?>">
                                                     </div>
                                                 </div>
                                             </div>

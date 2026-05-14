@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:08,587
+How do you decide which messages require an immediate reply and which can wait until later?
+

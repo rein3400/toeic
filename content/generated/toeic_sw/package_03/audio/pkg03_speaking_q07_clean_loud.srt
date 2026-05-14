@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:09,262
+Should organizations reward employees more for preventing problems than for solving visible crises?
+
+3
+00:00:09,262 --> 00:00:11,150
+Why or why not?
+

@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:05,137
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:05,087 --> 00:00:13,575
+Some organizations measure productivity by the number of tasks completed, while others measure it by the quality and durability of outcomes.
+
+3
+00:00:13,575 --> 00:00:16,662
+Which method is better for professional work?
+
+4
+00:00:16,662 --> 00:00:19,075
+Give reasons and examples.
+

@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:09,812
+Should employees be evaluated partly on how clearly they communicate risks, not only on final results?
+
+3
+00:00:09,812 --> 00:00:11,700
+Why or why not?
+

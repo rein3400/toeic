@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:04,925
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:04,875 --> 00:00:11,962
+Some organizations use strict approval processes to prevent errors, while others simplify approvals to move faster.
+
+3
+00:00:11,962 --> 00:00:15,550
+Which approach is better when serving demanding clients?
+
+4
+00:00:15,550 --> 00:00:18,012
+Give reasons and examples.
+

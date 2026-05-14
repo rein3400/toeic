@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:09,800
+Should companies encourage employees to challenge inefficient procedures, even when those procedures are familiar?
+
+3
+00:00:09,800 --> 00:00:11,687
+Why or why not?
+

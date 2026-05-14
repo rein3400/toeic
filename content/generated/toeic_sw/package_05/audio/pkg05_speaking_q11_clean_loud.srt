@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:04,925
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:04,875 --> 00:00:13,175
+Some companies expect employees to adapt to existing procedures, while others regularly redesign procedures around employee feedback.
+
+3
+00:00:13,175 --> 00:00:16,675
+Which approach creates better long-term performance?
+
+4
+00:00:16,675 --> 00:00:19,137
+Give reasons and examples.
+

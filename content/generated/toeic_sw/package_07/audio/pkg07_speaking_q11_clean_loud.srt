@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:04,925
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:04,875 --> 00:00:12,350
+Some businesses invest heavily in customer acquisition, while others focus on retaining current customers through better service.
+
+3
+00:00:12,350 --> 00:00:16,312
+Which investment is more valuable in a competitive market?
+
+4
+00:00:16,312 --> 00:00:18,775
+Give reasons and examples.
+

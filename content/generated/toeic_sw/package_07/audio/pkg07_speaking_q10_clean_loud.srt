@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:07,937
+Question: A supplier can arrive only after lunch.
+
+3
+00:00:07,937 --> 00:00:13,850
+Which activities can the supplier still attend, and which inspection practice will the supplier miss?
+
+4
+00:00:13,850 --> 00:00:16,325
+The question will be repeated.
+
+5
+00:00:16,325 --> 00:00:19,987
+Question: A supplier can arrive only after lunch.
+
+6
+00:00:19,987 --> 00:00:25,900
+Which activities can the supplier still attend, and which inspection practice will the supplier miss?
+

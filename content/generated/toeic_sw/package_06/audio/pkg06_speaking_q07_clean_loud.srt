@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,375
+Directions: Answer the following question.
+
+2
+00:00:03,325 --> 00:00:08,512
+Should organizations invest more in training employees to ask precise questions?
+
+3
+00:00:08,512 --> 00:00:10,962
+Give reasons for your opinion.
+

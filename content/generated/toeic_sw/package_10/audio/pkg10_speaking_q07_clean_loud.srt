@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,375
+Directions: Answer the following question.
+
+2
+00:00:03,325 --> 00:00:08,687
+Should managers share uncertainty openly with their teams during organizational change?
+
+3
+00:00:08,687 --> 00:00:11,100
+Give reasons and examples.
+

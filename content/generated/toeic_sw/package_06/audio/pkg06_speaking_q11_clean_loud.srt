@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:05,137
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:05,087 --> 00:00:12,762
+Some managers prefer detailed planning before a project begins, while others prefer quick experimentation and frequent adjustment.
+
+3
+00:00:12,762 --> 00:00:16,450
+Which style is more effective for high-stakes projects?
+
+4
+00:00:16,450 --> 00:00:18,862
+Give reasons and examples.
+

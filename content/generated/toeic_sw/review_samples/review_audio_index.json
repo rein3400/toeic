@@ -1,0 +1,23 @@
+﻿[
+    {
+        "part":  "S3 Respond to Questions",
+        "question":  5,
+        "text_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S3_q05_respond_to_questions_review.txt",
+        "wav_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S3_q05_respond_to_questions_review.wav",
+        "srt_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S3_q05_respond_to_questions_review.srt"
+    },
+    {
+        "part":  "S4 Respond Using Information",
+        "question":  10,
+        "text_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S4_q10_respond_using_information_repeat_review.txt",
+        "wav_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S4_q10_respond_using_information_repeat_review.wav",
+        "srt_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S4_q10_respond_using_information_repeat_review.srt"
+    },
+    {
+        "part":  "S5 Express Opinion",
+        "question":  11,
+        "text_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S5_q11_express_opinion_review.txt",
+        "wav_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S5_q11_express_opinion_review.wav",
+        "srt_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\review_samples\\toeic_sw_S5_q11_express_opinion_review.srt"
+    }
+]

@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:08,462
+Question: A supervisor can attend only after one o clock.
+
+3
+00:00:08,462 --> 00:00:14,812
+Which sessions can the supervisor still attend, and which remote-work discussion will the supervisor miss?
+
+4
+00:00:14,812 --> 00:00:17,175
+The question will be repeated.
+
+5
+00:00:17,175 --> 00:00:21,250
+Question: A supervisor can attend only after one o clock.
+
+6
+00:00:21,250 --> 00:00:27,600
+Which sessions can the supervisor still attend, and which remote-work discussion will the supervisor miss?
+

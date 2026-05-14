@@ -1,44 +1,98 @@
 <?php
-require_once '../includes/session_handler.php';
-require_once '../includes/config.php';
-require_once '../includes/settings.php';
-require_once '../includes/csrf_helper.php';
-require_once '../includes/toeic_sw_package_importer.php';
+require_once __DIR__ . '/../includes/session_handler.php';
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/db_utils.php';
+require_once __DIR__ . '/../includes/toeic_sw_package_importer.php';
 
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
-    header("Location: login.php");
+if (!($conn instanceof mysqli)) {
+    http_response_code(500);
+    echo "Database connection is unavailable.";
     exit();
 }
 
-$website_title = getWebsiteTitle();
-$package_root = realpath(__DIR__ . '/../content/generated/toeic_sw') ?: (__DIR__ . '/../content/generated/toeic_sw');
-$default_r2_base_url = getenv('R2_PUBLIC_BASE_URL') ?: 'https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev';
-$r2_base_url = $default_r2_base_url;
-$use_remote_media = true;
-$dry_run = true;
+$root = dirname(__DIR__);
+$defaultPackageRoot = $root . '/content/generated/toeic_sw';
+$defaultR2BaseUrl = getenv('R2_PUBLIC_BASE_URL');
+if ($defaultR2BaseUrl === false || trim($defaultR2BaseUrl) === '') {
+    $defaultR2BaseUrl = 'https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev';
+}
+
+function toeicSwImportH($value): string {
+    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+}
+
+function toeicSwImportEnvValue(string $name): string {
+    $value = getenv($name);
+    return $value === false ? '' : trim($value);
+}
+
+function toeicSwImportBootstrapToken(): string {
+    $token = toeicSwImportEnvValue('TOEIC_SETUP_TOKEN');
+    if ($token !== '') {
+        return $token;
+    }
+    return toeicSwImportEnvValue('SETUP_BOOTSTRAP_TOKEN');
+}
+
+function toeicSwImportSafeCount(mysqli $conn, string $table): int {
+    $result = $conn->query("SHOW TABLES LIKE '" . $conn->real_escape_string($table) . "'");
+    if (!$result || $result->num_rows === 0) {
+        return 0;
+    }
+    $count = $conn->query("SELECT COUNT(*) AS total FROM `{$table}`");
+    return $count ? (int)($count->fetch_assoc()['total'] ?? 0) : 0;
+}
+
+$csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+$_SESSION['csrf_token'] = $csrfToken;
+
+$usersTableExists = checkTableExists($conn, 'users');
+$bootstrapMode = !$usersTableExists;
+$providedBootstrapToken = isset($_REQUEST['bootstrap_token']) ? trim((string)$_REQUEST['bootstrap_token']) : trim((string)($_GET['token'] ?? ''));
+$configuredBootstrapToken = toeicSwImportBootstrapToken();
+$hasAdminSession = isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+
+if (!$hasAdminSession) {
+    if ($bootstrapMode) {
+        if ($configuredBootstrapToken === '' || !hash_equals($configuredBootstrapToken, $providedBootstrapToken)) {
+            http_response_code(403);
+            echo "Bootstrap token required. Set TOEIC_SETUP_TOKEN in .env and open this page with ?token=YOUR_TOKEN.";
+            exit();
+        }
+    } else {
+        header('Location: login.php');
+        exit();
+    }
+}
+
+$form = [
+    'package_root' => isset($_POST['package_root']) ? trim((string)$_POST['package_root']) : $defaultPackageRoot,
+    'r2_base_url' => isset($_POST['r2_base_url']) ? trim((string)$_POST['r2_base_url']) : rtrim((string)$defaultR2BaseUrl, '/'),
+    'use_remote_media' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['use_remote_media']) : true,
+    'dry_run' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['dry_run']) : true,
+    'verify_remote_media' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['verify_remote_media']) : true,
+];
+
 $result = null;
-$error = '';
+$error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!validateCsrfToken($_POST['csrf_token'] ?? null)) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($csrfToken, (string)$_POST['csrf_token'])) {
         $error = 'Invalid CSRF token.';
     } else {
-        $posted_root = trim((string)($_POST['package_root'] ?? ''));
-        if ($posted_root !== '') {
-            $package_root = $posted_root;
-        }
-        $dry_run = isset($_POST['dry_run']);
-        $use_remote_media = isset($_POST['use_remote_media']);
-        $posted_r2_base_url = trim((string)($_POST['r2_base_url'] ?? ''));
-        if ($posted_r2_base_url !== '') {
-            $r2_base_url = $posted_r2_base_url;
-        }
-
         try {
+            if ($bootstrapMode && ($configuredBootstrapToken === '' || !hash_equals($configuredBootstrapToken, $providedBootstrapToken))) {
+                throw new RuntimeException('Bootstrap token mismatch.');
+            }
+            if (!is_dir($form['package_root'])) {
+                throw new RuntimeException("Package root not found: {$form['package_root']}");
+            }
+
             $importer = new ToeicSwPackageImporter($conn);
-            $result = $importer->import($package_root, $dry_run, [
-                'use_remote_media' => $use_remote_media,
-                'media_base_url' => $r2_base_url,
+            $result = $importer->import($form['package_root'], $form['dry_run'], [
+                'use_remote_media' => $form['use_remote_media'],
+                'media_base_url' => $form['r2_base_url'],
+                'verify_remote_media' => $form['verify_remote_media'],
             ]);
         } catch (Throwable $e) {
             $error = $e->getMessage();
@@ -46,100 +100,162 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function toeicSwAdminH($value): string {
-    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
-}
+$snapshot = [
+    'toeic_sw_read_aloud' => toeicSwImportSafeCount($conn, 'toeic_sw_read_aloud'),
+    'toeic_sw_describe_picture' => toeicSwImportSafeCount($conn, 'toeic_sw_describe_picture'),
+    'toeic_sw_respond_questions' => toeicSwImportSafeCount($conn, 'toeic_sw_respond_questions'),
+    'toeic_sw_respond_information' => toeicSwImportSafeCount($conn, 'toeic_sw_respond_information'),
+    'toeic_sw_express_opinion' => toeicSwImportSafeCount($conn, 'toeic_sw_express_opinion'),
+    'toeic_sw_picture_sentence' => toeicSwImportSafeCount($conn, 'toeic_sw_picture_sentence'),
+    'toeic_sw_written_request' => toeicSwImportSafeCount($conn, 'toeic_sw_written_request'),
+    'toeic_sw_opinion_essay' => toeicSwImportSafeCount($conn, 'toeic_sw_opinion_essay'),
+];
+
+$summaryKeys = [
+    'packages',
+    'validated',
+    'inserted',
+    'updated',
+    'skipped',
+    'removed_stale',
+    'audio_files',
+    'audio_transcripts',
+    'image_files',
+    'verified_media_urls',
+    'errors',
+];
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?= csrfMeta() ?>
-    <title>Import TOEIC SW Packages - <?php echo toeicSwAdminH($website_title); ?></title>
-    <?php echo getFaviconHTML(); ?>
+    <title>TOEIC SW R2 Package Import</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../includes/modern-theme.css" rel="stylesheet">
+    <style>
+        body { background: #f6f8fb; color: #12233d; }
+        .panel { background: #fff; border: 1px solid #dfe7f1; border-radius: 8px; padding: 24px; box-shadow: 0 12px 28px rgba(18,35,61,0.06); }
+        pre { white-space: pre-wrap; word-break: break-word; background: #0f172a; color: #e2e8f0; padding: 18px; border-radius: 8px; }
+        .muted { color: #5f7089; }
+        code { color: #29446f; }
+    </style>
 </head>
 <body>
-<div class="container-fluid p-0">
-    <div class="row g-0">
-        <?php include 'sidebar.php'; ?>
-        <div class="col-md-9 col-lg-10 admin-content">
-            <div class="admin-header">
-                <h1><i class="fas fa-file-import me-3"></i>Import TOEIC Speaking & Writing</h1>
-                <p class="admin-subtitle mb-0">Validate and import 10 ETS-format SW packages.</p>
-            </div>
-
-            <div class="p-4">
-                <?php if ($error): ?>
-                    <div class="alert alert-danger"><?php echo toeicSwAdminH($error); ?></div>
-                <?php endif; ?>
-
-                <div class="content-card mb-4">
-                    <form method="post">
-                        <?= csrfField() ?>
-                        <div class="mb-3">
-                            <label class="form-label">Package root</label>
-                            <input type="text" name="package_root" class="form-control" value="<?php echo toeicSwAdminH($package_root); ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">R2 public base URL</label>
-                            <input type="url" name="r2_base_url" class="form-control" value="<?php echo toeicSwAdminH($r2_base_url); ?>">
-                        </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" name="use_remote_media" id="useRemoteMedia" <?php echo $use_remote_media ? 'checked' : ''; ?>>
-                            <label class="form-check-label fw-bold" for="useRemoteMedia">Store imported media as R2 URLs</label>
-                        </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" name="dry_run" id="dryRun" <?php echo $dry_run ? 'checked' : ''; ?>>
-                            <label class="form-check-label fw-bold" for="dryRun">Dry run only</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-check me-2"></i>Validate / Import
-                        </button>
-                    </form>
+    <div class="container py-4">
+        <div class="panel mb-4">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h1 class="h3 mb-2">TOEIC SW R2 Package Import</h1>
+                    <p class="muted mb-0">Imports generated TOEIC Speaking and Writing packages with Cloudflare R2 media URLs.</p>
                 </div>
-
-                <?php if ($result): ?>
-                    <div class="content-card">
-                        <div class="d-flex flex-wrap gap-3 mb-4">
-                            <?php foreach (['packages', 'validated', 'inserted', 'updated', 'skipped', 'audio_files', 'audio_transcripts', 'image_files', 'errors'] as $key): ?>
-                                <div class="p-3 rounded border" style="min-width:130px;">
-                                    <div class="text-muted small text-uppercase"><?php echo toeicSwAdminH($key); ?></div>
-                                    <div class="h3 mb-0">
-                                        <?php
-                                        $value = $result[$key] ?? 0;
-                                        echo is_array($value) ? count($value) : (int)$value;
-                                        ?>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="mb-3">
-                            <span class="badge bg-<?php echo !empty($result['remote_media']) ? 'success' : 'secondary'; ?>">
-                                <?php echo !empty($result['remote_media']) ? 'R2 media URLs' : 'Local media paths'; ?>
-                            </span>
-                            <?php if (!empty($result['media_base_url'])): ?>
-                                <code class="ms-2"><?php echo toeicSwAdminH($result['media_base_url']); ?></code>
-                            <?php endif; ?>
-                        </div>
-
-                        <?php if (!empty($result['messages'])): ?>
-                            <h5>Messages</h5>
-                            <pre class="p-3 bg-dark text-light rounded" style="white-space:pre-wrap;"><?php echo toeicSwAdminH(implode("\n", $result['messages'])); ?></pre>
-                        <?php endif; ?>
-
-                        <?php if (!empty($result['error_messages'])): ?>
-                            <h5 class="text-danger">Errors</h5>
-                            <pre class="p-3 bg-dark text-light rounded" style="white-space:pre-wrap;"><?php echo toeicSwAdminH(implode("\n", $result['error_messages'])); ?></pre>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
+                <a href="<?php echo $bootstrapMode ? '../index.php' : 'index.php'; ?>" class="btn btn-outline-secondary">
+                    <?php echo $bootstrapMode ? 'Back to Site' : 'Back to Admin'; ?>
+                </a>
             </div>
         </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-7">
+                <div class="panel h-100">
+                    <h2 class="h5 mb-3">Import Settings</h2>
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" value="<?php echo toeicSwImportH($csrfToken); ?>">
+                        <?php if ($bootstrapMode): ?>
+                            <input type="hidden" name="bootstrap_token" value="<?php echo toeicSwImportH($providedBootstrapToken); ?>">
+                        <?php endif; ?>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="package_root">Package root</label>
+                            <input class="form-control" id="package_root" name="package_root" value="<?php echo toeicSwImportH($form['package_root']); ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="r2_base_url">R2 public base URL</label>
+                            <input class="form-control" id="r2_base_url" name="r2_base_url" value="<?php echo toeicSwImportH($form['r2_base_url']); ?>">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="use_remote_media" name="use_remote_media" value="1" <?php echo $form['use_remote_media'] ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="use_remote_media">Store imported media as R2 URLs</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="verify_remote_media" name="verify_remote_media" value="1" <?php echo $form['verify_remote_media'] ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="verify_remote_media">Verify each public media URL with HEAD before import</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="dry_run" name="dry_run" value="1" <?php echo $form['dry_run'] ? 'checked' : ''; ?>>
+                            <label class="form-check-label" for="dry_run">Dry run only</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3" onclick="return confirm('Run TOEIC SW package import now?');">Run Import</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="panel h-100">
+                    <h2 class="h5 mb-3">Current SW DB Snapshot</h2>
+                    <?php foreach ($snapshot as $table => $count): ?>
+                        <div class="d-flex justify-content-between border-bottom py-2">
+                            <span><?php echo toeicSwImportH($table); ?></span>
+                            <strong><?php echo (int)$count; ?></strong>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <?php if ($error): ?>
+            <div class="alert alert-danger"><?php echo nl2br(toeicSwImportH($error)); ?></div>
+        <?php endif; ?>
+
+        <?php if ($result && empty($result['errors']) && !$result['dry_run']): ?>
+            <div class="alert alert-success">Import transaction committed without errors.</div>
+        <?php elseif ($result && !empty($result['errors'])): ?>
+            <div class="alert alert-danger">Import found errors. Database writes were rolled back when dry run was disabled.</div>
+        <?php endif; ?>
+
+        <?php if ($result): ?>
+            <div class="panel mb-4">
+                <h2 class="h5 mb-3">Run Summary</h2>
+                <div class="row g-3">
+                    <?php foreach ($summaryKeys as $key): ?>
+                        <div class="col-md-3">
+                            <div class="border rounded-2 p-3 h-100">
+                                <div class="small text-uppercase muted"><?php echo toeicSwImportH(str_replace('_', ' ', $key)); ?></div>
+                                <div class="h4 mb-0">
+                                    <?php
+                                    $value = $result[$key] ?? 0;
+                                    echo is_array($value) ? count($value) : (int)$value;
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="mt-3">
+                    <span class="badge bg-<?php echo !empty($result['remote_media']) ? 'success' : 'secondary'; ?>">
+                        <?php echo !empty($result['remote_media']) ? 'R2 media URLs' : 'Local media paths'; ?>
+                    </span>
+                    <span class="badge bg-<?php echo !empty($result['dry_run']) ? 'warning text-dark' : 'primary'; ?>">
+                        <?php echo !empty($result['dry_run']) ? 'Dry run' : 'Writes enabled'; ?>
+                    </span>
+                    <?php if (!empty($result['media_base_url'])): ?>
+                        <code class="ms-2"><?php echo toeicSwImportH($result['media_base_url']); ?></code>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <?php if (!empty($result['messages'])): ?>
+                <div class="panel mb-4">
+                    <h2 class="h5 mb-3">Messages</h2>
+                    <pre><?php echo toeicSwImportH(implode(PHP_EOL, $result['messages'])); ?></pre>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($result['error_messages'])): ?>
+                <div class="panel mb-4">
+                    <h2 class="h5 mb-3 text-danger">Errors</h2>
+                    <pre><?php echo toeicSwImportH(implode(PHP_EOL, $result['error_messages'])); ?></pre>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
-</div>
 </body>
 </html>

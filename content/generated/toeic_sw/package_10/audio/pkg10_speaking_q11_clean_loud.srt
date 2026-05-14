@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:05,137
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:05,087 --> 00:00:11,987
+Some leaders communicate only confirmed decisions, while others share early uncertainties and invite staff input.
+
+3
+00:00:11,987 --> 00:00:16,400
+Which communication style builds stronger teams during change?
+
+4
+00:00:16,400 --> 00:00:18,812
+Give reasons and examples.
+

@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:08,437
+Question: A facilities analyst arrives after the lunch break.
+
+3
+00:00:08,437 --> 00:00:14,537
+Which activities can the analyst still join, and which vendor-related rehearsal will the analyst miss?
+
+4
+00:00:14,537 --> 00:00:17,012
+The question will be repeated.
+
+5
+00:00:17,012 --> 00:00:21,175
+Question: A facilities analyst arrives after the lunch break.
+
+6
+00:00:21,175 --> 00:00:27,275
+Which activities can the analyst still join, and which vendor-related rehearsal will the analyst miss?
+

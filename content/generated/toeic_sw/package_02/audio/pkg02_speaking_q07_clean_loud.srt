@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,375
+Directions: Answer the following question.
+
+2
+00:00:03,325 --> 00:00:08,887
+Should companies require employees to explain major decisions in writing before acting on them?
+
+3
+00:00:08,887 --> 00:00:11,262
+Give reasons for your answer.
+

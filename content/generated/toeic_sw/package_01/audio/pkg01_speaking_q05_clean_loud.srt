@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:09,487
+When a recurring team meeting becomes unfocused, what specific change would you recommend first, and why?
+

@@ -10,6 +10,7 @@ class ToeicSwPackageImporter {
     private string $root;
     private string $mediaBaseUrl = '';
     private bool $useRemoteMedia = false;
+    private bool $verifyRemoteMedia = false;
 
     public function __construct(mysqli $conn, ?string $root = null) {
         $this->conn = $conn;
@@ -20,6 +21,7 @@ class ToeicSwPackageImporter {
     public function import(string $packageRoot, bool $dryRun = true, array $options = []): array {
         $this->mediaBaseUrl = rtrim(trim((string)($options['media_base_url'] ?? '')), '/');
         $this->useRemoteMedia = !empty($options['use_remote_media']) && $this->mediaBaseUrl !== '';
+        $this->verifyRemoteMedia = $this->useRemoteMedia && !empty($options['verify_remote_media']);
 
         $stats = [
             'dry_run' => $dryRun,
@@ -28,16 +30,23 @@ class ToeicSwPackageImporter {
             'inserted' => 0,
             'updated' => 0,
             'skipped' => 0,
+            'removed_stale' => 0,
             'audio_files' => 0,
             'audio_transcripts' => 0,
             'image_files' => 0,
             'remote_media' => $this->useRemoteMedia,
             'media_base_url' => $this->mediaBaseUrl,
+            'media_verified' => $this->verifyRemoteMedia,
+            'verified_media_urls' => 0,
             'errors' => [],
             'logs' => [],
         ];
 
         $packageRoot = rtrim($packageRoot, "/\\");
+        if (!$dryRun) {
+            $this->conn->begin_transaction();
+        }
+
         for ($package = 1; $package <= 10; $package++) {
             $packageName = sprintf('package_%02d', $package);
             $packageDir = $packageRoot . DIRECTORY_SEPARATOR . $packageName;
@@ -54,6 +63,16 @@ class ToeicSwPackageImporter {
                 }
             } catch (Throwable $e) {
                 $stats['errors'][] = "{$packageName}: " . $e->getMessage();
+            }
+        }
+
+        if (!$dryRun) {
+            if (empty($stats['errors'])) {
+                $this->conn->commit();
+                $stats['logs'][] = 'Import transaction committed.';
+            } else {
+                $this->conn->rollback();
+                $stats['logs'][] = 'Import transaction rolled back because errors were found.';
             }
         }
 
@@ -134,6 +153,10 @@ class ToeicSwPackageImporter {
                     if (filesize($absoluteAudio) < 1024) {
                         throw new RuntimeException("{$section} Q{$number} audio is too small to be valid: {$audioPath}.");
                     }
+                    if ($this->verifyRemoteMedia) {
+                        $this->assertRemoteMediaOk($this->resolveMediaPath(sprintf('package_%02d', $package), $audioPath), "{$section} Q{$number} audio");
+                        $stats['verified_media_urls']++;
+                    }
                     if ($this->audioTranscriptForTask($task) === '') {
                         throw new RuntimeException("{$section} Q{$number} missing audio transcript.");
                     }
@@ -153,6 +176,10 @@ class ToeicSwPackageImporter {
                     }
                     if (!file_exists($packageDir . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $imagePath))) {
                         throw new RuntimeException("{$section} Q{$number} image does not exist: {$imagePath}.");
+                    }
+                    if ($this->verifyRemoteMedia) {
+                        $this->assertRemoteMediaOk($this->resolveMediaPath(sprintf('package_%02d', $package), $imagePath), "{$section} Q{$number} image");
+                        $stats['verified_media_urls']++;
                     }
                     $images[$imagePath] = true;
                     $stats['image_files']++;
@@ -193,6 +220,8 @@ class ToeicSwPackageImporter {
     }
 
     private function upsertPackage(array $manifest, int $package, string $packageName, array &$stats): void {
+        $this->deleteStalePackageRows($manifest, $package, $stats);
+
         foreach (['speaking', 'writing'] as $section) {
             foreach (($manifest[$section] ?? []) as $task) {
                 $table = getToeicSwContentTableForType((string)$task['type']);
@@ -204,13 +233,62 @@ class ToeicSwPackageImporter {
                 $exists = $this->contentExists($table, $package, $questionNumber);
                 $this->upsertTask($table, $package, $packageName, $task);
                 if ($exists) {
-                    $stats['skipped']++;
+                    $stats['updated']++;
                 } else {
                     $stats['inserted']++;
                 }
             }
         }
         $stats['logs'][] = "{$packageName}: imported.";
+    }
+
+    private function deleteStalePackageRows(array $manifest, int $package, array &$stats): void {
+        $expected = $this->expectedTableQuestionNumbers($manifest);
+
+        foreach ($this->contentTables() as $table) {
+            $numbers = array_keys($expected[$table] ?? []);
+            if (empty($numbers)) {
+                $stmt = $this->conn->prepare("DELETE FROM {$table} WHERE package_number = ?");
+                $stmt->bind_param("i", $package);
+            } else {
+                $placeholders = implode(', ', array_fill(0, count($numbers), '?'));
+                $types = 'i' . str_repeat('i', count($numbers));
+                $values = array_merge([$package], $numbers);
+                $stmt = $this->conn->prepare("DELETE FROM {$table} WHERE package_number = ? AND question_number NOT IN ({$placeholders})");
+                $stmt->bind_param($types, ...$values);
+            }
+
+            $stmt->execute();
+            $stats['removed_stale'] += max(0, $stmt->affected_rows);
+            $stmt->close();
+        }
+    }
+
+    private function expectedTableQuestionNumbers(array $manifest): array {
+        $expected = [];
+        foreach (['speaking', 'writing'] as $section) {
+            foreach (($manifest[$section] ?? []) as $task) {
+                $table = getToeicSwContentTableForType((string)($task['type'] ?? ''));
+                if (!$table) {
+                    continue;
+                }
+                $expected[$table][(int)$task['question_number']] = true;
+            }
+        }
+        return $expected;
+    }
+
+    private function contentTables(): array {
+        $tables = [];
+        foreach (getToeicSwTaskBlueprint() as $section) {
+            foreach ($section as $task) {
+                $table = getToeicSwContentTableForType((string)$task['type']);
+                if ($table) {
+                    $tables[$table] = true;
+                }
+            }
+        }
+        return array_keys($tables);
     }
 
     private function contentExists(string $table, int $package, int $questionNumber): bool {
@@ -334,6 +412,21 @@ class ToeicSwPackageImporter {
         }
 
         return "content/generated/toeic_sw/{$packageName}/{$relativePath}";
+    }
+
+    private function assertRemoteMediaOk(string $url, string $label): void {
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'HEAD',
+                'timeout' => 15,
+                'ignore_errors' => true,
+            ],
+        ]);
+        $headers = @get_headers($url, true, $context);
+        $statusLine = is_array($headers) ? (string)($headers[0] ?? '') : '';
+        if (!preg_match('#\s(200|206)\s#', $statusLine)) {
+            throw new RuntimeException("{$label} URL is not reachable: {$url}");
+        }
     }
 
     private function updateAudioMetadata(string $table, int $package, int $questionNumber, string $audioPath, string $audioTranscript): void {

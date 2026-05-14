@@ -29,6 +29,40 @@ $providers = [
     ],
 ];
 
+$transcriptionProviders = [
+    'OpenAI' => ['models' => ['gpt-4o-transcribe', 'whisper-1']],
+    'Groq' => ['models' => ['whisper-large-v3', 'whisper-large-v3-turbo', 'distil-whisper-large-v3-en']],
+    'Gemini' => ['models' => ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']],
+];
+
+$scoringModelSuggestions = [];
+foreach ($providers as $meta) {
+    foreach ($meta['llms'] as $llm) {
+        $scoringModelSuggestions[$llm] = true;
+    }
+}
+$transcriptionModelSuggestions = [];
+foreach ($transcriptionProviders as $meta) {
+    foreach ($meta['models'] as $model) {
+        $transcriptionModelSuggestions[$model] = true;
+    }
+}
+
+function saveAiApiSetting(mysqli $conn, string $key, string $value): void {
+    $stmt = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
+    $stmt->bind_param("ss", $key, $value);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function normalizeAiProviderSetting(string $value, array $allowedKeys, bool $allowEmpty = true): string {
+    $value = trim($value);
+    if ($allowEmpty && $value === '') {
+        return '';
+    }
+    return in_array($value, $allowedKeys, true) ? $value : '';
+}
+
 // Create settings table if it doesn't exist
 $conn->query("CREATE TABLE IF NOT EXISTS site_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,6 +75,9 @@ $conn->query("CREATE TABLE IF NOT EXISTS site_settings (
 // Handle save
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_api_settings') {
     $active = $_POST['active_api'] ?? '';
+    $providerSettingKeys = array_map(fn($prov) => 'ai_api_' . strtolower($prov), array_keys($providers));
+    $transcriptionProviderKeys = array_map(fn($prov) => 'ai_api_' . strtolower($prov), array_keys($transcriptionProviders));
+
     foreach ($providers as $prov => $meta) {
         $key = $_POST[strtolower($prov) . '_key'] ?? '';
         $llm = $_POST[strtolower($prov) . '_llm'] ?? '';
@@ -55,32 +92,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             'llm' => $llm,
             'reasoning_effort' => $reasoning_effort
         ]);
-        $stmt = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
-        $stmt->bind_param("ss", $setting_key, $value);
-        $stmt->execute();
+        saveAiApiSetting($conn, $setting_key, $value);
     }
     // Set active
-    $stmt = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('active_ai_api', ?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
-    $stmt->bind_param("s", $active);
-    $stmt->execute();
+    saveAiApiSetting($conn, 'active_ai_api', normalizeAiProviderSetting($active, $providerSettingKeys, false));
 
     // Save curriculum-specific API setting
-    $curriculum_api = $_POST['curriculum_api'] ?? '';
-    $stmt = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('curriculum_ai_api', ?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
-    $stmt->bind_param("s", $curriculum_api);
-    $stmt->execute();
+    $curriculum_api = normalizeAiProviderSetting($_POST['curriculum_api'] ?? '', $providerSettingKeys);
+    saveAiApiSetting($conn, 'curriculum_ai_api', $curriculum_api);
 
     // Save curriculum custom model override (for OpenRouter free-text model)
     $curriculum_custom_model = trim($_POST['curriculum_custom_model'] ?? '');
     if (!empty($curriculum_custom_model) && !empty($curriculum_api)) {
         // Store as a separate setting so curriculum can use a different model from the same provider
-        $stmt = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('curriculum_ai_model_override', ?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
-        $stmt->bind_param("s", $curriculum_custom_model);
-        $stmt->execute();
+        saveAiApiSetting($conn, 'curriculum_ai_model_override', $curriculum_custom_model);
     } else {
         // Clear override if empty
         $conn->query("DELETE FROM site_settings WHERE setting_key = 'curriculum_ai_model_override'");
     }
+
+    $toeic_sw_scoring_api = normalizeAiProviderSetting($_POST['toeic_sw_scoring_ai_api'] ?? '', $providerSettingKeys);
+    $toeic_sw_scoring_model = trim($_POST['toeic_sw_scoring_model'] ?? 'gpt-5.5');
+    $toeic_sw_transcription_api = normalizeAiProviderSetting($_POST['toeic_sw_transcription_ai_api'] ?? 'ai_api_openai', $transcriptionProviderKeys, false);
+    if ($toeic_sw_transcription_api === '') {
+        $toeic_sw_transcription_api = 'ai_api_openai';
+    }
+    $toeic_sw_transcription_model = trim($_POST['toeic_sw_transcription_model'] ?? 'gpt-4o-transcribe');
+    saveAiApiSetting($conn, 'toeic_sw_scoring_ai_api', $toeic_sw_scoring_api);
+    saveAiApiSetting($conn, 'toeic_sw_scoring_model', $toeic_sw_scoring_model);
+    saveAiApiSetting($conn, 'toeic_sw_transcription_ai_api', $toeic_sw_transcription_api);
+    saveAiApiSetting($conn, 'toeic_sw_transcription_model', $toeic_sw_transcription_model);
 
     $success = 'Settings saved!';
 }
@@ -108,6 +149,10 @@ foreach ($providers as $prov => $meta) {
 $active_api = getSiteSetting('active_ai_api', '');
 $curriculum_api = getSiteSetting('curriculum_ai_api', '');
 $curriculum_model_override = getSiteSetting('curriculum_ai_model_override', '');
+$toeic_sw_scoring_api = getSiteSetting('toeic_sw_scoring_ai_api', '');
+$toeic_sw_scoring_model = getSiteSetting('toeic_sw_scoring_model', 'gpt-5.5');
+$toeic_sw_transcription_api = getSiteSetting('toeic_sw_transcription_ai_api', 'ai_api_openai');
+$toeic_sw_transcription_model = getSiteSetting('toeic_sw_transcription_model', 'gpt-4o-transcribe');
 $website_title = getWebsiteTitle();
 ?>
 <!DOCTYPE html>
@@ -399,6 +444,66 @@ $website_title = getWebsiteTitle();
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save
                                 Settings</button>
                             <div class="api-info mt-2">Pilih provider aktif di kolom Active, lalu klik Save Settings.</div>
+                        </div>
+                    </div>
+
+                    <div class="content-card mb-4">
+                        <h4><i class="fas fa-microphone-lines me-2"></i>TOEIC SW Evaluation Models</h4>
+                        <div class="row g-3">
+                            <div class="col-lg-3 col-md-6">
+                                <label class="form-label fw-bold">Scoring Provider</label>
+                                <select class="form-select" name="toeic_sw_scoring_ai_api">
+                                    <option value="" <?php if ($toeic_sw_scoring_api === '') echo 'selected'; ?>>Use active provider</option>
+                                    <?php foreach ($providers as $prov => $meta): ?>
+                                        <?php $provider_key = 'ai_api_' . strtolower($prov); ?>
+                                        <option value="<?php echo $provider_key; ?>" <?php if ($toeic_sw_scoring_api === $provider_key) echo 'selected'; ?>>
+                                            <?php echo $prov; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="api-info mt-1">Kosong berarti scoring mengikuti provider aktif.</div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <label class="form-label fw-bold">Scoring Model</label>
+                                <input type="text" class="form-control" name="toeic_sw_scoring_model"
+                                    value="<?php echo htmlspecialchars($toeic_sw_scoring_model); ?>"
+                                    list="toeic_sw_scoring_models"
+                                    placeholder="e.g. gpt-5.5 or google/gemini-3-pro">
+                                <datalist id="toeic_sw_scoring_models">
+                                    <?php foreach (array_keys($scoringModelSuggestions) as $model): ?>
+                                        <option value="<?php echo htmlspecialchars($model); ?>"></option>
+                                    <?php endforeach; ?>
+                                </datalist>
+                                <div class="api-info mt-1">Free-text supaya bisa ikut model provider mana pun.</div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <label class="form-label fw-bold">Transcription Provider</label>
+                                <select class="form-select" name="toeic_sw_transcription_ai_api">
+                                    <?php foreach ($transcriptionProviders as $prov => $meta): ?>
+                                        <?php $provider_key = 'ai_api_' . strtolower($prov); ?>
+                                        <option value="<?php echo $provider_key; ?>" <?php if ($toeic_sw_transcription_api === $provider_key) echo 'selected'; ?>>
+                                            <?php echo $prov; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="api-info mt-1">Audio transcription didukung via OpenAI, Groq, atau Gemini.</div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <label class="form-label fw-bold">Transcription Model</label>
+                                <input type="text" class="form-control" name="toeic_sw_transcription_model"
+                                    value="<?php echo htmlspecialchars($toeic_sw_transcription_model); ?>"
+                                    list="toeic_sw_transcription_models"
+                                    placeholder="e.g. whisper-large-v3">
+                                <datalist id="toeic_sw_transcription_models">
+                                    <?php foreach (array_keys($transcriptionModelSuggestions) as $model): ?>
+                                        <option value="<?php echo htmlspecialchars($model); ?>"></option>
+                                    <?php endforeach; ?>
+                                </datalist>
+                                <div class="api-info mt-1">Model bebas selama provider terpilih mendukung audio.</div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Evaluation Models</button>
                         </div>
                     </div>
 

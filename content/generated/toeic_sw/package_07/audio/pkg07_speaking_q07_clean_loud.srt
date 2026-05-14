@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:09,987
+Should a company prioritize long-term trust over short-term revenue when a client requests an unrealistic timeline?
+
+3
+00:00:09,987 --> 00:00:11,875
+Why or why not?
+

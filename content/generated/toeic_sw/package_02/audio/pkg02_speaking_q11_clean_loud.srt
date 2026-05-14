@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:05,137
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:05,087 --> 00:00:12,925
+Some companies centralize important decisions with senior leaders, while others allow project teams to make decisions close to the work.
+
+3
+00:00:12,925 --> 00:00:16,850
+Which approach is more effective when conditions change quickly?
+
+4
+00:00:16,850 --> 00:00:19,262
+Give reasons and examples.
+

@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:07,487
+Question: A distributor arrives at noon.
+
+3
+00:00:07,487 --> 00:00:13,462
+Which launch-related activities can the distributor still attend, and which morning briefing will they miss?
+
+4
+00:00:13,462 --> 00:00:15,937
+The question will be repeated.
+
+5
+00:00:15,937 --> 00:00:19,150
+Question: A distributor arrives at noon.
+
+6
+00:00:19,150 --> 00:00:25,125
+Which launch-related activities can the distributor still attend, and which morning briefing will they miss?
+

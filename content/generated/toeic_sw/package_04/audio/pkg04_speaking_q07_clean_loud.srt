@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,375
+Directions: Answer the following question.
+
+2
+00:00:03,325 --> 00:00:09,175
+Should companies allow teams to reject urgent requests when those requests create quality risks?
+
+3
+00:00:09,175 --> 00:00:11,587
+Give reasons and examples.
+

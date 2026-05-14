@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,325
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,275 --> 00:00:08,650
+Question: When does the priority-shipment triage exercise start?
+

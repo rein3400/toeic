@@ -26,6 +26,7 @@ const WebSocket = loadWs();
 const root = path.resolve(__dirname, '..');
 const packageRoot = path.join(root, 'content', 'generated', 'toeic_sw');
 const args = new Set(process.argv.slice(2));
+const allowRealtimeNonliteral = args.has('--allow-realtime-nonliteral');
 const overwrite = args.has('--overwrite');
 const dryRun = args.has('--dry-run');
 const fallbackSapi = args.has('--fallback-sapi');
@@ -38,6 +39,11 @@ const model = modelArg ? modelArg.split('=')[1] : 'gpt-realtime-1.5';
 const voiceArg = process.argv.find((arg) => arg.startsWith('--voice='));
 const voice = voiceArg ? voiceArg.split('=')[1] : 'alloy';
 const apiKey = process.env.OPENAI_API_KEY || '';
+
+if (!allowRealtimeNonliteral && !dryRun && !verifyOnly) {
+    console.error('This Realtime generator is deprecated for TOEIC SW prompt audio because it can add conversational prefaces. Use scripts/generate_toeic_sw_audio_mmx.ps1 for literal loud TTS output. Pass --allow-realtime-nonliteral only for legacy experiments.');
+    process.exit(2);
+}
 
 if (!apiKey && !dryRun && !fallbackOnly && !verifyOnly) {
     console.error('OPENAI_API_KEY is required for audio generation.');

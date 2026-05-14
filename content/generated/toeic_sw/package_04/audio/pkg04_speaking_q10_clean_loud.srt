@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:08,100
+Question: An auditor can attend only after lunch.
+
+3
+00:00:08,100 --> 00:00:14,012
+Which sessions can the auditor still attend, and which workflow demonstration will the auditor miss?
+
+4
+00:00:14,012 --> 00:00:16,375
+The question will be repeated.
+
+5
+00:00:16,375 --> 00:00:20,087
+Question: An auditor can attend only after lunch.
+
+6
+00:00:20,087 --> 00:00:26,000
+Which sessions can the auditor still attend, and which workflow demonstration will the auditor miss?
+

@@ -1,0 +1,24 @@
+1
+00:00:00,100 --> 00:00:04,437
+Directions: Answer the question using the information provided.
+
+2
+00:00:04,387 --> 00:00:08,150
+Question: A participant misses the entire morning.
+
+3
+00:00:08,150 --> 00:00:14,337
+Which afternoon sessions remain available, and which practical training session will the participant miss?
+
+4
+00:00:14,337 --> 00:00:16,700
+The question will be repeated.
+
+5
+00:00:16,700 --> 00:00:20,462
+Question: A participant misses the entire morning.
+
+6
+00:00:20,462 --> 00:00:26,650
+Which afternoon sessions remain available, and which practical training session will the participant miss?
+

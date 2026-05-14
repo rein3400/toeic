@@ -105,6 +105,24 @@ foreach ($routeFiles as $relativePath) {
     toeic_sw_check(file_exists($root . '/' . $relativePath), "{$relativePath} must exist.");
 }
 
+$aiSettingsPath = $root . '/admin/ai_api_settings.php';
+if (file_exists($aiSettingsPath)) {
+    $aiSettingsSource = file_get_contents($aiSettingsPath);
+    toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_scoring_ai_api') !== false, 'AI settings must expose TOEIC SW scoring provider selection.');
+    toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_transcription_ai_api') !== false, 'AI settings must expose TOEIC SW transcription provider selection.');
+    toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_scoring_model') !== false, 'AI settings must expose TOEIC SW scoring model override.');
+    toeic_sw_check(strpos($aiSettingsSource, 'toeic_sw_transcription_model') !== false, 'AI settings must expose TOEIC SW transcription model override.');
+}
+
+$subjectiveScorerPath = $root . '/includes/toeic_sw_subjective_scorer.php';
+if (file_exists($subjectiveScorerPath)) {
+    $subjectiveScorerSource = file_get_contents($subjectiveScorerPath);
+    toeic_sw_check(strpos($subjectiveScorerSource, 'toeic_sw_scoring_ai_api') !== false, 'TOEIC SW scorer must read the scoring provider setting.');
+    toeic_sw_check(strpos($subjectiveScorerSource, 'toeic_sw_transcription_ai_api') !== false, 'TOEIC SW scorer must read the transcription provider setting.');
+    toeic_sw_check(strpos($subjectiveScorerSource, 'api.groq.com/openai/v1/audio/transcriptions') !== false, 'TOEIC SW transcription must support Groq audio transcription.');
+    toeic_sw_check(strpos($subjectiveScorerSource, ':generateContent') !== false, 'TOEIC SW transcription must support Gemini audio transcription.');
+}
+
 $packageRoot = $root . '/content/generated/toeic_sw';
 toeic_sw_check(is_dir($packageRoot), 'content/generated/toeic_sw must exist.');
 

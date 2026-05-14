@@ -1,0 +1,16 @@
+1
+00:00:00,100 --> 00:00:04,925
+Directions: Express your opinion and support it with reasons and examples.
+
+2
+00:00:04,875 --> 00:00:14,600
+Some organizations promote employees mainly because they deliver fast results, while others promote employees because they document decisions carefully and reduce future risk.
+
+3
+00:00:14,600 --> 00:00:18,000
+Which approach is better for a complex workplace?
+
+4
+00:00:18,000 --> 00:00:20,462
+Give reasons and examples.
+

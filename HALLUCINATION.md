@@ -266,3 +266,41 @@
 - Risk: if the real 500 comes from another production-only PHP fatal, the deadline guard may only reduce one failure mode. Re-check production after deployment and inspect server logs if the 500 remains.
 - Risk: some Writing items may be stored as `needs_rescore` during busy or slow AI periods; admins should use the existing rescore/review flow.
 - Rollback: revert the changes in `user/ajax_submit_section_toeic_sw.php`, `includes/toeic_sw_subjective_scorer.php`, `user/test_toeic_sw.php`, and `user/js/test_toeic_sw.js`.
+
+## 2026-05-14 - TOEIC SW max loudness and production import access
+
+### Unknowns
+- The MiniMax speech API would not generate new WAV files during this run because the `speech-hd` quota was already at 8983/9000.
+- The repository did not contain a production `DATABASE_URL` or `MYSQL*` environment file, and no current production admin URL was discoverable from Vercel, Railway, Cloudflare Pages, Cloudflare Workers, or local repo config.
+- The exact MiniMax numeric maximum for `--volume` is not documented in the local `mmx-cli` skill beyond exposing a numeric `--volume` flag.
+
+### Reason for proceeding
+- The user explicitly allowed API-limit problems as the only acceptable audio-generation exception.
+- Existing approved TOEIC SW prompt WAV files were valid and complete, so they could be safely peak-normalized locally without changing transcripts or package structure.
+- R2 upload and remote media verification could be completed independently of the unavailable production database.
+
+### Assumptions used
+- "Max loud volume" means 16-bit PCM WAV files should be peak-normalized close to full scale without clipping.
+- A target peak of 32760/32767 is acceptable for maximum practical loudness while avoiding forced clipping.
+- The browser importer should remain production-ready and transactional, but the actual production write must not be claimed until a real production DB connection or admin browser session is available.
+
+### Project impact
+- Peak-normalized all referenced TOEIC SW `*_clean_loud.wav` files so every package audio file reaches at least the 32760 peak target.
+- Re-uploaded changed TOEIC SW audio objects to the `toeic-assets` R2 bucket and refreshed the R2 upload manifest.
+- Added remote media verification reporting to the CLI importer path, matching the browser importer's media HEAD gate.
+- Patched the SW R2 upload script so manifest entries previously marked `skipped` can be reused as valid remote objects when their hashes are unchanged.
+
+### Verification attempted
+- Validated 10 TOEIC SW package manifests successfully after audio normalization.
+- Parsed all 70 local package WAV files as 32000 Hz mono 16-bit PCM with zero bad files and no files below the 32760 peak target.
+- Verified all 140 local manifest assets exist, with 70 audio and 70 image references.
+- Re-uploaded 40 changed audio objects to R2; 100 unchanged objects were skipped and 0 failed.
+- Verified the R2 manifest through Cloudflare API object listing, public HEAD checks, and full public downloads with SHA-256 plus WAV/SVG parsing for all 140 assets.
+- Ran PHP syntax checks for the SW browser importer, shared importer, and CLI importer, and ran the TOEIC SW contract test successfully.
+- Attempted CLI dry-run import, but DB connection failed because 127.0.0.1:3306 refused connections and XAMPP MariaDB aborted while initializing corrupted multi-master metadata.
+- Verified Vercel authenticated context has 0 projects and 0 deployments; Railway CLI is unauthorized; Cloudflare token can access the R2 bucket but not Pages or Workers.
+
+### Risks and rollback
+- Risk: if MiniMax later documents or enforces a different volume maximum, regenerate the audio with MiniMax after quota reset and re-run the R2 upload and verification scripts.
+- Risk: production import remains incomplete until a real production DB/browser access path is provided.
+- Rollback: restore the previous `*_clean_loud.wav` artifacts from git or backup, rerun `scripts/upload_toeic_sw_r2_media.ps1`, and rerun the verifier before importing.

@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:03,237
+Directions: Answer the following question.
+
+2
+00:00:03,187 --> 00:00:10,637
+Should a manager postpone a public announcement when the operational details are still uncertain, even if competitors may act first?
+
+3
+00:00:10,637 --> 00:00:12,525
+Why or why not?
+
