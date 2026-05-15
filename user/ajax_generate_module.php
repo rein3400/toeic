@@ -7,6 +7,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/curriculum_generator.php';
+require_once '../includes/learning_schema.php';
 
 header('Content-Type: application/json');
 set_time_limit(300);
@@ -15,6 +16,7 @@ if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit();
 }
+toeicEnsureLearningSchema($conn);
 
 $input = json_decode(file_get_contents('php://input'), true);
 $module_id = (int)($input['module_id'] ?? 0);

@@ -5,6 +5,7 @@
 require_once __DIR__ . '/weakness_analyzer.php';
 require_once __DIR__ . '/ai_helper.php';
 require_once __DIR__ . '/settings.php';
+require_once __DIR__ . '/learning_schema.php';
 
 class CurriculumGenerator {
     private mysqli $conn;
@@ -12,6 +13,7 @@ class CurriculumGenerator {
 
     public function __construct($conn) {
         $this->conn = $conn;
+        toeicEnsureLearningSchema($this->conn);
         $this->config = $this->loadApiConfig();
     }
 

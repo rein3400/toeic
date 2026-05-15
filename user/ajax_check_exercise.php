@@ -4,6 +4,7 @@
  */
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
+require_once '../includes/learning_schema.php';
 
 header('Content-Type: application/json');
 
@@ -11,6 +12,7 @@ if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit();
 }
+toeicEnsureLearningSchema($conn);
 
 $input = json_decode(file_get_contents('php://input'), true);
 $exercise_id = (int)($input['exercise_id'] ?? 0);

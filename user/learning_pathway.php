@@ -6,6 +6,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/toeic_quality_helpers.php';
+require_once '../includes/learning_schema.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
@@ -17,6 +18,7 @@ $is_admin = ($_SESSION['role'] ?? '') === 'admin';
 $test_session = $_GET['session'] ?? '';
 $format = ($_GET['format'] ?? '') === 'toeic_sw' || strpos($test_session, 'toeic_sw_') === 0 ? 'toeic_sw' : 'toeic';
 $website_title = getWebsiteTitle();
+toeicEnsureLearningSchema($conn);
 
 if (empty($test_session)) {
     toeicRedirectWithFlash('index.php', 'info', 'Selesaikan simulasi TOEIC dulu untuk membuka learning pathway.');
