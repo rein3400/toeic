@@ -70,6 +70,10 @@
         return recorders.size > 0 || pendingUploads.size > 0 || prepareTimers.size > 0 || micRequests.size > 0;
     }
 
+    function allowAutoFlowRetry(rowId) {
+        autoStartedRows.delete(rowKey(rowId));
+    }
+
     function refreshSubmitState() {
         const submit = document.getElementById('sw-submit-section');
         const cards = questionCards();
@@ -111,7 +115,7 @@
         submit.disabled = missing > 0 || busy || failedUploads > 0;
 
         if (failedUploads > 0) {
-            setSubmitMessage('A recording upload failed. Refresh the page to retry before submitting.', 'error');
+            setSubmitMessage('A recording upload failed. Open that question again to retry automatically.', 'error');
         } else if (busy) {
             setSubmitMessage('Auto prepare, recording, or upload is still running. Next unlocks after save.', 'pending');
         } else if (missing > 0) {
@@ -412,6 +416,7 @@
             uploadErrors.set(key, error.message || 'Upload failed');
             markQuestionAnswered(key, false);
             setStatus(key, error.message || 'Upload failed', 'error');
+            allowAutoFlowRetry(key);
             throw error;
         } finally {
             pendingUploads.delete(key);
@@ -588,6 +593,7 @@
             setRecordControl(key, '<i class="fas fa-triangle-exclamation"></i> Mic blocked');
             const blocked = error && (error.name === 'NotAllowedError' || error.name === 'SecurityError');
             setStatus(key, blocked ? 'Please allow microphone access for this site' : 'Could not access microphone', 'error');
+            allowAutoFlowRetry(key);
             refreshSubmitState();
             return;
         }
@@ -604,7 +610,8 @@
         };
 
         recorder.onerror = () => {
-            setStatus(key, 'Recording failed. Refresh the page to retry this question.', 'error');
+            setStatus(key, 'Recording failed. Open this question again to retry automatically.', 'error');
+            allowAutoFlowRetry(key);
             stopRecorder(key);
         };
 
@@ -621,7 +628,8 @@
 
             if (chunks.length === 0) {
                 setRecordControl(key, '<i class="fas fa-circle-exclamation"></i> No audio captured');
-                setStatus(key, 'No audio was captured. Refresh the page to retry this question.', 'error');
+                setStatus(key, 'No audio was captured. Open this question again to retry automatically.', 'error');
+                allowAutoFlowRetry(key);
                 refreshSubmitState();
                 return;
             }
@@ -680,7 +688,7 @@
 
         if (uploadErrors.size > 0) {
             const firstError = Array.from(uploadErrors.values())[0];
-            throw new Error(firstError || 'A recording upload failed. Refresh the page to retry.');
+            throw new Error(firstError || 'A recording upload failed. Open that question again to retry automatically.');
         }
     };
 

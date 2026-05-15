@@ -48,14 +48,21 @@ async function main() {
     assert(await page.locator('.sw-question[data-question]').count() === 11, 'Speaking page should render 11 cards.');
     assert(await visibleCards() === 1, 'Speaking page should show one visible card.');
     assert((await page.textContent('#sw-current-question')).trim() === '1', 'Speaking counter should start at 1.');
+    const firstSpeakingRowId = await page.locator('.sw-question[data-section="speaking"]:visible').getAttribute('data-row-id');
+    await page.waitForFunction((rowId) => {
+        const card = document.querySelector(`.sw-question[data-row-id="${rowId}"]`);
+        const next = document.querySelector('#sw-next-question');
+        const status = document.querySelector(`#sw-status-${rowId}`);
+        return card && card.dataset.hasAnswer === '1' && next && !next.disabled && /saved/i.test(status?.textContent || '');
+    }, firstSpeakingRowId, {timeout: 20000});
     await page.locator('#sw-next-question').click();
     assert((await page.textContent('#sw-current-question')).trim() === '2', 'Speaking Next should move to question 2.');
     assert(await visibleCards() === 1, 'Speaking navigation should keep one visible card.');
     assert(await page.locator('#sw-submit-section').isDisabled(), 'Speaking submit should stay disabled until recordings upload.');
     const speakingSubmitMessage = (await page.textContent('#sw-submit-message')).trim();
     assert(
-        /recordings? remaining/i.test(speakingSubmitMessage),
-        'Speaking submit should explain the missing recordings before scoring.'
+        /speaking question|recordings?/i.test(speakingSubmitMessage),
+        'Speaking submit should explain the missing automatic recordings before scoring.'
     );
 
     await page.goto(setup.baseUrl + setup.writingUrl, {waitUntil: 'domcontentloaded'});

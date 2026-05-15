@@ -75,6 +75,21 @@ foreach (['speaking', 'writing'] as $section) {
     ]);
     $builder->buildTest($session, $userId);
 
+    if ($section === 'speaking') {
+        $timerStmt = $conn->prepare("
+            UPDATE toeic_sw_test_questions
+            SET prepare_seconds = 1, response_seconds = 1
+            WHERE test_session = ? AND section = 'speaking'
+        ");
+        if (!$timerStmt) {
+            fwrite(STDERR, "Unable to shorten speaking timers for browser smoke: " . $conn->error . "\n");
+            exit(1);
+        }
+        $timerStmt->bind_param('s', $session);
+        $timerStmt->execute();
+        $timerStmt->close();
+    }
+
     $payload[$section . 'Session'] = $session;
     $payload[$section . 'Url'] = '/user/test_toeic_sw.php?section=' . $section
         . '&test_session=' . urlencode($session)

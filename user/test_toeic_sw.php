@@ -742,6 +742,6 @@ function toeicSwRenderPrompt(array $question): void {
             'questionCount' => $question_count,
         ]); ?>;
     </script>
-    <script src="js/test_toeic_sw.js"></script>
+    <script src="<?php echo toeicSwH(getVersionedAssetUrl('user/js/test_toeic_sw.js', 'js/test_toeic_sw.js')); ?>"></script>
 </body>
 </html>
