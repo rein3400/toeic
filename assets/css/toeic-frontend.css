@@ -4,15 +4,15 @@
     --toeic-night: #152742;
     --toeic-night-soft: #21385c;
     --toeic-ink: #17263f;
-    --toeic-muted: #61718b;
+    --toeic-muted: #53627a;
     --toeic-muted-strong: #435167;
     --toeic-paper: #fffdf8;
     --toeic-cream: #f5efe2;
     --toeic-sand: #ece1cc;
     --toeic-shell: #f8f3ea;
     --toeic-shell-deep: #efe6d5;
-    --toeic-amber: #d18b1f;
-    --toeic-amber-deep: #ab6711;
+    --toeic-amber: #b45309;
+    --toeic-amber-deep: #8a4308;
     --toeic-amber-soft: #f8ebc8;
     --toeic-teal: #1e8078;
     --toeic-text-on-dark: rgba(255, 255, 255, 0.92);
@@ -31,7 +31,7 @@
     --rg-secondary-light: var(--toeic-amber-soft);
     --rg-text: var(--toeic-ink);
     --rg-text-secondary: var(--toeic-muted);
-    --rg-text-muted: #7b8698;
+    --rg-text-muted: #5f6b7a;
     --rg-border: var(--toeic-border);
     --rg-border-light: rgba(23, 38, 63, 0.08);
     --rg-bg: var(--toeic-shell);

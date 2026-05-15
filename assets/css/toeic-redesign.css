@@ -14,11 +14,11 @@
     --rg-secondary-light: #FFF0E6;
     --rg-accent-blue: #2563EB;
     --rg-accent-blue-light: #EFF6FF;
-    --rg-toeic: #F59E0B;
+    --rg-toeic: #B45309;
     --rg-toeic-light: #FFFBEB;
     --rg-text: #1A2A44;
     --rg-text-secondary: #4B5563;
-    --rg-text-muted: #9CA3AF;
+    --rg-text-muted: #64748B;
     --rg-border: #E5E7EB;
     --rg-border-light: #F3F4F6;
     --rg-bg: #F8FAFC;
@@ -146,6 +146,11 @@ p, .lead, .toeic-copy {
 
 .text-warning {
     color: var(--rg-toeic) !important;
+}
+
+.study-pill[style*="background:var(--sunbeam-yellow)"],
+.study-pill[style*="background: var(--sunbeam-yellow)"] {
+    color: #111827 !important;
 }
 
 .bg-light,

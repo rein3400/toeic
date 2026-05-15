@@ -17,7 +17,7 @@
     /* Neutrals */
     --rg-text: #1A2A44;
     --rg-text-secondary: #4B5563;
-    --rg-text-muted: #9CA3AF;
+    --rg-text-muted: #64748B;
     --rg-border: #E5E7EB;
     --rg-border-light: #F3F4F6;
 
@@ -40,7 +40,7 @@
     /* Test colors */
     --rg-itp: #2563EB;
     --rg-itp-light: #EFF6FF;
-    --rg-toeic: #F59E0B;
+    --rg-toeic: #B45309;
     --rg-toeic-light: #FFFBEB;
 
     /* Fonts */
