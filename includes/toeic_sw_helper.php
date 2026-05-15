@@ -102,6 +102,20 @@ if (!function_exists('getToeicSwSectionSeconds')) {
     }
 }
 
+if (!function_exists('toeicSwResolveSectionTimerStart')) {
+    function toeicSwResolveSectionTimerStart(array &$sectionStartTimes, string $timerKey, int $sectionSeconds, int $now, bool $isResume): int {
+        $storedStart = (int)($sectionStartTimes[$timerKey] ?? 0);
+        $isExpiredResume = $isResume && $storedStart > 0 && ($storedStart + $sectionSeconds) <= $now;
+
+        if ($storedStart <= 0 || $isExpiredResume) {
+            $storedStart = $now;
+            $sectionStartTimes[$timerKey] = $storedStart;
+        }
+
+        return $storedStart;
+    }
+}
+
 if (!function_exists('getToeicSwLevel')) {
     function getToeicSwLevel(int $totalScore): array {
         if ($totalScore >= 360) return ['Advanced Professional', 'C1', 'success'];

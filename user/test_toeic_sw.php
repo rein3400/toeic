@@ -26,6 +26,7 @@ $session_key = 'toeic_sw_test_session';
 $requested_session = trim((string)($_GET['test_session'] ?? $_SESSION[$session_key] ?? ''));
 $requested_mode = (($_GET['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
 $mode = $requested_mode;
+$is_resume_request = isset($_GET['resume']);
 
 ensureToeicSwSchema($conn);
 
@@ -74,7 +75,7 @@ if (isset($_GET['start_new'])) {
     exit();
 }
 
-if (isset($_GET['resume'])) {
+if ($is_resume_request) {
     if ($requested_session === '') {
         toeicRedirectWithFlash('index.php', 'info', 'Tidak ada sesi TOEIC Speaking & Writing aktif untuk dilanjutkan.');
     }
@@ -118,11 +119,15 @@ if (!isset($_SESSION['toeic_sw_section_start_times']) || !is_array($_SESSION['to
     $_SESSION['toeic_sw_section_start_times'] = [];
 }
 $timer_key = $requested_session . ':' . $section;
-if (empty($_SESSION['toeic_sw_section_start_times'][$timer_key])) {
-    $_SESSION['toeic_sw_section_start_times'][$timer_key] = time();
-}
-$section_start_time = (int)$_SESSION['toeic_sw_section_start_times'][$timer_key];
 $section_seconds = getToeicSwSectionSeconds($section);
+$now = time();
+$section_start_time = toeicSwResolveSectionTimerStart(
+    $_SESSION['toeic_sw_section_start_times'],
+    $timer_key,
+    $section_seconds,
+    $now,
+    $is_resume_request
+);
 $section_deadline = $section_start_time + $section_seconds;
 
 $questions = getToeicSwQuestionsForSection($conn, $requested_session, $section);
@@ -135,7 +140,7 @@ $section_detail = $section === 'speaking'
 $mode_label = $practice_mode ? 'Practice' : 'Full Simulation';
 $answered_count = count(array_filter($progress));
 $total_questions = $question_count;
-$remaining_time = max(0, $section_deadline - time());
+$remaining_time = max(0, $section_deadline - $now);
 $page_title = $practice_mode ? 'TOEIC SW Practice' : 'TOEIC SW Full Simulation';
 $context_title = $section === 'speaking' ? 'Speaking Context' : 'Writing Context';
 
