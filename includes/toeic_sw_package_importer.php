@@ -11,6 +11,7 @@ class ToeicSwPackageImporter {
     private string $mediaBaseUrl = '';
     private bool $useRemoteMedia = false;
     private bool $verifyRemoteMedia = false;
+    private bool $imageOnly = false;
 
     public function __construct(mysqli $conn, ?string $root = null) {
         $this->conn = $conn;
@@ -22,9 +23,11 @@ class ToeicSwPackageImporter {
         $this->mediaBaseUrl = rtrim(trim((string)($options['media_base_url'] ?? '')), '/');
         $this->useRemoteMedia = !empty($options['use_remote_media']) && $this->mediaBaseUrl !== '';
         $this->verifyRemoteMedia = $this->useRemoteMedia && !empty($options['verify_remote_media']);
+        $this->imageOnly = ($options['import_mode'] ?? '') === 'images_only';
 
         $stats = [
             'dry_run' => $dryRun,
+            'import_mode' => $this->imageOnly ? 'images_only' : 'full',
             'packages' => 0,
             'validated' => 0,
             'inserted' => 0,
@@ -58,7 +61,9 @@ class ToeicSwPackageImporter {
                 $this->validateManifest($manifest, $package, $packageDir, $stats);
                 $stats['validated']++;
 
-                if (!$dryRun) {
+                if ($this->imageOnly) {
+                    $this->updatePackageImages($manifest, $package, $packageName, $stats, $dryRun);
+                } elseif (!$dryRun) {
                     $this->upsertPackage($manifest, $package, $packageName, $stats);
                 }
             } catch (Throwable $e) {
@@ -141,7 +146,7 @@ class ToeicSwPackageImporter {
                     throw new RuntimeException("{$section} Q{$number} must be locked to C2 difficulty.");
                 }
 
-                if ($section === 'speaking' && toeicSwSpeakingUsesPromptAudio((string)$task['type'])) {
+                if (!$this->imageOnly && $section === 'speaking' && toeicSwSpeakingUsesPromptAudio((string)$task['type'])) {
                     $audioPath = trim((string)($task['audio_path'] ?? ''));
                     if ($audioPath === '') {
                         throw new RuntimeException("{$section} Q{$number} missing audio_path.");
@@ -163,9 +168,9 @@ class ToeicSwPackageImporter {
                     $audio[$audioPath] = true;
                     $stats['audio_files']++;
                     $stats['audio_transcripts']++;
-                } elseif ($section === 'speaking' && !empty($task['audio_path'])) {
+                } elseif (!$this->imageOnly && $section === 'speaking' && !empty($task['audio_path'])) {
                     throw new RuntimeException("{$section} Q{$number} should not reference prompt audio for {$task['type']}.");
-                } elseif ($section === 'speaking' && $this->audioTranscriptForTask($task) !== '') {
+                } elseif (!$this->imageOnly && $section === 'speaking' && $this->audioTranscriptForTask($task) !== '') {
                     throw new RuntimeException("{$section} Q{$number} should not reference prompt audio transcript for {$task['type']}.");
                 }
 
@@ -204,7 +209,7 @@ class ToeicSwPackageImporter {
         if (count($images) !== 7) {
             throw new RuntimeException('Each package must reference exactly 7 unique images.');
         }
-        if (count($audio) !== 7) {
+        if (!$this->imageOnly && count($audio) !== 7) {
             throw new RuntimeException('Each package must reference exactly 7 unique speaking prompt audio files.');
         }
     }
@@ -240,6 +245,48 @@ class ToeicSwPackageImporter {
             }
         }
         $stats['logs'][] = "{$packageName}: imported.";
+    }
+
+    private function updatePackageImages(array $manifest, int $package, string $packageName, array &$stats, bool $dryRun): void {
+        $planned = 0;
+
+        foreach (['speaking', 'writing'] as $section) {
+            foreach (($manifest[$section] ?? []) as $task) {
+                if (!in_array($task['type'] ?? '', ['describe_picture', 'write_sentence_based_on_picture'], true)) {
+                    continue;
+                }
+
+                $table = getToeicSwContentTableForType((string)$task['type']);
+                if (!$table) {
+                    throw new RuntimeException('Unknown image task type: ' . ($task['type'] ?? ''));
+                }
+
+                $questionNumber = (int)$task['question_number'];
+                if (!$this->contentExists($table, $package, $questionNumber)) {
+                    throw new RuntimeException("Cannot update image only; existing {$table} package {$package} Q{$questionNumber} was not found.");
+                }
+
+                $imagePath = $this->resolveMediaPath($packageName, (string)$task['image_path']);
+                $planned++;
+
+                if ($dryRun) {
+                    continue;
+                }
+
+                $stmt = $this->conn->prepare("UPDATE {$table} SET image_path = ? WHERE package_number = ? AND question_number = ?");
+                if (!$stmt) {
+                    throw new RuntimeException("Unable to prepare image-only update for {$table}.");
+                }
+                $stmt->bind_param("sii", $imagePath, $package, $questionNumber);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        $stats['updated'] += $planned;
+        $stats['logs'][] = $dryRun
+            ? "{$packageName}: image-only dry run planned {$planned} image URL updates."
+            : "{$packageName}: image-only updated {$planned} image URLs; content and audio were preserved.";
     }
 
     private function deleteStalePackageRows(array $manifest, int $package, array &$stats): void {

@@ -71,6 +71,7 @@ $form = [
     'use_remote_media' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['use_remote_media']) : true,
     'dry_run' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['dry_run']) : true,
     'verify_remote_media' => $_SERVER['REQUEST_METHOD'] === 'POST' ? isset($_POST['verify_remote_media']) : true,
+    'import_mode' => isset($_POST['import_mode']) && $_POST['import_mode'] === 'full' ? 'full' : 'images_only',
 ];
 
 $result = null;
@@ -93,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'use_remote_media' => $form['use_remote_media'],
                 'media_base_url' => $form['r2_base_url'],
                 'verify_remote_media' => $form['verify_remote_media'],
+                'import_mode' => $form['import_mode'],
             ]);
         } catch (Throwable $e) {
             $error = $e->getMessage();
@@ -146,7 +148,7 @@ $summaryKeys = [
             <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
                     <h1 class="h3 mb-2">TOEIC SW R2 Package Import</h1>
-                    <p class="muted mb-0">Imports generated TOEIC Speaking and Writing packages with Cloudflare R2 media URLs.</p>
+                    <p class="muted mb-0">Updates TOEIC Speaking and Writing package media URLs from Cloudflare R2.</p>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
                     <?php if (!$bootstrapMode): ?>
@@ -176,6 +178,19 @@ $summaryKeys = [
                         <div class="mb-3">
                             <label class="form-label" for="r2_base_url">R2 public base URL</label>
                             <input class="form-control" id="r2_base_url" name="r2_base_url" value="<?php echo toeicSwImportH($form['r2_base_url']); ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Import mode</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="mode_images_only" name="import_mode" value="images_only" <?php echo $form['import_mode'] === 'images_only' ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="mode_images_only">Update image URLs only</label>
+                                <div class="form-text">Preserves existing prompts, rubrics, answers, speaking audio, and transcripts.</div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="mode_full" name="import_mode" value="full" <?php echo $form['import_mode'] === 'full' ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="mode_full">Full content import</label>
+                                <div class="form-text">Use only when the manifest content should replace existing bank content.</div>
+                            </div>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="use_remote_media" name="use_remote_media" value="1" <?php echo $form['use_remote_media'] ? 'checked' : ''; ?>>
@@ -237,6 +252,9 @@ $summaryKeys = [
                 <div class="mt-3">
                     <span class="badge bg-<?php echo !empty($result['remote_media']) ? 'success' : 'secondary'; ?>">
                         <?php echo !empty($result['remote_media']) ? 'R2 media URLs' : 'Local media paths'; ?>
+                    </span>
+                    <span class="badge bg-info text-dark">
+                        <?php echo ($result['import_mode'] ?? '') === 'images_only' ? 'Image URLs only' : 'Full content import'; ?>
                     </span>
                     <span class="badge bg-<?php echo !empty($result['dry_run']) ? 'warning text-dark' : 'primary'; ?>">
                         <?php echo !empty($result['dry_run']) ? 'Dry run' : 'Writes enabled'; ?>
