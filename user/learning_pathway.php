@@ -101,12 +101,15 @@ $back_url = $format === 'toeic_sw'
     <link href="<?php echo htmlspecialchars(getVersionedAssetUrl('assets/css/toeic-redesign.css', '../assets/css/toeic-redesign.css')); ?>" rel="stylesheet">
     <style>
         .lp-layout { display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; }
-        .lp-sidebar { background: #f3ead8; border-right: 2px solid var(--cloud-line); padding: 1.5rem; }
+        .lp-sidebar { background: #f3ead8; border-right: 2px solid var(--cloud-line); padding: 1.5rem; overflow-x: hidden; }
         .lp-main { padding: 3rem; max-width: 1000px; }
         .module-item {
             display: flex; gap: 1rem; padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem;
             text-decoration: none; color: inherit; transition: all 0.2s; border: 2px solid transparent;
+            min-width: 0;
         }
+        .module-item > div:last-child { min-width: 0; }
+        .module-item h6, .module-item small { overflow-wrap: anywhere; word-break: break-word; }
         .module-item:hover { background: white; border-color: var(--cloud-line); }
         .module-item.active { background: var(--focus-blue); color: white; border-color: var(--focus-blue); }
         .module-item.locked { opacity: 0.5; pointer-events: none; }
