@@ -11,6 +11,8 @@
     const prepareTimers = new Map();
     const taskTimerIntervals = new Map();
     const micRequests = new Set();
+    const autoStartedRows = new Set();
+    const AUTO_RECORD_GAP_SECONDS = 5;
     let currentQuestion = 0;
     let submitting = false;
 
@@ -109,11 +111,11 @@
         submit.disabled = missing > 0 || busy || failedUploads > 0;
 
         if (failedUploads > 0) {
-            setSubmitMessage('A recording upload failed. Record that question again before submitting.', 'error');
+            setSubmitMessage('A recording upload failed. Refresh the page to retry before submitting.', 'error');
         } else if (busy) {
-            setSubmitMessage('Finish the current preparation, recording, or upload before moving on.', 'pending');
+            setSubmitMessage('Auto prepare, recording, or upload is still running. Next unlocks after save.', 'pending');
         } else if (missing > 0) {
-            setSubmitMessage(`${missing} recording${missing === 1 ? '' : 's'} remaining before submit.`, '');
+            setSubmitMessage(`${missing} speaking question${missing === 1 ? '' : 's'} still need the automatic recording.`, '');
         } else {
             setSubmitMessage('All recordings uploaded. Ready to submit.', 'ok');
         }
@@ -417,39 +419,105 @@
         }
     }
 
-    window.startToeicSwPrepare = function startToeicSwPrepare(rowId, prepareSeconds, maxSeconds) {
+    function setRecordControl(rowId, html) {
         const key = rowKey(rowId);
-        if (prepareTimers.has(key) || recorders.has(key)) {
+        const control = document.getElementById(`record-btn-${key}`);
+        if (!control) {
+            return;
+        }
+        control.innerHTML = html;
+        control.setAttribute('aria-disabled', 'true');
+        if ('disabled' in control) {
+            control.disabled = true;
+        }
+        control.onclick = null;
+    }
+
+    function startToeicSwAutoRecordGap(rowId, maxSeconds) {
+        const key = rowKey(rowId);
+        const timer = document.getElementById(`sw-record-timer-${key}`);
+        let remaining = AUTO_RECORD_GAP_SECONDS;
+
+        setRecordControl(key, '<i class="fas fa-clock"></i> Recording cue');
+        setStatus(key, `Recording starts in ${remaining}s`, 'pending');
+        if (timer) {
+            timer.textContent = `Recording starts in ${remaining}s`;
+        }
+        refreshSubmitState();
+
+        const interval = setInterval(() => {
+            remaining -= 1;
+            if (remaining > 0) {
+                if (timer) {
+                    timer.textContent = `Recording starts in ${remaining}s`;
+                }
+                setStatus(key, `Recording starts in ${remaining}s`, 'pending');
+                return;
+            }
+
+            clearInterval(interval);
+            prepareTimers.delete(key);
+            if (timer) {
+                timer.textContent = 'Recording now';
+            }
+            window.startToeicSwTimedRecording(key, maxSeconds);
+        }, 1000);
+
+        prepareTimers.set(key, interval);
+        refreshSubmitState();
+    }
+
+    function startActiveSpeakingFlow(card) {
+        if (cfg.section !== 'speaking' || !card) {
             return;
         }
 
-        const button = document.getElementById(`record-btn-${key}`);
+        const rowId = rowKey(card.dataset.rowId);
+        if (card.dataset.hasAnswer === '1') {
+            setRecordControl(rowId, '<i class="fas fa-check-circle"></i> Recording saved');
+            const timer = document.getElementById(`sw-record-timer-${rowId}`);
+            if (timer) {
+                timer.textContent = 'Ready for next question';
+            }
+            if (!document.getElementById(`sw-status-${rowId}`)?.textContent) {
+                setStatus(rowId, 'Recording saved', 'saved');
+            }
+            return;
+        }
+
+        if (autoStartedRows.has(rowId) || isSpeakingFlowBusy()) {
+            return;
+        }
+
+        autoStartedRows.add(rowId);
+        window.startToeicSwPrepare(
+            rowId,
+            Number(card.dataset.prepareSeconds || 0),
+            Number(card.dataset.responseSeconds || 0)
+        );
+    }
+
+    window.startToeicSwPrepare = function startToeicSwPrepare(rowId, prepareSeconds, maxSeconds) {
+        const key = rowKey(rowId);
+        if (prepareTimers.has(key) || recorders.has(key) || pendingUploads.has(key)) {
+            return;
+        }
+
         const timer = document.getElementById(`sw-record-timer-${key}`);
         let remaining = Math.max(0, Number(prepareSeconds || 0));
 
-        const enableRecording = () => {
+        const startGap = () => {
             prepareTimers.delete(key);
-            if (button) {
-                button.disabled = false;
-                button.innerHTML = '<i class="fas fa-microphone me-2"></i>Start Recording';
-                button.onclick = () => window.startToeicSwTimedRecording(key, maxSeconds);
-            }
-            if (timer) {
-                timer.textContent = 'Ready';
-            }
-            setStatus(key, 'Preparation complete', 'saved');
+            startToeicSwAutoRecordGap(key, maxSeconds);
             refreshSubmitState();
         };
 
         if (remaining <= 0) {
-            enableRecording();
+            startGap();
             return;
         }
 
-        if (button) {
-            button.disabled = true;
-            button.innerHTML = '<i class="fas fa-hourglass-half me-2"></i>Preparing';
-        }
+        setRecordControl(key, '<i class="fas fa-hourglass-half"></i> Preparing');
         setStatus(key, 'Preparing...', 'pending');
         if (timer) {
             timer.textContent = `Prepare ${remaining}s`;
@@ -463,7 +531,7 @@
             }
             if (remaining <= 0) {
                 clearInterval(interval);
-                enableRecording();
+                startGap();
             }
         }, 1000);
         prepareTimers.set(key, interval);
@@ -472,11 +540,9 @@
 
     window.startToeicSwTimedRecording = async function startToeicSwTimedRecording(rowId, maxSeconds) {
         const key = rowKey(rowId);
-        const button = document.getElementById(`record-btn-${key}`);
         const timer = document.getElementById(`sw-record-timer-${key}`);
 
         if (recorders.has(key)) {
-            stopRecorder(key);
             return;
         }
 
@@ -504,10 +570,7 @@
 
         try {
             micRequests.add(key);
-            if (button) {
-                button.disabled = true;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Opening Mic';
-            }
+            setRecordControl(key, '<i class="fas fa-spinner fa-spin"></i> Opening mic');
             setStatus(key, 'Requesting microphone permission...', 'pending');
             refreshSubmitState();
             stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
@@ -522,10 +585,7 @@
             if (stream) {
                 stream.getTracks().forEach((track) => track.stop());
             }
-            if (button) {
-                button.disabled = false;
-                button.innerHTML = '<i class="fas fa-microphone me-2"></i>Start Recording';
-            }
+            setRecordControl(key, '<i class="fas fa-triangle-exclamation"></i> Mic blocked');
             const blocked = error && (error.name === 'NotAllowedError' || error.name === 'SecurityError');
             setStatus(key, blocked ? 'Please allow microphone access for this site' : 'Could not access microphone', 'error');
             refreshSubmitState();
@@ -544,7 +604,7 @@
         };
 
         recorder.onerror = () => {
-            setStatus(key, 'Recording failed. Please record again.', 'error');
+            setStatus(key, 'Recording failed. Refresh the page to retry this question.', 'error');
             stopRecorder(key);
         };
 
@@ -560,38 +620,31 @@
             }
 
             if (chunks.length === 0) {
-                if (button) {
-                    button.disabled = false;
-                    button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
-                }
-                setStatus(key, 'No audio was captured. Please record again.', 'error');
+                setRecordControl(key, '<i class="fas fa-circle-exclamation"></i> No audio captured');
+                setStatus(key, 'No audio was captured. Refresh the page to retry this question.', 'error');
                 refreshSubmitState();
                 return;
             }
 
             const blob = new Blob(chunks, {type: recordedMime});
-            if (button) {
-                button.disabled = true;
-                button.innerHTML = '<i class="fas fa-cloud-upload-alt me-2"></i>Uploading';
-            }
+            setRecordControl(key, '<i class="fas fa-cloud-upload-alt"></i> Uploading');
 
             uploadRecording(key, blob)
                 .catch((error) => {
                     console.error('TOEIC SW recording upload failed:', error);
                 })
                 .finally(() => {
-                    if (button) {
-                        button.disabled = false;
-                        button.innerHTML = '<i class="fas fa-microphone me-2"></i>Record Again';
+                    const card = document.querySelector(`.sw-question[data-row-id="${key}"]`);
+                    if (card && card.dataset.hasAnswer === '1') {
+                        setRecordControl(key, '<i class="fas fa-check-circle"></i> Recording saved');
+                    } else {
+                        setRecordControl(key, '<i class="fas fa-circle-exclamation"></i> Upload failed');
                     }
                 });
         };
 
         let remaining = Math.max(1, Number(maxSeconds || 30));
-        if (button) {
-            button.disabled = false;
-            button.innerHTML = '<i class="fas fa-stop me-2"></i>Stop Recording';
-        }
+        setRecordControl(key, '<i class="fas fa-microphone-lines"></i> Recording');
         if (timer) {
             timer.textContent = `${remaining}s`;
         }
@@ -627,7 +680,7 @@
 
         if (uploadErrors.size > 0) {
             const firstError = Array.from(uploadErrors.values())[0];
-            throw new Error(firstError || 'A recording upload failed. Please record again.');
+            throw new Error(firstError || 'A recording upload failed. Refresh the page to retry.');
         }
     };
 
@@ -640,7 +693,7 @@
         const nextIndex = Math.max(0, Math.min(Number(index) || 0, cards.length - 1));
         if (!options.force && nextIndex !== currentQuestion && cfg.section === 'speaking' && isSpeakingFlowBusy()) {
             refreshSubmitState();
-            setSubmitMessage('Finish the current preparation, recording, or upload before changing questions.', 'error');
+            setSubmitMessage('Auto prepare, recording, or upload is still running. Next unlocks after save.', 'error');
             return;
         }
 
@@ -674,6 +727,7 @@
             activeCard.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
         refreshSubmitState();
+        startActiveSpeakingFlow(activeCard);
     };
 
     window.prevToeicSwQuestion = function prevToeicSwQuestion() {

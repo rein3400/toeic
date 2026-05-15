@@ -130,7 +130,7 @@ $progress = getToeicSwProgressMap($conn, $requested_session, $section);
 $question_count = count($questions);
 $section_label = $section === 'speaking' ? 'Speaking' : 'Writing';
 $section_detail = $section === 'speaking'
-    ? '11 questions, ETS-style prepare and record timing'
+    ? 'Auto prepare, 5-second cue, then timed recording.'
     : '8 questions, autosave, word count, and writing timers';
 $mode_label = $practice_mode ? 'Practice' : 'Full Simulation';
 $answered_count = count(array_filter($progress));
@@ -367,6 +367,23 @@ function toeicSwRenderPrompt(array $question): void {
             margin-top: 1.3rem;
             padding-top: 1.1rem;
         }
+        .sw-auto-flow-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            min-height: 42px;
+            border-radius: 12px;
+            padding: 0.65rem 0.95rem;
+            background: var(--academy-blue);
+            color: #ffffff;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .sw-record-timer {
+            color: #334155;
+            font-weight: 900;
+        }
         .sw-record-panel audio {
             max-width: 360px;
             width: min(360px, 100%);
@@ -557,7 +574,7 @@ function toeicSwRenderPrompt(array $question): void {
     </header>
 
     <main class="flex-1 flex overflow-hidden sw-main-shell">
-        <aside class="w-1/2 min-w-[500px] border-r-4 border-slate-200 flex flex-col sw-context-pane">
+        <aside class="w-[320px] min-w-[280px] max-w-[360px] border-r-4 border-slate-200 flex flex-col sw-context-pane">
             <div class="flex items-center justify-between px-6 py-4 border-b-2 border-slate-100 bg-white shrink-0">
                 <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest"><?php echo toeicSwH($context_title); ?></h3>
                 <span class="study-pill" style="font-size:10px; background:var(--sunbeam-yellow); border-radius:8px; padding: 4px 8px;"><?php echo toeicSwH($mode_label); ?></span>
@@ -587,7 +604,7 @@ function toeicSwRenderPrompt(array $question): void {
                     </div>
                     <p class="mb-0 text-sm leading-relaxed opacity-90">
                         <?php echo $section === 'speaking'
-                            ? 'Prepare, record, and wait for the upload status before moving to the next response.'
+                            ? 'Each question starts on its own. Wait for the 5-second cue, speak once, then move next after upload.'
                             : 'Type your response in the answer box. Responses autosave while you write.'; ?>
                     </p>
                 </div>
@@ -616,6 +633,8 @@ function toeicSwRenderPrompt(array $question): void {
                              data-question-number="<?php echo $number; ?>"
                              data-has-answer="<?php echo $has_answer ? '1' : '0'; ?>"
                              data-task-minutes="<?php echo (int)($question['task_minutes'] ?? 0); ?>"
+                             data-prepare-seconds="<?php echo (int)($question['prepare_seconds'] ?? 0); ?>"
+                             data-response-seconds="<?php echo (int)($question['response_seconds'] ?? 0); ?>"
                              <?php echo $question_index === 0 ? '' : 'hidden'; ?>>
                         <div class="flex flex-wrap justify-between gap-3">
                             <div>
@@ -648,10 +667,10 @@ function toeicSwRenderPrompt(array $question): void {
 
                         <?php if ($section === 'speaking'): ?>
                             <div class="sw-record-panel">
-                                <button type="button" id="record-btn-<?php echo $row_id; ?>" class="study-button py-2 px-3" onclick="startToeicSwPrepare(<?php echo $row_id; ?>, <?php echo (int)$question['prepare_seconds']; ?>, <?php echo (int)$question['response_seconds']; ?>)">
-                                    <i class="fas fa-hourglass-start me-2"></i>Start Prepare
-                                </button>
-                                <span class="font-bold text-slate-500" id="sw-record-timer-<?php echo $row_id; ?>"></span>
+                                <div id="record-btn-<?php echo $row_id; ?>" class="sw-auto-flow-badge" role="status" aria-live="polite">
+                                    <i class="fas fa-hourglass-start"></i> Auto flow ready
+                                </div>
+                                <span class="sw-record-timer" id="sw-record-timer-<?php echo $row_id; ?>" aria-live="polite">Starts automatically</span>
                                 <audio id="sw-playback-<?php echo $row_id; ?>" controls <?php echo $playback_src ? 'src="' . toeicSwH($playback_src) . '"' : 'hidden'; ?>></audio>
                             </div>
                         <?php else: ?>
