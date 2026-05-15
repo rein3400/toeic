@@ -1813,6 +1813,66 @@ body.tc-public-page .rg-footer-bottom p:last-child {
     color: inherit !important;
 }
 
+.tc-user-page .study-card.text-white .study-card,
+.tc-user-page .profile-hero .study-card,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card {
+    color: var(--tc-ink) !important;
+    border-color: rgba(216, 224, 234, 0.9) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+}
+
+.tc-user-page .study-card.text-white .study-card *,
+.tc-user-page .profile-hero .study-card *,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card *,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card *,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card * {
+    color: var(--tc-ink) !important;
+}
+
+.tc-user-page .study-card.text-white .study-card .study-kicker,
+.tc-user-page .profile-hero .study-card .study-kicker,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .study-kicker,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .study-kicker,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .study-kicker {
+    color: var(--tc-teal) !important;
+}
+
+.tc-user-page .study-card.text-white .study-card .text-muted,
+.tc-user-page .profile-hero .study-card .text-muted,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .text-muted,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .text-muted,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .text-muted {
+    color: var(--tc-muted) !important;
+}
+
+.tc-user-page .study-card.text-white .study-card .study-button,
+.tc-user-page .study-card.text-white .study-card .study-button *,
+.tc-user-page .profile-hero .study-card .study-button,
+.tc-user-page .profile-hero .study-card .study-button *,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .study-button,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .study-button *,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .study-button,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .study-button *,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .study-button,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .study-button * {
+    color: #FFFFFF !important;
+}
+
+.tc-user-page .study-card.text-white .study-card .study-button-secondary,
+.tc-user-page .study-card.text-white .study-card .study-button-secondary *,
+.tc-user-page .profile-hero .study-card .study-button-secondary,
+.tc-user-page .profile-hero .study-card .study-button-secondary *,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .study-button-secondary,
+.tc-user-page section.study-card[style*="linear-gradient"] .study-card .study-button-secondary *,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .study-button-secondary,
+.tc-user-page .study-card[style*="var(--academy-blue)"] .study-card .study-button-secondary *,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .study-button-secondary,
+.tc-test-page .study-card[style*="var(--academy-blue)"] .study-card .study-button-secondary * {
+    color: var(--tc-ink) !important;
+}
+
 .tc-user-page .tc-light-price-card,
 .tc-user-page .tc-light-price-card * {
     color: var(--tc-ink) !important;

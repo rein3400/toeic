@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
         <section class="study-card p-4 p-lg-5 mb-5 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-8">
-                    <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Exam Format</span>
+                    <span class="study-kicker" style="color:#FEF3C7 !important;">Exam Format</span>
                     <h2 class="display-4 text-white mb-3"><?php echo htmlspecialchars($format_title); ?></h2>
                     <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
                         <?php echo $is_free_trial_credit

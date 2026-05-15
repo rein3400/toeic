@@ -79,7 +79,7 @@ $checkout_label = $payment_mode === 'direct_bank' ? 'transfer bank langsung' : '
         <section class="study-card p-4 p-lg-5 mb-4 text-white" style="background: linear-gradient(135deg, var(--academy-blue), var(--focus-blue)); border:none;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
-                    <span class="study-kicker" style="color:var(--sunbeam-yellow) !important;">Special Offer</span>
+                    <span class="study-kicker" style="color:#FEF3C7 !important;">Special Offer</span>
                     <h2 class="display-4 text-white mb-3"><?php echo $toeic_name; ?></h2>
                     <p class="text-white-50 mb-4" style="font-size: 1.1rem;">
                         Akses 200 soal, mode full dengan proctoring, dan konversi skor TOEIC Listening & Reading.

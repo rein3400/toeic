@@ -118,7 +118,7 @@ $pricing_cta = $is_logged_in ? ($is_admin ? 'admin/index.php' : 'user/buy_exam.p
                         <span class="category-label">Full Test</span>
                     </a>
                     <a href="<?php echo htmlspecialchars($pricing_cta); ?>" class="category-item">
-                        <div class="category-icon" style="background:#FFFBEB; color:#F59E0B;"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="category-icon" style="background:#FFFBEB; color:#B45309;"><i class="fas fa-shopping-cart"></i></div>
                         <span class="category-label">Paket</span>
                     </a>
                 </div>

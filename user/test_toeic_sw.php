@@ -356,7 +356,7 @@ function toeicSwRenderPrompt(array $question): void {
             text-align: right;
         }
         .sw-status.saved { color: #059669; }
-        .sw-status.pending { color: #f59e0b; }
+        .sw-status.pending { color: #B45309; }
         .sw-status.error { color: #dc2626; font-weight: 800; }
         .sw-record-panel {
             display: flex;

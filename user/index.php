@@ -196,9 +196,9 @@ if (strpos($user_name, ' ') !== false) {
         <section class="tc-dashboard-hero mb-4">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-7">
-                    <span class="study-kicker" style="color:var(--tc-amber) !important;">TOEIC Score Cockpit</span>
+                    <span class="study-kicker" style="color:#FEF3C7 !important;">TOEIC Score Cockpit</span>
                     <h1 class="display-5 text-white mb-3">Selamat datang, <?php echo htmlspecialchars($user_name); ?>.</h1>
-                    <p class="text-white-50 mb-4" style="font-size: 1.08rem; color: rgba(255,255,255,0.8) !important;">
+                    <p class="text-white-50 mb-4" style="font-size: 1.08rem; color: #F8FAFC !important;">
                         Skor terakhir, paket aktif, dan latihan berikutnya diringkas dalam satu layar.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
