@@ -595,31 +595,6 @@ function fallbackToeicSwSpeakingScore(string $audioPath, ?string $transcript = n
     return 0.1;
 }
 
-function toeicSwGetStoredSpeakingTranscript(mysqli $conn, array $questionRow): ?string {
-    $testSession = (string)($questionRow['test_session'] ?? '');
-    $questionRowId = (int)($questionRow['id'] ?? 0);
-    if ($testSession === '' || $questionRowId <= 0) {
-        return null;
-    }
-
-    $stmt = $conn->prepare("
-        SELECT transcript_text
-        FROM toeic_sw_subjective_scores
-        WHERE test_session = ? AND question_row_id = ?
-        LIMIT 1
-    ");
-    if (!$stmt) {
-        return null;
-    }
-    $stmt->bind_param("si", $testSession, $questionRowId);
-    $stmt->execute();
-    $row = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-
-    $text = trim((string)($row['transcript_text'] ?? ''));
-    return $text !== '' ? $text : null;
-}
-
 function toeicSwStoreFallbackScore(mysqli $conn, array $questionRow, array $activeConfig, string $reason): float {
     $section = (string)$questionRow['section'];
     $questionType = (string)$questionRow['question_type'];
@@ -650,7 +625,6 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
     $userAnswer = (string)($questionRow['user_answer'] ?? '');
     $sourcePath = (string)($questionRow['source_path'] ?? '');
     $activeConfig = getToeicSwActiveScoringConfig($conn);
-    $speakingTranscriptForFallback = null;
 
     if (!$activeConfig) {
         $fallback = $section === 'speaking'
@@ -681,47 +655,39 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
     try {
         if ($section === 'speaking') {
             $path = $sourcePath ?: $userAnswer;
-            $storedTranscript = toeicSwGetStoredSpeakingTranscript($conn, $questionRow);
-            if (trim($path) === '' && $storedTranscript === null) {
+            if (trim($path) === '') {
                 return 0.0;
             }
 
-            if ($storedTranscript !== null) {
-                $path = trim($path) !== '' ? $path : 'text-fixture://speaking/' . (int)$questionRow['id'];
-                $transcriptText = $storedTranscript;
-            } else {
-                $transcription = transcribeToeicSwAudio($conn, $path);
-                if (!$transcription['success']) {
-                    $fallback = fallbackToeicSwSpeakingScore($path);
-                    storeToeicSwSubjectiveScore(
-                        $conn,
-                        $questionRow,
-                        $path,
-                        null,
-                        round($fallback * 30, 2),
-                        $fallback,
-                        ['fallback_reason' => $transcription['error']],
-                        $activeConfig,
-                        'needs_rescore'
-                    );
-                    return $fallback;
-                }
-                $transcriptText = (string)$transcription['text'];
+            $transcription = transcribeToeicSwAudio($conn, $path);
+            if (!$transcription['success']) {
+                $fallback = fallbackToeicSwSpeakingScore($path);
+                storeToeicSwSubjectiveScore(
+                    $conn,
+                    $questionRow,
+                    $path,
+                    null,
+                    round($fallback * 30, 2),
+                    $fallback,
+                    ['fallback_reason' => $transcription['error']],
+                    $activeConfig,
+                    'needs_rescore'
+                );
+                return $fallback;
             }
 
-            $speakingTranscriptForFallback = $transcriptText;
-            $prompt = buildToeicSwContentPrompt($questionRow, $transcriptText);
+            $prompt = buildToeicSwContentPrompt($questionRow, $transcription['text']);
             if (toeicSwScoringBudgetExhausted()) {
                 return toeicSwStoreFallbackScore($conn, $questionRow, $activeConfig, 'Interactive scoring time budget exhausted after transcription; queued for admin rescore');
             }
             $scoreData = requestToeicSwSubjectiveScore($activeConfig, $section, $questionType, $prompt);
             if (!$scoreData || !isset($scoreData['score_0_to_30'])) {
-                $fallback = fallbackToeicSwSpeakingScore($path, $transcriptText);
+                $fallback = fallbackToeicSwSpeakingScore($path, $transcription['text']);
                 storeToeicSwSubjectiveScore(
                     $conn,
                     $questionRow,
                     $path,
-                    $transcriptText,
+                    $transcription['text'],
                     round($fallback * 30, 2),
                     $fallback,
                     ['fallback_reason' => 'Scoring response invalid'],
@@ -733,7 +699,7 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
 
             $raw = max(0, min(30, (float)$scoreData['score_0_to_30']));
             $normalized = round($raw / 30, 4);
-            storeToeicSwSubjectiveScore($conn, $questionRow, $path, $transcriptText, $raw, $normalized, $scoreData, $activeConfig, 'scored');
+            storeToeicSwSubjectiveScore($conn, $questionRow, $path, $transcription['text'], $raw, $normalized, $scoreData, $activeConfig, 'scored');
             return $normalized;
         }
 
@@ -769,13 +735,13 @@ function scoreToeicSwSubjectiveQuestion(mysqli $conn, array $questionRow): float
     } catch (Throwable $e) {
         error_log('TOEIC SW subjective scoring fallback: ' . $e->getMessage());
         $fallback = $section === 'speaking'
-            ? fallbackToeicSwSpeakingScore($sourcePath ?: $userAnswer, $speakingTranscriptForFallback)
+            ? fallbackToeicSwSpeakingScore($sourcePath ?: $userAnswer)
             : fallbackToeicSwWritingScore($userAnswer, $questionType === 'write_opinion_essay' ? 300 : 40);
         storeToeicSwSubjectiveScore(
             $conn,
             $questionRow,
             $section === 'speaking' ? ($sourcePath ?: $userAnswer) : null,
-            $section === 'speaking' ? $speakingTranscriptForFallback : null,
+            null,
             round($fallback * 30, 2),
             $fallback,
             ['fallback_reason' => $e->getMessage()],

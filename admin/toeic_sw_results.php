@@ -135,9 +135,6 @@ function toeicSwAdminResultH($value): string {
                                                 <a class="btn btn-sm btn-outline-light me-1" href="toeic_sw_result_detail.php?session=<?php echo urlencode((string)$row['test_session']); ?>">
                                                     Detail
                                                 </a>
-                                                <a class="btn btn-sm btn-outline-warning me-1" href="toeic_sw_scoring_fixture.php?session=<?php echo urlencode((string)$row['test_session']); ?>">
-                                                    Text Fixture
-                                                </a>
                                                 <form method="post" class="d-inline">
                                                     <?= csrfField() ?>
                                                     <input type="hidden" name="action" value="rescore">
