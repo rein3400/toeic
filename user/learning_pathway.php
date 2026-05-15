@@ -15,6 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = (int)$_SESSION['user_id'];
 $is_admin = ($_SESSION['role'] ?? '') === 'admin';
 $test_session = $_GET['session'] ?? '';
+$format = ($_GET['format'] ?? '') === 'toeic_sw' || strpos($test_session, 'toeic_sw_') === 0 ? 'toeic_sw' : 'toeic';
 $website_title = getWebsiteTitle();
 
 if (empty($test_session)) {
@@ -23,7 +24,8 @@ if (empty($test_session)) {
 
 // Verify access
 if (!$is_admin) {
-    $stmt = $conn->prepare("SELECT 1 FROM toeic_test_sessions WHERE user_id = ? AND test_session = ?");
+    $table = $format === 'toeic_sw' ? 'toeic_sw_test_sessions' : 'toeic_test_sessions';
+    $stmt = $conn->prepare("SELECT 1 FROM {$table} WHERE user_id = ? AND test_session = ?");
     $stmt->bind_param("is", $user_id, $test_session);
     $stmt->execute();
     if ($stmt->get_result()->num_rows === 0) {
@@ -80,6 +82,10 @@ $sectionIcons = [
     'reading' => 'fa-book', 'listening' => 'fa-headphones', 'writing' => 'fa-pen',
     'speaking' => 'fa-microphone', 'grammar' => 'fa-pencil-alt', 'vocabulary' => 'fa-language',
 ];
+$pathway_title = $format === 'toeic_sw' ? 'TOEIC SW Learning Pathway' : 'Learning Pathway';
+$back_url = $format === 'toeic_sw'
+    ? 'result_toeic_sw.php?session=' . urlencode($test_session)
+    : 'ai_analysis.php?format=toeic&session=' . urlencode($test_session);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +134,7 @@ $sectionIcons = [
         <aside class="lp-sidebar">
             <div class="mb-4">
             <a href="index.php" class="study-headline text-decoration-none h4 d-block mb-1">TOEIC</a>
-                <p class="small text-muted fw-bold uppercase">Learning Pathway</p>
+                <p class="small text-muted fw-bold uppercase"><?php echo htmlspecialchars($pathway_title); ?></p>
             </div>
 
             <?php if (!empty($modules)): ?>
@@ -148,7 +154,7 @@ $sectionIcons = [
                         $isLocked = $m['status'] === 'locked';
                         $isCompleted = $m['status'] === 'completed';
                     ?>
-                        <a href="<?php echo $isLocked ? '#' : "learning_pathway.php?session=$test_session&module=".$m['id']; ?>"
+                        <a href="<?php echo $isLocked ? '#' : "learning_pathway.php?session=" . urlencode($test_session) . "&format=" . urlencode($format) . "&module=".$m['id']; ?>"
                            class="module-item <?php echo $isActive ? 'active' : ''; ?> <?php echo $isLocked ? 'locked' : ''; ?> <?php echo $isCompleted ? 'completed' : ''; ?>">
                             <div class="avatar-circle flex-shrink-0" style="width:32px; height:32px; font-size:12px; <?php echo $isActive ? 'background:white !important; color:var(--focus-blue) !important;' : ''; ?>">
                                 <?php if ($isLocked) echo '<i class="fas fa-lock"></i>'; else if ($isCompleted) echo '<i class="fas fa-check"></i>'; else echo $m['module_order']; ?>
@@ -163,8 +169,8 @@ $sectionIcons = [
             <?php endif; ?>
 
             <div class="mt-5 pt-4 border-top">
-                <a href="ai_analysis.php?format=toeic&session=<?php echo urlencode($test_session); ?>" class="study-button study-button-secondary w-100 py-2 min-vh-0" style="min-height:40px; font-size:12px;">
-                    <i class="fas fa-arrow-left me-2"></i> Back to Analysis
+                <a href="<?php echo htmlspecialchars($back_url); ?>" class="study-button study-button-secondary w-100 py-2 min-vh-0" style="min-height:40px; font-size:12px;">
+                    <i class="fas fa-arrow-left me-2"></i> Back
                 </a>
             </div>
         </aside>
@@ -177,7 +183,7 @@ $sectionIcons = [
                         <i class="fas fa-graduation-cap fa-2x text-primary"></i>
                     </div>
                     <h2 class="h3 mb-3">Your Personalized Pathway</h2>
-                    <p class="text-muted mb-4">Our AI will analyze your test performance and build a customized curriculum to target your specific weaknesses.</p>
+                    <p class="text-muted mb-4">Our AI will analyze your <?php echo $format === 'toeic_sw' ? 'Speaking & Writing' : 'TOEIC'; ?> performance and build a customized curriculum to target your specific weaknesses.</p>
                     <button class="study-button px-5" onclick="generateCurriculum()" id="btnGen">Build My Pathway</button>
                     <div id="genStatus" class="mt-4 small fw-bold text-primary" style="display:none;">
                         <i class="fas fa-robot fa-spin me-2"></i> Thinking... This may take up to 60 seconds.

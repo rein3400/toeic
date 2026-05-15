@@ -42,8 +42,9 @@ class CurriculumGenerator {
             return ['success' => true, 'curriculum_id' => $existing['id'], 'cached' => true];
         }
 
-        $analyzer = new WeaknessAnalyzer($this->conn);
-        $weakness = $analyzer->analyze($user_id, $test_session);
+        $weakness = strpos($test_session, 'toeic_sw_') === 0
+            ? $this->analyzeToeicSwWeakness($user_id, $test_session)
+            : (new WeaknessAnalyzer($this->conn))->analyze($user_id, $test_session);
 
         $stmt = $this->conn->prepare("
             INSERT INTO learning_curriculum (user_id, test_session, weakness_analysis, status, ai_provider)
@@ -174,7 +175,130 @@ class CurriculumGenerator {
         return ['success' => true, 'exercises_count' => count($exercises)];
     }
 
+    private function analyzeToeicSwWeakness(int $user_id, string $test_session): array {
+        $stmt = $this->conn->prepare("
+            SELECT speaking_scaled, writing_scaled, total_score, cefr_level
+            FROM toeic_sw_test_results
+            WHERE user_id = ? AND test_session = ?
+            LIMIT 1
+        ");
+        $stmt->bind_param("is", $user_id, $test_session);
+        $stmt->execute();
+        $scores = $stmt->get_result()->fetch_assoc() ?: [];
+        $stmt->close();
+
+        $stmt = $this->conn->prepare("
+            SELECT q.section, q.question_type, q.question_order, q.is_correct,
+                   s.normalized_score, s.feedback_json, s.fallback_reason, s.status
+            FROM toeic_sw_test_questions q
+            LEFT JOIN toeic_sw_subjective_scores s
+              ON s.test_session = q.test_session
+             AND s.question_row_id = q.id
+            WHERE q.user_id = ? AND q.test_session = ?
+            ORDER BY FIELD(q.section, 'speaking', 'writing'), q.question_order
+        ");
+        $stmt->bind_param("is", $user_id, $test_session);
+        $stmt->execute();
+        $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        $skillDescriptions = [
+            'read_text_aloud' => 'Pronunciation, pacing, and accurate read-aloud delivery',
+            'describe_picture' => 'Detailed picture description and organized visual language',
+            'respond_to_questions' => 'Direct spoken responses with complete reasons and examples',
+            'respond_using_information' => 'Using schedule or briefing information accurately under time pressure',
+            'express_opinion' => 'Clear spoken opinion with structure, support, and fluency',
+            'write_sentence_based_on_picture' => 'Accurate sentence writing using required words and visual context',
+            'respond_to_written_request' => 'Professional written reply with complete task coverage',
+            'write_opinion_essay' => 'Organized opinion essay with relevant support and control',
+        ];
+
+        $sectionStats = [];
+        $weakSkills = [];
+        $strongSkills = [];
+        $sum = 0.0;
+
+        foreach ($rows as $row) {
+            $section = (string)($row['section'] ?? 'unknown');
+            $type = (string)($row['question_type'] ?? 'general_sw');
+            $score = $row['normalized_score'] !== null
+                ? (float)$row['normalized_score']
+                : (float)($row['is_correct'] ?? 0);
+
+            if (!isset($sectionStats[$section])) {
+                $sectionStats[$section] = ['total' => 0, 'normalized_sum' => 0.0, 'needs_rescore' => 0];
+            }
+            $sectionStats[$section]['total']++;
+            $sectionStats[$section]['normalized_sum'] += $score;
+            if (($row['status'] ?? '') === 'needs_rescore') {
+                $sectionStats[$section]['needs_rescore']++;
+            }
+
+            $sum += $score;
+            $description = $skillDescriptions[$type] ?? str_replace('_', ' ', $type);
+            $feedback = json_decode((string)($row['feedback_json'] ?? ''), true);
+            $summary = is_array($feedback)
+                ? (string)($feedback['feedback_summary'] ?? $feedback['fallback_reason'] ?? '')
+                : (string)($row['fallback_reason'] ?? '');
+
+            if ($score < 0.6 || ($row['status'] ?? '') === 'needs_rescore') {
+                if (!isset($weakSkills[$type])) {
+                    $weakSkills[$type] = [
+                        'count' => 0,
+                        'description' => $description,
+                        'section' => $section,
+                        'evidence' => [],
+                    ];
+                }
+                $weakSkills[$type]['count']++;
+                if ($summary !== '' && count($weakSkills[$type]['evidence']) < 3) {
+                    $weakSkills[$type]['evidence'][] = $summary;
+                }
+            } elseif ($score >= 0.75) {
+                if (!isset($strongSkills[$type])) {
+                    $strongSkills[$type] = [
+                        'accuracy' => round($score * 100),
+                        'description' => $description,
+                        'section' => $section,
+                    ];
+                }
+            }
+        }
+
+        foreach ($sectionStats as &$stat) {
+            $stat['average_normalized'] = $stat['total'] > 0
+                ? round($stat['normalized_sum'] / $stat['total'], 4)
+                : 0.0;
+            unset($stat['normalized_sum']);
+        }
+        unset($stat);
+
+        uasort($weakSkills, fn($a, $b) => $b['count'] <=> $a['count']);
+        uasort($strongSkills, fn($a, $b) => ($b['accuracy'] ?? 0) <=> ($a['accuracy'] ?? 0));
+
+        $total = count($rows);
+        $average = $total > 0 ? $sum / $total : 0.0;
+
+        return [
+            'format' => 'toeic_sw',
+            'user_id' => $user_id,
+            'test_session' => $test_session,
+            'total_questions' => $total,
+            'overall_accuracy' => round($average * 100, 1),
+            'scores' => $scores,
+            'section_stats' => $sectionStats,
+            'weak_skills' => $weakSkills,
+            'strong_skills' => $strongSkills,
+            'recommended_cefr_start' => (string)($scores['cefr_level'] ?? 'A2'),
+            'priority_areas' => array_slice(array_keys($weakSkills), 0, 5),
+        ];
+    }
+
     private function generateSyllabus(array $weakness): array {
+        if (($weakness['format'] ?? '') === 'toeic_sw') {
+            return $this->generateToeicSwSyllabus($weakness);
+        }
+
         $weakSkillsList = [];
         foreach ($weakness['weak_skills'] as $skill => $data) {
             $weakSkillsList[] = "- {$data['description']} ({$skill})";
@@ -236,6 +360,78 @@ PROMPT;
         return $decoded;
     }
 
+    private function generateToeicSwSyllabus(array $weakness): array {
+        $weakSkillsList = [];
+        foreach (($weakness['weak_skills'] ?? []) as $skill => $data) {
+            $evidence = '';
+            if (!empty($data['evidence']) && is_array($data['evidence'])) {
+                $evidence = ' Evidence: ' . implode(' | ', array_slice(array_map('strval', $data['evidence']), 0, 2));
+            }
+            $weakSkillsList[] = "- {$data['description']} ({$skill}, {$data['section']}){$evidence}";
+        }
+
+        $strongSkillsList = [];
+        foreach (($weakness['strong_skills'] ?? []) as $skill => $data) {
+            $strongSkillsList[] = "- {$data['description']} ({$skill}, {$data['section']})";
+        }
+
+        $scores = $weakness['scores'] ?? [];
+        $speakingScaled = (int)($scores['speaking_scaled'] ?? 0);
+        $writingScaled = (int)($scores['writing_scaled'] ?? 0);
+        $totalScore = (int)($scores['total_score'] ?? 0);
+        $cefrLevel = (string)($scores['cefr_level'] ?? $weakness['recommended_cefr_start'] ?? 'A2');
+        $prompt = <<<PROMPT
+Kamu adalah perancang kurikulum TOEIC Speaking & Writing.
+
+Data siswa:
+- Speaking scaled: {$speakingScaled}
+- Writing scaled: {$writingScaled}
+- Total SW score: {$totalScore}
+- CEFR: {$cefrLevel}
+- Akurasi/normalized rata-rata: {$weakness['overall_accuracy']}%
+- Level awal rekomendasi: {$weakness['recommended_cefr_start']}
+
+Kelemahan utama:
+{weakness_list}
+
+Kekuatan utama:
+{strength_list}
+
+Buat syllabus personal TOEIC Speaking & Writing 6-8 modul. Modul harus actionable dan fokus pada task SW: read aloud, describe picture, spoken response, use provided information, express opinion, sentence writing, written request, dan opinion essay.
+
+Output JSON valid saja:
+{
+  "title": "Kurikulum Personal TOEIC Speaking & Writing",
+  "target_cefr": "B1",
+  "estimated_weeks": 4,
+  "modules": [
+    {
+      "title": "Judul modul",
+      "section": "speaking|writing",
+      "skill_category": "nama_skill",
+      "cefr_level": "A1|A2|B1|B2|C1",
+      "description": "deskripsi singkat",
+      "topics": ["topik 1", "topik 2"],
+      "estimated_minutes": 45
+    }
+  ]
+}
+PROMPT;
+
+        $prompt = str_replace(
+            ['{weakness_list}', '{strength_list}'],
+            [implode("\n", $weakSkillsList) ?: '- General TOEIC SW task completion', implode("\n", $strongSkillsList) ?: '- No clear strong skill yet'],
+            $prompt
+        );
+
+        $decoded = $this->parseJsonResponse($this->requestAI($prompt, 4000));
+        if (!$decoded || !isset($decoded['modules']) || !is_array($decoded['modules'])) {
+            throw new Exception('Failed to generate TOEIC SW syllabus');
+        }
+
+        return $decoded;
+    }
+
     private function buildModulePrompt(string $title, string $section, string $skill, string $cefr, string $topics, string $description): string {
         return <<<PROMPT
 Kamu adalah guru TOEIC dan penulis modul belajar.
@@ -267,7 +463,8 @@ Output JSON valid saja:
 
 PANDUAN:
 - Materi minimal 1000 kata, bilingual penjelasan Indonesia + contoh English
-- Fokus TOEIC Listening & Reading, grammar, vocabulary, workplace/business context
+- Fokus sesuai section modul: Listening/Reading untuk TOEIC LR, atau Speaking/Writing untuk TOEIC SW
+- Gunakan konteks workplace/business dan format latihan yang cocok dengan task TOEIC
 - Buat 8-10 latihan dengan explanation_html yang jelas
 PROMPT;
     }

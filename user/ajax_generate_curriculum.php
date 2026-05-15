@@ -25,11 +25,13 @@ if (empty($test_session)) {
 }
 
 $user_id = (int)$_SESSION['user_id'];
+$is_sw = strpos($test_session, 'toeic_sw_') === 0;
 
 // Verify user owns this test session (or is admin)
 $is_admin = ($_SESSION['role'] ?? '') === 'admin';
 if (!$is_admin) {
-    $stmt = $conn->prepare("SELECT 1 FROM toeic_test_sessions WHERE user_id = ? AND test_session = ?");
+    $table = $is_sw ? 'toeic_sw_test_sessions' : 'toeic_test_sessions';
+    $stmt = $conn->prepare("SELECT 1 FROM {$table} WHERE user_id = ? AND test_session = ?");
     $stmt->bind_param("is", $user_id, $test_session);
     $stmt->execute();
     if ($stmt->get_result()->num_rows === 0) {

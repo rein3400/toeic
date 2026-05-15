@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_sw_helper.php';
+require_once '../includes/csrf_helper.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'student') {
     header("Location: ../login.php");
@@ -42,6 +43,10 @@ $stmt->bind_param("si", $test_session, $user_id);
 $stmt->execute();
 $feedback_rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+$needs_rescore_count = count(array_filter(
+    $feedback_rows,
+    static fn($row) => ($row['status'] ?? '') === 'needs_rescore'
+));
 
 function toeicSwResultH($value): string {
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
@@ -64,6 +69,7 @@ function toeicSwFeedbackSummary(?string $json): string {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOEIC SW Result - <?php echo toeicSwResultH($website_title); ?></title>
+    <?php echo csrfMeta(); ?>
     <?php echo getFaviconHTML(); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -153,7 +159,15 @@ function toeicSwFeedbackSummary(?string $json): string {
                     <h2 class="h4 mb-1">Package <?php echo (int)$result['package_number']; ?></h2>
                     <p class="text-muted mb-0"><?php echo toeicSwResultH($mode_label); ?> completed <?php echo toeicSwResultH(date('d M Y H:i', strtotime((string)$result['completed_at']))); ?></p>
                 </div>
-                <a href="test_instructions.php?test_format=toeic_sw&mode=<?php echo toeicSwResultH($mode_param); ?>" class="study-button study-button-secondary">Try Another SW <?php echo toeicSwResultH($mode_label); ?></a>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="learning_pathway.php?format=toeic_sw&session=<?php echo urlencode($test_session); ?>" class="study-button">Build SW Pathway</a>
+                    <?php if ($needs_rescore_count > 0): ?>
+                        <button type="button" class="study-button study-button-secondary" id="swRescoreBtn" data-session="<?php echo toeicSwResultH($test_session); ?>">
+                            Retry AI Feedback (<?php echo (int)$needs_rescore_count; ?>)
+                        </button>
+                    <?php endif; ?>
+                    <a href="test_instructions.php?test_format=toeic_sw&mode=<?php echo toeicSwResultH($mode_param); ?>" class="study-button study-button-secondary">Try Another SW <?php echo toeicSwResultH($mode_label); ?></a>
+                </div>
             </div>
         </section>
 
@@ -189,5 +203,40 @@ function toeicSwFeedbackSummary(?string $json): string {
             <?php endforeach; ?>
         </section>
     </main>
+    <script>
+        const swRescoreBtn = document.getElementById('swRescoreBtn');
+        if (swRescoreBtn) {
+            swRescoreBtn.addEventListener('click', async () => {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                swRescoreBtn.disabled = true;
+                swRescoreBtn.textContent = 'Retrying AI feedback...';
+                try {
+                    for (let i = 0; i < 20; i++) {
+                        const response = await fetch('ajax_rescore_toeic_sw.php', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
+                            body: JSON.stringify({
+                                csrf_token: csrfToken,
+                                test_session: swRescoreBtn.dataset.session
+                            })
+                        });
+                        const data = await response.json();
+                        if (!data.success) {
+                            throw new Error(data.error || 'AI feedback retry failed');
+                        }
+                        if (!data.remaining) {
+                            window.location.reload();
+                            return;
+                        }
+                        swRescoreBtn.textContent = `Retrying AI feedback... ${data.remaining} left`;
+                    }
+                    window.location.reload();
+                } catch (error) {
+                    swRescoreBtn.disabled = false;
+                    swRescoreBtn.textContent = error.message;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
