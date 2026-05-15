@@ -1,13 +1,13 @@
-﻿{
-    "generated_at":  "2026-05-14T14:35:30.8425408+07:00",
+{
+    "generated_at":  "2026-05-15T11:02:58.2004201+07:00",
     "bucket":  "toeic-assets",
     "public_base_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev",
     "package_root":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw",
     "key_layout":  "toeic/sw/package_XX/\u003caudio|images\u003e/\u003cfilename\u003e",
     "summary":  {
                     "total":  140,
-                    "uploaded":  40,
-                    "skipped":  100,
+                    "uploaded":  134,
+                    "skipped":  6,
                     "failed":  0,
                     "dry_run":  false
                 },
@@ -15,26 +15,26 @@
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "ba42ff361405ef9a732f6be0636c1678919d4bafd69a61d0dc3e1d0ff795d6cf",
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  267306,
+                      "sha256":  "2e5458bb995f74a79d7944847159513fc4f1772bbc04e0cd247f9c4df498ce20",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:13:37.5648335+07:00"
+                      "uploaded_at":  "2026-05-15T10:41:27.2519834+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "d03ebca14c4733391ad2af33e52b70b4dadf01ebda8909ad4a20c7866e353341",
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  259016,
+                      "sha256":  "3794c4695958ca62da638e557a5891d564abc8dadf570b94b2368a94f687165d",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:13:52.2660977+07:00"
+                      "uploaded_at":  "2026-05-15T10:41:36.8396465+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -46,7 +46,7 @@
                       "bytes":  611372,
                       "sha256":  "5f10d74720ff93f0d76d565dc23e25d579c769ebfd4f5089e0a7592427103190",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:14:09.4769526+07:00"
+                      "uploaded_at":  "2026-05-15T10:41:45.0347756+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -58,7 +58,7 @@
                       "bytes":  572972,
                       "sha256":  "212b8a3bca719fe70173ae0f5ea8454695dabe99a04dacaeeca7eaac66efde71",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:14:26.2026545+07:00"
+                      "uploaded_at":  "2026-05-15T10:41:53.2886870+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -70,7 +70,7 @@
                       "bytes":  804908,
                       "sha256":  "899e34657c711821c85963678e38dc735600676d6faa334f8ae2b943ac5a0f5f",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:14:41.2581137+07:00"
+                      "uploaded_at":  "2026-05-15T10:42:02.5059789+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -82,7 +82,7 @@
                       "bytes":  525356,
                       "sha256":  "06857cd2e44a5513c7b999b6393e09d87705edd6073e9f0b92d66b0092bb796a",
                       "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:14:57.6798194+07:00"
+                      "uploaded_at":  "2026-05-15T10:42:12.5328186+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -93,8 +93,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  609836,
                       "sha256":  "7b7fca8657f5da8fd8385aba844be4d663212a315a7925cd65fd2ba24e9baff4",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:15:13.1085016+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:44:11.7335860+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -105,8 +105,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  1668140,
                       "sha256":  "c1b397ec5eda33937bf7f758b6ce110359b2e4a18e678bd8cb2b92d1612f36ec",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:15:29.0499724+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:44:21.3235152+07:00"
                   },
                   {
                       "package":  "package_01",
@@ -118,91 +118,91 @@
                       "bytes":  1313324,
                       "sha256":  "d47c73da3888efa028067d868224da54de3abab04c8c612333c15a06986adc77",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:23:07.9209100+07:00"
+                      "uploaded_at":  "2026-05-15T10:44:29.6667199+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "05714bf63710f6218db907cce32dc8031f6b83781e755d04c517a2c1c2c0cb75",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:16:01.0103276+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  258354,
+                      "sha256":  "4c6128139a4c5e6dbeb682de1a548ac12e7201a9e592ed036a5f26f93b7c60d9",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:44:37.8337309+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "10fe947597f38c00be1d5e3871ba8fe3c4a9513ca97a75fc9161ed5c0daa5161",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:16:20.2932352+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  243392,
+                      "sha256":  "4d639181e3ea56699d4b855011ac428ec80a070d9c44ec6382beac160375393b",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:44:46.3408814+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "f7769670f824504b8dc580bab7be91f217bc2b56258d143bd13656e5ba2486fa",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:16:38.9800143+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  260978,
+                      "sha256":  "1513a982ebb676d9d4bcea66fcd3a1fd0b715d4958bcba2e260add952ca1aecd",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:44:53.6262990+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "e50967c70c5edda8447cdbc8114776b4836686974f9194a47629625abb1f89cc",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:16:54.2712529+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  253250,
+                      "sha256":  "d9830313d2b3dfcd54e78d0c1abbb833512f1c384c2a5896cac81f4b95319315",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:45:02.3408924+07:00"
                   },
                   {
                       "package":  "package_01",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_01/images/pkg01_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "1d6a58f64f46a51082b800a5f79e6a0131c3d10e1e188348b6ef5ae5d0d2475a",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:17:06.7212511+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_01\\images\\pkg01_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_01/images/pkg01_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_01/images/pkg01_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  258482,
+                      "sha256":  "4c32fc2a477473bee6b016a349a1831db30d11dbf33d5b24477c4b7514334a1e",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:45:11.1895594+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "478d73d0898bac102046d5139a45aa19532d762d2544eaf721318f9dd4a4b140",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:17:22.1024914+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  298946,
+                      "sha256":  "eb7995d3e6a6869018f3fae4dc77b3b0841ba7bc26e8c1fbdce091bc08b34245",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:45:19.1761177+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "a96004d10f661444e4e5b8964ca656fa9abc693dbb71792b740964c84159782e",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:17:36.3139857+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  261605,
+                      "sha256":  "a2c650b81e26f9fe0ac4a55090146b8f2187c661d0dc25edfb1c6c55b53f22ce",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:45:27.6700290+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -214,7 +214,7 @@
                       "bytes":  534572,
                       "sha256":  "4d304acd9efd3b43a1020190ecf6bd67da0377a48bd089520bd02ff0f52a31a8",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:23:26.2556104+07:00"
+                      "uploaded_at":  "2026-05-15T10:45:36.2149706+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -226,7 +226,7 @@
                       "bytes":  577580,
                       "sha256":  "bb4087f4091e2be753218b551142b3361d4212970b42c832135bce967d0252ec",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:23:44.9319755+07:00"
+                      "uploaded_at":  "2026-05-15T10:45:44.3454617+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -238,7 +238,7 @@
                       "bytes":  721964,
                       "sha256":  "9fb44e5f0baf96b04a811a5d1be0ee8aece40a30131fc02edc27e91ca71ba7a0",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:24:04.7910344+07:00"
+                      "uploaded_at":  "2026-05-15T10:45:53.1078778+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -250,7 +250,7 @@
                       "bytes":  551468,
                       "sha256":  "50c3ee393a3ba02a154d86943e5c4256a45db3f9cf72a155133757dd66268a8e",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:24:23.8189854+07:00"
+                      "uploaded_at":  "2026-05-15T10:46:02.4716702+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -262,7 +262,7 @@
                       "bytes":  531500,
                       "sha256":  "650c634dab3bd42d2b5b0a18c488c936d06ddf1c905c5cfb1c45ad9f37a0c754",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:24:42.5873505+07:00"
+                      "uploaded_at":  "2026-05-15T10:46:09.8659536+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -274,7 +274,7 @@
                       "bytes":  1706540,
                       "sha256":  "b9ee4a749143408174107ca6487038067ccda7871c81601d84d13515e5f9c815",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:25:02.2841637+07:00"
+                      "uploaded_at":  "2026-05-15T10:46:18.7675549+07:00"
                   },
                   {
                       "package":  "package_02",
@@ -286,91 +286,91 @@
                       "bytes":  1233452,
                       "sha256":  "44e07981a694fca623d2698f8b5efcaa5b4600d0b721615d1f0891d4e8947ef1",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:25:21.6413930+07:00"
+                      "uploaded_at":  "2026-05-15T10:46:28.5799040+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "d71fec8fc3a7b975776ac087d875761f4d3e2773d8032608806d59a101515068",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:19:29.6900395+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  266790,
+                      "sha256":  "7aac8c198b92bb98aa38cddb674ceace0799f38547ab3f0b61c02f91050a85a3",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:46:36.6230239+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "c87741c23b7630d7ac4b50b14ce2545f35800dd5eca5e0503579ab1bd4e2d3fb",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:19:43.0840017+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  328492,
+                      "sha256":  "3bd96b7d85694584f3d96173072a333fd202479d74c3e7f6316b0be31123c375",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:46:44.6706907+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "541d6c1ba4511dfede8421c0f534f0dffd1a00ab87045f9ab7b03d69d6553468",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:19:54.8508520+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  332611,
+                      "sha256":  "c1478be6ebb2c15ec2b66ce2ae21ee45870fe151896a52d7865f18a92549417c",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:46:52.5721541+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "1032ca9267ddc97fe73fac8675a90ad8d0ceeadbde08556b37e7a57c1f09d7a9",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:20:07.5080985+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  292497,
+                      "sha256":  "bf6cc56e78acc0732fb329ab096f9fcfb92586c0c6075bba52dc3dc644bde943",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:00.2888638+07:00"
                   },
                   {
                       "package":  "package_02",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_02/images/pkg02_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "4182c6a3db560d454f560d144fe34ab6a5239d77300cedfec580c9b2781efe77",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:20:22.6347638+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_02\\images\\pkg02_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_02/images/pkg02_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_02/images/pkg02_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  379240,
+                      "sha256":  "7a50ba5d9543f40e1018e4609a8f163aa5e393a29c3f6614553d8cd39805779d",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:09.4489449+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "e75c1033aaf74e451917bbe7fcf065d1ed34cf1540973744b3a8383280dca78d",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:20:37.7186823+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  268782,
+                      "sha256":  "5579c6e70aeab81c9843db08fca8d8e6a24f575cc85c993bab406caacf1134af",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:17.3947343+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "fc5edb388f7400bbb6cc72b9fd699af28d0830b1623f78649012eff47c034590",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:20:55.1452464+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  331929,
+                      "sha256":  "90c64a461b970053856acf465bacc23caf7c6f4734bf16647c140ff7dd5fa2c6",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:25.6292289+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -381,8 +381,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  553004,
                       "sha256":  "41923c771152048e8f5afbb229174ee224be2da01eede27e561e311a2cd9174d",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:21:12.0690560+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:34.8999119+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -393,8 +393,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  574508,
                       "sha256":  "00f8a9da4f6c3e6a1f6cc26c1c89137152f28dde866a57ef128867a730c12260",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:21:29.5635063+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:42.9934790+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -405,8 +405,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  717356,
                       "sha256":  "742bf6a6bb02323a1f97c50667c2a71f6fd57c6fe03dcc6e5adf1e3ec686f424",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:21:46.0969947+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:50.9101398+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -417,8 +417,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  534572,
                       "sha256":  "a09826bff937aa59bd7143f3e9200f6f5fb20fe74e0a1445a632c2b74794a6bc",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:22:02.5282487+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:47:59.4011830+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -429,8 +429,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  516140,
                       "sha256":  "fa188e0c91176726afdb113f64a2960dd165ae1da6c9e028ef1be3d7688c84e5",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:22:18.5873401+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:07.1853221+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -441,8 +441,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  1611308,
                       "sha256":  "0dd85e7e152ad0a813dad9d45328b933d99c258e94be390c147a58c128e6366f",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:22:35.6495329+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:15.1349624+07:00"
                   },
                   {
                       "package":  "package_03",
@@ -454,91 +454,91 @@
                       "bytes":  1274924,
                       "sha256":  "70713ce1d2049896ce3da70a3bc155548acfcd03a19d9b4606ce9cdfbb8d30b6",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:25:43.0173646+07:00"
+                      "uploaded_at":  "2026-05-15T10:48:23.1041715+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "6f09c3b8c0aa51eca92b826830014227eac5d5837d0eb0b0ff90dadc5c4aa371",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:23:09.0765221+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  289468,
+                      "sha256":  "40ca0a614f59466a668cf1f52524ebcf767ee773e5a1a25ad5dd5e4bf11a8959",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:31.0611726+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "7d2a0df794aeeaca41fb51ec39ccf7bce32a3e90929f2bf10c75937679621cec",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:23:26.6488182+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  299500,
+                      "sha256":  "92a11520099a2c2bbe42e503d5be15075ef70ec6fd2126b3351183912e80ccb9",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:39.2494990+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "7c446c63c7924700a1fc7d8f0d7d4b75567248678a12936032e9b9890061fc0c",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:23:44.2505111+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  293596,
+                      "sha256":  "5ba2cdb1dd14b3bd4f0b5ac20faf70e6695b025c022a54570c6c03ecfe94ad02",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:46.9920972+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "01f315a1451e5013f007f43d0b486deae9271980970f638c3cde7d088584e733",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:23:59.7973873+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  293772,
+                      "sha256":  "a1550d3d42717bff40337253fdb5498eb9508718f33b2a6740002fc8cb9681ba",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:48:54.5405022+07:00"
                   },
                   {
                       "package":  "package_03",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_03/images/pkg03_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "aafe0d5f7a5061089fee1e729ca8e1704ddd5a83148e894519a0bb2fa3cce8f4",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:24:16.6719337+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_03\\images\\pkg03_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_03/images/pkg03_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_03/images/pkg03_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  252067,
+                      "sha256":  "0158bf18d4a385c14a433153d21baa870dd098bef48df365ced1ae90075f6a48",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:49:02.2148679+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "3b410db4a69348624ea4500b133b8efc1d84f8ee84aa62a63954325c151fbfa3",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:24:32.4944027+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  316215,
+                      "sha256":  "259e854260b31a9dce8a47d14ae3fe0436b8c49d2c6450250ae5109d4a49fe1d",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:49:10.8346022+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "32d5413de153a3a6c9da43891337047cf45abafcc72f142b9bd5e60317fc3232",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:24:49.5895115+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  318045,
+                      "sha256":  "37f2a6de73a835e0e71951a2bb522e51f7adc84f0dbb36c218e9be38340511e3",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:49:18.7578979+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -550,7 +550,7 @@
                       "bytes":  508460,
                       "sha256":  "ba1b86056389327eb29ecedffb49b0e591e1838053f640673363b017b5ed3137",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:26:04.2332217+07:00"
+                      "uploaded_at":  "2026-05-15T10:49:27.8050359+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -562,7 +562,7 @@
                       "bytes":  579116,
                       "sha256":  "44331a6c404288d4a6c37da13ff750edad9f99717aea5784369f48f40ded2624",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:26:21.4154878+07:00"
+                      "uploaded_at":  "2026-05-15T10:49:36.0461689+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -574,7 +574,7 @@
                       "bytes":  741932,
                       "sha256":  "e45e6e2d5b22c0ab2d1e35dc7f6cb09f9ff40fba6657b9e97fe4eaae37befe9e",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:26:41.2717738+07:00"
+                      "uploaded_at":  "2026-05-15T10:49:43.9611532+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -586,7 +586,7 @@
                       "bytes":  506924,
                       "sha256":  "37449e1148bb0ac523e7e142c930cdeeb25ad6f0503ea1f79d76df9a4d61f391",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:27:00.7856336+07:00"
+                      "uploaded_at":  "2026-05-15T10:49:52.2774244+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -598,7 +598,7 @@
                       "bytes":  542252,
                       "sha256":  "33a8977c1cf9950ab27225eebdeab8f8271de5555ff489044e2e213b380881a9",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:27:19.2717584+07:00"
+                      "uploaded_at":  "2026-05-15T10:50:00.9079705+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -610,7 +610,7 @@
                       "bytes":  1665068,
                       "sha256":  "d09646cc61d3955e3c032bb6f059b3710dd4be8a36205e094bda3ee0b0c158ea",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:27:36.2258671+07:00"
+                      "uploaded_at":  "2026-05-15T10:50:09.4075121+07:00"
                   },
                   {
                       "package":  "package_04",
@@ -622,91 +622,91 @@
                       "bytes":  1221164,
                       "sha256":  "3909d54d5a231dd8aeeffc7a944703d331cc3c3c81cd9f6d93cdb22beba78bd8",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:27:56.5435334+07:00"
+                      "uploaded_at":  "2026-05-15T10:50:17.4711658+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "67ed3a168cec9b26680884b593ce5cf2844ca17aae3633265e3fbaa057c6e3f3",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:27:23.3999500+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  372027,
+                      "sha256":  "198899251aec491c461283fcdaba1d569d4df72c70f997e036aa5808d525f378",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:50:25.4581218+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "c61dd94bdb159aff902108fbc99c5354eefba6a5e9c5c2e3d557a9f376e2625e",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:27:41.5847967+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  309982,
+                      "sha256":  "24f1a378f00081774ebda970d919c6d4672f1331ae735de83ec56d82288c3ffa",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:50:34.3810443+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "2f4648ba1d75b0365e3b74c8f7e0c8f3b99e7a8f8050681f2674c472639201aa",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:27:59.6285945+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  281991,
+                      "sha256":  "288425b4357350003f0144d707f5413ee9a2e058fea99398201cf7ff72d2c333",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:50:41.9561913+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "a1860a2d4e8e6dcbae2ea7890a1946b580a2026f91acb19d279e87611fc1fd4e",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:28:18.7664842+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  309707,
+                      "sha256":  "16888f5aa3ac083f91603b66cc4c9f9e218eb1425b52afc9fc1bbd0f5d2af0f2",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:50:49.9921866+07:00"
                   },
                   {
                       "package":  "package_04",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_04/images/pkg04_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "ac7e815c65ccfc19f624c49ea4d0cbc61cdbcdf0a0e26216f917394df7757807",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:28:37.5171922+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_04\\images\\pkg04_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_04/images/pkg04_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_04/images/pkg04_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  318956,
+                      "sha256":  "7f39fcd6435959fc6b4ad12f87b4e250cabd240de6baadd0ed315512d9e42157",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:50:58.0562205+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "791b707638e41eb3ae40118b4a991e1d182f72b0bdc23a0707f70b9ad9a36641",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:28:55.9068242+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  334295,
+                      "sha256":  "c7c3bb075b86807e57a4b4c2a4cf99fc1b98d51ce6059f8e7085cbadd1826f0e",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:05.5675776+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "b72253cd11aa1e91476e61b31871b086961e674a6179ff5f4055d6925ad13048",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:29:15.0209062+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  323773,
+                      "sha256":  "3f074a826804f99798bc39ef745cda031b553ce1db5ec69a24c9817d80046ce8",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:12.9022003+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -717,8 +717,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  517676,
                       "sha256":  "30f94a015751f567c7b894dceb44675c892fcf280817b5b13b5c20a4d7e894d1",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:29:31.7361984+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:22.0000329+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -729,8 +729,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  554540,
                       "sha256":  "6d17f2fae292233b31d80e7653e41b6a3c9982ff23028a157fce44609a4afbb2",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:29:49.4765959+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:30.4148368+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -741,8 +741,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  752684,
                       "sha256":  "b2c4c97da98cac0db87a4e723b16f319b9ca0caf35f4c0289c62d41ed7428de3",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:30:08.9822880+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:38.9128971+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -753,8 +753,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  531500,
                       "sha256":  "51eaa91914fe7792ff6b4ba05736861e878c17e600ed1101c602609bf8259a98",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:30:27.3570590+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:47.4192965+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -765,8 +765,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  499244,
                       "sha256":  "3688ac3b91a20c2631b33816de0cf9f27abe7c247d302280cd19ad3c0bfc689d",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:30:45.4642653+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:51:55.0647706+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -777,8 +777,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  1749548,
                       "sha256":  "894adae41311ee5191d032552d2ba196988d406102bda51dad057d7084bd1d72",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:31:03.6683583+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:04.8226889+07:00"
                   },
                   {
                       "package":  "package_05",
@@ -790,91 +790,91 @@
                       "bytes":  1228844,
                       "sha256":  "ba19d04c4584ab97bfb5f9cc118f1365c644f8e1f653b6701ba7253e1cc6cbb9",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:28:17.3051034+07:00"
+                      "uploaded_at":  "2026-05-15T10:52:13.1595326+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "186616d127be0537f7dc0f6cd9279a88db09aa054080fdd40d94d17607666a4e",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:31:40.1865041+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  382472,
+                      "sha256":  "272a6b27464515aecce1f7636a881391eff357060fa82fc5d5b8a82a71a5e238",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:20.9360513+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "ac4109039891aae32e4bc5da3e37f0d6d050e9adf995bc65e09816b51757ff7f",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:31:58.4645049+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  305106,
+                      "sha256":  "353db688b0439ad0ffc5d7651ac763e28256fca227c9aa75fd2861673b6a3ca3",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:29.1257877+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "8decef6c0e3c5d1589266450604bcc3d665450cbc7f1c555af301865857c9dfa",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:32:17.0107154+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  319221,
+                      "sha256":  "552a6cc5500d3a763de92a82577100bd8a134abddc9e55a2963141492c9a4340",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:37.5400611+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "c1d68f08704f58cf2eee219cd6ce5f72ad99df41d10143b7615c65ca4d167090",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:32:35.1225309+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  310383,
+                      "sha256":  "ca98dfc77a1fc57054dbc967145f0a62ff74ddfc2347382203507ea4e9cad92b",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:46.5854149+07:00"
                   },
                   {
                       "package":  "package_05",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_05/images/pkg05_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "4289a15eb021703bd890f238ce7d23019ae801c6cf1faff97d5a851a12794f88",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:32:54.9210789+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_05\\images\\pkg05_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_05/images/pkg05_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_05/images/pkg05_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  344712,
+                      "sha256":  "f2d008e76709331f9a4bb4cfc4da6d039bae78a704af4880e962355f587216dc",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:52:54.1486017+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "6213a8564d697b384cacfb091fa25c854a7508eaba863e42b8e8f233a502a19f",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:33:13.7719357+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  289502,
+                      "sha256":  "5f468aa126c8321fe0b073d14802bb6b1480fd8ce6ed44821f9ff328f35d2fc8",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:53:02.4744523+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "6cc68d191078ac8334124bbe2f747785459daddfad3cc19a3fdee7bda89bd748",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:33:32.3415583+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  305513,
+                      "sha256":  "87c4dcf3da1becaf5f6d97415fdc667757d4f3395e76f9496bbb2096dbfeed1b",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:53:10.5019307+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -886,7 +886,7 @@
                       "bytes":  562220,
                       "sha256":  "54f1202ab197a4899e23974cf9014a56d15f9aac65f2134d25924ccfd9a9a2a3",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:28:36.4454315+07:00"
+                      "uploaded_at":  "2026-05-15T10:53:18.7337685+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -898,7 +898,7 @@
                       "bytes":  631340,
                       "sha256":  "10f9a677de828731cfbf965861a8098416b9212f60a4b50cb6b2e2207fa8e505",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:28:56.5505937+07:00"
+                      "uploaded_at":  "2026-05-15T10:53:27.5420625+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -910,7 +910,7 @@
                       "bytes":  701996,
                       "sha256":  "2f0c749a3bc87c6fa1df6c09da7ae6853e8fc3d39bb36f606af3779e00810352",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:29:15.7252236+07:00"
+                      "uploaded_at":  "2026-05-15T10:53:35.4733008+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -922,7 +922,7 @@
                       "bytes":  574508,
                       "sha256":  "7490fc4dd77dcc779979c9f36c262bed68d27d9bfba1b3a02939c855350d0dea",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:29:33.4372187+07:00"
+                      "uploaded_at":  "2026-05-15T10:53:43.6285194+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -934,7 +934,7 @@
                       "bytes":  603692,
                       "sha256":  "4a8b9b9916e1db780740f23ab2b5fc22eeca041effb1cf08d9e0f4bc0077e424",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:29:54.1247737+07:00"
+                      "uploaded_at":  "2026-05-15T10:53:52.1937505+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -946,7 +946,7 @@
                       "bytes":  1740332,
                       "sha256":  "7bca95d7560ecbd31dcd06eab1d62f75ff9b5ad423526355fce29e6ceb7598d2",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:30:12.5091208+07:00"
+                      "uploaded_at":  "2026-05-15T10:54:01.4950812+07:00"
                   },
                   {
                       "package":  "package_06",
@@ -958,91 +958,91 @@
                       "bytes":  1207340,
                       "sha256":  "1d1c3cf29c81b3c00a084e04404dd13993ddb73f26a8c882e76a3445cb12c3a0",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:30:31.1664889+07:00"
+                      "uploaded_at":  "2026-05-15T10:54:09.4504339+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "f56ad4da30a134f5f9222601cf5bba0fd18b367b6c11affa0811670131e9f36e",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:36:03.4717794+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  302402,
+                      "sha256":  "21e3f9b603c249f6023d2b82335e32cde5f95dc40a065bf9a618b6b3ff3f4f79",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:17.7035051+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "55264770815a786a3db784455712d5720f5290a817c64254e7c6afde19b2d8f5",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:36:23.0639449+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  266031,
+                      "sha256":  "a3d5d0a5d47952604a5c9191dfea561c144a24ce1c61ba671d52a4afd14af6d7",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:25.1157903+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "e37d4bec8e53008375e29906391538b3e6e370c543133492ff8a7ff1df2bad34",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:36:40.9515010+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  272832,
+                      "sha256":  "77a56e19dce5ecb728767ecf503029589a53e8c001e458b0cd73f844d0393c7e",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:33.0667783+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "25711f34cf6a4358d54ac19370c89565cc83207488b550965a583bbf2194d4fd",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:36:59.2053533+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  290590,
+                      "sha256":  "d91de9a2b2886a4c03d463e60091e0b8abdb7c53630fc6994b91220593a95998",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:41.0613021+07:00"
                   },
                   {
                       "package":  "package_06",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_06/images/pkg06_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "867a1418d92664140b0b3f1846b0c8ffdfb46c292ac2791a2c1f16ad64214eb8",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:37:16.6286874+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_06\\images\\pkg06_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_06/images/pkg06_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_06/images/pkg06_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  293984,
+                      "sha256":  "c30f3149cab2088c9bb6a35ccdff0988150a2e1c8dc3fb7969e4a69e8ddb1388",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:50.0140574+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "6d3894529f8488445b35f8a83f4c6e3160730b25e0b063cd2030657fbc7274dd",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:37:34.1091030+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  243918,
+                      "sha256":  "48422e03fb289d26ef77036b4241bcbc5a704a7077a124718bdfa899747d2dc2",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:54:57.9489327+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "a3a58be397730a25405aa7ed3e8c65dc501ec7cec0a37a2083e94cdb845696fd",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:37:52.1208461+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  257471,
+                      "sha256":  "57b00dd67334ed43d43378733784659c1a07d6fb6e54fda2126598ec19391d53",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:06.0813003+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1053,8 +1053,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  506924,
                       "sha256":  "9c9e44a6298dae281bf72a24efeac96ee3cb16a79bfb5f76a3bd017fcc5d97c1",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:38:11.2412197+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:14.0032321+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1065,8 +1065,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  513068,
                       "sha256":  "d5dd3ecb238a2264ee4d9cd4fa3ef9696c43a8be3798e2da1b33669f173486d1",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:38:29.2619654+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:22.2862753+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1077,8 +1077,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  763436,
                       "sha256":  "9ff96301adcda182c99e80dc4c5ad1b9df1e4f2db4e34f26aa9ccad20a06a1d8",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:38:45.9835663+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:30.5519684+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1089,8 +1089,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  553004,
                       "sha256":  "fdd286c51f375664600eb45b12af37c183c7ec225e9741e5b21ca73d1899a128",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:39:04.6046930+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:39.0077953+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1101,8 +1101,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  523820,
                       "sha256":  "91e690cb349a7641648a6268e98dcc587253fd43107e31f31206ff484db47fb9",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:39:23.3488876+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:47.7630952+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1113,8 +1113,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  1661996,
                       "sha256":  "385194d6dc91125807ad870535a7a828d9a53ca4e7fcc9b48c28630b7413234a",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:39:41.7041292+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:55:55.9321140+07:00"
                   },
                   {
                       "package":  "package_07",
@@ -1126,91 +1126,91 @@
                       "bytes":  1205804,
                       "sha256":  "6545b2cf3b1a66e2fb53862b311606f393ef943a2ff1ca40747fa2b02d4a8abc",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:30:51.8291132+07:00"
+                      "uploaded_at":  "2026-05-15T10:56:04.3390661+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "efc1404479565418df8d9f7b79c13a9622f3ab1e37863026b067d88c593d6e74",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:40:18.4942943+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  224706,
+                      "sha256":  "4dc8f4736af3d0bda56f6f27455ffbcdd835c5f432ccf84678d8ad209ff59ced",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:11.9538639+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "6a4ee52a87376bf8e9da151c11d04cf541f338600f15e5ffcafc6bfd709d7e37",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:40:36.8409034+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  279244,
+                      "sha256":  "ff43c09d1324e840f0eaff1828bd3f19bfe63477a428acab38cb4943c6aaadd6",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:20.0090084+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "20c333cabb4ddc3998c40c77d6ef92b230bc0710f3554ac9547c41292a336395",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:40:54.7887910+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  249506,
+                      "sha256":  "5424e3f22eb790b405166347f04e043e101c970d75e0ecbd7132ca7ec0a3c841",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:28.1706935+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "15907066570e3547f88f139ff71cd4d076a71bf1656be6db51e6e5465a7529d4",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:41:15.5970596+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  287312,
+                      "sha256":  "f56de59c0f33f0cd7e84529e1b474fa8e175e186fbb92495453ca0451fcaee63",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:36.4806710+07:00"
                   },
                   {
                       "package":  "package_07",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_07/images/pkg07_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "9f812fb10069e6a2c47feb8eff6e9af599674eed25bba3196c2422e2601ad9e5",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:41:31.9309351+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_07\\images\\pkg07_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_07/images/pkg07_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_07/images/pkg07_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  257045,
+                      "sha256":  "6fdbec94a353d2ef4c590ee4ab74a5f80245b99b75860f64f766e4d97b7513ea",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:44.4982028+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "a214db93dad558c6afe472419a342d9164bffabe1b58dd6bc7431a2980d1bced",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:41:49.9176807+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  309084,
+                      "sha256":  "ad41fa73d97e709c6ce24d401ba501e66eb67c949b1d67a388fcedbc69859857",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:56:52.7098191+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "cd0ca94fb2eb957564450ce29acd6dd4c2c9179c11013558787752dd3368e90c",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:42:07.9829740+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  323764,
+                      "sha256":  "0d769dbd84c3641a288944c83f751ff75a1858df013da2f6464692759ab98e8a",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:57:01.6393945+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1222,7 +1222,7 @@
                       "bytes":  516140,
                       "sha256":  "5599b53abc4d7d38a152b4691c85df9e34e60d5d5210074599652a43e6c5c412",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:31:11.9162625+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:09.9897479+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1234,7 +1234,7 @@
                       "bytes":  546860,
                       "sha256":  "848496f599fef4445889a07c1dffd4ea94cf83022859bb7df0a903883677488b",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:31:31.8196305+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:18.0596943+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1246,7 +1246,7 @@
                       "bytes":  666668,
                       "sha256":  "eebcc9f04baa7f0f57b5fe7fac5a86a78e4b8e9017e0429b09cd82dbf6616793",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:31:49.9790426+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:25.5671177+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1258,7 +1258,7 @@
                       "bytes":  534572,
                       "sha256":  "cd47f04555ebb992291692d0546d14ee00d4ac4371c928e3205b85b5e9d93298",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:32:08.9817587+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:33.5994661+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1270,7 +1270,7 @@
                       "bytes":  549932,
                       "sha256":  "a959d157a9f20093248fc1b196b459c817e36dc50be87550dbe38b66df42a2d6",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:32:27.0961374+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:42.1364363+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1282,7 +1282,7 @@
                       "bytes":  1766444,
                       "sha256":  "22e6e1a73ecc98f12728bcf7710277a71ad33132dbcfc7ae0f07186b3b8b0769",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:32:47.0001696+07:00"
+                      "uploaded_at":  "2026-05-15T10:57:50.4778602+07:00"
                   },
                   {
                       "package":  "package_08",
@@ -1294,91 +1294,91 @@
                       "bytes":  1239596,
                       "sha256":  "581b8b9449d7d314239f1f4c7de4e9e5fc56ca622145910f7c0e5f6bd5a558d3",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:33:04.4715952+07:00"
+                      "uploaded_at":  "2026-05-15T10:58:00.6346215+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "eaa57ec2fdc0c14d274fa44d5214bd5c2beb4e26cbd6dc8376473cd2589c1668",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:45:29.5750216+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  321849,
+                      "sha256":  "f4d973d198ab8372b3445452024a1cf897aafae5ccd56a013dcbdb6bbf29c688",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:08.3313819+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "d087c0ff5e7df9b3ce4c72250a6e52383b6e2490f62fbc44b361d38bee59954c",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:45:44.0389286+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  304230,
+                      "sha256":  "660a14c2a33412daec2f7e50451c7539a0a36416093912ab7c31ea6ea3705e6d",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:15.7160591+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "86ec02762acf3b5af9229dc8234e05ba04d7d92450cd84ab2b24cd5cebd2ba78",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:45:57.4777222+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  314772,
+                      "sha256":  "d676e9316f6904949acce94fd35c68533caed8c84921320281b4d5bd5d0234d3",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:23.6288591+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "ec6b4139a122ace76df239fa0056c4f57ef3aa39f79e884116f121b342618c0c",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:46:12.4777845+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  300844,
+                      "sha256":  "74f594f863d30df1112f1a244d82122b47cd81a4548f115704e33b3ccf59d888",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:32.5126123+07:00"
                   },
                   {
                       "package":  "package_08",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_08/images/pkg08_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "80bce393ef9939ed09c21ff63a2c5b55f021eaf42b27c8bea467e6d501e9854d",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:46:28.6426541+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_08\\images\\pkg08_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_08/images/pkg08_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_08/images/pkg08_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  315465,
+                      "sha256":  "5883f222b0225ed7cf1ad8df361ea6de4f3a8383405203127159d0685f5327c6",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:41.7941106+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "033d76425c302a2ebca2385a5596b73f65dfb8eb48407f46be9db0cd76309c63",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:46:43.9702207+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  339715,
+                      "sha256":  "5c58c00778416ad1d4ca0d9679e4bdd549b2f173b0b771c0a2f07b753d19c414",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:49.1820454+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "d52841efb6b3f3b505cc6eb383284beafd2c79d767836da9ffffe25725a69965",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:46:58.8455255+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  284559,
+                      "sha256":  "f469207bbd4ef9832ccffb38514abee97c95f4bda200e06b8986ebf3fe6e3e51",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:58:57.3378484+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1389,8 +1389,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  516140,
                       "sha256":  "e8e7dfcfa65d30f3f5ae136bd8617464ac3d2be588e1074416a717fc9f8ea329",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:47:15.5746516+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:05.0593866+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1401,8 +1401,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  551468,
                       "sha256":  "d687af1cd30e526ce01ee09bde6618ed0bb1b782a53360839f416ee627836cd2",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:47:32.3540735+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:13.2584483+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1413,8 +1413,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  751148,
                       "sha256":  "649f2e907b7f6819b7908a7562ca72422bbc3864904743d07030af7c8d17502a",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:47:44.8973838+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:21.1598881+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1425,8 +1425,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  474668,
                       "sha256":  "41c2fe11daca76041e8197f53f529bc85feadf31077cdf3df88d42d611b02ecb",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:47:59.8704860+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:28.6712923+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1437,8 +1437,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  557612,
                       "sha256":  "4ac5657c0cb1fcc2a9bc60af4d442ed89e27959f52041f2e29ed7ef73965ab0b",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:48:15.9784619+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:36.6161649+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1449,8 +1449,8 @@
                       "content_type":  "audio/wav",
                       "bytes":  1646636,
                       "sha256":  "64a4fa6c4956763344be094ded487526e75af48b4c8db8c96dd5b00478740bce",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:48:33.3748682+07:00"
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T10:59:45.8910848+07:00"
                   },
                   {
                       "package":  "package_09",
@@ -1462,91 +1462,91 @@
                       "bytes":  1156652,
                       "sha256":  "1d6b7611137125ce0510d9ca5523aa1d2a847c4739635f6939a29584addf71c3",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:33:22.8620447+07:00"
+                      "uploaded_at":  "2026-05-15T10:59:53.4951550+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1230,
-                      "sha256":  "ec209f7b418e59db248d9c4b2070bd3962163c5b8abd361c1e1e546fdfce4aa6",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:49:03.9700054+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  320328,
+                      "sha256":  "d781b6c6fee620fbde59d5fa74d26ce50f6a6b07ba2be1f397ae8f0417737f6c",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:03.5622669+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1380,
-                      "sha256":  "c66cd17f4728eed5fda51452f7a18dc8cfdd6fa7291ab4357351d8e7a5749967",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:49:18.5669580+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  328503,
+                      "sha256":  "a4d19bd728dfa289413dfdf7eec2626678e7303b0ca462344339d0dd7eabe473",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:13.4130800+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "e695f6fa32063ccb7b836fdb8139adad66757297cd72e04eb51f03004ca468d2",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:49:35.1493441+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  333829,
+                      "sha256":  "faab2a4116f363d069e6bd72fd0b299474f9ab49202795796c9272193d0dd924",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:22.1817244+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "b3a7655a2a3f5b9a537ff06a5c1221fbf54f6d22b471521e1ca2f28516ede123",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:49:49.6153536+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  342264,
+                      "sha256":  "27ba6bc42fac5e3aee4ed07ca44c5c041d378eceb27053a08ada93421b6aacbc",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:30.7453226+07:00"
                   },
                   {
                       "package":  "package_09",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_09/images/pkg09_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "1997da01a18acfc8167de70a07d044d2f41e0f6cd02bae88e464565a0cb4de91",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:50:04.8071923+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_09\\images\\pkg09_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_09/images/pkg09_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_09/images/pkg09_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  320217,
+                      "sha256":  "be54301993b4b1547e57e5f7dea4240e6696ca99da5c292da90f9a7303c49a30",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:40.1005692+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_speaking_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_speaking_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_speaking_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "94201d2a949126e2f4ec11e751e989dda17d8e2099d7cbd7ab3c324e39d5f948",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:50:18.9757559+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_speaking_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_speaking_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_speaking_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  232705,
+                      "sha256":  "e379819da7c561cc3952600b60ca1f4f309375a2a9d60e2e5e7276749a92da2c",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:00:56.8197046+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_speaking_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_speaking_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_speaking_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "14e89644c610bf973979b56d1b071c6835eb58d8ca72a7f75e39748929698816",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:50:34.1623870+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_speaking_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_speaking_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_speaking_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  265409,
+                      "sha256":  "326cb26a5b33484a064b03efaf5036d6ab0a55761cb6005ce5bd5990ce5d3f3f",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:01:12.4694177+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1558,7 +1558,7 @@
                       "bytes":  525356,
                       "sha256":  "89af46fe1c4b63337b1fc70d5df119de284a9b97f9ed43da129c3c7cb381babc",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:33:41.2907735+07:00"
+                      "uploaded_at":  "2026-05-15T11:01:21.4808801+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1570,7 +1570,7 @@
                       "bytes":  554540,
                       "sha256":  "d476c91e2933efbcb11b8bfc28566940f61afae291535e1fdd718e46ea0382d9",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:33:59.3950200+07:00"
+                      "uploaded_at":  "2026-05-15T11:01:30.0733676+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1582,7 +1582,7 @@
                       "bytes":  711212,
                       "sha256":  "b55eebe1399cde8a826f83f44e89de3f7a68f193415d204712002489857e48e9",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:34:17.0249538+07:00"
+                      "uploaded_at":  "2026-05-15T11:01:37.4636889+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1594,7 +1594,7 @@
                       "bytes":  559148,
                       "sha256":  "0d3aad5b5337950e57e4d418c9667dcf92dc3566b6de0b8dcef3b6662771e780",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:34:34.5372924+07:00"
+                      "uploaded_at":  "2026-05-15T11:01:45.4287629+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1606,7 +1606,7 @@
                       "bytes":  568364,
                       "sha256":  "4eed6a38cfba73e793551150144bb70e5d76e5201a5c74b0fbb0224d544f5bce",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:34:53.8336829+07:00"
+                      "uploaded_at":  "2026-05-15T11:01:54.5500803+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1618,7 +1618,7 @@
                       "bytes":  1649708,
                       "sha256":  "7a4ec7598725f20bf16cf058ee2647160885c7213f923ed3ab0dadbbbbb75564",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:35:12.8087010+07:00"
+                      "uploaded_at":  "2026-05-15T11:02:04.7174691+07:00"
                   },
                   {
                       "package":  "package_10",
@@ -1630,67 +1630,67 @@
                       "bytes":  1204268,
                       "sha256":  "91bc8969c7176ed82f91f00b953ebda13c4d06febeada7199a0655fb971e1719",
                       "status":  "uploaded",
-                      "uploaded_at":  "2026-05-14T14:35:30.4286138+07:00"
+                      "uploaded_at":  "2026-05-15T11:02:15.8247825+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q01_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_writing_q01_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q01_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1403,
-                      "sha256":  "194aef2b6bd5674d20da1c029fa463b2ce8d6e8b814cae2f846369a7d8f7b9f1",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:52:39.5425383+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q01_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_writing_q01_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q01_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  239856,
+                      "sha256":  "14c4364b5d5fa98bf9250139a3496b827139acc8612c97f442dfd33ba5fc441c",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:02:23.8904171+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q02_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_writing_q02_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q02_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1428,
-                      "sha256":  "6193edaae20c9bef0dcfdf8b9928daef2a1529ef751b903c42f686ca33ac5a73",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:52:51.6539540+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q02_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_writing_q02_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q02_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  267547,
+                      "sha256":  "010742aac8c04f999fd739b6fbaf2ed5b9fcaec96ac7e27105b5381a377444db",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:02:32.6994350+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q03_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_writing_q03_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q03_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1518,
-                      "sha256":  "ec010b288c91dcc0fdf0b8098076d0830b1becdde9f58192426d9827afb5508f",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:53:08.1653332+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q03_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_writing_q03_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q03_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  268632,
+                      "sha256":  "17af4a50453778af29ea4a21d219290745a660aff1eb620c4859771b4e7e6eea",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:02:42.5057879+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q04_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_writing_q04_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q04_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1549,
-                      "sha256":  "fd2cbaad9b6169abc66b1fc4df3193120757cedb42a96624f9c4aa6f501c6743",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:53:25.1257579+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q04_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_writing_q04_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q04_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  246654,
+                      "sha256":  "2b944d550f240534a3d276d35526e387ed50799bc7808f2046ed8f5a42f7386a",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:02:50.3303559+07:00"
                   },
                   {
                       "package":  "package_10",
                       "kind":  "image",
-                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q05_scene_v2.svg",
-                      "key":  "toeic/sw/package_10/images/pkg10_writing_q05_scene_v2.svg",
-                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q05_scene_v2.svg",
-                      "content_type":  "image/svg+xml",
-                      "bytes":  1338,
-                      "sha256":  "f7f10d23846fc73985354bbf7318ad548a9dd1115b0e13f0a8b979e117681e6a",
-                      "status":  "skipped",
-                      "uploaded_at":  "2026-05-14T13:53:40.3022273+07:00"
+                      "local_path":  "C:\\Users\\stefa\\Project\\toeic\\content\\generated\\toeic_sw\\package_10\\images\\pkg10_writing_q05_scene_v2.jpg",
+                      "key":  "toeic/sw/package_10/images/pkg10_writing_q05_scene_v2.jpg",
+                      "public_url":  "https://pub-63f89fd288834fdf9eca1c875f0dfca9.r2.dev/toeic/sw/package_10/images/pkg10_writing_q05_scene_v2.jpg",
+                      "content_type":  "image/jpeg",
+                      "bytes":  274133,
+                      "sha256":  "a2115df8aefaddbeacf95e56b7b1a9d35727b6253dd71e9081b4e29bae70ece6",
+                      "status":  "uploaded",
+                      "uploaded_at":  "2026-05-15T11:02:58.1936915+07:00"
                   }
               ]
 }

@@ -132,7 +132,9 @@ function Save-Manifest {
         }
         files = @($Entries)
     }
-    $manifest | ConvertTo-Json -Depth 12 | Set-Content -Path $ManifestPath -Encoding UTF8
+    $json = $manifest | ConvertTo-Json -Depth 12
+    $encoding = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($ManifestPath, $json, $encoding)
 }
 
 $entries = New-Object System.Collections.Generic.List[object]
@@ -170,7 +172,7 @@ if ($entries.Count -ne 140) {
 }
 
 $existing = Read-ExistingManifest -Path $ManifestPath
-$wrangler = Get-WranglerCommand
+$wrangler = if ($DryRun) { @() } else { Get-WranglerCommand }
 $uploaded = 0
 $skipped = 0
 $failed = 0
@@ -213,8 +215,15 @@ for ($i = 0; $i -lt $entries.Count; $i++) {
         $uploadedOk = $false
         $lastUploadError = ""
         for ($attempt = 1; $attempt -le ($RetryCount + 1); $attempt++) {
-            $output = & $commandName @commandArgs 2>&1
-            $exitCode = $LASTEXITCODE
+            $previousErrorActionPreference = $ErrorActionPreference
+            $ErrorActionPreference = "Continue"
+            try {
+                $output = & $commandName @commandArgs 2>&1
+                $exitCode = $LASTEXITCODE
+            }
+            finally {
+                $ErrorActionPreference = $previousErrorActionPreference
+            }
             if ($exitCode -eq 0) {
                 $uploadedOk = $true
                 break
