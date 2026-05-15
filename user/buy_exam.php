@@ -91,9 +91,9 @@ $checkout_label = $payment_mode === 'direct_bank' ? 'transfer bank langsung' : '
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="study-card text-center bg-white border-0 shadow-lg p-4">
+                    <div class="study-card tc-light-price-card text-center bg-white border-0 shadow-lg p-4">
                         <div class="study-kicker">Total Harga</div>
-                        <div class="display-3 fw-bold mb-4" style="color:var(--focus-blue);">Rp <?php echo $toeic_price; ?></div>
+                        <div class="tc-package-price display-3 fw-bold mb-4">Rp <?php echo $toeic_price; ?></div>
 
                         <?php if ($hasAvailableToeicFullAccess): ?>
                             <div class="alert alert-success border-0 small mb-3">
@@ -139,9 +139,9 @@ $checkout_label = $payment_mode === 'direct_bank' ? 'transfer bank langsung' : '
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="study-card text-center bg-white border shadow-sm p-4">
+                    <div class="study-card tc-light-price-card text-center bg-white border shadow-sm p-4">
                         <div class="study-kicker">Total Harga</div>
-                        <div class="display-4 fw-bold mb-4" style="color:var(--focus-blue);">Rp <?php echo $toeic_sw_price; ?></div>
+                        <div class="tc-package-price display-4 fw-bold mb-4">Rp <?php echo $toeic_sw_price; ?></div>
 
                         <?php if ($hasAvailableToeicSwAccess): ?>
                             <div class="alert alert-success border-0 small mb-3">

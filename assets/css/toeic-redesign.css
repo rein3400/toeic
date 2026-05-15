@@ -1813,6 +1813,33 @@ body.tc-public-page .rg-footer-bottom p:last-child {
     color: inherit !important;
 }
 
+.tc-user-page .tc-light-price-card,
+.tc-user-page .tc-light-price-card * {
+    color: var(--tc-ink) !important;
+}
+
+.tc-user-page .tc-light-price-card .study-kicker {
+    color: var(--tc-teal) !important;
+}
+
+.tc-user-page .tc-light-price-card .tc-package-price {
+    color: var(--tc-teal) !important;
+}
+
+.tc-user-page .tc-light-price-card .text-muted {
+    color: var(--tc-muted) !important;
+}
+
+.tc-user-page .tc-light-price-card .study-button,
+.tc-user-page .tc-light-price-card .study-button * {
+    color: #FFFFFF !important;
+}
+
+.tc-user-page .tc-light-price-card .study-button-secondary,
+.tc-user-page .tc-light-price-card .study-button-secondary * {
+    color: var(--tc-ink) !important;
+}
+
 .tc-user-page .toeic-stat,
 .tc-user-page .tc-stat-card {
     overflow: hidden;
