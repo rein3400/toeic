@@ -79,6 +79,9 @@ if ($activeModuleId > 0) {
         $stmt->close();
     }
 }
+$activeModuleNeedsGeneration = $activeModule
+    && trim((string)($activeModule['content_html'] ?? '')) === ''
+    && empty($activeExercises);
 
 $sectionIcons = [
     'reading' => 'fa-book', 'listening' => 'fa-headphones', 'writing' => 'fa-pen',
@@ -201,47 +204,58 @@ $back_url = $format === 'toeic_sw'
                     <h1 class="display-5 mb-4"><?php echo htmlspecialchars($activeModule['title']); ?></h1>
                 </div>
 
-                <div class="study-card mb-5">
-                    <div class="module-content">
-                        <?php echo $activeModule['content_html']; ?>
+                <?php if ($activeModuleNeedsGeneration): ?>
+                    <div class="study-card text-center p-5" id="moduleGenState" data-module-id="<?php echo (int)$activeModule['id']; ?>">
+                        <div class="avatar-circle mx-auto mb-4" style="width:72px; height:72px; background:rgba(72,127,181,0.1) !important; border:none;">
+                            <i class="fas fa-robot fa-2x text-primary"></i>
+                        </div>
+                        <h2 class="h4 mb-2">Preparing Module</h2>
+                        <p class="text-muted mb-4" id="moduleGenMessage">Generating lessons and exercises...</p>
+                        <button class="study-button px-5" id="btnModuleGen" onclick="generateActiveModule()" style="display:none;">Retry Module</button>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="study-card mb-5">
+                        <div class="module-content">
+                            <?php echo $activeModule['content_html']; ?>
+                        </div>
+                    </div>
 
-                <?php if (!empty($activeExercises)): ?>
-                    <h3 class="h4 mb-4 fw-bold"><i class="fas fa-tasks me-2"></i> Practice Exercises</h3>
-                    <?php foreach ($activeExercises as $i => $ex): ?>
-                        <div class="study-card mb-4 exercise-box" id="ex-<?php echo $ex['id']; ?>" data-id="<?php echo $ex['id']; ?>" data-type="<?php echo $ex['type']; ?>">
-                            <div class="d-flex justify-content-between mb-3">
-                                <span class="small fw-bold text-muted uppercase">Question <?php echo $i+1; ?></span>
-                                <span class="badge bg-light text-dark"><?php echo $ex['points']; ?> pts</span>
-                            </div>
-                            <div class="mb-4 fw-bold"><?php echo $ex['question_html']; ?></div>
-
-                            <?php if ($ex['type'] === 'multiple_choice'): ?>
-                                <div class="options-list">
-                                    <?php foreach (json_decode($ex['options_json'], true) ?: [] as $opt): ?>
-                                        <label class="exercise-opt">
-                                            <input type="radio" name="opt_<?php echo $ex['id']; ?>" value="<?php echo htmlspecialchars($opt); ?>" class="d-none">
-                                            <span><?php echo htmlspecialchars($opt); ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
+                    <?php if (!empty($activeExercises)): ?>
+                        <h3 class="h4 mb-4 fw-bold"><i class="fas fa-tasks me-2"></i> Practice Exercises</h3>
+                        <?php foreach ($activeExercises as $i => $ex): ?>
+                            <div class="study-card mb-4 exercise-box" id="ex-<?php echo $ex['id']; ?>" data-id="<?php echo $ex['id']; ?>" data-type="<?php echo $ex['type']; ?>">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="small fw-bold text-muted uppercase">Question <?php echo $i+1; ?></span>
+                                    <span class="badge bg-light text-dark"><?php echo $ex['points']; ?> pts</span>
                                 </div>
-                            <?php else: ?>
-                                <input type="text" class="form-control mb-3" id="input-<?php echo $ex['id']; ?>" placeholder="Your answer...">
-                            <?php endif; ?>
+                                <div class="mb-4 fw-bold"><?php echo $ex['question_html']; ?></div>
 
-                            <div class="feedback-area mt-3 p-3 rounded-3 small fw-bold" style="display:none;"></div>
-                            <button class="study-button py-2 px-4 min-vh-0 mt-3" style="min-height:40px; font-size:13px;" onclick="checkEx(<?php echo $ex['id']; ?>)">Check Answer</button>
-                        </div>
-                    <?php endforeach; ?>
+                                <?php if ($ex['type'] === 'multiple_choice'): ?>
+                                    <div class="options-list">
+                                        <?php foreach (json_decode($ex['options_json'], true) ?: [] as $opt): ?>
+                                            <label class="exercise-opt">
+                                                <input type="radio" name="opt_<?php echo $ex['id']; ?>" value="<?php echo htmlspecialchars($opt); ?>" class="d-none">
+                                                <span><?php echo htmlspecialchars($opt); ?></span>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <input type="text" class="form-control mb-3" id="input-<?php echo $ex['id']; ?>" placeholder="Your answer...">
+                                <?php endif; ?>
 
-                    <div id="finishArea" style="display:none;" class="text-center mt-5">
-                        <div class="study-card bg-light border-0 p-4 mb-4">
-                            <h4 class="fw-bold mb-1">Module Completed!</h4>
-                            <p class="text-muted mb-0">You've finished all exercises for this module.</p>
+                                <div class="feedback-area mt-3 p-3 rounded-3 small fw-bold" style="display:none;"></div>
+                                <button class="study-button py-2 px-4 min-vh-0 mt-3" style="min-height:40px; font-size:13px;" onclick="checkEx(<?php echo $ex['id']; ?>)">Check Answer</button>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <div id="finishArea" style="display:none;" class="text-center mt-5">
+                            <div class="study-card bg-light border-0 p-4 mb-4">
+                                <h4 class="fw-bold mb-1">Module Completed!</h4>
+                                <p class="text-muted mb-0">You've finished all exercises for this module.</p>
+                            </div>
+                            <button class="study-button w-100" id="btnFinish" onclick="finishModule()">Complete & Continue</button>
                         </div>
-                        <button class="study-button w-100" id="btnFinish" onclick="finishModule()">Complete & Continue</button>
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
             <?php else: ?>
@@ -267,6 +281,38 @@ $back_url = $format === 'toeic_sw'
                 if (data.success) window.location.reload(); else throw new Error(data.error);
             } catch(e) { alert(e.message); btn.disabled = false; status.style.display = 'none'; }
         }
+
+        async function generateActiveModule() {
+            const state = document.getElementById('moduleGenState');
+            if (!state || state.dataset.running === '1') return;
+            const moduleId = parseInt(state.dataset.moduleId || '0', 10);
+            const message = document.getElementById('moduleGenMessage');
+            const btn = document.getElementById('btnModuleGen');
+            if (!moduleId) return;
+
+            state.dataset.running = '1';
+            if (btn) btn.style.display = 'none';
+            if (message) message.textContent = 'Generating lessons and exercises...';
+
+            try {
+                const res = await fetch('ajax_generate_module.php', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ module_id: moduleId })
+                });
+                const data = await res.json();
+                if (data.success) window.location.reload(); else throw new Error(data.error);
+            } catch(e) {
+                state.dataset.running = '0';
+                if (message) message.textContent = e.message || 'Module generation failed.';
+                if (btn) btn.style.display = 'inline-flex';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('moduleGenState')) {
+                generateActiveModule();
+            }
+        });
 
         const answered = {};
         document.querySelectorAll('.exercise-opt').forEach(opt => {
