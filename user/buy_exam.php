@@ -85,9 +85,9 @@ $checkout_label = $payment_mode === 'direct_bank' ? 'transfer bank langsung' : '
                         Akses 200 soal, mode full dengan proctoring, dan konversi skor TOEIC Listening & Reading.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">200 Questions</span>
-                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">120 Minutes</span>
-                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold">Score 10-990</span>
+                        <span class="badge bg-white rounded-pill px-3 py-2 fw-bold" style="color: #212529 !important;">200 Questions</span>
+                        <span class="badge bg-white rounded-pill px-3 py-2 fw-bold" style="color: #212529 !important;">120 Minutes</span>
+                        <span class="badge bg-white rounded-pill px-3 py-2 fw-bold" style="color: #212529 !important;">Score 10-990</span>
                     </div>
                 </div>
                 <div class="col-lg-5">
