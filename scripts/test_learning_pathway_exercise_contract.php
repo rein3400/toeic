@@ -21,6 +21,17 @@ pathway_exercise_check(
 );
 
 pathway_exercise_check(
+    strpos($page, '$pathway_user_id') !== false && strpos($page, 'SELECT user_id FROM {$table} WHERE test_session = ?') !== false,
+    'Learning pathway must resolve the session owner when an admin opens a user pathway.'
+);
+
+pathway_exercise_check(
+    strpos($page, '$stmt->bind_param("is", $pathway_user_id, $test_session)') !== false
+        && strpos($page, '$stmt->bind_param("i", $pathway_user_id)') !== false,
+    'Learning pathway curriculum/progress queries must use the pathway owner, not the admin session user.'
+);
+
+pathway_exercise_check(
     strpos($page, 'if (!data.success) throw new Error') !== false,
     'Learning pathway JS must stop on failed AJAX responses instead of rendering undefined feedback.'
 );

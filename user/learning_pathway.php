@@ -24,9 +24,22 @@ if (empty($test_session)) {
     toeicRedirectWithFlash('index.php', 'info', 'Selesaikan simulasi TOEIC dulu untuk membuka learning pathway.');
 }
 
+$table = $format === 'toeic_sw' ? 'toeic_sw_test_sessions' : 'toeic_test_sessions';
+$pathway_user_id = $user_id;
+
 // Verify access
-if (!$is_admin) {
-    $table = $format === 'toeic_sw' ? 'toeic_sw_test_sessions' : 'toeic_test_sessions';
+if ($is_admin) {
+    $stmt = $conn->prepare("SELECT user_id FROM {$table} WHERE test_session = ? LIMIT 1");
+    $stmt->bind_param("s", $test_session);
+    $stmt->execute();
+    $owner = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$owner) {
+        toeicRedirectWithFlash('index.php', 'error', 'Learning pathway session tidak ditemukan.');
+    }
+    $pathway_user_id = (int)$owner['user_id'];
+} else {
     $stmt = $conn->prepare("SELECT 1 FROM {$table} WHERE user_id = ? AND test_session = ?");
     $stmt->bind_param("is", $user_id, $test_session);
     $stmt->execute();
@@ -41,7 +54,7 @@ $modules = [];
 $progress = [];
 
 $stmt = $conn->prepare("SELECT * FROM learning_curriculum WHERE user_id = ? AND test_session = ? ORDER BY id DESC LIMIT 1");
-$stmt->bind_param("is", $user_id, $test_session);
+$stmt->bind_param("is", $pathway_user_id, $test_session);
 $stmt->execute();
 $curriculum = $stmt->get_result()->fetch_assoc();
 $stmt->close();
@@ -55,7 +68,7 @@ if ($curriculum && $curriculum['status'] === 'ready') {
     $stmt->close();
 
     $stmt = $conn->prepare("SELECT * FROM learning_progress WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("i", $pathway_user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) $progress[$row['module_id']] = $row;
