@@ -109,6 +109,71 @@ function formatPercent(float $earned, float $total): string
     return number_format(($earned / $total) * 100, 1) . '%';
 }
 
+function collectToeicQuestionLogSummary(mysqli $conn, string $test_session): array
+{
+    $stmt = $conn->prepare("
+        SELECT
+            section,
+            part,
+            COUNT(*) AS total_items,
+            COALESCE(SUM(CASE WHEN COALESCE(is_correct, 0) = 1 THEN 1 ELSE 0 END), 0) AS correct_items,
+            COALESCE(SUM(CASE WHEN user_answer IS NULL OR TRIM(user_answer) = '' THEN 1 ELSE 0 END), 0) AS unanswered
+        FROM toeic_test_questions
+        WHERE test_session = ?
+        GROUP BY section, part
+        ORDER BY CASE section WHEN 'listening' THEN 1 WHEN 'reading' THEN 2 ELSE 3 END, CAST(part AS UNSIGNED)
+    ");
+    $stmt->bind_param("s", $test_session);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    $facts = [];
+    $sectionTotals = [];
+    $parts = [];
+    $totalItems = 0;
+    $correctItems = 0;
+    $unansweredItems = 0;
+
+    while ($row = $res->fetch_assoc()) {
+        $section = (string)$row['section'];
+        $part = (string)$row['part'];
+        $total = (int)$row['total_items'];
+        $correct = (int)$row['correct_items'];
+        $unanswered = (int)$row['unanswered'];
+        $partInfo = getTOEICPartInfo($part);
+        $label = 'Part ' . $part . ($partInfo ? ' - ' . $partInfo['name'] : '');
+
+        $facts[] = $label . ': benar ' . $correct . '/' . $total . ' (' . formatPercent($correct, $total) . '), kosong ' . $unanswered . '.';
+        $parts[] = $label;
+        $totalItems += $total;
+        $correctItems += $correct;
+        $unansweredItems += $unanswered;
+
+        if (!isset($sectionTotals[$section])) {
+            $sectionTotals[$section] = ['correct' => 0, 'total' => 0, 'unanswered' => 0];
+        }
+        $sectionTotals[$section]['correct'] += $correct;
+        $sectionTotals[$section]['total'] += $total;
+        $sectionTotals[$section]['unanswered'] += $unanswered;
+    }
+    $stmt->close();
+
+    foreach ($sectionTotals as $section => $data) {
+        $facts[] = ucfirst($section) . ' total dari log soal: benar ' . $data['correct'] . '/' . $data['total'] . ' (' . formatPercent((float)$data['correct'], (float)$data['total']) . '), kosong ' . $data['unanswered'] . '.';
+    }
+
+    return [
+        'has_log' => $totalItems > 0,
+        'total' => $totalItems,
+        'correct' => $correctItems,
+        'incorrect' => max(0, $totalItems - $correctItems - $unansweredItems),
+        'unanswered' => $unansweredItems,
+        'accuracy' => $totalItems > 0 ? round(($correctItems / $totalItems) * 100, 1) : 0.0,
+        'facts' => $facts,
+        'parts' => $parts,
+    ];
+}
+
 function collectToeicScoreExplanationFacts(mysqli $conn, string $test_session): array
 {
     $uid = getUsersIdColumn($conn);
@@ -138,6 +203,7 @@ function collectToeicScoreExplanationFacts(mysqli $conn, string $test_session): 
     $facts = [];
     $formula = '';
     $score_summary = '';
+    $questionLog = collectToeicQuestionLogSummary($conn, $test_session);
 
     if ($result) {
         $listening_raw = (int)($result['listening_raw'] ?? 0);
@@ -154,56 +220,30 @@ function collectToeicScoreExplanationFacts(mysqli $conn, string $test_session): 
         $facts[] = "Total skor adalah {$listening_scaled} + {$reading_scaled} = {$total_score}/990.";
     } elseif ($is_practice) {
         $practice = getTOEICPracticeSummary((int)$session['user_id'], $test_session);
-        if (!$practice) {
-            throw new Exception('Data practice TOEIC belum cukup untuk dijelaskan');
+        if ($practice && (int)$practice['total'] > 0) {
+            $score_summary = 'Practice Part ' . $practice['part'] . ': ' . $practice['correct'] . '/' . $practice['total'] . ' benar (' . $practice['accuracy'] . '%)';
+            $formula = 'Mode practice tidak menghasilkan skor TOEIC 10-990. Nilai yang ditampilkan adalah akurasi latihan pada part yang dipilih.';
+            $facts[] = 'Mode practice: Part ' . $practice['part'] . ' ' . ($practice['part_info']['name'] ?? '') . '.';
+            $facts[] = 'Benar ' . $practice['correct'] . '/' . $practice['total'] . ', salah ' . $practice['incorrect'] . ', akurasi ' . $practice['accuracy'] . '%.';
+        } elseif ($questionLog['has_log']) {
+            $targetPart = preg_replace('/[^1-7]/', '', (string)($session['target_part'] ?? ''));
+            $targetLabel = $targetPart !== '' ? 'Part ' . $targetPart : 'Mixed practice';
+            $score_summary = 'Practice TOEIC berdasarkan log soal: ' . $questionLog['correct'] . '/' . $questionLog['total'] . ' benar (' . $questionLog['accuracy'] . '%)';
+            $formula = 'Mode practice tidak menghasilkan skor TOEIC 10-990. Untuk practice campuran atau sesi lama tanpa target_part, nilai dijelaskan dari akurasi semua log soal yang tersimpan.';
+            $facts[] = 'Mode practice: ' . $targetLabel . '.';
+            $facts[] = 'Benar ' . $questionLog['correct'] . '/' . $questionLog['total'] . ', salah ' . $questionLog['incorrect'] . ', kosong ' . $questionLog['unanswered'] . ', akurasi ' . $questionLog['accuracy'] . '%.';
+            if ($targetPart === '') {
+                $facts[] = 'Sesi practice ini tidak menyimpan target_part, jadi analisis memakai semua question log yang tersedia.';
+            }
+        } else {
+            throw new Exception('Belum ada log soal TOEIC untuk dijelaskan');
         }
-        $score_summary = 'Practice Part ' . $practice['part'] . ': ' . $practice['correct'] . '/' . $practice['total'] . ' benar (' . $practice['accuracy'] . '%)';
-        $formula = 'Mode practice tidak menghasilkan skor TOEIC 10-990. Nilai yang ditampilkan adalah akurasi latihan pada part yang dipilih.';
-        $facts[] = 'Mode practice: Part ' . $practice['part'] . ' ' . ($practice['part_info']['name'] ?? '') . '.';
-        $facts[] = 'Benar ' . $practice['correct'] . '/' . $practice['total'] . ', salah ' . $practice['incorrect'] . ', akurasi ' . $practice['accuracy'] . '%.';
     } else {
         $score_summary = 'Sesi TOEIC belum memiliki hasil final.';
         $formula = 'Skor final belum bisa dihitung sampai sesi selesai dan hasil tersimpan.';
     }
 
-    $stmt = $conn->prepare("
-        SELECT
-            section,
-            part,
-            COUNT(*) AS total_items,
-            COALESCE(SUM(CASE WHEN COALESCE(is_correct, 0) = 1 THEN 1 ELSE 0 END), 0) AS correct_items,
-            COALESCE(SUM(CASE WHEN user_answer IS NULL OR TRIM(user_answer) = '' THEN 1 ELSE 0 END), 0) AS unanswered
-        FROM toeic_test_questions
-        WHERE test_session = ?
-        GROUP BY section, part
-        ORDER BY CAST(part AS UNSIGNED)
-    ");
-    $stmt->bind_param("s", $test_session);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $sectionTotals = [];
-    while ($row = $res->fetch_assoc()) {
-        $section = (string)$row['section'];
-        $part = (string)$row['part'];
-        $total = (int)$row['total_items'];
-        $correct = (int)$row['correct_items'];
-        $unanswered = (int)$row['unanswered'];
-        $partInfo = getTOEICPartInfo($part);
-        $label = 'Part ' . $part . ($partInfo ? ' - ' . $partInfo['name'] : '');
-        $facts[] = $label . ': benar ' . $correct . '/' . $total . ' (' . formatPercent($correct, $total) . '), kosong ' . $unanswered . '.';
-
-        if (!isset($sectionTotals[$section])) {
-            $sectionTotals[$section] = ['correct' => 0, 'total' => 0, 'unanswered' => 0];
-        }
-        $sectionTotals[$section]['correct'] += $correct;
-        $sectionTotals[$section]['total'] += $total;
-        $sectionTotals[$section]['unanswered'] += $unanswered;
-    }
-    $stmt->close();
-
-    foreach ($sectionTotals as $section => $data) {
-        $facts[] = ucfirst($section) . ' total dari log soal: benar ' . $data['correct'] . '/' . $data['total'] . ' (' . formatPercent((float)$data['correct'], (float)$data['total']) . '), kosong ' . $data['unanswered'] . '.';
-    }
+    $facts = array_merge($facts, $questionLog['facts']);
 
     if (empty($facts)) {
         $facts[] = 'Belum ada log soal yang tersimpan untuk sesi ini.';
