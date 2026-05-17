@@ -323,6 +323,10 @@ $back_url = $format === 'toeic_sw'
             });
         });
 
+        function formatCorrectAnswer(data) {
+            return data.correct_answer || data.correct_letter || 'jawaban benar belum tersedia';
+        }
+
         async function checkEx(id) {
             if (answered[id]) return;
             const box = document.getElementById('ex-'+id);
@@ -344,6 +348,7 @@ $back_url = $format === 'toeic_sw'
                     body: JSON.stringify({ exercise_id: id, answer: ans })
                 });
                 const data = await res.json();
+                if (!data.success) throw new Error(data.error || 'Unable to check answer');
                 answered[id] = true; btn.style.display = 'none';
                 feedback.style.display = 'block';
                 if (data.correct) {
@@ -351,7 +356,7 @@ $back_url = $format === 'toeic_sw'
                     feedback.className += ' text-success bg-success-subtle';
                     if (box.dataset.type === 'multiple_choice') box.querySelector('.exercise-opt.selected').classList.add('correct');
                 } else {
-                    feedback.innerHTML = '<i class="fas fa-times-circle me-2"></i> Incorrect. Correct answer: ' + data.correct_answer;
+                    feedback.innerHTML = '<i class="fas fa-times-circle me-2"></i> Incorrect. Correct answer: ' + formatCorrectAnswer(data);
                     feedback.className += ' text-danger bg-danger-subtle';
                     if (box.dataset.type === 'multiple_choice') box.querySelector('.exercise-opt.selected').classList.add('wrong');
                 }

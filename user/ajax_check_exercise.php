@@ -24,6 +24,7 @@ if ($exercise_id <= 0 || $user_answer === '') {
 }
 
 $user_id = (int)$_SESSION['user_id'];
+$is_admin = ($_SESSION['role'] ?? '') === 'admin' ? 1 : 0;
 
 // Get exercise with access check
 $stmt = $conn->prepare("
@@ -31,9 +32,9 @@ $stmt = $conn->prepare("
     FROM learning_exercises e
     JOIN learning_modules m ON e.module_id = m.id
     JOIN learning_curriculum c ON m.curriculum_id = c.id
-    WHERE e.id = ? AND c.user_id = ?
+    WHERE e.id = ? AND (c.user_id = ? OR ? = 1)
 ");
-$stmt->bind_param("ii", $exercise_id, $user_id);
+$stmt->bind_param("iii", $exercise_id, $user_id, $is_admin);
 $stmt->execute();
 $exercise = $stmt->get_result()->fetch_assoc();
 $stmt->close();
