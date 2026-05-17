@@ -21,6 +21,9 @@ admin_sessions_sw_check(strpos($page, 'speaking_scaled') !== false, 'admin/test_
 admin_sessions_sw_check(strpos($page, 'writing_scaled') !== false, 'admin/test_sessions.php must display Writing scaled score data.');
 admin_sessions_sw_check(strpos($page, 'toeic_sw_result_detail.php') !== false, 'admin/test_sessions.php must route SW rows to the SW detail page.');
 admin_sessions_sw_check(strpos($page, 'TOEIC SW') !== false, 'admin/test_sessions.php must visibly distinguish TOEIC SW rows.');
+admin_sessions_sw_check(strpos($page, 'COLLATE utf8mb4_general_ci AS test_format') !== false, 'admin/test_sessions.php must normalize UNION text literals to the connection collation.');
+admin_sessions_sw_check(strpos($page, 'CONVERT(s.test_session USING utf8mb4) COLLATE utf8mb4_general_ci AS test_session') !== false, 'admin/test_sessions.php must normalize LR/SW session ids before UNION.');
+admin_sessions_sw_check(strpos($page, 'CONVERT(u.full_name USING utf8mb4) COLLATE utf8mb4_general_ci AS full_name') !== false, 'admin/test_sessions.php must normalize user display names before UNION.');
 
 if (!empty($failures)) {
     fwrite(STDERR, "Admin sessions SW contract failed:\n- " . implode("\n- ", $failures) . "\n");
