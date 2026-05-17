@@ -62,6 +62,10 @@ function toeicSwFeedbackSummary(?string $json): string {
     }
     return (string)($data['feedback_summary'] ?? $data['fallback_reason'] ?? 'Feedback belum tersedia.');
 }
+
+function toeicSwFormatScore($value): string {
+    return $value !== null ? number_format((float)$value, 2) : '-';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -191,7 +195,9 @@ function toeicSwFeedbackSummary(?string $json): string {
                     </div>
                     <p class="mb-2 text-muted"><?php echo toeicSwResultH($summary); ?></p>
                     <div class="small text-muted">
-                        Normalized: <?php echo $row['normalized_score'] !== null ? number_format((float)$row['normalized_score'], 2) : '-'; ?>
+                        <strong>AI Score</strong>
+                        - Raw: <?php echo toeicSwResultH(toeicSwFormatScore($row['raw_score'])); ?>
+                        - Normalized: <?php echo toeicSwResultH(toeicSwFormatScore($row['normalized_score'])); ?>
                         <?php if (!empty($row['ai_model'])): ?>
                             · Model: <?php echo toeicSwResultH($row['ai_model']); ?>
                         <?php endif; ?>

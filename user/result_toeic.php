@@ -11,20 +11,66 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
 }
 
 $website_title = getWebsiteTitle();
+$user_id = (int)$_SESSION['user_id'];
 $test_session = $_GET['session'] ?? $_SESSION['toeic_test_session'] ?? $_SESSION['test_session'] ?? null;
 if (!$test_session || strpos($test_session, 'toeic_') !== 0) {
     toeicRedirectWithFlash('index.php', 'info', 'Hasil TOEIC akan tersedia setelah sesi selesai.');
 }
 
-$session_info = getTOEICSessionInfo($_SESSION['user_id'], $test_session);
+$session_info = getTOEICSessionInfo($user_id, $test_session);
 if (!$session_info) {
     toeicRedirectWithFlash('index.php', 'error', 'Hasil TOEIC tidak ditemukan untuk akun ini.');
 }
 
 $is_practice = !empty($session_info['practice_mode']);
 $practice_part = preg_replace('/[^1-7]/', '', (string)($session_info['target_part'] ?? ''));
-$practice_summary = ($is_practice && $practice_part !== '') ? getTOEICPracticeSummary($_SESSION['user_id'], $test_session) : null;
-$part_stats = getTOEICPartStatistics($_SESSION['user_id'], $test_session);
+$practice_summary = ($is_practice && $practice_part !== '') ? getTOEICPracticeSummary($user_id, $test_session) : null;
+$part_stats = getTOEICPartStatistics($user_id, $test_session);
+$question_review_rows = [];
+$stmt = $conn->prepare("
+    SELECT
+        tq.question_order,
+        tq.section,
+        tq.part,
+        tq.question_id,
+        tq.user_answer,
+        tq.is_correct,
+        COALESCE(sl.jawaban_benar, sr.jawaban_benar) AS correct_answer
+    FROM toeic_test_questions tq
+    LEFT JOIN toeic_soal_listening sl
+      ON tq.section = 'listening'
+     AND tq.question_id = sl.id_soal
+    LEFT JOIN toeic_soal_reading sr
+      ON tq.section = 'reading'
+     AND tq.question_id = sr.id_soal
+    WHERE tq.test_session = ?
+      AND tq.user_id = ?
+    ORDER BY CASE tq.section WHEN 'listening' THEN 1 WHEN 'reading' THEN 2 ELSE 3 END,
+             tq.question_order ASC
+");
+$stmt->bind_param("si", $test_session, $user_id);
+$stmt->execute();
+$question_review_rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
+function toeicResultAnswerStatus(array $row): array {
+    $stored = $row['is_correct'];
+    if ($stored !== null) {
+        return ((float)$stored > 0)
+            ? ['label' => 'Correct', 'class' => 'is-correct']
+            : ['label' => 'Wrong', 'class' => 'is-wrong'];
+    }
+
+    $answer = strtoupper(trim((string)($row['user_answer'] ?? '')));
+    $correct = strtoupper(trim((string)($row['correct_answer'] ?? '')));
+    if ($answer !== '' && $correct !== '') {
+        return $answer === $correct
+            ? ['label' => 'Correct', 'class' => 'is-correct']
+            : ['label' => 'Wrong', 'class' => 'is-wrong'];
+    }
+
+    return ['label' => 'Pending', 'class' => 'is-pending'];
+}
 
 if ($is_practice && $practice_summary) {
     $hero_title = $practice_summary['part_info']['name'];
@@ -34,9 +80,9 @@ if ($is_practice && $practice_summary) {
     $hero_subvalue = 'Accuracy Rate';
 } else {
     if (!$is_practice) {
-        $results = getTOEICTestResults($_SESSION['user_id'], $test_session);
+        $results = getTOEICTestResults($user_id, $test_session);
         if (!$results) {
-            $results = calculateTOEICResults($_SESSION['user_id'], $test_session);
+            $results = calculateTOEICResults($user_id, $test_session);
         }
     } else {
         $results = [
@@ -222,11 +268,95 @@ if ($is_practice && $practice_summary) {
                 </section>
             </div>
         </div>
+
+        <section class="study-card mt-4">
+            <span class="study-kicker">Question Review</span>
+            <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                <div>
+                    <h2 class="h4 mb-2">Listening & Reading Answers</h2>
+                    <p class="text-muted mb-0">Lihat jawaban sendiri, kunci jawaban, dan status benar/salah untuk setiap nomor.</p>
+                </div>
+                <a href="analytics.php" class="study-button study-button-secondary py-2 px-3 min-vh-0" style="min-height: 40px; font-size: 13px;">All Reports</a>
+            </div>
+
+            <?php if (empty($question_review_rows)): ?>
+                <div class="text-center py-5 opacity-50">
+                    <i class="fas fa-list-check fa-3x mb-3"></i>
+                    <p class="mb-0">Question review belum tersedia untuk sesi ini.</p>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle tc-question-review-table">
+                        <thead>
+                            <tr class="small text-muted uppercase fw-bold">
+                                <th>Question</th>
+                                <th>Section</th>
+                                <th>Part</th>
+                                <th>Your Answer</th>
+                                <th>Correct Answer</th>
+                                <th class="text-end">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($question_review_rows as $row): ?>
+                                <?php $status = toeicResultAnswerStatus($row); ?>
+                                <tr class="border-bottom-faint">
+                                    <td class="py-3 fw-bold">#<?php echo (int)$row['question_order']; ?></td>
+                                    <td class="py-3"><?php echo htmlspecialchars(ucfirst((string)$row['section'])); ?></td>
+                                    <td class="py-3">Part <?php echo htmlspecialchars((string)$row['part']); ?></td>
+                                    <td class="py-3">
+                                        <span class="tc-answer-pill"><?php echo htmlspecialchars((string)($row['user_answer'] ?: '-')); ?></span>
+                                    </td>
+                                    <td class="py-3">
+                                        <span class="tc-answer-pill is-key"><?php echo htmlspecialchars((string)($row['correct_answer'] ?: '-')); ?></span>
+                                    </td>
+                                    <td class="py-3 text-end">
+                                        <span class="tc-result-status <?php echo htmlspecialchars($status['class']); ?>"><?php echo htmlspecialchars($status['label']); ?></span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </section>
     </main>
 
     <style>
         .border-bottom-faint {
             border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+        }
+        .tc-question-review-table {
+            min-width: 760px;
+        }
+        .tc-answer-pill,
+        .tc-result-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.25rem;
+            min-height: 2rem;
+            border-radius: 999px;
+            padding: 0.25rem 0.75rem;
+            font-weight: 800;
+            background: #eef2f7;
+            color: #162033;
+        }
+        .tc-answer-pill.is-key {
+            background: #ecfdf5;
+            color: #047857;
+        }
+        .tc-result-status.is-correct {
+            background: #10b981;
+            color: #fff;
+        }
+        .tc-result-status.is-wrong {
+            background: #ef4444;
+            color: #fff;
+        }
+        .tc-result-status.is-pending {
+            background: #64748b;
+            color: #fff;
         }
     </style>
 
