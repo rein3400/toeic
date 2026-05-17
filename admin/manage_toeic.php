@@ -69,6 +69,14 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
         .tab-nav .nav-link { color: var(--text-secondary); border-radius: 999px; }
         .tab-nav .nav-link.active { background: rgba(37,99,235,0.14); color: #93c5fd; }
         .url-preview { max-width: 320px; overflow-wrap: anywhere; font-size: 0.82rem; }
+        .question-tools-stack { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); gap: 1rem; align-items: start; }
+        .question-tools-stack .card-lite { margin-bottom: 0; }
+        .quick-question-panel { order: 1; }
+        .quick-text-panel { order: 2; }
+        .question-bank-panel { order: 3; grid-column: 1 / -1; }
+        .form-error { display: none; border: 1px solid rgba(239,68,68,0.35); background: rgba(239,68,68,0.12); color: #fecaca; border-radius: 12px; padding: 0.75rem 1rem; }
+        .form-error.is-visible { display: block; }
+        @media (max-width: 992px) { .question-tools-stack { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -102,7 +110,8 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                 </ul>
 
                 <?php if ($tab === 'questions'): ?>
-                    <div class="card-lite">
+                    <div class="question-tools-stack">
+                    <div class="card-lite question-bank-panel">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="fw-bold mb-0">Question Bank</h5>
                             <div class="small text-muted">Use existing editors for detail edits. This page focuses on overview, linking, and preview.</div>
@@ -168,22 +177,23 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                         </div>
                     </div>
 
-                    <div class="card-lite">
+                    <div class="card-lite quick-question-panel">
                         <h5 class="fw-bold mb-3">Create Question</h5>
                         <form id="questionForm" method="post" action="ajax_toeic_manager.php">
                             <input type="hidden" name="action" value="question_save">
                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                            <div id="question_error" class="form-error mb-3"></div>
                             <div class="row g-3">
-                                <div class="col-md-3"><label class="form-label">Section</label><select name="section" class="form-select"><option value="listening">Listening</option><option value="reading">Reading</option></select></div>
-                                <div class="col-md-3"><label class="form-label">Part</label><select name="part" class="form-select"><?php for ($i = 1; $i <= 7; $i++): ?><option value="<?php echo $i; ?>">Part <?php echo $i; ?></option><?php endfor; ?></select></div>
+                                <div class="col-md-3"><label class="form-label">Section</label><select name="section" id="question_section" class="form-select"><option value="listening">Listening</option><option value="reading">Reading</option></select></div>
+                                <div class="col-md-3"><label class="form-label">Part</label><select name="part" id="question_part" class="form-select"></select></div>
                                 <div class="col-md-3"><label class="form-label">Question No.</label><input type="number" name="nomor_soal" class="form-control" min="1" required></div>
                                 <div class="col-md-3"><label class="form-label">Question Type</label><input type="text" name="question_type" class="form-control" placeholder="Blank = default by part"></div>
                                 <div class="col-12"><label class="form-label">Question</label><textarea name="pertanyaan" class="form-control" rows="3" required></textarea></div>
                                 <div class="col-md-6"><label class="form-label">Option A</label><input type="text" name="opsi_a" class="form-control" required></div>
                                 <div class="col-md-6"><label class="form-label">Option B</label><input type="text" name="opsi_b" class="form-control" required></div>
                                 <div class="col-md-6"><label class="form-label">Option C</label><input type="text" name="opsi_c" class="form-control" required></div>
-                                <div class="col-md-6"><label class="form-label">Option D</label><input type="text" name="opsi_d" class="form-control"></div>
-                                <div class="col-md-4"><label class="form-label">Correct</label><select name="jawaban_benar" class="form-select"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+                                <div class="col-md-6"><label class="form-label">Option D</label><input type="text" name="opsi_d" id="question_opsi_d" class="form-control"></div>
+                                <div class="col-md-4"><label class="form-label">Correct</label><select name="jawaban_benar" id="question_correct" class="form-select"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
                                 <div class="col-md-8"><label class="form-label">Linked Audio</label><select name="id_audio" class="form-select"><option value="">Select audio (listening only)</option><?php foreach ($audio_catalog as $audio): ?><option value="<?php echo (int)$audio['id_audio']; ?>">#<?php echo (int)$audio['id_audio']; ?> · Part <?php echo htmlspecialchars((string)$audio['part']); ?> · <?php echo htmlspecialchars($audio['judul']); ?></option><?php endforeach; ?></select></div>
                                 <div class="col-12"><label class="form-label">Linked Text</label><select name="id_teks" class="form-select"><option value="">Select text (Part 6/7 only)</option><?php foreach ($text_catalog as $text): ?><option value="<?php echo (int)$text['id_teks']; ?>">#<?php echo (int)$text['id_teks']; ?> · Part <?php echo htmlspecialchars((string)$text['part']); ?> · <?php echo htmlspecialchars($text['judul']); ?></option><?php endforeach; ?></select></div>
                                 <div class="col-12"><label class="form-label">Explanation</label><textarea name="explanation" class="form-control" rows="4" required></textarea></div>
@@ -192,7 +202,7 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                         </form>
                     </div>
 
-                    <div class="card-lite">
+                    <div class="card-lite quick-text-panel" id="quickEditors">
                         <h5 class="fw-bold mb-3">Quick Text Editor</h5>
                         <form id="textForm" method="post" action="ajax_toeic_manager.php">
                             <input type="hidden" name="action" value="text_save">
@@ -208,6 +218,7 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                                 <div class="col-12"><button type="submit" class="btn btn-primary">Save Text</button></div>
                             </div>
                         </form>
+                    </div>
                     </div>
                 <?php elseif ($tab === 'audio'): ?>
                     <div class="row g-4">
@@ -306,35 +317,116 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
     </div>
     <script>
         const textCatalog = <?php echo json_encode($text_catalog, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
-        function ajaxSubmit(formId) {
-            const form = document.getElementById(formId);
+        const questionPartOptions = {
+            listening: ['1', '2', '3', '4'],
+            reading: ['5', '6', '7'],
+        };
+
+        function setFormError(form, message) {
+            const inlineError = form.id === 'questionForm' ? document.getElementById('question_error') : null;
+            if (inlineError) {
+                inlineError.textContent = message;
+                inlineError.classList.add('is-visible');
+                return;
+            }
+            alert(message);
+        }
+
+        function clearFormError(form) {
+            const inlineError = form.id === 'questionForm' ? document.getElementById('question_error') : null;
+            if (!inlineError) return;
+            inlineError.textContent = '';
+            inlineError.classList.remove('is-visible');
+        }
+
+        function syncQuestionPartOptions() {
+            const form = document.getElementById('questionForm');
             if (!form) return;
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const formData = new FormData(form);
-                const response = await fetch(form.action, { method: 'POST', body: formData });
+            const sectionSelect = document.getElementById('question_section');
+            const partSelect = document.getElementById('question_part');
+            const correctSelect = document.getElementById('question_correct');
+            const optionD = document.getElementById('question_opsi_d');
+            const allowedParts = questionPartOptions[sectionSelect.value] || questionPartOptions.listening;
+            const currentPart = allowedParts.includes(partSelect.value) ? partSelect.value : allowedParts[0];
+
+            partSelect.innerHTML = '';
+            allowedParts.forEach((part) => {
+                const option = document.createElement('option');
+                option.value = part;
+                option.textContent = `Part ${part}`;
+                option.selected = part === currentPart;
+                partSelect.appendChild(option);
+            });
+
+            const isPart2 = partSelect.value === '2';
+            optionD.disabled = isPart2;
+            optionD.required = !isPart2;
+            if (isPart2) {
+                optionD.value = '';
+            }
+            Array.from(correctSelect.options).forEach((option) => {
+                option.disabled = isPart2 && option.value === 'D';
+            });
+            if (isPart2 && correctSelect.value === 'D') {
+                correctSelect.value = 'A';
+            }
+
+            const audioSelect = form.elements.id_audio;
+            const textSelect = form.elements.id_teks;
+            if (audioSelect) {
+                audioSelect.disabled = sectionSelect.value !== 'listening';
+                audioSelect.required = sectionSelect.value === 'listening';
+            }
+            if (textSelect) {
+                textSelect.disabled = sectionSelect.value !== 'reading' || !['6', '7'].includes(partSelect.value);
+                textSelect.required = sectionSelect.value === 'reading' && ['6', '7'].includes(partSelect.value);
+            }
+        }
+
+        function validateQuestionForm(form) {
+            const section = form.elements.section?.value || '';
+            const part = form.elements.part?.value || '';
+            const allowedParts = questionPartOptions[section] || [];
+            if (!allowedParts.includes(part)) {
+                setFormError(form, 'Part tidak sesuai dengan section TOEIC yang dipilih.');
+                return false;
+            }
+            if (part === '2' && form.elements.jawaban_benar?.value === 'D') {
+                setFormError(form, 'Part 2 hanya memakai pilihan A, B, atau C.');
+                return false;
+            }
+            return true;
+        }
+
+        async function submitManagerForm(form) {
+            clearFormError(form);
+            if (form.id === 'questionForm' && !validateQuestionForm(form)) {
+                return;
+            }
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalLabel = submitButton ? submitButton.textContent : '';
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Saving...';
+            }
+
+            try {
+                const response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
                 const result = await response.json();
                 if (!result.success) {
-                    alert(result.error || 'Request failed');
+                    setFormError(form, result.error || 'Request failed');
                     return;
                 }
                 window.location.reload();
-            });
-        }
-
-        ajaxSubmit('questionForm');
-        ajaxSubmit('textForm');
-        ajaxSubmit('audioForm');
-        ajaxSubmit('imageForm');
-
-        async function submitManagerForm(form) {
-            const response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-            const result = await response.json();
-            if (!result.success) {
-                alert(result.error || 'Request failed');
-                return;
+            } catch (error) {
+                setFormError(form, error.message || 'Request failed');
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalLabel;
+                }
             }
-            window.location.reload();
         }
 
         ['questionForm', 'textForm', 'audioForm', 'imageForm'].forEach((formId) => {
@@ -345,6 +437,10 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                 submitManagerForm(form);
             });
         });
+
+        document.getElementById('question_section')?.addEventListener('change', syncQuestionPartOptions);
+        document.getElementById('question_part')?.addEventListener('change', syncQuestionPartOptions);
+        syncQuestionPartOptions();
 
         async function managerDelete(payload) {
             const formData = new FormData();
@@ -404,7 +500,9 @@ $image_catalog = $conn->query("SELECT id_photo, description FROM toeic_photos OR
                 document.getElementById('text_isi_teks').value = row.isi_teks || '';
                 document.getElementById('text_isi_teks_2').value = row.isi_teks_2 || '';
                 document.getElementById('text_isi_teks_3').value = row.isi_teks_3 || '';
-                window.scrollTo({ top: document.getElementById('textForm').offsetTop - 120, behavior: 'smooth' });
+                const quickEditors = document.getElementById('quickEditors');
+                window.scrollTo({ top: (quickEditors || document.getElementById('textForm')).offsetTop - 120, behavior: 'smooth' });
+                document.getElementById('text_isi_teks').focus();
             });
         });
         document.querySelectorAll('.btn-open-audio').forEach((button) => {

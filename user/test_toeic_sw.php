@@ -548,8 +548,8 @@ function toeicSwRenderPrompt(array $question): void {
                 <span class="material-symbols-outlined text-slate-400">timer</span>
                 <div class="font-mono font-bold text-xl text-primary" id="sw-section-timer"><?php echo gmdate('i:s', $remaining_time); ?></div>
             </div>
-            <a href="index.php" onclick="return confirm('Exit exam? Progress is saved.');" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
-                Quit
+            <a href="index.php" id="quitTestBtn" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
+                Quit Test
             </a>
         </div>
         <div class="toeic-test-statusbar">
@@ -748,5 +748,43 @@ function toeicSwRenderPrompt(array $question): void {
         ]); ?>;
     </script>
     <script src="<?php echo toeicSwH(getVersionedAssetUrl('user/js/test_toeic_sw.js', 'js/test_toeic_sw.js')); ?>"></script>
+    <script>
+        function withQuitTimeout(promise, timeoutMs) {
+            return Promise.race([
+                promise,
+                new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+            ]);
+        }
+
+        async function handleQuitTest(event) {
+            event.preventDefault();
+            if (!confirm('Quit Test? Jawaban yang sudah tersimpan tetap aman dan sesi tidak akan ditandai selesai.')) return;
+
+            const button = document.getElementById('quitTestBtn');
+            if (button) {
+                button.classList.add('disabled');
+                button.setAttribute('aria-disabled', 'true');
+            }
+            if (window.proctorSDK && typeof window.proctorSDK.pause === 'function') {
+                window.proctorSDK.pause(5000);
+            }
+            document.body.classList.add('tc-saving');
+            try {
+                const saves = [];
+                if (typeof window.flushToeicSwTextAnswers === 'function') {
+                    saves.push(window.flushToeicSwTextAnswers());
+                }
+                if (typeof window.waitForToeicSwRecordingSaves === 'function') {
+                    saves.push(window.waitForToeicSwRecordingSaves());
+                }
+                await withQuitTimeout(Promise.allSettled(saves), 3000);
+            } catch (error) {
+                console.warn('Best-effort save before quit failed', error);
+            }
+            window.location.href = 'index.php';
+        }
+
+        document.getElementById('quitTestBtn')?.addEventListener('click', handleQuitTest);
+    </script>
 </body>
 </html>

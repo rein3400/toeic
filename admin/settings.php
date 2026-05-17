@@ -184,10 +184,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($_POST['action'] == 'update_tripay') {
             // Payment routing plus optional Tripay gateway settings.
             $payment_mode = ($_POST['payment_mode'] ?? 'direct_bank') === 'tripay' ? 'tripay' : 'direct_bank';
-            $bank_name = trim($_POST['bank_name'] ?? '');
-            $bank_account_number = trim($_POST['bank_account_number'] ?? '');
-            $bank_account_holder = trim($_POST['bank_account_holder'] ?? '');
-            $bank_transfer_instructions = trim($_POST['bank_transfer_instructions'] ?? '');
+            $bank_name = trim($_POST['bank_name'] ?? '') ?: 'GOPAY';
+            $bank_account_number = trim($_POST['bank_account_number'] ?? '') ?: '+62856-4359-7072';
+            $bank_account_holder = trim($_POST['bank_account_holder'] ?? '') ?: 'Leonardus Bayu';
+            $bank_transfer_instructions = trim($_POST['bank_transfer_instructions'] ?? '') ?: 'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.';
             $tripay_api_key = trim($_POST['tripay_api_key']);
             $tripay_private_key = trim($_POST['tripay_private_key']);
             $tripay_merchant_code = trim($_POST['tripay_merchant_code']);
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             saveSetting('tripay_merchant_code', $tripay_merchant_code);
             saveSetting('tripay_is_production', $tripay_is_production);
 
-            $success = "Pengaturan pembayaran berhasil disimpan. Checkout aktif: " . ($payment_mode === 'direct_bank' ? 'transfer bank langsung' : 'Tripay');
+            $success = "Pengaturan pembayaran berhasil disimpan. Checkout aktif: " . ($payment_mode === 'direct_bank' ? 'GoPay Manual' : 'Tripay');
         } elseif ($_POST['action'] == 'update_auth_settings') {
             $forgot_password_enabled = isset($_POST['forgot_password_enabled']) ? '1' : '0';
             $password_reset_expiry_minutes = max(10, min(1440, (int)($_POST['password_reset_expiry_minutes'] ?? 60)));
@@ -598,13 +598,14 @@ $pricing = [
                                 
                                 <?php 
                                 $payment_mode = getSetting('payment_mode', 'direct_bank');
+                                $manual_payment = toeicGetBankTransferSettings();
                                 $tripay_is_prod = getSetting('tripay_is_production', '0');
                                 $is_configured = !empty(getSetting('tripay_api_key')) && !empty(getSetting('tripay_private_key')) && !empty(getSetting('tripay_merchant_code'));
                                 ?>
                                 
                                 <div class="alert alert-<?php echo $is_configured ? 'success' : 'warning'; ?> mb-3">
                                     <i class="fas fa-<?php echo $is_configured ? 'check-circle' : 'exclamation-triangle'; ?> me-2"></i>
-                                    Checkout aktif: <strong><?php echo $payment_mode === 'tripay' ? 'Tripay' : 'Transfer Bank Langsung'; ?></strong> |
+                                    Checkout aktif: <strong><?php echo $payment_mode === 'tripay' ? 'Tripay' : 'GoPay Manual'; ?></strong> |
                                     Tripay: <?php echo $is_configured ? 'Configured' : 'Not Configured'; ?> |
                                     Mode: <strong><?php echo $tripay_is_prod === '1' ? 'PRODUCTION' : 'SANDBOX'; ?></strong>
                                 </div>
@@ -616,7 +617,7 @@ $pricing = [
                                         <div class="d-flex flex-column gap-2">
                                             <label class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_mode" value="direct_bank" <?php echo $payment_mode !== 'tripay' ? 'checked' : ''; ?>>
-                                                <span class="form-check-label">Transfer Bank Langsung</span>
+                                                <span class="form-check-label">GoPay Manual</span>
                                             </label>
                                             <label class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_mode" value="tripay" <?php echo $payment_mode === 'tripay' ? 'checked' : ''; ?>>
@@ -626,22 +627,22 @@ $pricing = [
                                     </div>
 
                                     <div class="p-3 border rounded mb-4" style="border-color: rgba(16,185,129,0.35) !important;">
-                                        <h6 class="fw-bold mb-3 text-success"><i class="fas fa-building-columns me-2"></i>Rekening Direct Bank</h6>
+                                        <h6 class="fw-bold mb-3 text-success"><i class="fas fa-wallet me-2"></i>GoPay Manual</h6>
                                         <div class="mb-2">
-                                            <label class="form-label form-label-sm">Nama Bank</label>
-                                            <input type="text" class="form-control form-control-sm" name="bank_name" value="<?php echo htmlspecialchars(getSetting('bank_name', '')); ?>" placeholder="BCA / Mandiri / BRI">
+                                            <label class="form-label form-label-sm">Channel Pembayaran</label>
+                                            <input type="text" class="form-control form-control-sm" name="bank_name" value="<?php echo htmlspecialchars($manual_payment['payment_channel'] ?? 'GOPAY'); ?>" placeholder="GOPAY">
                                         </div>
                                         <div class="mb-2">
-                                            <label class="form-label form-label-sm">Nomor Rekening</label>
-                                            <input type="text" class="form-control form-control-sm" name="bank_account_number" value="<?php echo htmlspecialchars(getSetting('bank_account_number', '')); ?>" placeholder="1234567890">
+                                            <label class="form-label form-label-sm">Nomor GoPay</label>
+                                            <input type="text" class="form-control form-control-sm" name="bank_account_number" value="<?php echo htmlspecialchars($manual_payment['bank_account_number'] ?? '+62856-4359-7072'); ?>" placeholder="+62856-4359-7072">
                                         </div>
                                         <div class="mb-2">
                                             <label class="form-label form-label-sm">Atas Nama</label>
-                                            <input type="text" class="form-control form-control-sm" name="bank_account_holder" value="<?php echo htmlspecialchars(getSetting('bank_account_holder', '')); ?>" placeholder="Nama pemilik rekening">
+                                            <input type="text" class="form-control form-control-sm" name="bank_account_holder" value="<?php echo htmlspecialchars($manual_payment['bank_account_holder'] ?? 'Leonardus Bayu'); ?>" placeholder="Leonardus Bayu">
                                         </div>
                                         <div class="mb-0">
                                             <label class="form-label form-label-sm">Instruksi Pembayaran</label>
-                                            <textarea class="form-control form-control-sm" name="bank_transfer_instructions" rows="3"><?php echo htmlspecialchars(getSetting('bank_transfer_instructions', 'Transfer sesuai nominal invoice, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.')); ?></textarea>
+                                            <textarea class="form-control form-control-sm" name="bank_transfer_instructions" rows="3"><?php echo htmlspecialchars($manual_payment['instructions'] ?? 'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.'); ?></textarea>
                                         </div>
                                     </div>
 

@@ -56,6 +56,10 @@ $amount_fmt = 'Rp ' . number_format((int)($tx['amount'] ?? 0), 0, ',', '.');
 $is_direct_bank = strtoupper((string)($tx['payment_method'] ?? '')) === 'BANK_TRANSFER'
     || (string)($tx['payment_type'] ?? '') === 'direct_bank';
 $bank_transfer = toeicGetBankTransferSettings();
+$manual_payment_label = $bank_transfer['display_label'] ?? 'GoPay Manual';
+$manual_payment_channel = $bank_transfer['payment_channel'] ?? 'GOPAY';
+$manual_payment_number = $bank_transfer['bank_account_number'] ?? '+62856-4359-7072';
+$manual_payment_holder = $bank_transfer['bank_account_holder'] ?? 'Leonardus Bayu';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +109,7 @@ $bank_transfer = toeicGetBankTransferSettings();
                         <i class="fas fa-clock fa-4x pulse-icon text-warning"></i>
                     </div>
                     <span class="study-kicker">Payment Status</span>
-                    <h2 class="h3 mb-3 fw-bold"><?php echo $is_direct_bank ? 'Transfer Bank Langsung' : 'Waiting for Payment'; ?></h2>
+                    <h2 class="h3 mb-3 fw-bold"><?php echo $is_direct_bank ? 'Bayar via GoPay Manual' : 'Waiting for Payment'; ?></h2>
 
                     <div class="p-3 rounded-4 mb-4" style="background: rgba(72,127,181,0.05);">
                         <div class="small text-muted uppercase fw-bold mb-1">Total Amount</div>
@@ -115,18 +119,18 @@ $bank_transfer = toeicGetBankTransferSettings();
 
                     <div id="payment-info">
                         <?php if ($is_direct_bank): ?>
-                            <div class="p-3 rounded-4 mb-4 text-start" style="background: rgba(16,185,129,0.08);">
-                                <div class="small text-muted uppercase fw-bold mb-2">Direct Bank Transfer</div>
-                                <div class="fw-bold h5 mb-1"><?php echo htmlspecialchars($bank_transfer['bank_name'] ?: 'Bank belum diatur'); ?></div>
+                            <div class="p-3 rounded-4 mb-4 text-start" data-legacy-method="Direct Bank Transfer" style="background: rgba(16,185,129,0.08);">
+                                <div class="small text-muted uppercase fw-bold mb-2"><?php echo htmlspecialchars($manual_payment_label); ?></div>
+                                <div class="fw-bold h5 mb-1"><?php echo htmlspecialchars($manual_payment_channel ?: 'GOPAY'); ?></div>
                                 <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
-                                    <code class="h4 fw-bold mb-0" style="letter-spacing:1px; color:var(--focus-blue);"><?php echo htmlspecialchars($bank_transfer['bank_account_number'] ?: '-'); ?></code>
-                                    <?php if (!empty($bank_transfer['bank_account_number'])): ?>
-                                        <button onclick="copyToClipboard('<?php echo htmlspecialchars(preg_replace('/[^0-9]/', '', $bank_transfer['bank_account_number'])); ?>', this)" class="btn btn-sm btn-outline-primary border-0 rounded-pill px-3">
+                                    <code class="h4 fw-bold mb-0" style="letter-spacing:1px; color:var(--focus-blue);"><?php echo htmlspecialchars($manual_payment_number ?: '-'); ?></code>
+                                    <?php if (!empty($manual_payment_number)): ?>
+                                        <button onclick="copyToClipboard('<?php echo htmlspecialchars(preg_replace('/[^0-9+]/', '', $manual_payment_number)); ?>', this)" class="btn btn-sm btn-outline-primary border-0 rounded-pill px-3">
                                             <i class="fas fa-copy"></i> Copy
                                         </button>
                                     <?php endif; ?>
                                 </div>
-                                <div class="small mb-2">Atas nama: <strong><?php echo htmlspecialchars($bank_transfer['bank_account_holder'] ?: '-'); ?></strong></div>
+                                <div class="small mb-2">Atas nama: <strong><?php echo htmlspecialchars($manual_payment_holder ?: '-'); ?></strong></div>
                                 <div class="small text-muted"><?php echo nl2br(htmlspecialchars($bank_transfer['instructions'])); ?></div>
                             </div>
                         <?php endif; ?>
@@ -134,7 +138,7 @@ $bank_transfer = toeicGetBankTransferSettings();
 
                     <p class="small text-muted mb-4" id="pending-desc">
                         <?php if ($is_direct_bank): ?>
-                            Transfer sesuai nominal, lalu tunggu admin memverifikasi pembayaran.
+                            Transfer sesuai nominal ke GoPay Manual, lalu tunggu admin memverifikasi pembayaran.
                         <?php else: ?>
                             Please complete the payment in your app.<br>
                             This page will refresh automatically.

@@ -326,6 +326,7 @@
             throw new Error(`${failed.length} writing answer(s) failed to save. ${firstReason}`);
         }
     }
+    window.flushToeicSwTextAnswers = flushTextAnswers;
 
     function getPreferredAudioMimeType() {
         const candidates = [

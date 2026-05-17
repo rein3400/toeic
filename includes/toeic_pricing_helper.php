@@ -48,16 +48,25 @@ if (!function_exists('toeicGetPaymentMode')) {
     }
 }
 
+if (!function_exists('toeicPaymentSettingOrDefault')) {
+    function toeicPaymentSettingOrDefault(string $key, string $default): string {
+        $value = trim((string)getSiteSetting($key, $default));
+        return $value === '' ? $default : $value;
+    }
+}
+
 if (!function_exists('toeicGetBankTransferSettings')) {
     function toeicGetBankTransferSettings(): array {
         return [
-            'bank_name' => trim((string)getSiteSetting('bank_name', '')),
-            'bank_account_number' => trim((string)getSiteSetting('bank_account_number', '')),
-            'bank_account_holder' => trim((string)getSiteSetting('bank_account_holder', '')),
-            'instructions' => trim((string)getSiteSetting(
+            'display_label' => 'GoPay Manual',
+            'payment_channel' => toeicPaymentSettingOrDefault('bank_name', 'GOPAY'),
+            'bank_name' => toeicPaymentSettingOrDefault('bank_name', 'GOPAY'),
+            'bank_account_number' => toeicPaymentSettingOrDefault('bank_account_number', '+62856-4359-7072'),
+            'bank_account_holder' => toeicPaymentSettingOrDefault('bank_account_holder', 'Leonardus Bayu'),
+            'instructions' => toeicPaymentSettingOrDefault(
                 'bank_transfer_instructions',
-                'Transfer sesuai nominal invoice, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.'
-            )),
+                'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.'
+            ),
         ];
     }
 }

@@ -37,6 +37,10 @@ $payment_mode = toeicGetPaymentMode();
 $tripay_ready = toeicPaymentUsesTripay();
 $direct_bank_ready = toeicIsDirectBankConfigured();
 $bank_transfer = toeicGetBankTransferSettings();
+$manual_payment_label = $bank_transfer['display_label'] ?? 'GoPay Manual';
+$manual_payment_channel = $bank_transfer['payment_channel'] ?? 'GOPAY';
+$manual_payment_number = $bank_transfer['bank_account_number'] ?? '+62856-4359-7072';
+$manual_payment_holder = $bank_transfer['bank_account_holder'] ?? 'Leonardus Bayu';
 $checkout_ready = $payment_mode === 'direct_bank' ? $direct_bank_ready : $tripay_ready;
 ?>
 <!DOCTYPE html>
@@ -103,15 +107,15 @@ $checkout_ready = $payment_mode === 'direct_bank' ? $direct_bank_ready : $tripay
                             <input type="radio" name="payment_method" value="BANK_TRANSFER" checked class="d-none">
                             <div class="d-flex gap-3 align-items-start">
                                 <div class="avatar-circle flex-shrink-0" style="width:50px; height:50px; background:rgba(16,185,129,0.1) !important; border:none;">
-                                    <i class="fas fa-building-columns text-success h4 mb-0"></i>
+                                    <i class="fas fa-wallet text-success h4 mb-0"></i>
                                 </div>
                                 <div>
-                                    <div class="fw-bold">Transfer Bank Langsung</div>
-                                    <div class="small text-muted">Invoice dibuat di sistem, lalu pembayaran diselesaikan ke rekening admin.</div>
+                                    <div class="fw-bold"><?php echo htmlspecialchars($manual_payment_label); ?></div>
+                                    <div class="small text-muted">Invoice dibuat di sistem, lalu pembayaran diselesaikan ke nomor GoPay admin.</div>
                                     <?php if ($direct_bank_ready): ?>
                                         <div class="mt-3 small">
-                                            <div class="fw-bold"><?php echo htmlspecialchars($bank_transfer['bank_name']); ?></div>
-                                            <div><?php echo htmlspecialchars($bank_transfer['bank_account_number']); ?> a.n. <?php echo htmlspecialchars($bank_transfer['bank_account_holder']); ?></div>
+                                            <div class="fw-bold"><?php echo htmlspecialchars($manual_payment_channel); ?></div>
+                                            <div><?php echo htmlspecialchars($manual_payment_number); ?> a.n. <?php echo htmlspecialchars($manual_payment_holder); ?></div>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -176,7 +180,7 @@ $checkout_ready = $payment_mode === 'direct_bank' ? $direct_bank_ready : $tripay
 
                     <ul class="list-unstyled mb-5">
                         <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Aktivasi instan</li>
-                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> <?php echo $payment_mode === 'direct_bank' ? 'Transfer bank langsung' : 'Transaksi aman'; ?></li>
+                        <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> <?php echo $payment_mode === 'direct_bank' ? 'Bayar via GoPay Manual' : 'Transaksi aman'; ?></li>
                         <li class="mb-2 small d-flex gap-2 align-items-center"><i class="fas fa-check-circle text-success"></i> Berlaku untuk 1 sesi</li>
                     </ul>
 
@@ -184,7 +188,7 @@ $checkout_ready = $payment_mode === 'direct_bank' ? $direct_bank_ready : $tripay
                         <button id="payButton" class="study-button w-100" onclick="createTransaction()">Selesaikan Pembelian</button>
                     <?php else: ?>
                         <div class="alert alert-warning border-0 small text-center">
-                            <?php echo $payment_mode === 'direct_bank' ? 'Rekening direct bank belum lengkap.' : 'Payment gateway belum aktif di environment ini.'; ?> Gunakan voucher atau hubungi admin.
+                            <?php echo $payment_mode === 'direct_bank' ? 'Nomor GoPay Manual belum lengkap.' : 'Payment gateway belum aktif di environment ini.'; ?> Gunakan voucher atau hubungi admin.
                         </div>
                     <?php endif; ?>
                     <div id="paymentMessage" class="small mt-3 text-center text-muted"></div>

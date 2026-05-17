@@ -2183,6 +2183,59 @@ body.tc-payment-page {
     color: var(--tc-navy);
 }
 
+.tc-package-page .tc-package-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: 1.25rem;
+    align-items: stretch;
+    background: #FFFFFF;
+    border: 1px solid rgba(216, 224, 234, 0.95);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 16px 40px rgba(21, 32, 51, 0.08);
+}
+
+.tc-package-page .tc-package-body,
+.tc-package-page .tc-package-action {
+    min-width: 0;
+}
+
+.tc-package-page .tc-package-action {
+    border-left: 1px solid rgba(216, 224, 234, 0.95);
+    padding-left: 1.25rem;
+}
+
+.tc-package-page .tc-package-price {
+    color: var(--focus-blue);
+    line-height: 1;
+}
+
+.tc-package-page .tc-payment-expectation {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    border-radius: 12px;
+    color: #047857;
+    font-size: 0.86rem;
+    font-weight: 800;
+    padding: 0.75rem 0.85rem;
+}
+
+.tc-package-page .tc-feature-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tc-package-page .tc-feature-line span {
+    background: rgba(72, 127, 181, 0.08);
+    border: 1px solid rgba(72, 127, 181, 0.14);
+    border-radius: 999px;
+    color: var(--academy-blue);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.42rem 0.72rem;
+}
+
 .voucher-redeem-row .form-control {
     min-width: 0;
     flex: 1 1 auto;
@@ -2222,6 +2275,17 @@ body.tc-payment-page {
 
     .tc-test-page section.flex-1 {
         min-height: 58dvh;
+    }
+
+    .tc-package-page .tc-package-row {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-package-page .tc-package-action {
+        border-left: 0;
+        border-top: 1px solid rgba(216, 224, 234, 0.95);
+        padding-left: 0;
+        padding-top: 1.25rem;
     }
 }
 

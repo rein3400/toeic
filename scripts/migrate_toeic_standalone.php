@@ -389,6 +389,10 @@ $settingStatements = [
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_sw_partner', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('price_toeic_sw_bulk', '175000') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('payment_mode', 'direct_bank') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_name', 'GOPAY') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_account_number', '+62856-4359-7072') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_account_holder', 'Leonardus Bayu') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_transfer_instructions', 'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('forgot_password_enabled', '1') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('features_toeic', '[\"Full simulation 200 soal\",\"Practice mode Part 1-7\",\"Score report TOEIC\",\"Weakness map per part\"]') ON DUPLICATE KEY UPDATE setting_value = setting_value",
 ];

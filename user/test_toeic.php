@@ -705,8 +705,8 @@ if ($is_batch) {
                 <span class="material-symbols-outlined text-slate-400">timer</span>
                 <div class="font-mono font-bold text-xl text-primary" id="timerDisplay"><?php echo gmdate('i:s', $remaining_time); ?></div>
             </div>
-            <a href="index.php" onclick="return confirm('Exit exam? Progress is saved.');" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
-                Quit
+            <a href="index.php" id="quitTestBtn" class="study-button study-button-secondary" style="min-height:40px; font-size:12px; padding: 8px 16px !important;">
+                Quit Test
             </a>
         </div>
         <div class="toeic-test-statusbar">
@@ -850,7 +850,7 @@ if ($is_batch) {
         const csrfToken = document.getElementById('csrfToken').value, mode = document.getElementById('mode').value, targetPart = document.getElementById('targetPart').value;
         const nextBtn = document.getElementById('nextBtn'), prevBtn = document.getElementById('prevBtn');
         const nextBtnDefault = nextBtn.innerHTML;
-        let isNavigating = false, isSubmitting = false;
+        let isNavigating = false, isSubmitting = false, isQuitting = false;
 
         function setTestBusy(message) {
             const loadingText = document.querySelector('.tc-test-loading span');
@@ -882,6 +882,34 @@ if ($is_batch) {
             }
             return list;
         }
+
+        function withTimeout(promise, timeoutMs) {
+            return Promise.race([
+                promise,
+                new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+            ]);
+        }
+
+        async function handleQuitTest(event) {
+            event.preventDefault();
+            if (isQuitting) return;
+            if (!confirm('Quit Test? Jawaban yang sudah tersimpan tetap aman dan sesi tidak akan ditandai selesai.')) return;
+
+            isQuitting = true;
+            isNavigating = true;
+            if (window.proctorSDK && typeof window.proctorSDK.pause === 'function') {
+                window.proctorSDK.pause(5000);
+            }
+            setTestBusy('Menyimpan sebelum keluar...');
+            try {
+                await withTimeout(Promise.allSettled(collectAnswers()), 2500);
+            } catch (error) {
+                console.warn('Best-effort save before quit failed', error);
+            }
+            window.location.href = 'index.php';
+        }
+
+        document.getElementById('quitTestBtn')?.addEventListener('click', handleQuitTest);
 
         async function handleNext() {
             if (isNavigating || isSubmitting) return;

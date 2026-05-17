@@ -5,6 +5,7 @@ require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/proctor_helper.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_sw_helper.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
     header("Location: login.php");
@@ -14,100 +15,207 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
 $website_title = getWebsiteTitle();
 $uid = getUsersIdColumn($conn);
 ensureTOEICSessionModeColumns($conn);
+ensureToeicSwSchema($conn);
 $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 20;
 $offset = ($page - 1) * $per_page;
 $search = trim($_GET['search'] ?? '');
+$format_filter = $_GET['format'] ?? 'all';
 $mode_filter = $_GET['mode'] ?? 'all';
 $status_filter = $_GET['status'] ?? 'all';
 
-$where = [];
-$params = [];
-$types = '';
+if (!in_array($format_filter, ['all', 'toeic', 'toeic_sw'], true)) {
+    $format_filter = 'all';
+}
+
+$include_toeic = in_array($format_filter, ['all', 'toeic'], true);
+$include_toeic_sw = in_array($format_filter, ['all', 'toeic_sw'], true);
+
+$lr_where = [];
+$lr_params = [];
+$lr_types = '';
+$sw_where = [];
+$sw_params = [];
+$sw_types = '';
 
 if ($search !== '') {
-    $where[] = "(u.full_name LIKE ? OR u.username LIKE ? OR s.test_session LIKE ?)";
+    $lr_where[] = "(u.full_name LIKE ? OR u.username LIKE ? OR s.test_session LIKE ?)";
+    $sw_where[] = "(u.full_name LIKE ? OR u.username LIKE ? OR s.test_session LIKE ?)";
     $like = '%' . $search . '%';
-    array_push($params, $like, $like, $like);
-    $types .= 'sss';
+    array_push($lr_params, $like, $like, $like);
+    array_push($sw_params, $like, $like, $like);
+    $lr_types .= 'sss';
+    $sw_types .= 'sss';
 }
 
 if ($mode_filter === 'full') {
-    $where[] = "COALESCE(s.practice_mode, 0) = 0";
+    $lr_where[] = "COALESCE(s.practice_mode, 0) = 0";
+    $sw_where[] = "COALESCE(s.practice_mode, 0) = 0";
 } elseif ($mode_filter === 'practice') {
-    $where[] = "COALESCE(s.practice_mode, 0) = 1";
+    $lr_where[] = "COALESCE(s.practice_mode, 0) = 1";
+    $sw_where[] = "COALESCE(s.practice_mode, 0) = 1";
 }
 
 if ($status_filter === 'active') {
-    $where[] = "s.status = 'active' AND (p.status IS NULL OR p.status <> 'terminated')";
+    $lr_where[] = "s.status = 'active' AND (p.status IS NULL OR p.status <> 'terminated')";
+    $sw_where[] = "s.status = 'active'";
 } elseif ($status_filter === 'completed') {
-    $where[] = "s.status = 'completed'";
+    $lr_where[] = "s.status = 'completed'";
+    $sw_where[] = "s.status = 'completed'";
 } elseif ($status_filter === 'terminated') {
-    $where[] = "p.status = 'terminated'";
+    $lr_where[] = "p.status = 'terminated'";
+    $include_toeic_sw = false;
 } elseif ($status_filter === 'cleared') {
-    $where[] = "p.review_status = 'cleared'";
+    $lr_where[] = "p.review_status = 'cleared'";
+    $include_toeic_sw = false;
 }
 
-$whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+$lr_where_sql = !empty($lr_where) ? 'WHERE ' . implode(' AND ', $lr_where) : '';
+$sw_where_sql = !empty($sw_where) ? 'WHERE ' . implode(' AND ', $sw_where) : '';
 
-$countSql = "
-    SELECT COUNT(*) AS total
-    FROM toeic_test_sessions s
-    JOIN users u ON s.user_id = u.{$uid}
-    LEFT JOIN proctoring_sessions p ON p.test_session = s.test_session
-    $whereSql
-";
-$stmt = $conn->prepare($countSql);
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
+function adminTestSessionCount(mysqli $conn, string $sql, string $types, array $params): int {
+    $stmt = $conn->prepare($sql);
+    if ($types !== '') {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $total = (int)($stmt->get_result()->fetch_assoc()['total'] ?? 0);
+    $stmt->close();
+
+    return $total;
 }
-$stmt->execute();
-$total_rows = (int)($stmt->get_result()->fetch_assoc()['total'] ?? 0);
-$stmt->close();
+
+$total_rows = 0;
+if ($include_toeic) {
+    $total_rows += adminTestSessionCount($conn, "
+        SELECT COUNT(*) AS total
+        FROM toeic_test_sessions s
+        JOIN users u ON s.user_id = u.{$uid}
+        LEFT JOIN proctoring_sessions p ON p.test_session = s.test_session
+        $lr_where_sql
+    ", $lr_types, $lr_params);
+}
+if ($include_toeic_sw) {
+    $total_rows += adminTestSessionCount($conn, "
+        SELECT COUNT(*) AS total
+        FROM toeic_sw_test_sessions s
+        JOIN users u ON s.user_id = u.{$uid}
+        $sw_where_sql
+    ", $sw_types, $sw_params);
+}
 $total_pages = max(1, (int)ceil($total_rows / $per_page));
 
-$sql = "
-    SELECT
-        s.*,
-        u.full_name,
-        u.username,
-        r.total_score,
-        r.cefr_level,
-        r.completed_at AS report_completed_at,
-        p.integrity_score,
-        p.status AS proctor_status,
-        p.review_status,
-        p.camera_granted,
-        p.microphone_granted,
-        qa.accuracy
-    FROM toeic_test_sessions s
-    JOIN users u ON s.user_id = u.{$uid}
-    LEFT JOIN toeic_test_results r ON r.test_session = s.test_session
-    LEFT JOIN proctoring_sessions p ON p.test_session = s.test_session
-    LEFT JOIN (
+$select_parts = [];
+$select_params = [];
+$select_types = '';
+
+if ($include_toeic) {
+    $select_parts[] = "
         SELECT
-            test_session,
-            ROUND(100 * SUM(CASE WHEN is_correct = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 1) AS accuracy
-        FROM toeic_test_questions
-        GROUP BY test_session
-    ) qa ON qa.test_session = s.test_session
-    $whereSql
-    ORDER BY COALESCE(s.completed_at, s.started_at) DESC
-    LIMIT $per_page OFFSET $offset
-";
-$stmt = $conn->prepare($sql);
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
+            'toeic' AS test_format,
+            NULL AS package_number,
+            s.test_session,
+            s.user_id,
+            s.practice_mode,
+            s.target_part,
+            s.checkout_source,
+            s.checkout_reference,
+            s.current_section,
+            s.status,
+            s.started_at,
+            s.completed_at,
+            COALESCE(s.completed_at, s.started_at) AS sort_at,
+            u.full_name,
+            u.username,
+            r.total_score,
+            r.cefr_level,
+            NULL AS speaking_scaled,
+            NULL AS writing_scaled,
+            p.integrity_score,
+            p.status AS proctor_status,
+            p.review_status,
+            p.camera_granted,
+            p.microphone_granted,
+            qa.accuracy
+        FROM toeic_test_sessions s
+        JOIN users u ON s.user_id = u.{$uid}
+        LEFT JOIN toeic_test_results r ON r.test_session = s.test_session
+        LEFT JOIN proctoring_sessions p ON p.test_session = s.test_session
+        LEFT JOIN (
+            SELECT
+                test_session,
+                ROUND(100 * SUM(CASE WHEN is_correct = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 1) AS accuracy
+            FROM toeic_test_questions
+            GROUP BY test_session
+        ) qa ON qa.test_session = s.test_session
+        $lr_where_sql
+    ";
+    $select_params = array_merge($select_params, $lr_params);
+    $select_types .= $lr_types;
 }
-$stmt->execute();
-$sessions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
+
+if ($include_toeic_sw) {
+    $select_parts[] = "
+        SELECT
+            'toeic_sw' AS test_format,
+            s.package_number,
+            s.test_session,
+            s.user_id,
+            s.practice_mode,
+            NULL AS target_part,
+            'toeic_sw' AS checkout_source,
+            NULL AS checkout_reference,
+            s.current_section,
+            s.status,
+            s.started_at,
+            s.completed_at,
+            COALESCE(s.completed_at, s.started_at) AS sort_at,
+            u.full_name,
+            u.username,
+            COALESCE(r.total_score, s.total_score) AS total_score,
+            COALESCE(r.cefr_level, s.cefr_level) AS cefr_level,
+            COALESCE(r.speaking_scaled, s.speaking_scaled) AS speaking_scaled,
+            COALESCE(r.writing_scaled, s.writing_scaled) AS writing_scaled,
+            NULL AS integrity_score,
+            NULL AS proctor_status,
+            NULL AS review_status,
+            NULL AS camera_granted,
+            NULL AS microphone_granted,
+            NULL AS accuracy
+        FROM toeic_sw_test_sessions s
+        JOIN users u ON s.user_id = u.{$uid}
+        LEFT JOIN toeic_sw_test_results r ON r.test_session = s.test_session
+        $sw_where_sql
+    ";
+    $select_params = array_merge($select_params, $sw_params);
+    $select_types .= $sw_types;
+}
+
+$sessions = [];
+if (!empty($select_parts)) {
+    $sql = "
+        SELECT *
+        FROM (
+            " . implode("\nUNION ALL\n", $select_parts) . "
+        ) combined_sessions
+        ORDER BY sort_at DESC
+        LIMIT $per_page OFFSET $offset
+    ";
+    $stmt = $conn->prepare($sql);
+    if ($select_types !== '') {
+        $stmt->bind_param($select_types, ...$select_params);
+    }
+    $stmt->execute();
+    $sessions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
 
 $summary = [
     'full_reports' => 0,
     'active_full' => 0,
     'active_practice' => 0,
     'completed_practice' => 0,
+    'sw_sessions' => 0,
     'terminated_proctor' => 0,
 ];
 
@@ -115,7 +223,14 @@ $summary['full_reports'] = (int)($conn->query("SELECT COUNT(*) AS total FROM toe
 $summary['active_full'] = (int)($conn->query("SELECT COUNT(*) AS total FROM toeic_test_sessions WHERE status = 'active' AND COALESCE(practice_mode, 0) = 0")->fetch_assoc()['total'] ?? 0);
 $summary['active_practice'] = (int)($conn->query("SELECT COUNT(*) AS total FROM toeic_test_sessions WHERE status = 'active' AND COALESCE(practice_mode, 0) = 1")->fetch_assoc()['total'] ?? 0);
 $summary['completed_practice'] = (int)($conn->query("SELECT COUNT(*) AS total FROM toeic_test_sessions WHERE status = 'completed' AND COALESCE(practice_mode, 0) = 1")->fetch_assoc()['total'] ?? 0);
+$summary['sw_sessions'] = (int)($conn->query("SELECT COUNT(*) AS total FROM toeic_sw_test_sessions")->fetch_assoc()['total'] ?? 0);
 $summary['terminated_proctor'] = (int)($conn->query("SELECT COUNT(*) AS total FROM proctoring_sessions WHERE status = 'terminated'")->fetch_assoc()['total'] ?? 0);
+
+function adminSessionFormatLabel(array $row): array {
+    return (($row['test_format'] ?? 'toeic') === 'toeic_sw')
+        ? ['label' => 'TOEIC SW', 'class' => 'bg-info text-dark']
+        : ['label' => 'TOEIC LR', 'class' => 'bg-secondary'];
+}
 
 function adminSessionModeLabel(array $row): string {
     return !empty($row['practice_mode']) ? 'Practice' : 'Full';
@@ -129,6 +244,7 @@ function adminSessionCheckoutLabel(array $row): array {
     }
 
     return match ($source) {
+        'toeic_sw' => ['label' => 'TOEIC SW', 'class' => 'bg-info text-dark'],
         'voucher' => ['label' => 'Voucher', 'class' => 'bg-info text-dark'],
         'free_trial' => ['label' => 'Free Trial', 'class' => 'bg-warning text-dark'],
         'direct_bank' => ['label' => 'Direct Bank', 'class' => 'bg-success'],
@@ -138,6 +254,16 @@ function adminSessionCheckoutLabel(array $row): array {
 }
 
 function adminSessionStatusLabel(array $row): array {
+    if (($row['test_format'] ?? 'toeic') === 'toeic_sw') {
+        if ($row['status'] === 'completed') {
+            return ['label' => 'SW Completed', 'class' => 'bg-primary'];
+        }
+        if ($row['status'] === 'cancelled') {
+            return ['label' => 'SW Cancelled', 'class' => 'bg-secondary'];
+        }
+        $section = ucfirst((string)($row['current_section'] ?? 'speaking'));
+        return ['label' => 'SW ' . $section . ' Active', 'class' => 'bg-warning text-dark'];
+    }
     if (($row['proctor_status'] ?? '') === 'terminated') {
         return ['label' => 'Proctor Terminated', 'class' => 'bg-danger'];
     }
@@ -178,26 +304,35 @@ function adminSessionStatusLabel(array $row): array {
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h1 class="fw-bold mb-1">TOEIC Sessions</h1>
-                        <p class="text-muted mb-0">Pantau full simulation, practice mode, dan status runtime sesi TOEIC.</p>
+                        <p class="text-muted mb-0">Pantau sesi TOEIC LR dan TOEIC SW dari satu daftar operasional.</p>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="test_results.php" class="btn btn-outline-secondary">Full Results</a>
+                        <a href="toeic_sw_results.php" class="btn btn-outline-secondary">SW Results</a>
                         <a href="proctoring_sessions.php" class="btn btn-outline-primary">Proctoring</a>
                     </div>
                 </div>
 
                 <div class="row g-3 mb-4">
-                    <div class="col-md-2"><div class="stats-card"><h6>Full Reports</h6><h3><?php echo $summary['full_reports']; ?></h3></div></div>
-                    <div class="col-md-2"><div class="stats-card"><h6>Active Full</h6><h3><?php echo $summary['active_full']; ?></h3></div></div>
-                    <div class="col-md-2"><div class="stats-card"><h6>Active Practice</h6><h3><?php echo $summary['active_practice']; ?></h3></div></div>
-                    <div class="col-md-3"><div class="stats-card"><h6>Completed Practice</h6><h3><?php echo $summary['completed_practice']; ?></h3></div></div>
-                    <div class="col-md-3"><div class="stats-card"><h6>Proctor Terminated</h6><h3><?php echo $summary['terminated_proctor']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>LR Reports</h6><h3><?php echo $summary['full_reports']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>LR Active Full</h6><h3><?php echo $summary['active_full']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>LR Active Practice</h6><h3><?php echo $summary['active_practice']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>LR Completed Practice</h6><h3><?php echo $summary['completed_practice']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>SW Sessions</h6><h3><?php echo $summary['sw_sessions']; ?></h3></div></div>
+                    <div class="col-md-2"><div class="stats-card"><h6>Proctor Terminated</h6><h3><?php echo $summary['terminated_proctor']; ?></h3></div></div>
                 </div>
 
                 <div class="content-card mb-4">
                     <form method="GET" class="row g-3">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <input type="text" class="form-control" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Cari nama, username, atau session">
+                        </div>
+                        <div class="col-md-2">
+                            <select name="format" class="form-select">
+                                <option value="all" <?php echo $format_filter === 'all' ? 'selected' : ''; ?>>All Formats</option>
+                                <option value="toeic" <?php echo $format_filter === 'toeic' ? 'selected' : ''; ?>>TOEIC LR</option>
+                                <option value="toeic_sw" <?php echo $format_filter === 'toeic_sw' ? 'selected' : ''; ?>>TOEIC SW</option>
+                            </select>
                         </div>
                         <div class="col-md-2">
                             <select name="mode" class="form-select">
@@ -206,7 +341,7 @@ function adminSessionStatusLabel(array $row): array {
                                 <option value="practice" <?php echo $mode_filter === 'practice' ? 'selected' : ''; ?>>Practice</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <select name="status" class="form-select">
                                 <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Status</option>
                                 <option value="active" <?php echo $status_filter === 'active' ? 'selected' : ''; ?>>Active</option>
@@ -227,6 +362,7 @@ function adminSessionStatusLabel(array $row): array {
                             <thead>
                                 <tr>
                                     <th>Siswa</th>
+                                    <th>Format</th>
                                     <th>Mode</th>
                                     <th>Checkout Source</th>
                                     <th>Target</th>
@@ -240,17 +376,21 @@ function adminSessionStatusLabel(array $row): array {
                             </thead>
                             <tbody>
                                 <?php if (empty($sessions)): ?>
-                                    <tr><td colspan="10" class="text-center text-muted py-4">Belum ada sesi TOEIC yang cocok dengan filter.</td></tr>
+                                    <tr><td colspan="11" class="text-center text-muted py-4">Belum ada sesi TOEIC yang cocok dengan filter.</td></tr>
                                 <?php else: ?>
                                     <?php foreach ($sessions as $row): ?>
                                         <?php $statusBadge = adminSessionStatusLabel($row); ?>
                                         <?php $checkoutBadge = adminSessionCheckoutLabel($row); ?>
+                                        <?php $formatBadge = adminSessionFormatLabel($row); ?>
+                                        <?php $isSwSession = ($row['test_format'] ?? 'toeic') === 'toeic_sw'; ?>
+                                        <?php $detailUrl = $isSwSession ? 'toeic_sw_result_detail.php?session=' . urlencode($row['test_session']) : 'view_result.php?session=' . urlencode($row['test_session']); ?>
                                         <tr>
                                             <td>
                                                 <div class="fw-semibold"><?php echo htmlspecialchars($row['full_name']); ?></div>
                                                 <div class="small text-muted"><?php echo htmlspecialchars($row['username']); ?></div>
                                                 <div class="small text-muted"><code><?php echo htmlspecialchars($row['test_session']); ?></code></div>
                                             </td>
+                                            <td><span class="badge <?php echo $formatBadge['class']; ?>"><?php echo htmlspecialchars($formatBadge['label']); ?></span></td>
                                             <td><span class="badge bg-dark"><?php echo adminSessionModeLabel($row); ?></span></td>
                                             <td>
                                                 <span class="badge <?php echo $checkoutBadge['class']; ?>"><?php echo htmlspecialchars($checkoutBadge['label']); ?></span>
@@ -259,7 +399,10 @@ function adminSessionStatusLabel(array $row): array {
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <?php if (!empty($row['practice_mode'])): ?>
+                                                <?php if ($isSwSession): ?>
+                                                    <div class="fw-semibold">Package <?php echo (int)($row['package_number'] ?? 0); ?></div>
+                                                    <div class="small text-muted">Speaking &amp; Writing</div>
+                                                <?php elseif (!empty($row['practice_mode'])): ?>
                                                     <?php if (!empty($row['target_part'])): ?>
                                                         <div class="fw-semibold">Part <?php echo htmlspecialchars((string)$row['target_part']); ?></div>
                                                     <?php else: ?>
@@ -272,7 +415,14 @@ function adminSessionStatusLabel(array $row): array {
                                             <td><span class="badge <?php echo $statusBadge['class']; ?>"><?php echo htmlspecialchars($statusBadge['label']); ?></span></td>
                                             <td><?php echo htmlspecialchars(ucfirst((string)$row['current_section'])); ?></td>
                                             <td>
-                                                <?php if (!empty($row['practice_mode'])): ?>
+                                                <?php if ($isSwSession): ?>
+                                                    <?php if ($row['speaking_scaled'] !== null || $row['writing_scaled'] !== null || $row['total_score'] !== null): ?>
+                                                        <div>S <?php echo $row['speaking_scaled'] !== null ? (int)$row['speaking_scaled'] : '-'; ?> / W <?php echo $row['writing_scaled'] !== null ? (int)$row['writing_scaled'] : '-'; ?></div>
+                                                        <div class="small text-muted">Total <?php echo $row['total_score'] !== null ? (int)$row['total_score'] : '-'; ?></div>
+                                                    <?php else: ?>
+                                                        <span class="text-muted">-</span>
+                                                    <?php endif; ?>
+                                                <?php elseif (!empty($row['practice_mode'])): ?>
                                                     <?php if (!empty($row['target_part'])): ?>
                                                         <?php echo $row['accuracy'] !== null ? htmlspecialchars((string)$row['accuracy']) . '%' : '<span class="text-muted">-</span>'; ?>
                                                     <?php else: ?>
@@ -283,7 +433,9 @@ function adminSessionStatusLabel(array $row): array {
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <?php if (!empty($row['practice_mode'])): ?>
+                                                <?php if ($isSwSession): ?>
+                                                    <span class="text-muted">No Proctor</span>
+                                                <?php elseif (!empty($row['practice_mode'])): ?>
                                                     <span class="text-muted">No Proctor</span>
                                                 <?php elseif ($row['proctor_status'] === null): ?>
                                                     <span class="text-muted">Not Started</span>
@@ -294,7 +446,7 @@ function adminSessionStatusLabel(array $row): array {
                                                 <?php endif; ?>
                                             </td>
                                             <td><?php echo date('d M Y H:i', strtotime($row['started_at'])); ?></td>
-                                            <td><a href="view_result.php?session=<?php echo urlencode($row['test_session']); ?>" class="btn btn-sm btn-outline-primary">View</a></td>
+                                            <td><a href="<?php echo htmlspecialchars($detailUrl); ?>" class="btn btn-sm btn-outline-primary">View</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
@@ -307,7 +459,7 @@ function adminSessionStatusLabel(array $row): array {
                             <ul class="pagination justify-content-center mb-0">
                                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                     <li class="page-item <?php echo $i === $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&mode=<?php echo urlencode($mode_filter); ?>&status=<?php echo urlencode($status_filter); ?>"><?php echo $i; ?></a>
+                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&format=<?php echo urlencode($format_filter); ?>&mode=<?php echo urlencode($mode_filter); ?>&status=<?php echo urlencode($status_filter); ?>"><?php echo $i; ?></a>
                                     </li>
                                 <?php endfor; ?>
                             </ul>
