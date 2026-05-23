@@ -27,7 +27,24 @@ $full_credit_count = countStrictTestCredits($conn, (int)$_SESSION['user_id'], $c
 $next_credit = $test_format === 'toeic' ? peekNextTestCredit($conn, (int)$_SESSION['user_id'], $credit_type) : null;
 $is_free_trial_credit = $test_format === 'toeic' && toeicIsFreeTrialCredit($next_credit ?: null);
 $display_mode = $is_free_trial_credit ? 'prep' : $mode;
+$is_lr_practice = $test_format === 'toeic' && $display_mode === 'prep';
 $format_title = $test_format === 'toeic_sw' ? 'TOEIC Speaking & Writing' : 'TOEIC Listening & Reading';
+$timer_copy = $test_format === 'toeic_sw'
+    ? 'Speaking and Writing timers cannot be paused once the section begins.'
+    : ($is_lr_practice
+        ? 'Practice uses the same timer behavior as the simulator. Make sure your audio is ready before starting.'
+        : 'The timer cannot be paused. Make sure you have 2 hours of uninterrupted time.');
+$rules_title = $test_format === 'toeic_sw'
+    ? 'Submission Rules'
+    : ($is_lr_practice ? 'No Proctoring' : 'Proctoring Rules');
+$rules_copy = $test_format === 'toeic_sw'
+    ? 'Speaking submit is blocked until recordings finish uploading. Writing responses are autosaved.'
+    : ($is_lr_practice
+        ? 'Practice sessions run without camera, microphone, or proctoring review. Focus on answering and checking your progress.'
+        : 'Do not switch tabs or exit full-screen. Suspicious activity may disqualify your result.');
+$environment_device = $test_format === 'toeic_sw'
+    ? 'Microphone ready'
+    : ($is_lr_practice ? 'Audio ready' : 'Webcam ready');
 $full_test_parts = $test_format === 'toeic_sw'
     ? [
         ['label' => 'Speaking', 'detail' => '11 Qs - about 20m - score 0-200'],
@@ -167,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                             </div>
                             <div>
                                 <div class="fw-bold">Non-Stop Timer</div>
-                                <div class="small text-muted"><?php echo $test_format === 'toeic_sw' ? 'Speaking and Writing timers cannot be paused once the section begins.' : 'The timer cannot be paused. Make sure you have 2 hours of uninterrupted time.'; ?></div>
+                                <div class="small text-muted"><?php echo htmlspecialchars($timer_copy); ?></div>
                             </div>
                         </div>
                         <div class="list-group-item bg-transparent border-0 px-0 py-3 d-flex gap-3">
@@ -175,8 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                                 <i class="fas fa-shield-alt text-primary"></i>
                             </div>
                             <div>
-                                <div class="fw-bold"><?php echo $test_format === 'toeic_sw' ? 'Submission Rules' : 'Proctoring Rules'; ?></div>
-                                <div class="small text-muted"><?php echo $test_format === 'toeic_sw' ? 'Speaking submit is blocked until recordings finish uploading. Writing responses are autosaved.' : 'Do not switch tabs or exit full-screen. Suspicious activity may disqualify your result.'; ?></div>
+                                <div class="fw-bold"><?php echo htmlspecialchars($rules_title); ?></div>
+                                <div class="small text-muted"><?php echo htmlspecialchars($rules_copy); ?></div>
                             </div>
                         </div>
                     </div>
@@ -191,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                         <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Quiet room</span></li>
                         <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Stable internet</span></li>
                         <li class="mb-3 d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span>Charged laptop/PC</span></li>
-                        <li class="d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span><?php echo $test_format === 'toeic_sw' ? 'Microphone ready' : 'Webcam ready'; ?></span></li>
+                        <li class="d-flex gap-2"><i class="fas fa-check text-success mt-1"></i> <span><?php echo htmlspecialchars($environment_device); ?></span></li>
                     </ul>
                 </div>
             </div>

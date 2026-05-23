@@ -309,10 +309,25 @@ class ToeicTestBuilder {
         }
         $excludeIds = array_values(array_unique(array_filter(array_map('intval', $excludeIds))));
 
-        $sql = "SELECT * FROM {$table} WHERE part = ?";
-        if (!empty($excludeIds)) {
-            $sql .= " AND id_soal NOT IN (" . implode(',', $excludeIds) . ")";
+        $joins = '';
+        $conditions = ['src.part = ?'];
+
+        if ($this->requiresAudioAsset($table, $part)) {
+            $joins .= ' JOIN toeic_audio ta ON ta.id_audio = src.id_audio';
+            $conditions[] = 'src.id_audio IS NOT NULL';
+            $conditions[] = "TRIM(COALESCE(ta.file_path, '')) <> ''";
         }
+
+        if ($this->requiresPhotoAsset($table, $part)) {
+            $joins .= ' JOIN toeic_photos tp ON tp.id_photo = ta.id_photo';
+            $conditions[] = 'ta.id_photo IS NOT NULL';
+            $conditions[] = "TRIM(COALESCE(tp.file_path, '')) <> ''";
+        }
+
+        if (!empty($excludeIds)) {
+            $conditions[] = "src.id_soal NOT IN (" . implode(',', $excludeIds) . ")";
+        }
+        $sql = "SELECT src.* FROM {$table} src{$joins} WHERE " . implode(' AND ', $conditions);
         $sql .= " ORDER BY RAND() LIMIT " . (int)$limit;
 
         $stmt = $this->conn->prepare($sql);
@@ -343,13 +358,21 @@ class ToeicTestBuilder {
 
     private function fetchRandomGroupIds(string $table, string $part, string $groupColumn, bool $preferUnseen): array {
         $excludeGroupIds = $preferUnseen ? $this->getSeenGroupIds($table, $part, $groupColumn) : [];
-        $sql = "SELECT DISTINCT {$groupColumn} AS group_id
-                FROM {$table}
-                WHERE part = ? AND {$groupColumn} IS NOT NULL";
+        $joins = '';
+        $conditions = ["src.part = ?", "src.{$groupColumn} IS NOT NULL"];
+
+        if ($this->requiresAudioAsset($table, $part)) {
+            $joins .= " JOIN toeic_audio ta ON ta.id_audio = src.{$groupColumn}";
+            $conditions[] = "TRIM(COALESCE(ta.file_path, '')) <> ''";
+        }
+
         if (!empty($excludeGroupIds)) {
             $safeIds = implode(',', array_map('intval', $excludeGroupIds));
-            $sql .= " AND {$groupColumn} NOT IN ({$safeIds})";
+            $conditions[] = "src.{$groupColumn} NOT IN ({$safeIds})";
         }
+        $sql = "SELECT DISTINCT src.{$groupColumn} AS group_id
+                FROM {$table} src{$joins}
+                WHERE " . implode(' AND ', $conditions);
         $sql .= " ORDER BY RAND()";
 
         $stmt = $this->conn->prepare($sql);
@@ -363,6 +386,14 @@ class ToeicTestBuilder {
         $stmt->close();
 
         return $groupIds;
+    }
+
+    private function requiresAudioAsset(string $table, string $part): bool {
+        return $table === 'toeic_soal_listening' && in_array($part, ['1', '2', '3', '4'], true);
+    }
+
+    private function requiresPhotoAsset(string $table, string $part): bool {
+        return $table === 'toeic_soal_listening' && $part === '1';
     }
 
     private function fetchRowsForGroup(string $table, string $part, string $groupColumn, int $groupId): array {

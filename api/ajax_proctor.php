@@ -106,13 +106,20 @@ try {
             break;
 
         case 'upload_video_chunk':
+        case 'upload_chunk':
             // Upload video chunk
-            if (isset($_FILES['video']) && $_FILES['video']['error'] === UPLOAD_ERR_OK) {
-                $chunk = file_get_contents($_FILES['video']['tmp_name']);
-                $chunkIndex = $input['chunkIndex'] ?? 0;
-                $totalChunks = $input['totalChunks'] ?? 1;
-                
-                saveVideoChunk($session_id, $chunk, $chunkIndex);
+            if (!$session_id) throw new Exception('Proctoring session not found');
+            $chunkFile = $_FILES['video'] ?? ($_FILES['chunk'] ?? null);
+            if ($chunkFile && ($chunkFile['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+                $chunkIndex = (int)($_POST['chunkIndex'] ?? $_POST['index'] ?? ($input['chunkIndex'] ?? 0));
+                $chunkDuration = (int)($_POST['duration'] ?? $_POST['chunkDuration'] ?? ($input['duration'] ?? 30));
+                if ($chunkDuration <= 0) {
+                    $chunkDuration = 30;
+                }
+
+                if (!saveVideoChunk($session_id, $chunkIndex, $chunkFile, $chunkDuration)) {
+                    throw new Exception('Failed saving video chunk');
+                }
                 echo json_encode(['success' => true, 'chunk' => $chunkIndex]);
             } else {
                 throw new Exception('No video file uploaded');

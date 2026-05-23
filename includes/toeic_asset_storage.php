@@ -196,6 +196,40 @@ function toeicAssetLocalFileCandidates($filePath, $kind) {
     return toeicUniqueAssetValues($existingUrls);
 }
 
+function toeicAssetLocalPathCandidates($filePath, $kind) {
+    $paths = toeicAssetPathCandidates($filePath, $kind);
+    if (empty($paths)) {
+        return [];
+    }
+
+    $directory = toeicAssetDirectory($kind);
+    $directoryPrefix = $directory . '/';
+    $localPaths = [];
+
+    foreach ($paths as $path) {
+        if (preg_match('#^https?://#i', $path)) {
+            continue;
+        }
+
+        $path = ltrim($path, '/');
+        $relativePath = strpos($path, $directoryPrefix) === 0 ? $path : $directoryPrefix . ltrim($path, '/');
+        $localPaths[] = __DIR__ . '/../' . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+    }
+
+    return toeicUniqueAssetValues($localPaths);
+}
+
+function toeicAssetExistingLocalPathCandidates($filePath, $kind) {
+    $existingPaths = [];
+    foreach (toeicAssetLocalPathCandidates($filePath, $kind) as $path) {
+        if (is_file($path)) {
+            $existingPaths[] = $path;
+        }
+    }
+
+    return toeicUniqueAssetValues($existingPaths);
+}
+
 function toeicPhotoUrlCandidates($filePath) {
     $paths = toeicAssetPathCandidates($filePath, 'photo');
     if (empty($paths)) {
@@ -249,61 +283,60 @@ function toeicPhotoUrl($filePath) {
 }
 
 function toeicAudioUrl($filePath) {
-    $key = toeicNormalizeAssetKey($filePath);
-    if ($key === '') {
+    $paths = toeicAssetPathCandidates($filePath, 'audio');
+    if (empty($paths)) {
         return '';
     }
-    if (preg_match('#^https?://#i', $key)) {
-        $parsedPath = parse_url($key, PHP_URL_PATH);
-        $basename = basename((string)$parsedPath);
-        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
-            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $basename;
-            if (is_file($localPath)) {
-                return '../uploads/toeic_audio/' . rawurlencode($basename);
-            }
-        }
-        return $key;
+
+    $existingLocalCandidates = toeicAssetLocalFileCandidates($filePath, 'audio');
+    if (!empty($existingLocalCandidates)) {
+        return $existingLocalCandidates[0];
     }
+
     if (toeicAssetDriver('audio') === 'r2') {
-        $base = toeicAssetBaseUrl('audio');
-        if ($base !== '') {
-            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $key;
-            if (is_file($localPath)) {
-                return '../uploads/toeic_audio/' . rawurlencode($key);
-            }
-            return $base . '/' . rawurlencode($key);
+        $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'audio');
+        if (!empty($remoteCandidates)) {
+            return $remoteCandidates[0];
         }
     }
-    return '../uploads/toeic_audio/' . rawurlencode($key);
+
+    $localCandidates = toeicAssetLocalUrlCandidates($filePath, 'audio');
+    if (!empty($localCandidates)) {
+        return $localCandidates[count($localCandidates) - 1];
+    }
+
+    $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'audio');
+    return $remoteCandidates[0] ?? '';
 }
 
 function toeicAudioSource($filePath) {
-    $key = toeicNormalizeAssetKey($filePath);
-    if ($key === '') {
+    $paths = toeicAssetPathCandidates($filePath, 'audio');
+    if (empty($paths)) {
         return ['mode' => 'missing'];
     }
-    if (preg_match('#^https?://#i', $key)) {
-        $parsedPath = parse_url($key, PHP_URL_PATH);
-        $basename = basename((string)$parsedPath);
-        if ($basename !== '' && $basename !== '/' && $basename !== '.') {
-            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $basename;
-            if (is_file($localPath)) {
-                return ['mode' => 'local', 'path' => $localPath];
-            }
-        }
-        return ['mode' => 'remote', 'url' => $key];
+
+    $existingLocalPaths = toeicAssetExistingLocalPathCandidates($filePath, 'audio');
+    if (!empty($existingLocalPaths)) {
+        return ['mode' => 'local', 'path' => $existingLocalPaths[0]];
     }
+
+    if (preg_match('#^https?://#i', $paths[0])) {
+        return ['mode' => 'remote', 'url' => $paths[0]];
+    }
+
     if (toeicAssetDriver('audio') === 'r2') {
-        $base = toeicAssetBaseUrl('audio');
-        if ($base !== '') {
-            $localPath = __DIR__ . '/../uploads/toeic_audio/' . $key;
-            if (is_file($localPath)) {
-                return ['mode' => 'local', 'path' => $localPath];
-            }
-            return ['mode' => 'remote', 'url' => $base . '/' . rawurlencode($key)];
+        $remoteCandidates = toeicAssetRemoteUrlCandidates($filePath, 'audio');
+        if (!empty($remoteCandidates)) {
+            return ['mode' => 'remote', 'url' => $remoteCandidates[0]];
         }
     }
-    return ['mode' => 'local', 'path' => __DIR__ . '/../uploads/toeic_audio/' . $key];
+
+    $localPaths = toeicAssetLocalPathCandidates($filePath, 'audio');
+    if (!empty($localPaths)) {
+        return ['mode' => 'local', 'path' => $localPaths[count($localPaths) - 1]];
+    }
+
+    return ['mode' => 'missing'];
 }
 
 function toeicStreamRemoteFile($url, $localFallbackPath = null) {

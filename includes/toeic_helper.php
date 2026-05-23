@@ -69,7 +69,29 @@ if (!function_exists('getTOEICContentReadiness')) {
         $ready = true;
 
         foreach ($targets as $part => $meta) {
-            $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM {$meta['table']} WHERE part = ?");
+            $table = (string)$meta['table'];
+            if ($table === 'toeic_soal_listening') {
+                $joins = '';
+                $conditions = ['sl.part = ?'];
+
+                if (in_array($part, ['1', '2', '3', '4'], true)) {
+                    $joins .= ' JOIN toeic_audio ta ON ta.id_audio = sl.id_audio';
+                    $conditions[] = 'sl.id_audio IS NOT NULL';
+                    $conditions[] = "TRIM(COALESCE(ta.file_path, '')) <> ''";
+                }
+
+                if ($part === '1') {
+                    $joins .= ' JOIN toeic_photos tp ON tp.id_photo = ta.id_photo';
+                    $conditions[] = 'ta.id_photo IS NOT NULL';
+                    $conditions[] = "TRIM(COALESCE(tp.file_path, '')) <> ''";
+                }
+
+                $sql = "SELECT COUNT(*) AS total FROM toeic_soal_listening sl{$joins} WHERE " . implode(' AND ', $conditions);
+            } else {
+                $sql = "SELECT COUNT(*) AS total FROM {$table} WHERE part = ?";
+            }
+
+            $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $part);
             $stmt->execute();
             $row = $stmt->get_result()->fetch_assoc();

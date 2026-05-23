@@ -56,6 +56,12 @@ function getAdminNavigation()
             'description' => 'Generate and manage exam vouchers',
             'group' => 'system'
         ],
+        'payments.php' => [
+            'icon' => 'fa-money-check-alt',
+            'title' => 'Payments',
+            'description' => 'Verify manual TOEIC payments and grant credits',
+            'group' => 'system'
+        ],
         'users.php' => [
             'icon' => 'fa-users',
             'title' => 'Users',

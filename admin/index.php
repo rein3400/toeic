@@ -30,6 +30,7 @@ $active_practice_sessions = safeCount($conn, 'toeic_test_sessions') ? (int)($con
 $completed_practice_sessions = safeCount($conn, 'toeic_test_sessions') ? (int)($conn->query("SELECT COUNT(*) AS total FROM toeic_test_sessions WHERE status = 'completed' AND COALESCE(practice_mode, 0) = 1")->fetch_assoc()['total'] ?? 0) : 0;
 $terminated_proctor_sessions = safeCount($conn, 'proctoring_sessions') ? (int)($conn->query("SELECT COUNT(*) AS total FROM proctoring_sessions WHERE status = 'terminated'")->fetch_assoc()['total'] ?? 0) : 0;
 $cleared_proctor_sessions = safeCount($conn, 'proctoring_sessions') ? (int)($conn->query("SELECT COUNT(*) AS total FROM proctoring_sessions WHERE review_status = 'cleared'")->fetch_assoc()['total'] ?? 0) : 0;
+$pending_payments = safeCount($conn, 'payment_transactions') ? (int)($conn->query("SELECT COUNT(*) AS total FROM payment_transactions WHERE status = 'pending'")->fetch_assoc()['total'] ?? 0) : 0;
 $students = 0;
 $users_id_col = getUsersIdColumn($conn);
 $result = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role = 'student'");
@@ -118,6 +119,9 @@ if (checkTableExists($conn, 'toeic_test_sessions')) {
                     <div class="d-flex gap-2 flex-wrap">
                         <a href="manage_toeic.php" class="btn btn-warning rounded-pill px-4 fw-bold">Open TOEIC Bank</a>
                         <a href="toeic_sw_bank.php" class="btn btn-outline-warning rounded-pill px-4 fw-bold">Open SW Bank</a>
+                        <a href="payments.php" class="btn btn-outline-success rounded-pill px-4 fw-bold">
+                            Verify Payments<?php if ($pending_payments > 0): ?> <span class="badge bg-success ms-1"><?php echo $pending_payments; ?></span><?php endif; ?>
+                        </a>
                         <a href="test_sessions.php" class="btn btn-outline-secondary rounded-pill px-4 fw-bold">Open Sessions</a>
                         <a href="proctoring_sessions.php" class="btn btn-outline-primary rounded-pill px-4 fw-bold">Open Proctoring</a>
                     </div>
