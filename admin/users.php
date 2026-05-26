@@ -28,6 +28,14 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
     exit();
 }
 
+try {
+    if (!adminColumnExists($conn, 'users', 'email')) {
+        $conn->query("ALTER TABLE users ADD COLUMN email VARCHAR(191) NULL AFTER username");
+    }
+} catch (Throwable $e) {
+    error_log('Unable to ensure users.email in admin users page: ' . $e->getMessage());
+}
+
 $error = '';
 $success = '';
 
@@ -36,21 +44,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
         if ($_POST['action'] == 'add_user') {
             $username = trim($_POST['username']);
+            $email = strtolower(trim($_POST['email'] ?? ''));
             $password = $_POST['password'];
             $full_name = trim($_POST['full_name']);
             $role = $_POST['role'];
 
-            // Check if username already exists
-            $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ?");
-            $check_stmt->bind_param("s", $username);
+            // Check if username or reset email already exists.
+            $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ? OR LOWER(email) = ?");
+            $check_stmt->bind_param("ss", $username, $email);
             $check_stmt->execute();
 
-            if ($check_stmt->get_result()->num_rows > 0) {
-                $error = "Username already exists!";
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = "Valid reset email is required.";
+            } elseif ($check_stmt->get_result()->num_rows > 0) {
+                $error = "Username or email already exists!";
             } else {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO users (username, password, full_name, role) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("ssss", $username, $hashed_password, $full_name, $role);
+                $stmt = $conn->prepare("INSERT INTO users (username, email, password, full_name, role) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssss", $username, $email, $hashed_password, $full_name, $role);
 
                 if ($stmt->execute()) {
                     $success = "User added successfully!";
@@ -61,25 +72,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($_POST['action'] == 'edit_user') {
             $id = $_POST['id'];
             $username = trim($_POST['username']);
+            $email = strtolower(trim($_POST['email'] ?? ''));
             $full_name = trim($_POST['full_name']);
             $role = $_POST['role'];
 
-            // Check if username already exists (excluding current user)
-            $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ? AND id_user != ?");
-            $check_stmt->bind_param("si", $username, $id);
+            // Check if username or reset email already exists (excluding current user).
+            $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE (username = ? OR LOWER(email) = ?) AND id_user != ?");
+            $check_stmt->bind_param("ssi", $username, $email, $id);
             $check_stmt->execute();
 
-            if ($check_stmt->get_result()->num_rows > 0) {
-                $error = "Username already exists!";
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = "Valid reset email is required.";
+            } elseif ($check_stmt->get_result()->num_rows > 0) {
+                $error = "Username or email already exists!";
             } else {
                 // Update password if provided
                 if (!empty($_POST['password'])) {
                     $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("UPDATE users SET username = ?, password = ?, full_name = ?, role = ? WHERE id_user = ?");
-                    $stmt->bind_param("ssssi", $username, $hashed_password, $full_name, $role, $id);
+                    $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    $stmt->bind_param("sssssi", $username, $email, $hashed_password, $full_name, $role, $id);
                 } else {
-                    $stmt = $conn->prepare("UPDATE users SET username = ?, full_name = ?, role = ? WHERE id_user = ?");
-                    $stmt->bind_param("sssi", $username, $full_name, $role, $id);
+                    $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    $stmt->bind_param("ssssi", $username, $email, $full_name, $role, $id);
                 }
 
                 if ($stmt->execute()) {
@@ -161,10 +175,10 @@ $params = [];
 $param_types = '';
 
 if (!empty($search)) {
-    $where_conditions[] = "(full_name LIKE ? OR username LIKE ?)";
+    $where_conditions[] = "(full_name LIKE ? OR username LIKE ? OR email LIKE ?)";
     $search_term = "%$search%";
-    $params = array_merge($params, [$search_term, $search_term]);
-    $param_types .= 'ss';
+    $params = array_merge($params, [$search_term, $search_term, $search_term]);
+    $param_types .= 'sss';
 }
 
 if (!empty($filter_role)) {
@@ -241,6 +255,7 @@ $stats = $conn->query("
         COUNT(*) as total_users,
         SUM(CASE WHEN role = 'student' THEN 1 ELSE 0 END) as students,
         SUM(CASE WHEN role = 'admin' THEN 1 ELSE 0 END) as admins,
+        SUM(CASE WHEN email IS NULL OR email = '' THEN 1 ELSE 0 END) as missing_email_count,
         COUNT(CASE WHEN created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 END) as new_users_30d
     FROM users
 ")->fetch_assoc();
@@ -343,8 +358,8 @@ $stats = $conn->query("
                     </div>
                     <div class="col-md-3">
                         <div class="stats-card">
-                            <h5><i class="fas fa-user-plus me-2"></i>New (30d)</h5>
-                            <h3><?php echo $stats['new_users_30d']; ?></h3>
+                            <h5><i class="fas fa-envelope-open-text me-2"></i>Missing Email</h5>
+                            <h3><?php echo (int)$stats['missing_email_count']; ?></h3>
                         </div>
                     </div>
                 </div>
@@ -377,16 +392,23 @@ $stats = $conn->query("
                                         value="<?php echo htmlspecialchars($edit_user['username']); ?>" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" name="full_name" class="form-control"
-                                        value="<?php echo htmlspecialchars($edit_user['full_name']); ?>" required>
+                                    <label class="form-label">Reset Email</label>
+                                    <input type="email" name="email" class="form-control"
+                                        value="<?php echo htmlspecialchars((string)($edit_user['email'] ?? '')); ?>" required>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="full_name" class="form-control"
+                                        value="<?php echo htmlspecialchars($edit_user['full_name']); ?>" required>
+                                </div>
+                                <div class="col-md-6">
                                     <label class="form-label">Password (leave empty to keep current)</label>
                                     <input type="password" name="password" class="form-control">
                                 </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Role</label>
                                     <select name="role" class="form-select" required>
@@ -420,15 +442,21 @@ $stats = $conn->query("
                                     <input type="text" name="username" class="form-control" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" name="full_name" class="form-control" required>
+                                    <label class="form-label">Reset Email</label>
+                                    <input type="email" name="email" class="form-control" required>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="full_name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
                                     <label class="form-label">Password</label>
                                     <input type="password" name="password" class="form-control" required>
                                 </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Role</label>
                                     <select name="role" class="form-select" required>
@@ -452,7 +480,7 @@ $stats = $conn->query("
                         <div class="col-md-4">
                             <label class="form-label">Search</label>
                             <input type="text" name="search" class="form-control"
-                                value="<?php echo htmlspecialchars($search); ?>" placeholder="Name or username...">
+                                value="<?php echo htmlspecialchars($search); ?>" placeholder="Name, username, or email...">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Filter by Role</label>
@@ -505,7 +533,12 @@ $stats = $conn->query("
                                             <td>
                                                 <strong><?php echo htmlspecialchars($user['full_name']); ?></strong><br>
                                                 <small
-                                                    class="text-muted">@<?php echo htmlspecialchars($user['username']); ?></small>
+                                                    class="text-muted">@<?php echo htmlspecialchars($user['username']); ?></small><br>
+                                                <?php if (!empty($user['email'])): ?>
+                                                    <small class="text-muted"><?php echo htmlspecialchars($user['email']); ?></small>
+                                                <?php else: ?>
+                                                    <span class="badge bg-warning text-dark">Missing reset email</span>
+                                                <?php endif; ?>
                                             </td>
                                             <td>
                                                 <span class="badge-maroon">
