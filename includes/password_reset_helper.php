@@ -6,9 +6,21 @@
 require_once __DIR__ . '/settings.php';
 require_once __DIR__ . '/db_utils.php';
 
+$toeicPasswordResetAutoload = __DIR__ . '/../vendor/autoload.php';
+if (is_file($toeicPasswordResetAutoload)) {
+    require_once $toeicPasswordResetAutoload;
+}
+
 if (!function_exists('toeicPasswordResetEnabled')) {
     function toeicPasswordResetEnabled(): bool {
         return getSiteSetting('forgot_password_enabled', '1') === '1';
+    }
+}
+
+if (!function_exists('toeicPasswordResetIntSetting')) {
+    function toeicPasswordResetIntSetting(string $key, int $default, int $min, int $max): int {
+        $value = (int)getSiteSetting($key, (string)$default);
+        return max($min, min($max, $value));
     }
 }
 
@@ -79,6 +91,67 @@ if (!function_exists('toeicPasswordResetBaseUrl')) {
     }
 }
 
+if (!function_exists('toeicPasswordResetSmtpConfig')) {
+    function toeicPasswordResetSmtpConfig(): array {
+        return [
+            'enabled' => getSiteSetting('password_reset_smtp_enabled', '0') === '1',
+            'host' => trim((string)getSiteSetting('password_reset_smtp_host', '')),
+            'port' => toeicPasswordResetIntSetting('password_reset_smtp_port', 587, 1, 65535),
+            'username' => trim((string)getSiteSetting('password_reset_smtp_username', '')),
+            'password' => (string)getSiteSetting('password_reset_smtp_password', ''),
+            'encryption' => strtolower(trim((string)getSiteSetting('password_reset_smtp_encryption', 'tls'))),
+        ];
+    }
+}
+
+if (!function_exists('toeicPasswordResetSendSmtpEmail')) {
+    function toeicPasswordResetSendSmtpEmail(string $email, string $name, string $subject, string $body, string $fromEmail, string $fromName): bool {
+        if (!class_exists('\\PHPMailer\\PHPMailer\\PHPMailer')) {
+            error_log('Password reset SMTP requested but PHPMailer is not installed.');
+            return false;
+        }
+
+        $smtp = toeicPasswordResetSmtpConfig();
+        if (!$smtp['enabled'] || $smtp['host'] === '') {
+            return false;
+        }
+
+        $from = $fromEmail !== '' ? $fromEmail : $smtp['username'];
+        if ($from === '') {
+            error_log('Password reset SMTP requested but no from email or SMTP username is configured.');
+            return false;
+        }
+
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        try {
+            $mail->CharSet = 'UTF-8';
+            $mail->isSMTP();
+            $mail->Host = $smtp['host'];
+            $mail->Port = $smtp['port'];
+            $mail->SMTPAuth = $smtp['username'] !== '' || $smtp['password'] !== '';
+            if ($mail->SMTPAuth) {
+                $mail->Username = $smtp['username'];
+                $mail->Password = $smtp['password'];
+            }
+            if (in_array($smtp['encryption'], ['tls', 'ssl'], true)) {
+                $mail->SMTPSecure = $smtp['encryption'];
+            }
+
+            $mail->setFrom($from, $fromName !== '' ? $fromName : 'TOEIC Support');
+            $mail->addAddress($email, $name);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+            $mail->AltBody = $body;
+            $mail->isHTML(false);
+
+            return $mail->send();
+        } catch (Throwable $e) {
+            error_log('Password reset SMTP failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+}
+
 if (!function_exists('toeicPasswordResetSendEmail')) {
     function toeicPasswordResetSendEmail(string $email, string $name, string $resetLink): bool {
         $fromEmail = trim((string)getSiteSetting('password_reset_from_email', ''));
@@ -88,6 +161,11 @@ if (!function_exists('toeicPasswordResetSendEmail')) {
             . "Kami menerima permintaan reset password untuk akun TOEIC Anda.\n\n"
             . "Buka link berikut untuk membuat password baru:\n{$resetLink}\n\n"
             . "Jika Anda tidak meminta reset password, abaikan email ini.";
+
+        if (toeicPasswordResetSendSmtpEmail($email, $name, $subject, $body, $fromEmail, $fromName)) {
+            return true;
+        }
+
         $headers = [];
         if ($fromEmail !== '') {
             $headers[] = 'From: ' . $fromName . ' <' . $fromEmail . '>';
@@ -96,9 +174,72 @@ if (!function_exists('toeicPasswordResetSendEmail')) {
 
         $sent = mail($email, $subject, $body, implode("\r\n", $headers));
         if (!$sent) {
-            error_log("Password reset mail failed for {$email}. Reset link: {$resetLink}");
+            error_log("Password reset mail failed for {$email}.");
         }
         return $sent;
+    }
+}
+
+if (!function_exists('toeicPasswordResetRateLimitStatus')) {
+    function toeicPasswordResetRateLimitStatus(mysqli $conn, string $email): array {
+        $email = strtolower(trim($email));
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $windowMinutes = toeicPasswordResetIntSetting('password_reset_rate_window_minutes', 60, 10, 1440);
+        $emailLimit = toeicPasswordResetIntSetting('password_reset_email_limit', 3, 1, 100);
+        $ipLimit = toeicPasswordResetIntSetting('password_reset_ip_limit', 10, 1, 500);
+
+        $stmt = $conn->prepare("
+            SELECT COUNT(*) AS total
+            FROM password_reset_tokens
+            WHERE LOWER(email) = ?
+              AND created_at >= DATE_SUB(NOW(), INTERVAL ? MINUTE)
+        ");
+        $stmt->bind_param('si', $email, $windowMinutes);
+        $stmt->execute();
+        $emailCount = (int)($stmt->get_result()->fetch_assoc()['total'] ?? 0);
+        $stmt->close();
+
+        if ($emailCount >= $emailLimit) {
+            return [
+                'allowed' => false,
+                'rate_limited' => true,
+                'reason' => 'email',
+                'count' => $emailCount,
+                'limit' => $emailLimit,
+                'window_minutes' => $windowMinutes,
+            ];
+        }
+
+        if ($ip !== '') {
+            $stmt = $conn->prepare("
+                SELECT COUNT(*) AS total
+                FROM password_reset_tokens
+                WHERE ip_address = ?
+                  AND created_at >= DATE_SUB(NOW(), INTERVAL ? MINUTE)
+            ");
+            $stmt->bind_param('si', $ip, $windowMinutes);
+            $stmt->execute();
+            $ipCount = (int)($stmt->get_result()->fetch_assoc()['total'] ?? 0);
+            $stmt->close();
+
+            if ($ipCount >= $ipLimit) {
+                return [
+                    'allowed' => false,
+                    'rate_limited' => true,
+                    'reason' => 'ip',
+                    'count' => $ipCount,
+                    'limit' => $ipLimit,
+                    'window_minutes' => $windowMinutes,
+                ];
+            }
+        }
+
+        return [
+            'allowed' => true,
+            'rate_limited' => false,
+            'reason' => null,
+            'window_minutes' => $windowMinutes,
+        ];
     }
 }
 
@@ -109,6 +250,14 @@ if (!function_exists('toeicCreatePasswordReset')) {
         }
 
         toeicEnsurePasswordResetSchema($conn);
+        $conn->query("DELETE FROM password_reset_tokens WHERE expires_at < NOW() OR used_at IS NOT NULL");
+
+        $rateLimit = toeicPasswordResetRateLimitStatus($conn, $email);
+        if (!$rateLimit['allowed']) {
+            error_log('Password reset rate_limited by ' . $rateLimit['reason']);
+            return false;
+        }
+
         $user = toeicFindUserByRegisteredEmail($conn, $email);
         if (!$user) {
             return false;
@@ -121,8 +270,6 @@ if (!function_exists('toeicCreatePasswordReset')) {
         $expiresAt = date('Y-m-d H:i:s', time() + ($expiryMinutes * 60));
         $ip = $_SERVER['REMOTE_ADDR'] ?? null;
         $agent = substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 1000);
-
-        $conn->query("DELETE FROM password_reset_tokens WHERE expires_at < NOW() OR used_at IS NOT NULL");
 
         $stmt = $conn->prepare("
             INSERT INTO password_reset_tokens (user_id, email, token_hash, expires_at, ip_address, user_agent)

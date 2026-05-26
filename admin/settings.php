@@ -209,11 +209,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password_reset_expiry_minutes = max(10, min(1440, (int)($_POST['password_reset_expiry_minutes'] ?? 60)));
             $password_reset_from_email = trim($_POST['password_reset_from_email'] ?? '');
             $password_reset_from_name = trim($_POST['password_reset_from_name'] ?? 'TOEIC Support');
+            $password_reset_smtp_enabled = isset($_POST['password_reset_smtp_enabled']) ? '1' : '0';
+            $password_reset_smtp_host = trim($_POST['password_reset_smtp_host'] ?? '');
+            $password_reset_smtp_port = max(1, min(65535, (int)($_POST['password_reset_smtp_port'] ?? 587)));
+            $password_reset_smtp_username = trim($_POST['password_reset_smtp_username'] ?? '');
+            $password_reset_smtp_password_input = (string)($_POST['password_reset_smtp_password'] ?? '');
+            $password_reset_smtp_password = $password_reset_smtp_password_input !== ''
+                ? $password_reset_smtp_password_input
+                : getSetting('password_reset_smtp_password', '');
+            $password_reset_smtp_encryption = strtolower(trim($_POST['password_reset_smtp_encryption'] ?? 'tls'));
+            if (!in_array($password_reset_smtp_encryption, ['', 'tls', 'ssl'], true)) {
+                $password_reset_smtp_encryption = 'tls';
+            }
+            $password_reset_email_limit = max(1, min(100, (int)($_POST['password_reset_email_limit'] ?? 3)));
+            $password_reset_ip_limit = max(1, min(500, (int)($_POST['password_reset_ip_limit'] ?? 10)));
+            $password_reset_rate_window_minutes = max(10, min(1440, (int)($_POST['password_reset_rate_window_minutes'] ?? 60)));
 
             saveSetting('forgot_password_enabled', $forgot_password_enabled);
             saveSetting('password_reset_expiry_minutes', (string)$password_reset_expiry_minutes);
             saveSetting('password_reset_from_email', $password_reset_from_email);
             saveSetting('password_reset_from_name', $password_reset_from_name);
+            saveSetting('password_reset_smtp_enabled', $password_reset_smtp_enabled);
+            saveSetting('password_reset_smtp_host', $password_reset_smtp_host);
+            saveSetting('password_reset_smtp_port', (string)$password_reset_smtp_port);
+            saveSetting('password_reset_smtp_username', $password_reset_smtp_username);
+            saveSetting('password_reset_smtp_password', $password_reset_smtp_password);
+            saveSetting('password_reset_smtp_encryption', $password_reset_smtp_encryption);
+            saveSetting('password_reset_email_limit', (string)$password_reset_email_limit);
+            saveSetting('password_reset_ip_limit', (string)$password_reset_ip_limit);
+            saveSetting('password_reset_rate_window_minutes', (string)$password_reset_rate_window_minutes);
 
             $success = "Pengaturan lupa password berhasil disimpan.";
         } elseif ($_POST['action'] == 'update_pricing') {
@@ -721,6 +745,59 @@ $pricing = [
                                     <div class="mb-3">
                                         <label class="form-label">From Name</label>
                                         <input type="text" class="form-control" name="password_reset_from_name" value="<?php echo htmlspecialchars(getSetting('password_reset_from_name', 'TOEIC Support')); ?>">
+                                    </div>
+                                    <div class="p-3 border rounded mb-3" style="border-color: rgba(59,130,246,0.35) !important;">
+                                        <h6 class="fw-bold mb-3"><i class="fas fa-envelope me-2"></i>SMTP Delivery</h6>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="password_reset_smtp_enabled" name="password_reset_smtp_enabled" <?php echo getSetting('password_reset_smtp_enabled', '0') === '1' ? 'checked' : ''; ?>>
+                                                <label class="form-check-label fw-bold" for="password_reset_smtp_enabled">Kirim reset password via SMTP</label>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-md-8">
+                                                <label class="form-label form-label-sm">SMTP Host</label>
+                                                <input type="text" class="form-control form-control-sm" name="password_reset_smtp_host" value="<?php echo htmlspecialchars(getSetting('password_reset_smtp_host', '')); ?>" placeholder="smtp.example.com">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label form-label-sm">SMTP Port</label>
+                                                <input type="number" class="form-control form-control-sm" name="password_reset_smtp_port" value="<?php echo htmlspecialchars(getSetting('password_reset_smtp_port', '587')); ?>" min="1" max="65535">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label form-label-sm">SMTP Username</label>
+                                                <input type="text" class="form-control form-control-sm" name="password_reset_smtp_username" value="<?php echo htmlspecialchars(getSetting('password_reset_smtp_username', '')); ?>" autocomplete="username">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label form-label-sm">SMTP Password</label>
+                                                <input type="password" class="form-control form-control-sm" name="password_reset_smtp_password" value="" placeholder="<?php echo getSetting('password_reset_smtp_password', '') !== '' ? 'Biarkan kosong untuk mempertahankan password' : ''; ?>" autocomplete="new-password">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label form-label-sm">SMTP Encryption</label>
+                                                <?php $smtp_encryption = getSetting('password_reset_smtp_encryption', 'tls'); ?>
+                                                <select class="form-select form-select-sm" name="password_reset_smtp_encryption">
+                                                    <option value="tls" <?php echo $smtp_encryption === 'tls' ? 'selected' : ''; ?>>TLS</option>
+                                                    <option value="ssl" <?php echo $smtp_encryption === 'ssl' ? 'selected' : ''; ?>>SSL</option>
+                                                    <option value="" <?php echo $smtp_encryption === '' ? 'selected' : ''; ?>>None</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border rounded mb-3" style="border-color: rgba(245,158,11,0.35) !important;">
+                                        <h6 class="fw-bold mb-3"><i class="fas fa-shield-alt me-2"></i>Rate Limit</h6>
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <label class="form-label form-label-sm">Per Email</label>
+                                                <input type="number" class="form-control form-control-sm" name="password_reset_email_limit" value="<?php echo htmlspecialchars(getSetting('password_reset_email_limit', '3')); ?>" min="1" max="100">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label form-label-sm">Per IP</label>
+                                                <input type="number" class="form-control form-control-sm" name="password_reset_ip_limit" value="<?php echo htmlspecialchars(getSetting('password_reset_ip_limit', '10')); ?>" min="1" max="500">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label form-label-sm">Window Menit</label>
+                                                <input type="number" class="form-control form-control-sm" name="password_reset_rate_window_minutes" value="<?php echo htmlspecialchars(getSetting('password_reset_rate_window_minutes', '60')); ?>" min="10" max="1440">
+                                            </div>
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Password Reset</button>
                                 </form>

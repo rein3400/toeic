@@ -394,6 +394,18 @@ $settingStatements = [
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_account_holder', 'Leonardus Bayu') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_transfer_instructions', 'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('forgot_password_enabled', '1') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_expiry_minutes', '60') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_from_email', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_from_name', 'TOEIC Support') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_enabled', '0') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_host', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_port', '587') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_username', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_password', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_encryption', 'tls') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_email_limit', '3') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_ip_limit', '10') ON DUPLICATE KEY UPDATE setting_value = setting_value",
+    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_rate_window_minutes', '60') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('features_toeic', '[\"Full simulation 200 soal\",\"Practice mode Part 1-7\",\"Score report TOEIC\",\"Weakness map per part\"]') ON DUPLICATE KEY UPDATE setting_value = setting_value",
 ];
 
