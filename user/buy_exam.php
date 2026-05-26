@@ -3,6 +3,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
+require_once '../includes/email_verification_helper.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_pricing_helper.php';
@@ -11,6 +12,8 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit();
 }
+
+toeicRequireVerifiedEmail($conn);
 
 $user_id = (int)$_SESSION['user_id'];
 $hasAvailableToeicFullAccess = hasStrictTestCredit($conn, $user_id, 'toeic');

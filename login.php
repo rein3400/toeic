@@ -11,6 +11,7 @@ if (isset($_SESSION['user_id'])) {
 require_once 'includes/config.php';
 require_once 'includes/settings.php';
 require_once 'includes/db_utils.php';
+require_once 'includes/email_verification_helper.php';
 
 $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
@@ -18,8 +19,14 @@ $db_unavailable = !($conn instanceof mysqli);
 $error = '';
 $notice = '';
 
+if (!$db_unavailable) {
+    toeicEnsureEmailVerificationSchema($conn);
+}
+
 if (($_GET['registered'] ?? '') === '1') {
-    $notice = 'Akun berhasil dibuat. Silakan masuk untuk melanjutkan.';
+    $notice = (($_GET['verify_email'] ?? '') === '1')
+        ? 'Akun berhasil dibuat. Silakan cek email untuk verifikasi, lalu masuk.'
+        : 'Akun berhasil dibuat. Silakan masuk untuk melanjutkan.';
 } elseif (($_GET['message'] ?? '') === 'logged_out') {
     $notice = 'Anda sudah logout dari sesi sebelumnya.';
 } elseif (!empty($_GET['message'])) {
@@ -35,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $redirect = $_POST['redirect'] ?? '';
 
         $id_col = getUsersIdColumn($conn);
-        $stmt = $conn->prepare("SELECT $id_col as user_id, username, password, full_name, role FROM users WHERE username = ?");
+        $stmt = $conn->prepare("SELECT $id_col as user_id, username, password, full_name, role, email, email_verified_at FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -47,6 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['full_name'] = $user['full_name'];
                 $_SESSION['role'] = $user['role'];
+
+                if ($user['role'] !== 'admin' && toeicUserNeedsEmailVerification($conn, (int)$user['user_id'])) {
+                    $verify_redirect = $redirect !== '' ? $redirect : 'user/index.php';
+                    header("Location: user/verify_email.php?redirect=" . urlencode($verify_redirect));
+                    exit();
+                }
 
                 if (!empty($redirect)) {
                     header("Location: " . $redirect);

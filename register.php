@@ -12,6 +12,7 @@ require_once 'includes/config.php';
 require_once 'includes/settings.php';
 require_once 'includes/db_utils.php';
 require_once 'includes/password_reset_helper.php';
+require_once 'includes/email_verification_helper.php';
 
 $website_title = getWebsiteTitle();
 $website_logo = getWebsiteLogo();
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (strlen($password) < 6) {
         $error = "Password minimal 6 karakter.";
     } else {
-        toeicEnsureUserEmailColumn($conn);
+        toeicEnsureEmailVerificationSchema($conn);
         $id_col = getUsersIdColumn($conn);
         $stmt = $conn->prepare("SELECT {$id_col} FROM users WHERE username = ? OR LOWER(email) = ? LIMIT 1");
         $stmt->bind_param("ss", $username, $email);
@@ -44,12 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $role = 'student';
-            $stmt = $conn->prepare("INSERT INTO users (full_name, email, username, password, role) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO users (full_name, email, email_verified_at, username, password, role) VALUES (?, ?, NULL, ?, ?, ?)");
             $stmt->bind_param("sssss", $full_name, $email, $username, $hashed_password, $role);
             if ($stmt->execute()) {
                 $new_user_id = $conn->insert_id;
                 grantTestCredit($conn, $new_user_id, 'toeic', 'FREE_TRIAL');
-                header("Location: login.php?registered=1");
+                toeicCreateEmailVerification($conn, (int)$new_user_id);
+                header("Location: login.php?registered=1&verify_email=1");
                 exit();
             } else {
                 $error = "Pendaftaran gagal: " . $conn->error;

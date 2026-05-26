@@ -2,6 +2,7 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
+require_once '../includes/email_verification_helper.php';
 
 function adminTableExists($conn, $table) {
     $escaped = $conn->real_escape_string($table);
@@ -32,8 +33,9 @@ try {
     if (!adminColumnExists($conn, 'users', 'email')) {
         $conn->query("ALTER TABLE users ADD COLUMN email VARCHAR(191) NULL AFTER username");
     }
+    toeicEnsureEmailVerificationSchema($conn);
 } catch (Throwable $e) {
-    error_log('Unable to ensure users.email in admin users page: ' . $e->getMessage());
+    error_log('Unable to ensure email verification schema in admin users page: ' . $e->getMessage());
 }
 
 $error = '';
@@ -64,7 +66,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->bind_param("sssss", $username, $email, $hashed_password, $full_name, $role);
 
                 if ($stmt->execute()) {
-                    $success = "User added successfully!";
+                    $newUserId = (int)$conn->insert_id;
+                    if ($role === 'admin') {
+                        $verified_stmt = $conn->prepare("UPDATE users SET email_verified_at = NOW() WHERE id_user = ?");
+                        $verified_stmt->bind_param("i", $newUserId);
+                        $verified_stmt->execute();
+                        $verified_stmt->close();
+                        $success = "User added successfully!";
+                    } elseif ($role === 'student') {
+                        $sent = toeicCreateEmailVerification($conn, $newUserId);
+                        $success = $sent
+                            ? "User added successfully! Verification email sent."
+                            : "User added successfully, but verification email could not be sent yet.";
+                    } else {
+                        $success = "User added successfully!";
+                    }
                 } else {
                     $error = "Failed to add user: " . $conn->error;
                 }
@@ -86,22 +102,80 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } elseif ($check_stmt->get_result()->num_rows > 0) {
                 $error = "Username or email already exists!";
             } else {
+                $current_stmt = $conn->prepare("SELECT email, role FROM users WHERE id_user = ?");
+                $current_stmt->bind_param("i", $id);
+                $current_stmt->execute();
+                $current_user = $current_stmt->get_result()->fetch_assoc() ?: [];
+                $current_stmt->close();
+
+                $current_email = strtolower(trim((string)($current_user['email'] ?? '')));
+                $current_role = (string)($current_user['role'] ?? '');
+                $needs_verification = $role === 'student' && ($current_email !== $email || $current_role !== 'student');
+
                 // Update password if provided
                 if (!empty($_POST['password'])) {
                     $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    if ($role === 'admin') {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ?, full_name = ?, role = ?, email_verified_at = COALESCE(email_verified_at, NOW()) WHERE id_user = ?");
+                    } elseif ($needs_verification) {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ?, full_name = ?, role = ?, email_verified_at = NULL WHERE id_user = ?");
+                    } else {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, password = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    }
                     $stmt->bind_param("sssssi", $username, $email, $hashed_password, $full_name, $role, $id);
                 } else {
-                    $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    if ($role === 'admin') {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, full_name = ?, role = ?, email_verified_at = COALESCE(email_verified_at, NOW()) WHERE id_user = ?");
+                    } elseif ($needs_verification) {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, full_name = ?, role = ?, email_verified_at = NULL WHERE id_user = ?");
+                    } else {
+                        $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, full_name = ?, role = ? WHERE id_user = ?");
+                    }
                     $stmt->bind_param("ssssi", $username, $email, $full_name, $role, $id);
                 }
 
                 if ($stmt->execute()) {
-                    $success = "User updated successfully!";
+                    if ($needs_verification) {
+                        $sent = toeicCreateEmailVerification($conn, (int)$id);
+                        $success = $sent
+                            ? "User updated successfully! Verification email sent."
+                            : "User updated successfully, but verification email could not be sent yet.";
+                    } else {
+                        $success = "User updated successfully!";
+                    }
                 } else {
                     $error = "Failed to update user: " . $conn->error;
                 }
             }
+        }
+    }
+}
+
+// Handle email verification resend
+if (isset($_GET['resend_verification'])) {
+    $id = (int) $_GET['resend_verification'];
+    $verify_stmt = $conn->prepare("SELECT id_user, email, role FROM users WHERE id_user = ?");
+    $verify_stmt->bind_param("i", $id);
+    $verify_stmt->execute();
+    $target_user = $verify_stmt->get_result()->fetch_assoc();
+    $verify_stmt->close();
+
+    if (!$target_user) {
+        $error = "User not found.";
+    } elseif (($target_user['role'] ?? '') === 'admin') {
+        $error = "Admin accounts do not require email verification.";
+    } elseif (empty($target_user['email']) || !filter_var($target_user['email'], FILTER_VALIDATE_EMAIL)) {
+        $error = "User needs a valid email before verification can be sent.";
+    } else {
+        $reset_stmt = $conn->prepare("UPDATE users SET email_verified_at = NULL WHERE id_user = ?");
+        $reset_stmt->bind_param("i", $id);
+        $reset_stmt->execute();
+        $reset_stmt->close();
+
+        if (toeicCreateEmailVerification($conn, $id)) {
+            $success = "Verification email sent.";
+        } else {
+            $error = "Verification email could not be sent yet. Check SMTP settings or rate limit.";
         }
     }
 }
@@ -256,6 +330,7 @@ $stats = $conn->query("
         SUM(CASE WHEN role = 'student' THEN 1 ELSE 0 END) as students,
         SUM(CASE WHEN role = 'admin' THEN 1 ELSE 0 END) as admins,
         SUM(CASE WHEN email IS NULL OR email = '' THEN 1 ELSE 0 END) as missing_email_count,
+        SUM(CASE WHEN role = 'student' AND email IS NOT NULL AND email != '' AND email_verified_at IS NULL THEN 1 ELSE 0 END) as unverified_email_count,
         COUNT(CASE WHEN created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 END) as new_users_30d
     FROM users
 ")->fetch_assoc();
@@ -358,8 +433,9 @@ $stats = $conn->query("
                     </div>
                     <div class="col-md-3">
                         <div class="stats-card">
-                            <h5><i class="fas fa-envelope-open-text me-2"></i>Missing Email</h5>
-                            <h3><?php echo (int)$stats['missing_email_count']; ?></h3>
+                            <h5><i class="fas fa-envelope-open-text me-2"></i>Email Issues</h5>
+                            <h3><?php echo (int)$stats['unverified_email_count']; ?></h3>
+                            <div class="text-white-50 small"><?php echo (int)$stats['missing_email_count']; ?> missing email</div>
                         </div>
                     </div>
                 </div>
@@ -535,7 +611,14 @@ $stats = $conn->query("
                                                 <small
                                                     class="text-muted">@<?php echo htmlspecialchars($user['username']); ?></small><br>
                                                 <?php if (!empty($user['email'])): ?>
-                                                    <small class="text-muted"><?php echo htmlspecialchars($user['email']); ?></small>
+                                                    <small class="text-muted"><?php echo htmlspecialchars($user['email']); ?></small><br>
+                                                    <?php if ($user['role'] === 'admin'): ?>
+                                                        <span class="badge bg-secondary">Verification not required</span>
+                                                    <?php elseif (!empty($user['email_verified_at'])): ?>
+                                                        <span class="badge bg-success">Email verified</span>
+                                                    <?php else: ?>
+                                                        <span class="badge bg-warning text-dark">Email unverified</span>
+                                                    <?php endif; ?>
                                                 <?php else: ?>
                                                     <span class="badge bg-warning text-dark">Missing reset email</span>
                                                 <?php endif; ?>
@@ -575,6 +658,13 @@ $stats = $conn->query("
                                                     class="btn btn-sm btn-warning me-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
+                                                <?php if ($user['role'] === 'student' && !empty($user['email']) && empty($user['email_verified_at'])): ?>
+                                                    <a href="?resend_verification=<?php echo $user['id']; ?>"
+                                                        class="btn btn-sm btn-info me-1" title="Resend verification"
+                                                        onclick="return confirm('Resend email verification to this user?')">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                    </a>
+                                                <?php endif; ?>
                                                 <?php if ($user['id'] != $_SESSION['user_id']): ?>
                                                     <a href="?delete=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger"
                                                         onclick="return confirm('Delete this user and all their data?')"
