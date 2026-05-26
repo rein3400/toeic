@@ -3,7 +3,6 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
-require_once '../includes/email_verification_helper.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_sw_helper.php';
@@ -13,8 +12,6 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'student') {
     header("Location: ../login.php");
     exit();
 }
-
-toeicRequireVerifiedEmail($conn);
 
 if (!defined('FEATURE_TOEIC') || !FEATURE_TOEIC) {
     toeicRedirectWithFlash('index.php', 'info', 'TOEIC sedang tidak tersedia.');

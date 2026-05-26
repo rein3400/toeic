@@ -2,7 +2,6 @@
 require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
-require_once '../includes/email_verification_helper.php';
 require_once '../includes/toeic_quality_helpers.php';
 
 // Check if user is logged in and is student
@@ -10,8 +9,6 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role
     header("Location: ../login.php");
     exit();
 }
-
-toeicEnsureEmailVerificationSchema($conn);
 
 // Fetch dynamic website settings
 $website_title = getWebsiteTitle();
@@ -26,44 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST['action'] == 'update_profile') {
             $full_name = trim($_POST['full_name']);
             $username = trim($_POST['username']);
-            $email = strtolower(trim($_POST['email'] ?? ''));
 
-            if (empty($full_name) || empty($username) || empty($email)) {
-                $error = "Profile name, username, and email are required.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = "Profile email is not valid.";
+            if (empty($full_name) || empty($username)) {
+                $error = "Full name and username are required.";
             } else {
-                $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE (username = ? OR LOWER(email) = ?) AND id_user != ?");
-                $check_stmt->bind_param("ssi", $username, $email, $_SESSION['user_id']);
+                $check_stmt = $conn->prepare("SELECT id_user FROM users WHERE username = ? AND id_user != ?");
+                $check_stmt->bind_param("si", $username, $_SESSION['user_id']);
                 $check_stmt->execute();
 
                 if ($check_stmt->get_result()->num_rows > 0) {
-                    $error = "Profile username or email is already taken by another user.";
+                    $error = "Username is already taken by another user.";
                 } else {
-                    $current_stmt = $conn->prepare("SELECT email FROM users WHERE id_user = ?");
-                    $current_stmt->bind_param("i", $_SESSION['user_id']);
-                    $current_stmt->execute();
-                    $current_email = strtolower(trim((string)($current_stmt->get_result()->fetch_assoc()['email'] ?? '')));
-                    $current_stmt->close();
-
-                    $email_changed = $current_email !== $email;
-                    if ($email_changed) {
-                        $stmt = $conn->prepare("UPDATE users SET full_name = ?, username = ?, email = ?, email_verified_at = NULL WHERE id_user = ?");
-                        $stmt->bind_param("sssi", $full_name, $username, $email, $_SESSION['user_id']);
-                    } else {
-                        $stmt = $conn->prepare("UPDATE users SET full_name = ?, username = ?, email = ? WHERE id_user = ?");
-                        $stmt->bind_param("sssi", $full_name, $username, $email, $_SESSION['user_id']);
-                    }
+                    $stmt = $conn->prepare("UPDATE users SET full_name = ?, username = ? WHERE id_user = ?");
+                    $stmt->bind_param("ssi", $full_name, $username, $_SESSION['user_id']);
 
                     if ($stmt->execute()) {
                         $_SESSION['full_name'] = $full_name;
                         $_SESSION['username'] = $username;
-                        if ($email_changed) {
-                            toeicCreateEmailVerification($conn, (int)$_SESSION['user_id']);
-                            $success = "Profile updated successfully! Please verify the new email address.";
-                        } else {
-                            $success = "Profile updated successfully!";
-                        }
+                        $success = "Profile updated successfully!";
                     } else {
                         $error = "Failed to update profile: " . $conn->error;
                     }
@@ -111,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Get current user data
-$stmt = $conn->prepare("SELECT username, full_name, email, email_verified_at, created_at FROM users WHERE id_user = ?");
+$stmt = $conn->prepare("SELECT username, full_name, created_at FROM users WHERE id_user = ?");
 $stmt->bind_param("i", $_SESSION['user_id']);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
@@ -279,10 +256,10 @@ if (strpos($user_name, ' ') !== false) {
                     <div class="study-card" style="border-top-left-radius: 0;">
                         <div class="tab-content" id="profileTabsContent">
                             <div class="tab-pane fade show active" id="info" role="tabpanel">
-                                <?php if ($success && strpos($success, 'Password') === false): ?>
+                                <?php if ($success && strpos($success, 'Profile') !== false): ?>
                                     <div class="alert alert-success border-0 rounded-3 mb-4"><i class="fas fa-check-circle me-2"></i> <?php echo $success; ?></div>
                                 <?php endif; ?>
-                                <?php if ($error && strpos($error, 'Password') === false): ?>
+                                <?php if ($error && strpos($error, 'Profile') !== false): ?>
                                     <div class="alert alert-danger border-0 rounded-3 mb-4"><i class="fas fa-exclamation-circle me-2"></i> <?php echo $error; ?></div>
                                 <?php endif; ?>
 
@@ -296,13 +273,6 @@ if (strpos($user_name, ' ') !== false) {
                                         <div class="col-md-6">
                                             <label class="toeic-field-label" for="username">Username</label>
                                             <input type="text" id="username" name="username" class="form-control" value="<?php echo htmlspecialchars($user_data['username']); ?>" required>
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="toeic-field-label" for="email">Email</label>
-                                            <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars((string)($user_data['email'] ?? '')); ?>" required autocomplete="email">
-                                            <div class="small fw-bold mt-2 <?php echo !empty($user_data['email_verified_at']) ? 'text-success' : 'text-warning'; ?>">
-                                                <?php echo !empty($user_data['email_verified_at']) ? 'Email verified' : 'Email not verified'; ?>
-                                            </div>
                                         </div>
                                         <div class="col-12 pt-3">
                                             <button type="submit" class="study-button">Save Changes</button>

@@ -27,7 +27,6 @@ $statements = [
             id_user INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(191) NOT NULL UNIQUE,
             email VARCHAR(191) NULL,
-            email_verified_at DATETIME NULL,
             password VARCHAR(255) NOT NULL,
             full_name VARCHAR(191) NOT NULL,
             role ENUM('admin','student') NOT NULL DEFAULT 'student',
@@ -92,23 +91,6 @@ $statements = [
             UNIQUE KEY uniq_password_reset_token_hash (token_hash),
             INDEX idx_password_reset_user (user_id),
             INDEX idx_password_reset_expires (expires_at)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-    ",
-    'email_verification_tokens' => "
-        CREATE TABLE IF NOT EXISTS email_verification_tokens (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            user_id INT NOT NULL,
-            email VARCHAR(191) NOT NULL,
-            token_hash CHAR(64) NOT NULL,
-            expires_at DATETIME NOT NULL,
-            used_at DATETIME NULL DEFAULT NULL,
-            ip_address VARCHAR(45) NULL,
-            user_agent TEXT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE KEY uniq_email_verification_token_hash (token_hash),
-            INDEX idx_email_verification_user (user_id),
-            INDEX idx_email_verification_email (email),
-            INDEX idx_email_verification_expires (expires_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ",
     'toeic_photos' => "
@@ -364,7 +346,6 @@ foreach ($statements as $label => $sql) {
 
 $alters = [
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR(191) NULL",
-    "ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified_at DATETIME NULL",
     "ALTER TABLE toeic_audio ADD COLUMN IF NOT EXISTS id_photo INT NULL",
     "ALTER TABLE toeic_audio ADD COLUMN IF NOT EXISTS transcript LONGTEXT NULL",
     "ALTER TABLE toeic_teks ADD COLUMN IF NOT EXISTS part VARCHAR(2) NOT NULL DEFAULT '7'",
@@ -413,23 +394,6 @@ $settingStatements = [
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_account_holder', 'Leonardus Bayu') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('bank_transfer_instructions', 'Transfer sesuai nominal invoice ke GOPAY +62856-4359-7072 a.n. Leonardus Bayu, lalu kirim bukti pembayaran ke admin untuk aktivasi paket.') ON DUPLICATE KEY UPDATE setting_value = IF(setting_value = '', VALUES(setting_value), setting_value)",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('forgot_password_enabled', '1') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_expiry_minutes', '60') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_from_email', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_from_name', 'TOEIC Support') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_enabled', '0') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_host', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_port', '587') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_username', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_password', '') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_smtp_encryption', 'tls') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_email_limit', '3') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_ip_limit', '10') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('password_reset_rate_window_minutes', '60') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('email_verification_enabled', '1') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('email_verification_expiry_minutes', '1440') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('email_verification_email_limit', '5') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('email_verification_ip_limit', '20') ON DUPLICATE KEY UPDATE setting_value = setting_value",
-    "INSERT INTO site_settings (setting_key, setting_value) VALUES ('email_verification_rate_window_minutes', '60') ON DUPLICATE KEY UPDATE setting_value = setting_value",
     "INSERT INTO site_settings (setting_key, setting_value) VALUES ('features_toeic', '[\"Full simulation 200 soal\",\"Practice mode Part 1-7\",\"Score report TOEIC\",\"Weakness map per part\"]') ON DUPLICATE KEY UPDATE setting_value = setting_value",
 ];
 
