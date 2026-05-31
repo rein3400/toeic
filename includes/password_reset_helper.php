@@ -94,6 +94,11 @@ if (!function_exists('toeicPasswordResetSendEmail')) {
         }
         $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 
+        if (!function_exists('mail')) {
+            error_log("Password reset mail fallback unavailable because PHP mail() is disabled for {$email}.");
+            return false;
+        }
+
         $sent = mail($email, $subject, $body, implode("\r\n", $headers));
         if (!$sent) {
             error_log("Password reset mail failed for {$email}. Reset link: {$resetLink}");
