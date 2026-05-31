@@ -66,6 +66,15 @@ function toeicSwFeedbackSummary(?string $json): string {
 function toeicSwFormatScore($value): string {
     return $value !== null ? number_format((float)$value, 2) : '-';
 }
+
+function toeicSwUserRecordingUrl(array $question): string {
+    $source = trim((string)($question['source_path'] ?? ''));
+    if ($source === '' || ($question['section'] ?? '') !== 'speaking') {
+        return '';
+    }
+    return 'stream_toeic_sw_recording.php?session=' . rawurlencode((string)$question['test_session'])
+        . '&question_id=' . (int)$question['id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -204,7 +213,22 @@ function toeicSwFormatScore($value): string {
                         <?php if (!empty($row['transcript_text'])): ?>
                             · Transcript available
                         <?php endif; ?>
+                        <?php
+                        $recordingUrl = toeicSwUserRecordingUrl($row);
+                        if ($recordingUrl && ($row['section'] ?? '') === 'speaking'):
+                            ?>
+                            · <a href="<?php echo toeicSwResultH($recordingUrl); ?>" target="_blank" class="text-decoration-none"><i class="fas fa-headphones me-1"></i> Listen to Recording</a>
+                        <?php endif; ?>
                     </div>
+                    <?php if ($recordingUrl && ($row['section'] ?? '') === 'speaking'): ?>
+                    <div class="mt-2">
+                        <audio controls preload="metadata" style="width:100%; max-width:400px;">
+                            <source src="<?php echo toeicSwResultH($recordingUrl); ?>" type="audio/webm">
+                            <source src="<?php echo toeicSwResultH($recordingUrl); ?>" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </section>
