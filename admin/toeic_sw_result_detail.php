@@ -213,8 +213,19 @@ function toeicSwAdminAnswerText(array $question, array $score): string {
                                     <?php if ($answerAudio): ?>
                                         <div class="mb-3">
                                             <div class="text-muted small text-uppercase">Student Recording</div>
-                                            <audio controls preload="metadata" src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" style="width:100%; max-width:560px;"></audio>
-                                            <div class="small text-muted mt-1">Stored source: <?php echo toeicSwAdminDetailH($question['source_path'] ?? ''); ?></div>
+                                            <audio controls preload="metadata" style="width:100%; max-width:560px;">
+                                                <source src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" type="audio/wav">
+                                                <source src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" type="audio/webm">
+                                                <source src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" type="audio/ogg">
+                                                <source src="<?php echo toeicSwAdminDetailH($answerAudio); ?>" type="audio/mpeg">
+                                                Your browser does not support audio playback.
+                                            </audio>
+                                            <div class="mt-2">
+                                                <a href="<?php echo toeicSwAdminDetailH($answerAudio); ?>" download class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download me-1"></i>Download Recording
+                                                </a>
+                                                <span class="small text-muted ms-2"><?php echo toeicSwAdminDetailH($question['source_path'] ?? ''); ?></span>
+                                            </div>
                                         </div>
                                     <?php elseif (($question['section'] ?? '') === 'speaking'): ?>
                                         <div class="alert alert-secondary py-2">No student recording uploaded for this speaking item.</div>
