@@ -262,6 +262,20 @@ function toeicC2ValidateQuestion(array $item, string $context, bool $allowThreeO
     if (strlen($item['explanation']) < 35) {
         $errors[] = "$context has an explanation that is too short for a C2-quality import.";
     }
+    // Length-balance guard: correct option must not be > 1.3x the median
+    // distractor length, or the "longest option" cue leaks the answer key.
+    $correctText = $item['options'][$item['correct_answer']] ?? '';
+    $distractorLens = [];
+    foreach ($letters as $L) {
+        if ($L === $item['correct_answer']) continue;
+        $distractorLens[] = strlen((string)$item['options'][$L]);
+    }
+    sort($distractorLens);
+    $median = $distractorLens[(int)floor(count($distractorLens) / 2)] ?? 0;
+    $correctLen = strlen((string)$correctText);
+    if ($median > 0 && $correctLen > $median * 1.3) {
+        $errors[] = "$context correct option is {$correctLen} chars vs distractor median {$median} (>{1.3}x); pad distractors or shorten correct text to avoid length-leak.";
+    }
 }
 
 function toeicC2ValidatePackage(array $package, int $packageNumber): array {
@@ -539,8 +553,10 @@ function toeicC2InsertListeningQuestion(mysqli $conn, string $part, int $number,
     if (!$stmt->execute()) {
         throw new RuntimeException($stmt->error);
     }
+    $newId = (int)$conn->insert_id;
     $stmt->close();
     $stats['listening_inserted']++;
+    toeicC2CheckSignatureDuplicate($conn, 'listening', $part, $newId, $question, $a, $b, $c, $d, $audioId, null, $stats);
 }
 
 function toeicC2InsertReadingQuestion(mysqli $conn, string $part, int $number, string $question, ?string $a, ?string $b, ?string $c, ?string $d, string $correct, string $explanation, ?int $textId, string $questionType, array &$stats, bool $dryRun): void {
@@ -563,8 +579,10 @@ function toeicC2InsertReadingQuestion(mysqli $conn, string $part, int $number, s
     if (!$stmt->execute()) {
         throw new RuntimeException($stmt->error);
     }
+    $newId = (int)$conn->insert_id;
     $stmt->close();
     $stats['reading_inserted']++;
+    toeicC2CheckSignatureDuplicate($conn, 'reading', $part, $newId, $question, $a, $b, $c, $d, null, $textId, $stats);
 }
 
 function toeicC2VerifyMediaUrl(string $url, array &$stats, array &$logs): void {
@@ -845,4 +863,110 @@ function toeicC2ImportPackages(mysqli $conn, string $contentRoot, array $options
         'stats' => $stats,
         'logs' => $logs,
     ];
+}
+
+/**
+ * Post-import signature duplicate warning.
+ *
+ * After a soal row is inserted, compute its signature (matching the
+ * dedup tool's signature scheme) and look for any other row in the same
+ * section+part that already has the same signature. If found, log a
+ * warning so admin knows to run scripts/dedup_question_bank.php before
+ * random selection produces a duplicate.
+ *
+ * This is non-blocking: a duplicate does not prevent import. It only
+ * surfaces the issue for admin to address.
+ */
+function toeicC2CheckSignatureDuplicate(
+    mysqli $conn,
+    string $section,
+    string $part,
+    int $newId,
+    string $question,
+    ?string $a,
+    ?string $b,
+    ?string $c,
+    ?string $d,
+    ?int $audioId,
+    ?int $textId,
+    array &$stats
+): void {
+    $norm = function (string $s): string {
+        $s = mb_strtolower($s, 'UTF-8');
+        $s = preg_replace('/\s+/u', ' ', $s);
+        $s = preg_replace('/[^\p{L}\p{N}]+/u', '', $s);
+        return trim($s);
+    };
+
+    $expectedLetters = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
+    $opts = [];
+    foreach ($expectedLetters as $letter) {
+        $key = 'opsi_' . strtolower($letter);
+        $val = ${$key} ?? '';
+        $opts[] = $norm((string)$val);
+    }
+    sort($opts);
+    $text = $norm($question);
+    $payload = $section . '|' . $part . '|T=' . $text . '|O=' . implode('|', $opts);
+    if ($audioId !== null) {
+        $payload .= '|A=' . $audioId;
+    }
+    if ($textId !== null) {
+        $payload .= '|X=' . $textId;
+    }
+    $signature = sha1($payload);
+
+    $table = $section === 'listening' ? 'toeic_soal_listening' : 'toeic_soal_reading';
+    $stmt = $conn->prepare("SELECT id_soal FROM {$table} WHERE part = ? AND id_soal <> ?");
+    $stmt->bind_param('si', $part, $newId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $matches = [];
+    while ($row = $result->fetch_assoc()) {
+        $otherId = (int)$row['id_soal'];
+        $colStmt = $conn->prepare("SELECT pertanyaan, opsi_a, opsi_b, opsi_c, opsi_d, id_audio, id_teks FROM {$table} WHERE id_soal = ?");
+        $colStmt->bind_param('i', $otherId);
+        $colStmt->execute();
+        $other = $colStmt->get_result()->fetch_assoc();
+        $colStmt->close();
+        if (!$other) {
+            continue;
+        }
+        $otherOpts = [];
+        foreach ($expectedLetters as $letter) {
+            $otherOpts[] = $norm((string)($other['opsi_' . strtolower($letter)] ?? ''));
+        }
+        sort($otherOpts);
+        $otherText = $norm((string)($other['pertanyaan'] ?? ''));
+        $otherPayload = $section . '|' . $part . '|T=' . $otherText . '|O=' . implode('|', $otherOpts);
+        if (!empty($other['id_audio'])) {
+            $otherPayload .= '|A=' . (int)$other['id_audio'];
+        }
+        if (!empty($other['id_teks'])) {
+            $otherPayload .= '|X=' . (int)$other['id_teks'];
+        }
+        if (sha1($otherPayload) === $signature) {
+            $matches[] = $otherId;
+        }
+    }
+    $stmt->close();
+
+    if (!empty($matches)) {
+        $key = $section === 'listening' ? 'listening_signature_dupes' : 'reading_signature_dupes';
+        if (!isset($stats[$key])) {
+            $stats[$key] = [];
+        }
+        $stats[$key][] = [
+            'new_id' => $newId,
+            'duplicates_of' => $matches,
+            'signature' => $signature,
+        ];
+        error_log(sprintf(
+            'toeic_dedup: post-import signature dupe detected. new id_soal=%d (section=%s part=%s) matches existing ids=%s. Run scripts/dedup_question_bank.php to clean up.',
+            $newId,
+            $section,
+            $part,
+            implode(',', $matches)
+        ));
+    }
 }

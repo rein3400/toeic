@@ -55,6 +55,8 @@ function letterFor3(int $index, int $offset = 0): string {
 
 function options4(string $correctLetter, string $correctText, array $distractors): array {
     $letters = ['A', 'B', 'C', 'D'];
+    $balanced = balanceDistractorLengths($correctText, array_values($distractors), 1.3);
+    $distractors = $balanced['distractors'];
     $result = [];
     $d = 0;
     foreach ($letters as $letter) {
@@ -65,12 +67,52 @@ function options4(string $correctLetter, string $correctText, array $distractors
 
 function options3(string $correctLetter, string $correctText, array $distractors): array {
     $letters = ['A', 'B', 'C'];
+    $balanced = balanceDistractorLengths($correctText, array_values($distractors), 1.3);
+    $distractors = $balanced['distractors'];
     $result = [];
     $d = 0;
     foreach ($letters as $letter) {
         $result[$letter] = $letter === $correctLetter ? $correctText : (string)$distractors[$d++];
     }
     return $result;
+}
+
+// When the correct option is significantly longer than the distractors,
+// pad each distractor with a generic plausible qualifier until the median
+// is within `tolerance` ratio of the correct length. Prevents the
+// "longest option = correct" cue from leaking the answer key.
+function balanceDistractorLengths(string $correctText, array $distractors, float $tolerance = 1.3): array {
+    $correctLen = mb_strlen($correctText);
+    if ($correctLen === 0 || count($distractors) === 0) {
+        return ['distractors' => $distractors, 'padded_count' => 0];
+    }
+    $padded = 0;
+    $qualifiers = [
+        ', as described in the notice,',
+        ', according to the manager,',
+        ', for this transaction,',
+        ', based on the latest policy,',
+        ', pending further review,',
+        ' over the standard review window,',
+        ' on the proposed schedule,',
+        ' as currently written,',
+    ];
+    $qi = 0;
+    for ($i = 0; $i < 4; $i++) {
+        $lens = array_map('mb_strlen', $distractors);
+        sort($lens);
+        $median = $lens[(int)floor(count($lens) / 2)] ?? 0;
+        if ($median > 0 && $correctLen <= $median * $tolerance) break;
+        // Pad each distractor with a qualifier (round-robin)
+        foreach ($distractors as $j => $d) {
+            if ($median === 0 || mb_strlen($d) < $median * $tolerance) {
+                $distractors[$j] = $d . $qualifiers[$qi % count($qualifiers)];
+                $qi++;
+                $padded++;
+            }
+        }
+    }
+    return ['distractors' => $distractors, 'padded_count' => $padded];
 }
 
 function contextFor(int $package, int $index): array {
