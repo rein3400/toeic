@@ -100,11 +100,20 @@ foreach ($rows as $r) {
     $qid = (int)$r['qid'];
     $ans = $r['answer'];
     $q = $r['question'];
-    $blankD = trim($r['opt_d']) === '';
+    // DB cols are opsi_a/b/c/d. Coalesce NULL → '' for PHP 8.1+ trim safety.
+    $a = (string)($r['opsi_a'] ?? '');
+    $b = (string)($r['opsi_b'] ?? '');
+    $c = (string)($r['opsi_c'] ?? '');
+    $d = (string)($r['opsi_d'] ?? '');
+    if ($a === '' || $b === '' || $c === '') {
+        $skipped[$qid] = 'missing option text';
+        continue;
+    }
+    $blankD = trim($d) === '';
     $sec = classify($q, $blankD);
     $pool = $pools[$sec];
 
-    $opts = ['A' => $r['opt_a'], 'B' => $r['opt_b'], 'C' => $r['opt_c'], 'D' => $r['opt_d']];
+    $opts = ['A' => $a, 'B' => $b, 'C' => $c, 'D' => $d];
     if (!isset($opts[$ans]) || $opts[$ans] === '') {
         $skipped[$qid] = 'missing correct text';
         continue;
