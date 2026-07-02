@@ -223,10 +223,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
     }
 }
 ?>
-<!DOCTYPE html&gt;
-<html lang="id"&gt;
-<head&gt;
-    <meta charset="UTF-8"&gt;
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
     <title>Balance Option Lengths</title>
     <style>
         body { font-family: system-ui, sans-serif; margin: 20px; background: #f5f5f5; }
@@ -250,18 +250,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
         table { border-collapse: collapse; width: 100%; margin-top: 8px; }
         td, th { border: 1px solid #ddd; padding: 6px; text-align: left; vertical-align: top; }
         th { background: #f0f0f0; }
-    </style&gt;
-</head&gt;
-<body&gt;
-<div class="wrap"&gt;
+    </style>
+</head>
+<body>
+<div class="wrap">
     <h1>Balance Opsi Panjang</h1>
     <p>Tool ini memperbaiki soal yang memiliki opsi benar terlalu panjang dibanding pilihan salah. Siswa bisa menebak jawaban dengan memilih opsi terpanjang.</p>
 
-    <div class="stats"&gt;
+    <div class="stats">
         <div class="stat"><b><?= count($rows) ?></b>Soal flagged</div>
         <div class="stat"><b><?= count($patches) ?></b>Akan diperbaiki</div>
         <div class="stat"><b><?= count($skipped) ?></b>Dilewatkan</div>
-    </div&gt;
+    </div>
 
     <div class="note">
         <strong>Keamanan:</strong> Test history siswa tetap aman karena setiap sesi menyimpan snapshot soal di tabel <code>toiec_test_questions</code>. Tool akan menolak apply jika masih ada sesi yang sedang berjalan.
@@ -290,15 +290,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply'])) {
                 </tr>
                 <?php endforeach; ?>
             </table>
-        </div&gt;
+        </div>
     <?php endforeach; ?>
 
-    <form method="post" onsubmit="return confirm('Yakin update production DB? Pastikan tidak ada sesi aktif.');"&gt;
+    <form method="post" onsubmit="return confirm('Yakin update production DB? Pastikan tidak ada sesi aktif.');">
         <button type="submit" name="apply" class="danger">Apply <?= count($patches) ?> perubahan ke Database</button>
     </form>
     <?php else: ?>
-        <div class="ok">Tidak ada soal yang perlu diperbaiki.</div&gt;
+        <div class="ok">Tidak ada soal yang perlu diperbaiki.</div>
     <?php endif; ?>
-</div&gt;
+</div>
 </body>
-</html&gt;
+</html>
