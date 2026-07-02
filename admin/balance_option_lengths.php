@@ -38,44 +38,52 @@ function classify(string $q, bool $blankD): string {
     return 'formal';
 }
 
+function normalizeEnd(string $s): string {
+    $s = rtrim($s);
+    // Strip trailing punctuation so appended phrase can close the sentence cleanly.
+    return preg_replace('/[.,;:!?]+$/u', '', $s);
+}
+
 function pickPhrase(array $pool, int $qi): string {
     return $pool[$qi % count($pool)];
 }
 
+// Phrase format: ", text." (comma leading, period closing). Append via
+// normalizeEnd(base) . phrase  →  "laptop., as shown..." becomes "laptop, as shown...".
 $pools = [
     'listening_part1' => [
-        ', as shown in the image,',
-        ', in the foreground,',
-        ', in the scene,',
-        ', as displayed,',
-        ' in this setting,',
-        ' throughout the workspace,',
-        ' in the picture,',
-        ', at the location,',
+        ', as shown in the image.',
+        ', in the foreground.',
+        ', in the scene.',
+        ', as displayed.',
+        ' in this setting.',
+        ' throughout the workspace.',
+        ' in the picture.',
+        ', at the location.',
     ],
     'listening_part2' => [
-        ', as she mentioned,',
-        ', like he said,',
-        ', I think,',
-        ' for now,',
-        ', in that case,',
-        ' if that works,',
-        ', the way I see it,',
-        ', based on what we know,',
+        ', as she mentioned.',
+        ', like he said.',
+        ', I think.',
+        ' for now.',
+        ', in that case.',
+        ' if that works.',
+        ', the way I see it.',
+        ', based on what we know.',
     ],
     'formal' => [
-        ', as described in the notice,',
-        ', according to the manager,',
-        ', for this transaction,',
-        ', based on the latest policy,',
-        ', pending further review,',
-        ' over the standard review window,',
-        ' on the proposed schedule,',
-        ' as currently written,',
-        ', under the current guidelines,',
-        ', in the attached memorandum,',
-        ', before the stated deadline,',
-        ', unless otherwise directed,',
+        ', as described in the notice.',
+        ', according to the manager.',
+        ', for this transaction.',
+        ', based on the latest policy.',
+        ', pending further review.',
+        ' over the standard review window.',
+        ' on the proposed schedule.',
+        ' as currently written.',
+        ', under the current guidelines.',
+        ', in the attached memorandum.',
+        ', before the stated deadline.',
+        ', unless otherwise directed.',
     ],
 ];
 
@@ -135,27 +143,29 @@ foreach ($rows as $r) {
 
     $newOpts = $opts;
     $qi = $qiGlobal;
-    for ($iter = 0; $iter < 6; $iter++) {
-        $changed = false;
-        foreach ($distractorKeys as $dk) {
-            for ($append = 0; $append < 10; $append++) {
-                if (mb_strlen($newOpts[$dk]) >= $targetLen || mb_strlen($newOpts[$dk]) >= $cap) break;
-                $newOpts[$dk] = $opts[$dk] . pickPhrase($pool, $qi);
-                $qi++;
-                $changed = true;
-            }
+    // Pad each distractor: normalize trailing punctuation on the current
+    // string, then append the next phrase. Each phrase is self-contained
+    // (", text.") so chained appends read cleanly: "laptop, in the scene,
+    // as displayed."
+    foreach ($distractorKeys as $dk) {
+        $buf = $opts[$dk];
+        $appends = 0;
+        while (mb_strlen($buf) < $targetLen && mb_strlen($buf) < $cap && $appends < 10) {
+            $buf = normalizeEnd($buf) . pickPhrase($pool, $qi);
+            $qi++;
+            $appends++;
         }
-        if (!$changed) break;
+        $newOpts[$dk] = $buf;
     }
 
-    // bump if still short
+    // bump if still short: add one more phrase to smallest distractors
     $lens = array_map(fn($k) => mb_strlen($newOpts[$k]), $distractorKeys);
     sort($lens);
     $m = $lens[(int)floor(count($lens) / 2)] ?? 0;
     if ($m === 0 || $correctLen > $m * $tolerance) {
         foreach ($distractorKeys as $dk) {
             if (mb_strlen($newOpts[$dk]) < $cap) {
-                $newOpts[$dk] = $opts[$dk] . pickPhrase($pool, $qi);
+                $newOpts[$dk] = normalizeEnd($newOpts[$dk]) . pickPhrase($pool, $qi);
                 $qi++;
             }
         }
