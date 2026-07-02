@@ -17,12 +17,10 @@
  *   - Snapshots in toeic_test_questions keep finished tests safe.
  */
 
+require_once __DIR__ . '/../includes/session_handler.php';
 require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/db_utils.php';
 
-// Must be admin
-if (session_status() === PHP_SESSION_NONE) session_start();
-if (empty($_SESSION['admin_id'])) {
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     die('Admin login required.');
 }
 
