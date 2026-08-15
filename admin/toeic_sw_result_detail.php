@@ -3,6 +3,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/settings.php';
 require_once '../includes/toeic_sw_helper.php';
+require_once '../includes/CertificateAccess.php';
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
     header("Location: login.php");
@@ -41,6 +42,13 @@ if (!$session) {
     echo 'TOEIC SW session not found.';
     exit();
 }
+
+$sw_result_row = null;
+$sw_result_stmt = $conn->prepare("SELECT * FROM toeic_sw_test_results WHERE test_session = ? LIMIT 1");
+$sw_result_stmt->bind_param("s", $test_session);
+$sw_result_stmt->execute();
+$sw_result_row = $sw_result_stmt->get_result()->fetch_assoc() ?: null;
+$sw_result_stmt->close();
 
 $scores = [];
 $stmt = $conn->prepare("SELECT * FROM toeic_sw_subjective_scores WHERE test_session = ? ORDER BY id ASC");
@@ -157,6 +165,66 @@ function toeicSwAdminAnswerText(array $question, array $score): string {
                             <div class="fw-bold"><?php echo toeicSwAdminDetailH($session['completed_at'] ?? '-'); ?></div>
                         </div>
                     </div>
+                </div>
+
+                <?php
+                if (empty($_SESSION['certificate_csrf'])) {
+                    $_SESSION['certificate_csrf'] = bin2hex(random_bytes(16));
+                }
+                $sw_result = $sw_result_row;
+                if ($sw_result) {
+                    $sw_result['full_name'] = $session['full_name'] ?? null;
+                }
+                $sw_cert_state = $sw_result ? getCertificateAccessState($sw_result, $sw_result['status'] ?? null, 'sw') : ['allowed' => false, 'label' => 'No Result'];
+                $sw_cert_status = $sw_result['certificate_status'] ?? null;
+                $sw_result_id = (int)($sw_result['id'] ?? 0);
+                ?>
+                <div class="content-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                        <div>
+                            <h5 class="fw-bold mb-1"><i class="fas fa-certificate me-2"></i>Certificate</h5>
+                            <p class="text-muted mb-0 small">Status: <strong><?php echo toeicSwAdminDetailH($sw_cert_state['label']); ?></strong>
+                            <?php if ($sw_cert_status): ?> · override: <code><?php echo toeicSwAdminDetailH($sw_cert_status); ?></code><?php endif; ?>
+                            </p>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <?php if ($sw_cert_state['allowed']): ?>
+                                <a href="../user/export_certificate_toeic_sw.php?session=<?php echo urlencode($test_session); ?>&format=html" class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="fas fa-eye me-1"></i> Preview
+                                </a>
+                                <a href="../user/export_certificate_toeic_sw.php?session=<?php echo urlencode($test_session); ?>" class="btn btn-primary btn-sm" target="_blank">
+                                    <i class="fas fa-download me-1"></i> Download PDF
+                                </a>
+                            <?php endif; ?>
+                            <?php if ($sw_result_id > 0): ?>
+                                <form method="POST" action="certificate_action.php" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="<?php echo toeicSwAdminDetailH($_SESSION['certificate_csrf']); ?>">
+                                    <input type="hidden" name="result_id" value="<?php echo $sw_result_id; ?>">
+                                    <input type="hidden" name="domain" value="sw">
+                                    <input type="hidden" name="test_session" value="<?php echo toeicSwAdminDetailH($test_session); ?>">
+                                    <input type="hidden" name="action" value="approve">
+                                    <button type="submit" class="btn btn-success btn-sm" <?php echo $sw_cert_status === 'approved' ? 'disabled' : ''; ?>>
+                                        <i class="fas fa-check me-1"></i> Approve
+                                    </button>
+                                </form>
+                                <form method="POST" action="certificate_action.php" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="<?php echo toeicSwAdminDetailH($_SESSION['certificate_csrf']); ?>">
+                                    <input type="hidden" name="result_id" value="<?php echo $sw_result_id; ?>">
+                                    <input type="hidden" name="domain" value="sw">
+                                    <input type="hidden" name="test_session" value="<?php echo toeicSwAdminDetailH($test_session); ?>">
+                                    <input type="hidden" name="action" value="revoke">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" <?php echo $sw_cert_status === 'revoked' ? 'disabled' : ''; ?>>
+                                        <i class="fas fa-ban me-1"></i> Revoke
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php $flash = $_GET['certificate'] ?? null; if ($flash): ?>
+                        <div class="alert alert-<?php echo $flash === 'error' ? 'danger' : 'info'; ?> py-2 mb-0 small">
+                            Certificate action: <strong><?php echo toeicSwAdminDetailH($flash); ?></strong>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="review-grid">

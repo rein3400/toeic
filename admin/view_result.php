@@ -5,6 +5,7 @@ require_once '../includes/settings.php';
 require_once '../includes/toeic_helper.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/ai_helper.php';
+require_once '../includes/CertificateAccess.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -150,6 +151,62 @@ try {
                     <div class="col-md-3"><div class="stats-card"><h6>Status</h6><h3><?php echo htmlspecialchars(ucfirst((string)($result['status'] ?? 'completed'))); ?></h3></div></div>
                     <div class="col-md-3"><div class="stats-card"><h6>Section</h6><h3><?php echo htmlspecialchars(ucfirst((string)($result['current_section'] ?? 'reading'))); ?></h3></div></div>
                     <div class="col-md-3"><div class="stats-card"><h6>Target</h6><h3><?php echo $is_practice ? 'Part ' . htmlspecialchars((string)($result['target_part'] ?? '-')) : '200Q'; ?></h3></div></div>
+                </div>
+
+                <?php
+                if (empty($_SESSION['certificate_csrf'])) {
+                    $_SESSION['certificate_csrf'] = bin2hex(random_bytes(16));
+                }
+                $result_id_rl = (int)($result['id'] ?? 0);
+                $cert_state_rl = getCertificateAccessState($result, $result['status'] ?? null, 'rl');
+                $cert_status_rl = $result['certificate_status'] ?? null;
+                ?>
+                <div class="content-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                        <div>
+                            <h5 class="fw-bold mb-1"><i class="fas fa-certificate me-2"></i>Certificate</h5>
+                            <p class="text-muted mb-0 small">Status: <strong><?php echo htmlspecialchars($cert_state_rl['label']); ?></strong>
+                            <?php if ($cert_status_rl): ?> · override: <code><?php echo htmlspecialchars($cert_status_rl); ?></code><?php endif; ?>
+                            </p>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <?php if ($cert_state_rl['allowed'] && $result_id_rl > 0): ?>
+                                <a href="../user/export_certificate_toeic.php?session=<?php echo urlencode($test_session); ?>&format=html" class="btn btn-outline-primary btn-sm" target="_blank">
+                                    <i class="fas fa-eye me-1"></i> Preview
+                                </a>
+                                <a href="../user/export_certificate_toeic.php?session=<?php echo urlencode($test_session); ?>" class="btn btn-primary btn-sm" target="_blank">
+                                    <i class="fas fa-download me-1"></i> Download PDF
+                                </a>
+                            <?php endif; ?>
+                            <?php if ($result_id_rl > 0): ?>
+                                <form method="POST" action="certificate_action.php" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['certificate_csrf']); ?>">
+                                    <input type="hidden" name="result_id" value="<?php echo (int)$result_id_rl; ?>">
+                                    <input type="hidden" name="domain" value="rl">
+                                    <input type="hidden" name="test_session" value="<?php echo htmlspecialchars($test_session); ?>">
+                                    <input type="hidden" name="action" value="approve">
+                                    <button type="submit" class="btn btn-success btn-sm" <?php echo $cert_status_rl === 'approved' ? 'disabled' : ''; ?>>
+                                        <i class="fas fa-check me-1"></i> Approve
+                                    </button>
+                                </form>
+                                <form method="POST" action="certificate_action.php" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['certificate_csrf']); ?>">
+                                    <input type="hidden" name="result_id" value="<?php echo (int)$result_id_rl; ?>">
+                                    <input type="hidden" name="domain" value="rl">
+                                    <input type="hidden" name="test_session" value="<?php echo htmlspecialchars($test_session); ?>">
+                                    <input type="hidden" name="action" value="revoke">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" <?php echo $cert_status_rl === 'revoked' ? 'disabled' : ''; ?>>
+                                        <i class="fas fa-ban me-1"></i> Revoke
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php $flash = $_GET['certificate'] ?? null; if ($flash): ?>
+                        <div class="alert alert-<?php echo $flash === 'error' ? 'danger' : 'info'; ?> py-2 mb-0 small">
+                            Certificate action: <strong><?php echo htmlspecialchars($flash); ?></strong>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="content-card mb-4">
