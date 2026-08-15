@@ -1,0 +1,307 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/AppendStream.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\BufferStream\:\:getSize\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/BufferStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/CachingStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/DroppingStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn___toString\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_close\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_detach\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_eof\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_getContents\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_getMetadata\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_getSize\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_isReadable\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_isSeekable\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_isWritable\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_read\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_rewind\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_seek\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_tell\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Access to an undefined property GuzzleHttp\\Psr7\\FnStream\:\:\$_fn_write\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/FnStream.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Header.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/InflateStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/LazyOpenStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/LimitStream.php
+
+		-
+			message: '#^PHPDoc tag @var with type array\<array\> is not subtype of native type list\<array\<string\>\>\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/Message.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function substr_count expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_match expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_match_all expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message.php
+
+		-
+			message: '#^Variable \$headerLines in PHPDoc tag @var does not match assigned variable \$count\.$#'
+			identifier: varTag.differentVariable
+			count: 1
+			path: src/Message.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/MultipartStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/NoSeekStream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/PumpStream.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Query.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\ServerRequest\:\:normalizeNestedFileSpec\(\) should return array\<Psr\\Http\\Message\\UploadedFileInterface\> but returns array\<int\|string, array\<Psr\\Http\\Message\\UploadedFileInterface\>\|Psr\\Http\\Message\\UploadedFileInterface\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/ServerRequest.php
+
+		-
+			message: '#^Offset ''size'' on array\{0\: int, 1\: int, 2\: int, 3\: int, 4\: int, 5\: int, 6\: int, 7\: int, \.\.\.\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: src/Stream.php
+
+		-
+			message: '#^Property GuzzleHttp\\Psr7\\Stream\:\:\$stream \(resource\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 10
+			path: src/Stream.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Stream.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\UploadedFile\:\:isStringNotEmpty\(\) has parameter \$param with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/UploadedFile.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: src/Uri.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\Uri\:\:filterPath\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Uri.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\Uri\:\:filterQueryAndFragment\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Uri.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\Uri\:\:filterUserInfoComponent\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Uri.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(int\<0, 65535\>\|string\)\: mixed\)\|null, ''urldecode'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Uri.php
+
+		-
+			message: '#^Parameter \#1 \$path of method Psr\\Http\\Message\\UriInterface\:\:withPath\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/UriNormalizer.php
+
+		-
+			message: '#^Parameter \#1 \$query of method Psr\\Http\\Message\\UriInterface\:\:withQuery\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/UriNormalizer.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between '''' and non\-falsy\-string will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/UriResolver.php
+
+		-
+			message: '#^Method GuzzleHttp\\Psr7\\Utils\:\:tryGetContents\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: '#^Parameter \#1 \$source of class GuzzleHttp\\Psr7\\PumpStream constructor expects callable\(int\)\: \(string\|false\|null\), Closure\(\)\: mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: '#^Variable \$contents might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: '#^Variable \$handle might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Utils.php
