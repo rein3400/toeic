@@ -32,6 +32,12 @@ function getAdminNavigation()
             'description' => 'View TOEIC result reports and completion history',
             'group' => 'analytics'
         ],
+        'download_certificates_by_date.php' => [
+            'icon' => 'fa-file-zipper',
+            'title' => 'Certificate Batch',
+            'description' => 'Download all eligible TOEIC certificates for a selected date',
+            'group' => 'analytics'
+        ],
         'toeic_sw_results.php' => [
             'icon' => 'fa-microphone',
             'title' => 'TOEIC SW Results',
@@ -78,6 +84,12 @@ function getAdminNavigation()
             'icon' => 'fa-robot',
             'title' => 'AI API Settings',
             'description' => 'Configure AI providers',
+            'group' => 'system'
+        ],
+        'certificate_config.php' => [
+            'icon' => 'fa-certificate',
+            'title' => 'Certificate Configuration',
+            'description' => 'Choose certificate template, colors, and release policy',
             'group' => 'system'
         ],
     ];

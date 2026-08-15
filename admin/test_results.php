@@ -15,6 +15,7 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 20;
 $offset = ($page - 1) * $per_page;
 $search = trim($_GET['search'] ?? '');
+$filterDate = trim($_GET['filter_date'] ?? '');
 
 $where = [];
 $params = [];
@@ -25,6 +26,17 @@ if ($search !== '') {
     $like = "%{$search}%";
     $params = [$like, $like, $like];
     $types = 'sss';
+}
+
+$filterDateIsValid = false;
+if ($filterDate !== '') {
+    $parsedDate = DateTime::createFromFormat('Y-m-d', $filterDate);
+    $filterDateIsValid = $parsedDate && $parsedDate->format('Y-m-d') === $filterDate;
+    if ($filterDateIsValid) {
+        $where[] = 'DATE(r.completed_at) = ?';
+        $params[] = $filterDate;
+        $types .= 's';
+    }
 }
 
 $whereSql = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
@@ -107,11 +119,17 @@ $stats = $conn->query("
 
                 <div class="content-card mb-4">
                     <form method="GET" class="row g-3">
-                        <div class="col-md-10">
+                        <div class="col-md-5">
                             <input type="text" class="form-control" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Cari nama siswa, username, atau session">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="filter_date" value="<?php echo htmlspecialchars($filterDateIsValid ? $filterDate : ''); ?>">
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="download_certificates_by_date.php?<?php echo http_build_query(['date' => $filterDateIsValid ? $filterDate : date('Y-m-d'), 'search' => $search]); ?>" class="btn btn-outline-success w-100">Certificates</a>
                         </div>
                     </form>
                 </div>
@@ -168,7 +186,7 @@ $stats = $conn->query("
                             <ul class="pagination justify-content-center mb-0">
                                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                     <li class="page-item <?php echo $i === $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>"><?php echo $i; ?></a>
+                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&filter_date=<?php echo urlencode($filterDate); ?>"><?php echo $i; ?></a>
                                     </li>
                                 <?php endfor; ?>
                             </ul>
