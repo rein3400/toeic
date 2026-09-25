@@ -105,12 +105,6 @@ if ($start_new) {
         exit();
     }
 
-    if (!consumeTestCredit($conn, $_SESSION['user_id'], 'toeic')) {
-        $_SESSION['error'] = 'Paket TOEIC aktif tidak dapat dipakai. Silakan cek kembali paket Anda.';
-        header("Location: buy_exam.php");
-        exit();
-    }
-
     $test_session = 'toeic_' . date('Ymd_His') . '_' . bin2hex(random_bytes(8));
     $start_section = ($practice_mode && $practice_config) ? $practice_config['section'] : 'listening';
     $builder_options = [
@@ -124,9 +118,18 @@ if ($start_new) {
     ];
 
     require_once '../includes/toeic_test_builder.php';
-    $builder = new ToeicTestBuilder($conn);
-    $builder->createSession($test_session, $_SESSION['user_id'], $builder_options);
-    $builder->buildTest($test_session, $_SESSION['user_id'], $builder_options);
+    require_once '../includes/toeic_session_start.php';
+    try {
+        toeicStartSessionWithCredit($conn, $test_session, (int)$_SESSION['user_id'], $builder_options, isset($credit_preview['id']) ? (int)$credit_preview['id'] : null);
+    } catch (Throwable $error) {
+        error_log('TOEIC session start failed: ' . $error->getMessage());
+        $message = $error->getMessage();
+        $_SESSION['error'] = preg_match('/^(Bank soal|Paket TOEIC|Sesi TOEIC)/u', $message)
+            ? $message
+            : 'Sesi TOEIC belum dapat disiapkan. Kredit Anda tidak terpotong. Silakan coba lagi atau hubungi administrator.';
+        header('Location: index.php');
+        exit();
+    }
 
     $_SESSION[$session_key] = $test_session;
     $_SESSION['test_session'] = $test_session;
@@ -437,6 +440,32 @@ function filterToeicBatchContextRows(array $rows, int $currentOrder): array {
     return $rows;
 }
 
+// <toeic-doc-render>
+function toeicRenderReadingDocuments($text) {
+    if (!is_array($text)) {
+        return '';
+    }
+    $bodies = [];
+    foreach (['isi_teks', 'isi_teks_2', 'isi_teks_3'] as $field) {
+        $body = trim((string)($text[$field] ?? ''));
+        if ($body !== '') {
+            $bodies[] = $body;
+        }
+    }
+    if (empty($bodies)) {
+        return '';
+    }
+    $total = count($bodies);
+    $cards = [];
+    foreach ($bodies as $index => $body) {
+        $escaped = htmlspecialchars($body, ENT_QUOTES, 'UTF-8');
+        $escaped = preg_replace('/___(\d+)___/', '<strong class="text-primary underline">[$1]</strong>', $escaped);
+        $label = $total > 1 ? '<div class="study-kicker mb-3">Document ' . ($index + 1) . ' of ' . $total . '</div>' : '';
+        $cards[] = '<div class="study-card font-serif text-lg leading-relaxed text-slate-800 space-y-6">' . $label . nl2br($escaped) . '</div>';
+    }
+    return implode("\n", $cards);
+}
+// </toeic-doc-render>
 function getToeicTimerSeconds($section, $practicePart) {
     if (!empty($practicePart)) {
         $config = getTOEICPracticeConfig($practicePart);
@@ -489,6 +518,20 @@ if ($section === 'listening') {
 
 $primary_photo_url = $photo_urls[0] ?? '';
 $fallback_photo_urls = array_values(array_slice($photo_urls, 1));
+// Part 1 browser guard state: answers stay closed until the photo loads in
+// this browser. Server-known-missing (no row, empty path, or a failing
+// toeicPhotoIsUsable() verdict) renders the placeholder + locked choices
+// immediately. This guard only controls browser interaction; it does not
+// change scoring, saving, or credit behavior (parent lane owns those).
+$part1_photo_required = ($part === '1');
+$part1_photo_missing = false;
+if ($part1_photo_required) {
+    if ($photo === null || trim((string)($photo['file_path'] ?? '')) === '') {
+        $part1_photo_missing = true;
+    } elseif (!toeicPhotoIsUsable((string)$photo['file_path'])) {
+        $part1_photo_missing = true;
+    }
+}
 
 if ($is_batch) {
     foreach ($batch_questions as $row) {
@@ -566,8 +609,69 @@ if ($is_batch) {
             }
         };
 
+        // <toeic-photo-guard>
+        /** Keep browser-only image failures across question navigation in this tab. */
+        function toeicPhotoFailureMap() {
+            if (typeof window === 'undefined') return {};
+            const session = document.getElementById('testSession');
+            if (!session) return {};
+            try { return JSON.parse(sessionStorage.getItem('toeic-missing-photos-' + session.value) || '{}'); }
+            catch (error) { return window.toeicMissingPhotos || {}; }
+        }
+        /** Clear a failure only after the browser actually decodes that photo. */
+        function toeicRememberPhotoState(ready) {
+            if (typeof window === 'undefined') return;
+            const session = document.getElementById('testSession');
+            const question = document.getElementById('questionId');
+            const order = document.getElementById('currentOrder');
+            if (!session || !question || !order) return;
+            const failures = toeicPhotoFailureMap();
+            if (ready) delete failures[question.value];
+            else failures[question.value] = order.value;
+            window.toeicMissingPhotos = failures;
+            try { sessionStorage.setItem('toeic-missing-photos-' + session.value, JSON.stringify(failures)); }
+            catch (error) { /* The in-page guard still applies when storage is unavailable. */ }
+        }
+        function toeicPhotoAnswerInputs() {
+            if (typeof document === 'undefined' || !document.getElementById) return [];
+            var container = document.getElementById('singleAnswerContainer');
+            if (!container || !container.querySelectorAll) return [];
+            return container.querySelectorAll('input[type="radio"]');
+        }
+        function toeicPhotoNoticeElement() {
+            if (typeof document === 'undefined' || !document.getElementById) return null;
+            return document.getElementById('toeicPhotoNotice');
+        }
+        function toeicPhotoSetAnswersEnabled(enabled) {
+            var inputs = toeicPhotoAnswerInputs();
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = !enabled;
+            }
+            if (enabled) {
+                var notice = toeicPhotoNoticeElement();
+                if (notice && notice.style) {
+                    notice.style.display = 'none';
+                }
+            }
+        }
+        function toeicPhotoShowMissing() {
+            toeicRememberPhotoState(false);
+            toeicPhotoSetAnswersEnabled(false);
+            var notice = toeicPhotoNoticeElement();
+            if (notice && notice.style) {
+                notice.style.display = 'block';
+            }
+        }
+        function toeicPhotoMarkLoaded(img) {
+            if (img && img.dataset) {
+                img.dataset.loaded = '1';
+            }
+            toeicPhotoSetAnswersEnabled(true);
+            toeicRememberPhotoState(true);
+        }
         function handleToeicPhotoFailure(img) {
             if (!img) return;
+            toeicPhotoSetAnswersEnabled(false);
             let fallbacks = [];
             try {
                 fallbacks = JSON.parse(img.dataset.fallbacks || '[]');
@@ -586,7 +690,9 @@ if ($is_batch) {
             if (frame) {
                 frame.innerHTML = '<div class="toeic-photo-placeholder"><span class="material-symbols-outlined">image_not_supported</span><span>Foto soal belum tersedia</span></div>';
             }
+            toeicPhotoShowMissing();
         }
+        // </toeic-photo-guard>
     </script>
     <style>
         .toeic-test-statusbar {
@@ -690,6 +796,23 @@ if ($is_batch) {
     </style>
 </head>
 <body class="font-display h-screen flex flex-col overflow-hidden tc-test-page">
+    <?php
+    // Discreet user-facing notice when this session used fallback draws
+    // (dedup tier below "unseen"). Visible only on the test page so the
+    // user understands why a part may feel familiar.
+    $session_fallback_count = (int)($session_info['fallback_count'] ?? 0);
+    $session_short_filled = (int)($session_info['short_filled_count'] ?? 0);
+    if ($session_fallback_count > 0 || $session_short_filled > 0): ?>
+        <div class="bg-amber-50 border-b-2 border-amber-200 px-6 py-2 text-amber-900 text-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-base">info</span>
+            <span>
+                Bank soal untuk sesi ini terbatas.Beberapa soal mungkin terasa mirip dengan latihan sebelumnya.
+                <?php if ($session_short_filled > 0): ?>
+                    Sesi ini memiliki <strong><?php echo (int)$session_short_filled; ?></strong> soal yang tidak dapat diisi penuh karena bank sedang dirapikan.
+                <?php endif; ?>
+            </span>
+        </div>
+    <?php endif; ?>
     <header class="bg-white border-b-4 border-slate-200 z-10 shrink-0">
         <div class="px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -736,9 +859,13 @@ if ($is_batch) {
             </div>
 
             <div class="flex-1 overflow-y-auto p-8 pb-20">
-                <?php if ($part === '1' && $primary_photo_url !== ''): ?>
+                <?php if ($part === '1' && !$part1_photo_missing && $primary_photo_url !== ''): ?>
                     <div class="toeic-photo-frame rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white" id="photo-container-<?php echo (int)$question_num; ?>">
-                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="TOEIC Part 1 photo" class="toeic-photo-image" data-fallbacks="<?php echo htmlspecialchars(json_encode($fallback_photo_urls), ENT_QUOTES); ?>" loading="eager" decoding="async" onload="this.dataset.loaded='1';" onerror="handleToeicPhotoFailure(this);">
+                        <img src="<?php echo htmlspecialchars($primary_photo_url); ?>" alt="TOEIC Part 1 photo" class="toeic-photo-image" data-photo-required="1" data-fallbacks="<?php echo htmlspecialchars(json_encode($fallback_photo_urls), ENT_QUOTES); ?>" loading="eager" decoding="async" onload="toeicPhotoMarkLoaded(this);" onerror="handleToeicPhotoFailure(this);">
+                    </div>
+                    <div id="toeicPhotoNotice" class="mb-6 p-4 bg-amber-50 text-amber-900 rounded-xl flex gap-3 text-sm border-2 border-amber-200" style="display:none">
+                        <span class="material-symbols-outlined">image_not_supported</span>
+                        <span>Foto soal tidak dapat dimuat. Soal ini dikunci dan tidak bisa dijawab &mdash; lanjutkan ke soal berikutnya.</span>
                     </div>
                 <?php elseif ($part === '1'): ?>
                     <div class="toeic-photo-frame rounded-2xl overflow-hidden border-4 border-slate-100 shadow-sm mb-6 bg-white">
@@ -746,6 +873,10 @@ if ($is_batch) {
                             <span class="material-symbols-outlined">image_not_supported</span>
                             <span>Foto soal belum tersedia</span>
                         </div>
+                    </div>
+                    <div id="toeicPhotoNotice" class="mb-6 p-4 bg-amber-50 text-amber-900 rounded-xl flex gap-3 text-sm border-2 border-amber-200">
+                        <span class="material-symbols-outlined">image_not_supported</span>
+                        <span>Foto soal tidak dapat dimuat. Soal ini dikunci dan tidak bisa dijawab &mdash; lanjutkan ke soal berikutnya.</span>
                     </div>
                 <?php endif; ?>
 
@@ -766,9 +897,7 @@ if ($is_batch) {
                 <?php endif; ?>
 
                 <?php if ($section === 'reading' && $text): ?>
-                    <div class="study-card font-serif text-lg leading-relaxed text-slate-800 space-y-6">
-                        <?php echo nl2br(preg_replace('/___(\d+)___/', '<strong class="text-primary underline">[$1]</strong>', (string)$text['isi_teks'])); ?>
-                    </div>
+                    <?php echo toeicRenderReadingDocuments($text); ?>
                 <?php endif; ?>
 
                 <div class="mt-6 p-4 bg-blue-50 text-blue-800 rounded-xl flex gap-3 text-sm border-2 border-blue-100">
@@ -817,12 +946,12 @@ if ($is_batch) {
                     <div class="max-w-2xl mx-auto pt-10">
                         <span class="study-kicker">Question <?php echo (int)$question_num; ?></span>
                         <h3 class="h3 fw-bold mb-8"><?php echo $part === '2' ? '<em>(Question in audio)</em>' : html_entity_decode((string)$question['pertanyaan']); ?></h3>
-                        <div class="space-y-4" id="singleAnswerContainer">
+                        <div class="space-y-4" id="singleAnswerContainer"<?php echo $part1_photo_required ? ' data-photo-required="1"' : ''; ?>>
                             <?php $options = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D']; ?>
                             <?php foreach ($options as $opt): ?>
                                 <?php $val = trim((string)($question['opsi_' . strtolower($opt)] ?? '')); ?>
                                 <label class="answer-choice p-5 <?php echo $user_answer === $opt ? 'selected' : ''; ?>">
-                                    <input type="radio" name="answer" value="<?php echo $opt; ?>" class="single-answer" data-question-id="<?php echo (int)$question['question_id']; ?>" <?php echo $user_answer === $opt ? 'checked' : ''; ?> hidden>
+                                    <input type="radio" name="answer" value="<?php echo $opt; ?>" class="single-answer" data-question-id="<?php echo (int)$question['question_id']; ?>" <?php echo $user_answer === $opt ? 'checked' : ''; ?><?php echo $part1_photo_required ? ' disabled' : ''; ?> hidden>
                                     <span class="flex-shrink-0 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-black text-sm"><?php echo $opt; ?></span>
                                     <span class="choice-label text-lg"><?php echo $val ? htmlspecialchars($val) : "Choice $opt"; ?></span>
                                 </label>
@@ -851,6 +980,7 @@ if ($is_batch) {
         const nextBtn = document.getElementById('nextBtn'), prevBtn = document.getElementById('prevBtn');
         const nextBtnDefault = nextBtn.innerHTML;
         let isNavigating = false, isSubmitting = false, isQuitting = false;
+        let photoSubmissionBlocked = false;
 
         function setTestBusy(message) {
             const loadingText = document.querySelector('.tc-test-loading span');
@@ -878,7 +1008,7 @@ if ($is_batch) {
                 });
             } else {
                 const chk = document.querySelector('.single-answer:checked');
-                if (chk) list.push(saveAnswer(chk.dataset.questionId, chk.value));
+                if (chk && !chk.disabled) list.push(saveAnswer(chk.dataset.questionId, chk.value));
             }
             return list;
         }
@@ -924,6 +1054,14 @@ if ($is_batch) {
         }
 
         function submitSection() {
+            const missing = Object.values(toeicPhotoFailureMap());
+            if (missing.length > 0) {
+                photoSubmissionBlocked = true;
+                isSubmitting = false; isNavigating = false;
+                nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy();
+                alert('Foto soal ' + missing.join(', ') + ' belum tampil. Buka kembali nomor tersebut dan muat ulang sebelum menyelesaikan section.');
+                return;
+            }
             isSubmitting = true; nextBtn.innerHTML = 'Mengirim...'; setTestBusy('Mengirim section...');
             fetch('ajax_submit_section_toeic.php', {
                 method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
@@ -966,7 +1104,16 @@ if ($is_batch) {
             setTimeout(() => activeMapLink.scrollIntoView({ block: 'nearest', inline: 'center' }), 80);
         }
 
+        <?php if ($part1_photo_required): ?>
+        toeicRememberPhotoState(false);
+        <?php endif; ?>
+        <?php if ($part1_photo_missing): ?>
+        toeicPhotoShowMissing();
+        <?php endif; ?>
         document.querySelectorAll('.toeic-photo-image').forEach(img => {
+            if (img.dataset.loaded || (img.complete && img.naturalWidth > 0)) {
+                toeicPhotoMarkLoaded(img);
+            }
             setTimeout(() => {
                 if (!img.dataset.loaded && (!img.complete || img.naturalWidth === 0)) {
                     handleToeicPhotoFailure(img);
@@ -976,7 +1123,7 @@ if ($is_batch) {
 
         let timeLeft = <?php echo (int)$remaining_time; ?>;
         setInterval(() => {
-            if (timeLeft <= 0) { if (!isSubmitting) submitSection(); return; }
+            if (timeLeft <= 0) { if (!isSubmitting && !photoSubmissionBlocked) submitSection(); return; }
             timeLeft--;
             document.getElementById('timerDisplay').textContent = `${Math.floor(timeLeft/60).toString().padStart(2,'0')}:${(timeLeft%60).toString().padStart(2,'0')}`;
         }, 1000);

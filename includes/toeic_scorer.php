@@ -24,13 +24,16 @@ class ToeicScorer {
      */
     public function scoreSection($testSession, $section) {
         $sourceTable = ($section === 'listening') ? 'toeic_soal_listening' : 'toeic_soal_reading';
-        $answerCol = 'jawaban_benar'; // correct answer column in source table
+        $answerCol = 'jawaban_benar'; // correct answer column in source table (legacy fallback)
 
-        // Fetch all questions for this section with their correct answers
+        // Prefer the snap_jawaban_benar column populated at build time. This
+        // makes scoring immune to source-table mutation (admin edits, bank
+        // merges, etc.). Fall back to a JOIN on the source table when the
+        // snapshot is NULL (legacy sessions created before migration 002).
         $stmt = $this->conn->prepare("
-            SELECT tq.id as tq_id, tq.question_id, tq.user_answer, s.$answerCol as correct_answer
+            SELECT tq.id as tq_id, tq.question_id, tq.user_answer, tq.snap_jawaban_benar, s.$answerCol as source_correct
             FROM toeic_test_questions tq
-            JOIN $sourceTable s ON tq.question_id = s.id_soal
+            LEFT JOIN $sourceTable s ON tq.question_id = s.id_soal
             WHERE tq.test_session = ? AND tq.section = ?
             ORDER BY tq.question_order ASC
         ");
@@ -45,7 +48,8 @@ class ToeicScorer {
             $total++;
             $isCorrect = null;
 
-            if (!empty($row['user_answer']) && strtoupper(trim($row['user_answer'])) === strtoupper(trim($row['correct_answer']))) {
+            $correctAnswer = $row['snap_jawaban_benar'] !== null ? $row['snap_jawaban_benar'] : $row['source_correct'];
+            if (!empty($row['user_answer']) && strtoupper(trim($row['user_answer'])) === strtoupper(trim((string)$correctAnswer))) {
                 $isCorrect = 1;
                 $raw++;
             } else {

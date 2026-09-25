@@ -17,6 +17,7 @@ require_once '../includes/config.php';
 require_once '../includes/toeic_scorer.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_media_guard.php';
 
 header('Content-Type: application/json');
 
@@ -96,6 +97,12 @@ if ($isLegacyPartPractice) {
 
 if ($section !== $expectedSection) {
     echo json_encode(['success' => false, 'error' => 'Section is no longer active']);
+    exit();
+}
+
+// Never grade an unanswered photo question that the server cannot deliver.
+if ($section === 'listening' && toeicUnavailablePhotoQuestions($conn, $test_session, (int)$_SESSION['user_id'], null, true) !== []) {
+    echo json_encode(['success' => false, 'error_code' => 'photo_unavailable', 'error' => 'Foto soal belum tersedia. Muat ulang soal foto sebelum menyelesaikan section.']);
     exit();
 }
 

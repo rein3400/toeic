@@ -39,24 +39,16 @@ assertNotContainsText(
     'practice mode must not bypass strict credit check'
 );
 
-assertContainsText(
-    $testToeic,
-    "if (!consumeTestCredit(\$conn, \$_SESSION['user_id'], 'toeic'))",
-    'new TOEIC sessions consume one credit regardless of mode'
-);
-
-assertNotContainsText(
-    $testToeic,
-    "if (!\$practice_mode) {\n        if (!consumeTestCredit",
-    'practice mode must not bypass credit consumption'
-);
-
-assertBeforeText(
-    $testToeic,
-    "if (!consumeTestCredit(\$conn, \$_SESSION['user_id'], 'toeic'))",
-    '$builder->createSession',
-    'credit is consumed before creating the test session'
-);
+// Credit consumption moved into the atomic helper; assert the actual call chain
+// and transaction boundaries rather than requiring its old inline location.
+$start = file_get_contents($root . '/includes/toeic_session_start.php');
+assertContainsText($testToeic, 'toeicStartSessionWithCredit(', 'page delegates creation to the atomic credit helper');
+assertContainsText($start, "!consumeTestCredit(\$conn, \$userId, 'toeic')", 'new TOEIC sessions consume one credit regardless of mode');
+assertNotContainsText($testToeic . $start, "if (!\$practice_mode) {\n        if (!consumeTestCredit", 'practice mode must not bypass credit consumption');
+assertBeforeText($start, '$conn->begin_transaction()', '!consumeTestCredit(', 'credit consumption happens inside the start transaction');
+assertBeforeText($start, '!consumeTestCredit(', '$builder->createSession', 'credit is reserved before creating the test session');
+assertBeforeText($start, '$builder->buildTest', '$conn->commit()', 'credit commits only after the complete session is built');
+assertContainsText($start, '$conn->rollback()', 'failed builds can restore the credit');
 
 $copyFiles = [
     'index.php',

@@ -348,6 +348,48 @@ function toeicC2ValidatePackage(array $package, int $packageNumber): array {
         }
     }
 
+    return array_merge($errors, toeicC2PackageDuplicateErrors($package));
+}
+
+/** Detect duplicate logical questions before a package can create bank rows. */
+function toeicC2PackageDuplicateErrors(array $package): array {
+    require_once __DIR__ . '/toeic_question_identity.php';
+    $seen = [];
+    $errors = [];
+    for ($partNumber = 1; $partNumber <= 7; $partNumber++) {
+        $part = (string)$partNumber;
+        $document = $package['part' . $part] ?? [];
+        foreach (['items', 'sets', 'single_sets', 'double_sets', 'triple_sets'] as $kind) {
+            foreach (($document[$kind] ?? []) as $index => $stimulus) {
+                foreach (($stimulus['questions'] ?? [$stimulus]) as $questionIndex => $question) {
+                    $question = toeicC2NormalizeQuestionItem($question);
+                    $script = $stimulus['audio_script'] ?? '';
+                    $row = [
+                        'pertanyaan' => (string)($question['question_text'] ?? $question['sentence'] ?? $question['prompt_text'] ?? ''),
+                        'opsi_a' => $question['options']['A'] ?? '', 'opsi_b' => $question['options']['B'] ?? '',
+                        'opsi_c' => $question['options']['C'] ?? '', 'opsi_d' => $question['options']['D'] ?? '',
+                        'jawaban_benar' => $question['correct_answer'] ?? '',
+                        'id_audio' => $partNumber <= 4 ? $index + 1 : null,
+                        'id_teks' => $partNumber >= 6 ? $index + 1 : null,
+                        '_audio_path' => (string)($stimulus['audio_file'] ?? ''),
+                        '_photo_path' => (string)($stimulus['image_file'] ?? ''),
+                        '_audio_prompt' => is_array($script) ? (string)($script['question'] ?? '') : '',
+                        '_audio_transcript' => is_string($script) ? $script : '',
+                        '_passage_1' => (string)($stimulus['passage_with_blanks'] ?? $stimulus['passage_1'] ?? ''),
+                        '_passage_2' => (string)($stimulus['passage_2'] ?? ''),
+                        '_passage_3' => (string)($stimulus['passage_3'] ?? ''),
+                    ];
+                    $signature = toeicQuestionContentSignature($row, $part);
+                    $reference = 'part' . $part . ' ' . $kind . '[' . ($index + 1) . '] question ' . ($questionIndex + 1);
+                    if (isset($seen[$signature])) {
+                        $errors[] = 'Duplicate content: ' . $reference . ' repeats ' . $seen[$signature] . '. Supply a genuinely different question/stimulus.';
+                    } else {
+                        $seen[$signature] = $reference;
+                    }
+                }
+            }
+        }
+    }
     return $errors;
 }
 
@@ -866,6 +908,50 @@ function toeicC2ImportPackages(mysqli $conn, string $contentRoot, array $options
 }
 
 /**
+ * Shared duplicate-signature fingerprint (pure, testable).
+ *
+ * Normalization, option sorting, part-2 A/B/C-only rule, and media-ID
+ * suffixes match the dedup tool's signature scheme. Both the newly
+ * imported row and each existing candidate row must go through this
+ * function so the two sides can never diverge again.
+ */
+function toeicC2SignatureFingerprint(
+    string $section,
+    string $part,
+    string $question,
+    ?string $a,
+    ?string $b,
+    ?string $c,
+    ?string $d,
+    ?int $audioId,
+    ?int $textId
+): string {
+    $norm = function (string $s): string {
+        $s = mb_strtolower($s, 'UTF-8');
+        $s = preg_replace('/\s+/u', ' ', $s);
+        $s = preg_replace('/[^\p{L}\p{N}]+/u', '', $s);
+        return trim($s);
+    };
+
+    $byLetter = ['A' => $a, 'B' => $b, 'C' => $c, 'D' => $d];
+    $expectedLetters = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
+    $opts = [];
+    foreach ($expectedLetters as $letter) {
+        $opts[] = $norm((string)($byLetter[$letter] ?? ''));
+    }
+    sort($opts);
+    $text = $norm($question);
+    $payload = $section . '|' . $part . '|T=' . $text . '|O=' . implode('|', $opts);
+    if ($audioId !== null) {
+        $payload .= '|A=' . $audioId;
+    }
+    if ($textId !== null) {
+        $payload .= '|X=' . $textId;
+    }
+    return sha1($payload);
+}
+
+/**
  * Post-import signature duplicate warning.
  *
  * After a soal row is inserted, compute its signature (matching the
@@ -891,30 +977,17 @@ function toeicC2CheckSignatureDuplicate(
     ?int $textId,
     array &$stats
 ): void {
-    $norm = function (string $s): string {
-        $s = mb_strtolower($s, 'UTF-8');
-        $s = preg_replace('/\s+/u', ' ', $s);
-        $s = preg_replace('/[^\p{L}\p{N}]+/u', '', $s);
-        return trim($s);
-    };
-
-    $expectedLetters = $part === '2' ? ['A', 'B', 'C'] : ['A', 'B', 'C', 'D'];
-    $opts = [];
-    foreach ($expectedLetters as $letter) {
-        $key = 'opsi_' . strtolower($letter);
-        $val = ${$key} ?? '';
-        $opts[] = $norm((string)$val);
-    }
-    sort($opts);
-    $text = $norm($question);
-    $payload = $section . '|' . $part . '|T=' . $text . '|O=' . implode('|', $opts);
-    if ($audioId !== null) {
-        $payload .= '|A=' . $audioId;
-    }
-    if ($textId !== null) {
-        $payload .= '|X=' . $textId;
-    }
-    $signature = sha1($payload);
+    $signature = toeicC2SignatureFingerprint(
+        $section,
+        $part,
+        $question,
+        $a,
+        $b,
+        $c,
+        $d,
+        $audioId,
+        $textId
+    );
 
     $table = $section === 'listening' ? 'toeic_soal_listening' : 'toeic_soal_reading';
     $stmt = $conn->prepare("SELECT id_soal FROM {$table} WHERE part = ? AND id_soal <> ?");
@@ -932,20 +1005,20 @@ function toeicC2CheckSignatureDuplicate(
         if (!$other) {
             continue;
         }
-        $otherOpts = [];
-        foreach ($expectedLetters as $letter) {
-            $otherOpts[] = $norm((string)($other['opsi_' . strtolower($letter)] ?? ''));
-        }
-        sort($otherOpts);
-        $otherText = $norm((string)($other['pertanyaan'] ?? ''));
-        $otherPayload = $section . '|' . $part . '|T=' . $otherText . '|O=' . implode('|', $otherOpts);
-        if (!empty($other['id_audio'])) {
-            $otherPayload .= '|A=' . (int)$other['id_audio'];
-        }
-        if (!empty($other['id_teks'])) {
-            $otherPayload .= '|X=' . (int)$other['id_teks'];
-        }
-        if (sha1($otherPayload) === $signature) {
+        $otherAudio = !empty($other['id_audio']) ? (int)$other['id_audio'] : null;
+        $otherTextId = !empty($other['id_teks']) ? (int)$other['id_teks'] : null;
+        $otherSignature = toeicC2SignatureFingerprint(
+            $section,
+            $part,
+            (string)($other['pertanyaan'] ?? ''),
+            isset($other['opsi_a']) ? (string)$other['opsi_a'] : null,
+            isset($other['opsi_b']) ? (string)$other['opsi_b'] : null,
+            isset($other['opsi_c']) ? (string)$other['opsi_c'] : null,
+            isset($other['opsi_d']) ? (string)$other['opsi_d'] : null,
+            $otherAudio,
+            $otherTextId
+        );
+        if ($otherSignature === $signature) {
             $matches[] = $otherId;
         }
     }

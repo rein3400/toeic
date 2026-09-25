@@ -8,6 +8,7 @@ require_once '../includes/session_handler.php';
 require_once '../includes/config.php';
 require_once '../includes/csrf_helper.php';
 require_once '../includes/toeic_helper.php';
+require_once '../includes/toeic_media_guard.php';
 
 header('Content-Type: application/json');
 
@@ -98,6 +99,10 @@ if (!$question_exists) {
 }
 
 // Save answer to toeic_test_questions using the current unique key shape.
+if ($section === 'listening' && toeicUnavailablePhotoQuestions($conn, $test_session, (int)$_SESSION['user_id'], $question_id) !== []) {
+    echo json_encode(['success' => false, 'error_code' => 'photo_unavailable', 'error' => 'Foto soal belum tersedia. Muat ulang foto sebelum menjawab.']);
+    exit();
+}
 $stmt = $conn->prepare("
     UPDATE toeic_test_questions
     SET user_answer = ?

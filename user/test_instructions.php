@@ -5,6 +5,7 @@ require_once '../includes/settings.php';
 require_once '../includes/db_utils.php';
 require_once '../includes/toeic_quality_helpers.php';
 require_once '../includes/toeic_sw_helper.php';
+require_once '../includes/csrf_helper.php';
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
     header("Location: ../login.php");
@@ -61,6 +62,9 @@ $full_test_parts = $test_format === 'toeic_sw'
     ]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'])) {
+    if (!validateCsrfToken()) {
+        toeicRedirectWithFlash('index.php', 'error', 'Sesi tidak valid. Silakan muat ulang halaman.');
+    } else {
     $postedMode = (($_POST['mode'] ?? 'full') === 'prep') ? 'prep' : 'full';
     $postedFormat = (($_POST['test_format'] ?? 'toeic') === 'toeic_sw') ? 'toeic_sw' : 'toeic';
     $postedCreditType = $postedFormat === 'toeic_sw' ? 'toeic_sw' : 'toeic';
@@ -84,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
 
     header("Location: test_toeic.php?start_new=1&mode=" . urlencode($postedMode));
     exit();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -147,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_instructions'
                         <p class="small text-muted mb-4">You have <strong><?php echo $full_credit_count; ?></strong> active package(s).</p>
 
                         <form method="post">
+                            <?= csrfField() ?>
                             <input type="hidden" name="mode" value="<?php echo htmlspecialchars($mode); ?>">
                             <input type="hidden" name="test_format" value="<?php echo htmlspecialchars($test_format); ?>">
                             <button type="submit" name="confirm_instructions" class="study-button w-100" <?php echo !$has_full_credit ? 'disabled' : ''; ?>>
