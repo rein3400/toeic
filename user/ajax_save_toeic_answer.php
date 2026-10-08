@@ -111,6 +111,28 @@ $stmt = $conn->prepare("
 $stmt->bind_param("sssi", $answer, $test_session, $section, $question_id);
 
 if ($stmt->execute()) {
+    if ($stmt->affected_rows === 0) {
+        // affected_rows counts CHANGED rows: 0 also means the stored answer
+        // already equals the submitted one. Re-read to distinguish an
+        // unchanged-but-persisted answer (success) from a genuinely absent
+        // or non-matching row (failure).
+        $stmt->close();
+        $verify = $conn->prepare(
+            "SELECT user_answer FROM toeic_test_questions
+             WHERE test_session = ? AND section = ? AND question_id = ?
+             LIMIT 1"
+        );
+        $verify->bind_param("ssi", $test_session, $section, $question_id);
+        $verify->execute();
+        $persisted = $verify->get_result()->fetch_assoc();
+        $verify->close();
+        if (($persisted['user_answer'] ?? null) === $answer) {
+            echo json_encode(['success' => true]);
+            exit();
+        }
+        echo json_encode(['success' => false, 'error' => 'Answer could not be saved — question not found in this section']);
+        exit();
+    }
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Failed to save answer']);

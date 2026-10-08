@@ -644,8 +644,9 @@ if ($is_batch) {
         }
         function toeicPhotoSetAnswersEnabled(enabled) {
             var inputs = toeicPhotoAnswerInputs();
+            var recoveryLocked = enabled && typeof toeicAnswersRecoveryLocked === 'function' && toeicAnswersRecoveryLocked();
             for (var i = 0; i < inputs.length; i++) {
-                inputs[i].disabled = !enabled;
+                inputs[i].disabled = !enabled || recoveryLocked;
             }
             if (enabled) {
                 var notice = toeicPhotoNoticeElement();
@@ -961,6 +962,7 @@ if ($is_batch) {
                 <?php endif; ?>
             </div>
 
+            <p id="toeic-save-message" role="status" aria-live="polite" class="px-6 py-2 text-sm text-red-700" hidden></p>
             <div class="p-6 border-t-4 border-slate-200 bg-white shrink-0 flex justify-between">
                 <a href="<?php echo $prev_link; ?>" id="prevBtn" class="study-button study-button-secondary <?php echo $prev_q <= 0 ? 'opacity-50 pointer-events-none' : ''; ?>">
                     <i class="fas fa-arrow-left me-2"></i> Sebelumnya
@@ -981,6 +983,56 @@ if ($is_batch) {
         const nextBtnDefault = nextBtn.innerHTML;
         let isNavigating = false, isSubmitting = false, isQuitting = false;
         let photoSubmissionBlocked = false;
+        const submitUncertainStorageKey = 'toeic-submit-uncertain-' + testSession + '-' + currentSection;
+        let submitStatusUncertain = readSubmitUncertain();
+        let sectionExpired = false;
+        let lockedAnswerSnapshot = null;
+        const answerControlStates = new WeakMap();
+        const pendingAnswerSaves = new Set();
+        const answerSaveTails = new Map();
+        const ANSWER_REQUEST_TIMEOUT_MS = 12000;
+        const failedAnswerSaves = new Map();
+
+        /** A same-tab reload must not replay an unconfirmed grading request. */
+        function readSubmitUncertain() {
+            try { return sessionStorage.getItem(submitUncertainStorageKey) === '1'; }
+            catch (error) { return false; }
+        }
+
+        /** Refuse grading when its reload-safe intent cannot be recorded first. */
+        function persistSubmitIntent() {
+            try {
+                sessionStorage.setItem(submitUncertainStorageKey, '1');
+                return readSubmitUncertain();
+            } catch (error) { return false; }
+        }
+
+        /** Let the head photo callback respect the current answer-recovery owner. */
+        function toeicAnswersRecoveryLocked() {
+            return sectionExpired || submitStatusUncertain || isNavigating || isSubmitting || lockedAnswerSnapshot !== null;
+        }
+
+        /** Show safe, perceivable failures without injecting response HTML. */
+        function renderSaveStatus() {
+            const status = document.getElementById('toeic-save-message');
+            if (!status) return;
+            if (submitStatusUncertain) nextBtn.disabled = true;
+            status.hidden = !submitStatusUncertain && failedAnswerSaves.size === 0;
+            status.textContent = submitStatusUncertain
+                ? 'Status submit belum dapat dipastikan. Jangan submit ulang sebelum admin mengonfirmasi status sesi.'
+                : failedAnswerSaves.size > 0
+                    ? 'Jawaban belum tersimpan: ' + [...failedAnswerSaves.values()].join('; ')
+                    : '';
+        }
+
+        /** Recheck the current photo, not only the disabled flag captured before saving. */
+        function currentPhotoBlocksAnswers() {
+            const container = document.getElementById('singleAnswerContainer');
+            if (!container || container.dataset.photoRequired !== '1') return false;
+            const question = document.getElementById('questionId');
+            if (Object.prototype.hasOwnProperty.call(toeicPhotoFailureMap(), question.value)) return true;
+            return ![...document.querySelectorAll('.toeic-photo-image')].some(img => img.dataset.loaded === '1' || (img.complete && img.naturalWidth > 0));
+        }
 
         function setTestBusy(message) {
             const loadingText = document.querySelector('.tc-test-loading span');
@@ -992,25 +1044,116 @@ if ($is_batch) {
             document.body.classList.remove('tc-saving');
         }
 
-        function saveAnswer(id, ans) {
-            return fetch('ajax_save_toeic_answer.php', {
-                method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
-                body: JSON.stringify({ test_session: testSession, section: currentSection, question_id: parseInt(id), answer: ans })
-            }).then(r => r.json());
+        /** Categorize safe failure metadata without exposing HTML, cookies or answers. */
+        function answerSaveError(message, retryable = false) {
+            const error = new Error(message);
+            error.retryable = retryable;
+            return error;
         }
 
-        function collectAnswers() {
+        /** Read the real JSON contract, distinguishing hosting HTML from save rejection. */
+        async function requestToeicJson(url, payload) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), ANSWER_REQUEST_TIMEOUT_MS);
+            let response;
+            let text;
+            try {
+                response = await fetch(url, {
+                    method: 'POST', credentials: 'same-origin', signal: controller.signal,
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrfToken },
+                    body: JSON.stringify(payload)
+                });
+                text = await response.text();
+            } catch (error) {
+                throw answerSaveError(error.name === 'AbortError'
+                    ? 'Request ke server timeout. Jangan tutup tab ini.'
+                    : 'Koneksi ke server gagal. Jangan tutup tab ini.', true);
+            } finally {
+                clearTimeout(timeout);
+            }
+            let result;
+            try { result = JSON.parse(text); }
+            catch (error) {
+                const challenged = /one moment, please|just a moment|checking your browser|verify you are human/i.test(text);
+                throw answerSaveError(challenged
+                    ? 'Request tertahan verifikasi server/hosting. Jangan tutup tab ini.'
+                    : 'Server tidak mengirim JSON (HTTP ' + response.status + '). Jangan tutup tab ini.',
+                    challenged || response.status >= 500 || response.status === 429);
+            }
+            if (!response.ok || !result || result.success !== true) {
+                const reason = result && typeof result.error === 'string' ? result.error : 'HTTP ' + response.status;
+                throw answerSaveError(reason, !/Unauthorized|CSRF|Invalid|Session|Question|Foto/i.test(reason) && (response.status >= 500 || response.status === 429 || /Failed to save/i.test(reason)));
+            }
+            return result;
+        }
+
+        /** Serialize same-question snapshots and require explicit persistence acknowledgement. */
+        function saveAnswer(id, ans) {
+            const questionId = Number(id);
+            const previous = answerSaveTails.get(questionId);
+            const operation = (previous ? previous.catch(() => {}) : Promise.resolve()).then(() => requestToeicJson('ajax_save_toeic_answer.php', {
+                test_session: testSession, section: currentSection, question_id: questionId, answer: ans
+            }));
+            pendingAnswerSaves.add(operation);
+            answerSaveTails.set(questionId, operation);
+            const complete = () => {
+                pendingAnswerSaves.delete(operation);
+                if (answerSaveTails.get(questionId) === operation) answerSaveTails.delete(questionId);
+            };
+            operation.then(() => {
+                failedAnswerSaves.delete(questionId);
+                complete();
+                renderSaveStatus();
+            }, error => {
+                failedAnswerSaves.set(questionId, error.message);
+                complete();
+                renderSaveStatus();
+            });
+            return operation;
+        }
+
+        /** Read selectable answers without confusing a locked photo with an answer. */
+        function captureSelectedAnswers() {
+            if (lockedAnswerSnapshot !== null) return lockedAnswerSnapshot;
             const list = [];
             if (document.getElementById('isBatch').value === '1') {
                 document.querySelectorAll('.batch-answer-group').forEach(g => {
                     const chk = g.querySelector('input:checked');
-                    if (chk) list.push(saveAnswer(g.dataset.questionId, chk.value));
+                    if (chk && !chk.disabled) list.push({ id: g.dataset.questionId, answer: chk.value });
                 });
             } else {
                 const chk = document.querySelector('.single-answer:checked');
-                if (chk && !chk.disabled) list.push(saveAnswer(chk.dataset.questionId, chk.value));
+                if (chk && !chk.disabled) list.push({ id: chk.dataset.questionId, answer: chk.value });
             }
             return list;
+        }
+
+        /** Persist the selected or already-frozen snapshot through the save owner. */
+        function collectAnswers() {
+            return captureSelectedAnswers().map(item => saveAnswer(item.id, item.answer));
+        }
+
+        /** Freeze before waiting for network so expiry cannot extend answering time. */
+        function lockAnswerSnapshot(expired = false) {
+            if (lockedAnswerSnapshot === null) lockedAnswerSnapshot = captureSelectedAnswers();
+            sectionExpired = sectionExpired || expired;
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                if (!answerControlStates.has(input)) answerControlStates.set(input, input.disabled);
+                input.disabled = true;
+            });
+            if (sectionExpired) document.getElementById('timerDisplay').textContent = '00:00';
+        }
+
+        /** Restore editing only when a save failed before the answer deadline. */
+        function unlockAnswerSnapshot() {
+            if (sectionExpired || submitStatusUncertain) return;
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                if (answerControlStates.has(input)) {
+                    input.disabled = answerControlStates.get(input) || currentPhotoBlocksAnswers();
+                    answerControlStates.delete(input);
+                }
+            });
+            lockedAnswerSnapshot = null;
         }
 
         function withTimeout(promise, timeoutMs) {
@@ -1041,61 +1184,112 @@ if ($is_batch) {
 
         document.getElementById('quitTestBtn')?.addEventListener('click', handleQuitTest);
 
-        async function handleNext() {
+        /** All question navigation shares one frozen, acknowledged save boundary. */
+        async function navigateWithSaveGate(destination) {
+            if (submitStatusUncertain) { renderSaveStatus(); return; }
+            if (sectionExpired || timeLeft <= 0) { await submitSection(); return; }
             if (isNavigating || isSubmitting) return;
-            isNavigating = true; nextBtn.disabled = true; nextBtn.innerHTML = 'Menyimpan...'; setTestBusy('Menyimpan jawaban...');
+            isNavigating = true;
+            lockAnswerSnapshot();
+            nextBtn.disabled = true; nextBtn.innerHTML = 'Menyimpan...'; setTestBusy('Menyimpan jawaban...');
             try {
+                await Promise.allSettled([...pendingAnswerSaves]);
                 await Promise.all(collectAnswers());
-                const nextQ = parseInt(document.getElementById('isBatch').value === '1' ? document.getElementById('lastOrder').value : document.getElementById('currentOrder').value) + 1;
-                if (nextQ <= parseInt(document.getElementById('totalQuestions').value)) {
-                    window.location.href = `test_toeic.php?section=${currentSection}&test_session=${testSession}&q=${nextQ}&setup_complete=1&mode=${mode}${targetPart ? '&part='+targetPart : ''}`;
-                } else { submitSection(); }
-            } catch (e) { alert('Save failed: ' + e.message); isNavigating = false; nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy(); }
+                if (sectionExpired || timeLeft <= 0) {
+                    isNavigating = false;
+                    if (!isSubmitting && !submitStatusUncertain) await submitSection();
+                    return;
+                }
+                if (destination) window.location.href = destination;
+                else { isNavigating = false; await submitSection(); }
+            } catch (error) {
+                alert('Save failed: ' + error.message);
+                isNavigating = false;
+                if (timeLeft <= 0) lockAnswerSnapshot(true);
+                else unlockAnswerSnapshot();
+                nextBtn.disabled = submitStatusUncertain; nextBtn.innerHTML = nextBtnDefault; clearTestBusy();
+            }
         }
 
-        function submitSection() {
+        /** Next either opens the acknowledged question or enters the final save gate. */
+        async function handleNext() {
+            const nextQ = parseInt(document.getElementById('isBatch').value === '1' ? document.getElementById('lastOrder').value : document.getElementById('currentOrder').value) + 1;
+            const destination = nextQ <= parseInt(document.getElementById('totalQuestions').value)
+                ? `test_toeic.php?section=${currentSection}&test_session=${testSession}&q=${nextQ}&setup_complete=1&mode=${mode}${targetPart ? '&part='+targetPart : ''}`
+                : null;
+            await navigateWithSaveGate(destination);
+        }
+
+        prevBtn?.addEventListener('click', async event => {
+            event.preventDefault();
+            await navigateWithSaveGate(prevBtn.href);
+        });
+
+        /** Drain earlier writes and save the current snapshot before grading. */
+        async function submitSection() {
+            if (isSubmitting || submitStatusUncertain) return;
+            if (sectionExpired || timeLeft <= 0) lockAnswerSnapshot(true);
             const missing = Object.values(toeicPhotoFailureMap());
             if (missing.length > 0) {
                 photoSubmissionBlocked = true;
                 isSubmitting = false; isNavigating = false;
+                unlockAnswerSnapshot();
                 nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy();
                 alert('Foto soal ' + missing.join(', ') + ' belum tampil. Buka kembali nomor tersebut dan muat ulang sebelum menyelesaikan section.');
                 return;
             }
+            lockAnswerSnapshot(timeLeft <= 0);
             isSubmitting = true; nextBtn.innerHTML = 'Mengirim...'; setTestBusy('Mengirim section...');
-            fetch('ajax_submit_section_toeic.php', {
-                method: 'POST', headers: {'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken},
-                body: JSON.stringify({ test_session: testSession, section: currentSection, mode: mode, target_part: targetPart })
-            }).then(r => r.json()).then(d => { if (d.redirect) window.location.href = d.redirect; else throw new Error(d.error); })
-            .catch(e => { alert('Submit failed: '+e.message); isSubmitting = false; nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy(); });
+            try {
+                await Promise.allSettled([...pendingAnswerSaves]);
+                await Promise.all(collectAnswers());
+            } catch (error) {
+                alert('Save failed: ' + error.message);
+                unlockAnswerSnapshot();
+                isSubmitting = false; isNavigating = false;
+                nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy();
+                return;
+            }
+            // Persist before sending: reload must not replay an ambiguous operation.
+            if (!persistSubmitIntent()) {
+                isSubmitting = false; isNavigating = false;
+                unlockAnswerSnapshot();
+                nextBtn.disabled = false; nextBtn.innerHTML = nextBtnDefault; clearTestBusy();
+                alert('Browser tidak dapat menyimpan status submit. Submit belum dikirim. Hubungi admin.');
+                return;
+            }
+            submitStatusUncertain = true;
+            renderSaveStatus();
+            requestToeicJson('ajax_submit_section_toeic.php', {
+                test_session: testSession, section: currentSection, mode: mode, target_part: targetPart
+            }).then(d => {
+                if (typeof d.redirect !== 'string' || d.redirect === '') throw new Error('Server belum mengonfirmasi tujuan submit.');
+                try { sessionStorage.removeItem(submitUncertainStorageKey); } catch (error) { /* Keep the in-page lock until navigation. */ }
+                window.location.href = d.redirect;
+            })
+            .catch(e => { alert('Status submit belum dapat dipastikan: ' + e.message + ' Jangan tutup tab atau submit ulang sebelum admin mengonfirmasi status sesi.'); isSubmitting = false; nextBtn.disabled = true; nextBtn.innerHTML = nextBtnDefault; clearTestBusy(); });
         }
 
         document.querySelectorAll('input[type="radio"]').forEach(i => {
             i.addEventListener('change', () => {
+                if (toeicAnswersRecoveryLocked() || i.disabled || !i.checked) return;
                 i.closest('.study-card, #singleAnswerContainer').querySelectorAll('.answer-choice').forEach(l => l.classList.remove('selected'));
                 i.closest('.answer-choice').classList.add('selected');
-                saveAnswer(i.dataset.questionId, i.value);
+                const card = i.closest('.study-card, #singleAnswerContainer');
+                saveAnswer(i.dataset.questionId, i.value).then(() => {
+                    if (card) card.style.outline = '';
+                    nextBtn.title = '';
+                }, error => {
+                    if (card) card.style.outline = '2px solid #dc2626';
+                    nextBtn.title = 'Jawaban belum tersimpan: ' + error.message;
+                });
             });
         });
 
         document.querySelectorAll('[data-question-map-link="true"]').forEach(link => {
-            link.addEventListener('click', async (event) => {
-                if (isNavigating || isSubmitting) {
-                    event.preventDefault();
-                    return;
-                }
-
+            link.addEventListener('click', async event => {
                 event.preventDefault();
-                isNavigating = true;
-                setTestBusy('Membuka nomor soal...');
-                try {
-                    await Promise.all(collectAnswers());
-                    window.location.href = link.href;
-                } catch (error) {
-                    alert('Save failed: ' + error.message);
-                    isNavigating = false;
-                    clearTestBusy();
-                }
+                await navigateWithSaveGate(link.href);
             });
         });
 
@@ -1122,9 +1316,15 @@ if ($is_batch) {
         });
 
         let timeLeft = <?php echo (int)$remaining_time; ?>;
+        if (timeLeft <= 0 || submitStatusUncertain) lockAnswerSnapshot(timeLeft <= 0);
+        renderSaveStatus();
         setInterval(() => {
-            if (timeLeft <= 0) { if (!isSubmitting && !photoSubmissionBlocked) submitSection(); return; }
-            timeLeft--;
+            if (timeLeft > 0) timeLeft--;
+            if (timeLeft <= 0) {
+                lockAnswerSnapshot(true);
+                if (!isSubmitting && !submitStatusUncertain && !photoSubmissionBlocked) submitSection();
+                return;
+            }
             document.getElementById('timerDisplay').textContent = `${Math.floor(timeLeft/60).toString().padStart(2,'0')}:${(timeLeft%60).toString().padStart(2,'0')}`;
         }, 1000);
     </script>
